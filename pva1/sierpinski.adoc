@@ -1,0 +1,281 @@
+= Sierpinski-Dreieck: Implementation und Analyse
+:author: Daniel Senften
+:revdate: {docdate}
+:toc:
+:toclevels: 3
+:source-highlighter: pygments
+:icons: font
+:numbered:
+
+== Einführung
+
+Das Sierpinski-Dreieck ist eines der bekanntesten Fraktale und ein ausgezeichnetes Beispiel für rekursive Algorithmen. Benannt nach dem polnischen Mathematiker Wacław Sierpiński, demonstriert es die Eleganz selbstähnlicher mathematischer Strukturen.
+
+=== Mathematische Definition
+
+Das Sierpinski-Dreieck entsteht durch wiederholte Anwendung einer einfachen Regel:
+
+1. Beginne mit einem gleichseitigen Dreieck
+2. Teile das Dreieck in vier kongruente Dreiecke
+3. Entferne das mittlere Dreieck
+4. Wiederhole den Prozess für die verbleibenden drei Dreiecke
+
+== Theoretische Grundlagen
+
+=== Fraktale Eigenschaften
+
+Das Sierpinski-Dreieck besitzt mehrere faszinierende mathematische Eigenschaften:
+
+* **Selbstähnlichkeit**: Jeder Teil ähnelt dem Ganzen
+* **Fraktale Dimension**: log(3)/log(2) ≈ 1.585
+* **Unendliche Komplexität**: Beliebig viele Details auf allen Maßstabsebenen
+
+=== Rekursive Konstruktion
+
+Die rekursive Natur des Sierpinski-Dreiecks macht es zu einem idealen Beispiel für:
+
+* Rekursive Algorithmen
+* Divide-and-Conquer-Strategien
+* Geometrische Transformationen
+
+== Implementation
+
+=== Code-Struktur
+
+Die Implementation besteht aus mehreren Komponenten:
+
+[source,python]
+----
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+import warnings
+
+# Unterdrücke matplotlib Warnungen
+warnings.filterwarnings('ignore', category=UserWarning, module='matplotlib')
+----
+
+=== Grundlegende Dreieck-Zeichnung
+
+[source,python]
+----
+def draw_filled_triangle(x, y, size, color='black'):
+    """Zeichnet ein gefülltes gleichschenkliges Dreieck"""
+    height = size * np.sqrt(3) / 2
+    
+    # Dreieck-Koordinaten (Spitze oben)
+    triangle_points = np.array([
+        [x, y + height * 2/3],        # Obere Spitze
+        [x - size/2, y - height/3],   # Linke untere Ecke
+        [x + size/2, y - height/3]    # Rechte untere Ecke
+    ])
+    
+    triangle = patches.Polygon(triangle_points, closed=True, 
+                             facecolor=color, edgecolor=color)
+    plt.gca().add_patch(triangle)
+----
+
+**Wichtige Aspekte:**
+
+* Verwendung der Höhenformel für gleichseitige Dreiecke: `h = a * √3/2`
+* Koordinatenberechnung mit Schwerpunkt als Referenzpunkt
+* Integration mit matplotlib für die Visualisierung
+
+=== Iterative Implementation
+
+[source,python]
+----
+def sierpinski_iteration(triangles, iteration):
+    """
+    Führt eine Iteration der Sierpinski-Konstruktion durch
+    triangles: Liste von (x, y, size) Tupeln
+    """
+    if iteration <= 1:
+        return triangles
+    
+    new_triangles = []
+    
+    for x, y, size in triangles:
+        # Größe der neuen kleineren Dreiecke
+        new_size = size / 2
+        height = size * np.sqrt(3) / 2
+        
+        # Drei neue Dreiecks-Positionen berechnen
+        # Für korrekte Sierpinski-Konstruktion: Dreiecke berühren sich an den Ecken
+        
+        # Linkes unteres Dreieck
+        left_x = x - new_size / 2
+        left_y = y - height / 6
+        
+        # Rechtes unteres Dreieck
+        right_x = x + new_size / 2
+        right_y = y - height / 6
+        
+        # Oberes Dreieck
+        top_x = x
+        top_y = y + height / 3
+        
+        new_triangles.extend([
+            (left_x, left_y, new_size),
+            (right_x, right_y, new_size),
+            (top_x, top_y, new_size)
+        ])
+    
+    return sierpinski_iteration(new_triangles, iteration - 1)
+----
+
+**Schlüsselkonzepte:**
+
+* **Tail Recursion**: Optimierte rekursive Struktur
+* **Positionsberechnung**: Exakte mathematische Platzierung der Unterdreiecke
+* **Skalierung**: Jede Iteration halbiert die Dreiecksgröße
+
+=== Rekursive Implementation
+
+[source,python]
+----
+def sierpinski_recursive(x, y, n, level):
+    """
+    Rekursive Implementierung des Sierpinski-Dreiecks
+    """
+    # Rekursionsabbruch
+    if level == 0:
+        draw_filled_triangle(x, y, n)
+        return
+    
+    # Rekursionsschritt: drei kleinere Dreiecke mit halber Größe
+    new_size = n / 2
+    height = n * np.sqrt(3) / 2
+    
+    # Positionen der drei Teildreiecke
+    sierpinski_recursive(x - new_size/2, y - height/6, new_size, level - 1)  # Links unten
+    sierpinski_recursive(x + new_size/2, y - height/6, new_size, level - 1)  # Rechts unten  
+    sierpinski_recursive(x, y + height/3, new_size, level - 1)               # Oben
+----
+
+**Rekursive Eigenschaften:**
+
+* **Base Case**: Bei Level 0 wird ein einzelnes Dreieck gezeichnet
+* **Recursive Case**: Aufteilung in drei Unterdreiecke
+* **Selbstaufruf**: Jeder Aufruf erzeugt drei weitere Aufrufe
+
+== Mathematische Details
+
+=== Positionsberechnung
+
+Die korrekte Positionierung der Unterdreiecke ist entscheidend:
+
+[cols="1,2,3"]
+|===
+|Dreieck |X-Position |Y-Position
+
+|Links unten
+|`x - new_size/2`
+|`y - height/6`
+
+|Rechts unten
+|`x + new_size/2`
+|`y - height/6`
+
+|Oben
+|`x`
+|`y + height/3`
+|===
+
+=== Geometrische Überlegungen
+
+* **Höhe eines gleichseitigen Dreiecks**: `h = a * √3/2`
+* **Schwerpunkt**: Liegt bei `2/3` der Höhe von der Basis
+* **Berührungspunkte**: Dreiecke berühren sich an den Ecken ohne Überlappung
+
+== Visualisierung und Anwendung
+
+=== Progressionsdarstellung
+
+[source,python]
+----
+def zeichne_sierpinski_progression():
+    """
+    Zeichnet die ersten 5 Iterationen des Sierpinski-Dreiecks
+    """
+    fig, axes = plt.subplots(1, 5, figsize=(20, 4))
+    fig.suptitle('Sierpinski-Dreieck - Erste 5 Iterationen', fontsize=16)
+    
+    for i in range(5):
+        plt.sca(axes[i])
+        
+        # Zeichne Sierpinski-Dreieck mit entsprechender Iteration
+        sierpinski(0, 0, 3, max_iterations=i+1)
+        
+        plt.xlim(-2, 2)
+        plt.ylim(-1.5, 2)
+        plt.gca().set_aspect('equal', adjustable='box')
+        plt.title(f'Iteration {i+1}')
+        plt.axis('off')
+    
+    plt.tight_layout()
+    plt.show()
+----
+
+=== Verwendung
+
+[source,python]
+----
+# Ausführung der Beispiele
+if __name__ == "__main__":
+    # Iterative Version (mathematisch korrekt)
+    zeichne_sierpinski_progression()
+    
+    # Rekursive Version  
+    zeichne_rekursive_version()
+----
+
+== Algorithmus-Analyse
+
+=== Zeitkomplexität
+
+* **Rekursive Version**: O(3^n) - exponentielles Wachstum
+* **Iterative Version**: O(3^n) - gleiche asymptotische Komplexität
+* **Speicherverbrauch**: O(3^n) für die Dreiecksliste
+
+=== Rekursionstiefe
+
+Bei n Iterationen:
+
+* **Maximale Rekursionstiefe**: n
+* **Anzahl der Dreiecke**: 3^n
+* **Funktionsaufrufe**: (3^(n+1) - 1) / 2
+
+== Erweiterte Übungen
+
+=== Aufgabe 1: Farbvariationen
+Erweitern Sie die Implementation um verschiedene Farben für unterschiedliche Rekursionsebenen.
+
+=== Aufgabe 2: Animierte Konstruktion
+Implementieren Sie eine schrittweise Visualisierung des Konstruktionsprozesses.
+
+=== Aufgabe 3: Interaktive Parameter
+Erstellen Sie eine Version mit veränderbaren Parametern (Größe, Iterationen, Farben).
+
+=== Aufgabe 4: Performance-Optimierung
+Optimieren Sie den Algorithmus für große Iterationszahlen.
+
+== Fazit
+
+Das Sierpinski-Dreieck demonstriert mehrere wichtige Konzepte:
+
+* **Rekursion**: Elegante Lösung komplexer Probleme
+* **Fraktale Geometrie**: Selbstähnliche mathematische Strukturen  
+* **Algorithmus-Design**: Verschiedene Implementierungsansätze
+* **Visualisierung**: Transformation mathematischer Konzepte in grafische Darstellungen
+
+Die Implementation zeigt, wie mathematische Eleganz und Programmier-Effizienz Hand in Hand gehen können.
+
+== Literatur und Weiterführende Ressourcen
+
+* Sierpiński, W. (1915): Sur une courbe dont tout point est un point de ramification
+* Mandelbrot, B. (1982): The Fractal Geometry of Nature
+* Sedgewick, R. & Wayne, K. (2011): Algorithms, 4th Edition
+
+---
+_Diese Dokumentation ist Teil des FFHS-DUA Kurses "Algorithmen und Datenstrukturen"_

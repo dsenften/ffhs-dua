@@ -38,6 +38,11 @@ algs4/
 │   └── bag.py            # Bag-Datenstruktur
 └── errors/               # Benutzerdefinierte Fehlerklassen
     └── errors.py
+pva1/                     # Praktische Vertiefungsaufgaben 1
+├── __init__.py
+├── sierpinski.py         # Sierpinski-Dreieck Fraktal-Implementierungen
+├── sierpinski.adoc       # Sierpinski-Dokumentation
+└── grundlagen.ipynb      # Grundlagen-Jupyter-Notebook
 ```
 
 ### Implementierungsmuster

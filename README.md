@@ -19,6 +19,14 @@ Dieses Projekt implementiert die wichtigsten Datenstrukturen aus dem ersten Teil
 
 Alle Implementierungen unterstützen generische Typen und folgen den Python-Konventionen für Container-Klassen.
 
+#### PVA1 (Praktische Vertiefungsaufgaben)
+
+- **Sierpinski-Dreieck**: Fraktal-Implementation mit rekursiven und iterativen Algorithmen
+  - Mathematisch korrekte Positionierung
+  - Visualisierung der Iterationsschritte
+  - Umfassende AsciiDoc-Dokumentation
+- **Grundlagen-Notebook**: Interaktive Jupyter-Übungen
+
 ## Installation und Setup
 
 ### Voraussetzungen
@@ -126,6 +134,22 @@ queue.enqueue("Drittes")
 first_element = queue.dequeue()  # Gibt "Erstes" zurück
 ```
 
+### Beispiel: Sierpinski-Dreieck verwenden
+
+```python
+from pva1.sierpinski import sierpinski, zeichne_sierpinski_progression
+
+# Einzelnes Sierpinski-Dreieck zeichnen
+import matplotlib.pyplot as plt
+plt.figure(figsize=(8, 8))
+sierpinski(0, 0, 3, max_iterations=5)
+plt.axis('equal')
+plt.show()
+
+# Progression der ersten 5 Iterationen
+zeichne_sierpinski_progression()
+```
+
 ## Projektstruktur
 
 ```text
@@ -140,6 +164,11 @@ ffhs-dua/
 │   └── errors/               # Benutzerdefinierte Exceptions
 │       ├── __init__.py
 │       └── errors.py
+├── pva1/                     # Praktische Vertiefungsaufgaben 1
+│   ├── __init__.py
+│   ├── sierpinski.py         # Sierpinski-Dreieck Implementation
+│   ├── sierpinski.adoc       # Sierpinski-Dokumentation
+│   └── grundlagen.ipynb      # Grundlagen-Jupyter-Notebook
 ├── tests/                    # Testsuiten
 │   ├── __init__.py
 │   ├── test_stack.py
