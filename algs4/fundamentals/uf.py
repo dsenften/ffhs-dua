@@ -23,40 +23,41 @@ Implementierte Varianten:
 
 Basiert auf Kapitel 1.5 von "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
 """
+
 from typing import List
 
 
 class UF:
     """Union-Find mit Weighted Quick Union by Rank und Path Compression
-    
+
     Diese Implementation verwendet Weighted Quick Union by Rank mit Path Compression
     durch Halbierung. Die Initialisierung einer Datenstruktur mit n Knoten benötigt
     lineare Zeit. Danach benötigen die union-, find- und connected-Operationen
     logarithmische Zeit (im schlechtesten Fall) und die count-Operation konstante Zeit.
     Die amortisierte Zeit pro union-, find- und connected-Operation hat inverse
     Ackermann-Komplexität.
-    
+
     Diese Implementierung ist die effizienteste der verfügbaren Union-Find-Varianten.
-    
+
     Zeitkomplexität:
     - Konstruktor: O(n)
     - union(p, q): O(α(n)) amortisiert
-    - find(p): O(α(n)) amortisiert  
+    - find(p): O(α(n)) amortisiert
     - connected(p, q): O(α(n)) amortisiert
     - count(): O(1)
-    
+
     Wobei α(n) die inverse Ackermann-Funktion ist, die für praktische Zwecke
     als konstant betrachtet werden kann.
     """
 
     def __init__(self, n: int) -> None:
         """Initialisiert eine leere Union-Find-Datenstruktur mit n Knoten.
-        
+
         Jeder Knoten (0 bis n-1) befindet sich anfangs in seiner eigenen Komponente.
 
         Args:
             n: Anzahl der Knoten (muss positiv sein)
-            
+
         Raises:
             ValueError: wenn n <= 0
         """
@@ -74,7 +75,7 @@ class UF:
 
     def union(self, p: int, q: int) -> None:
         """Verbindet die Komponenten, die die Knoten p und q enthalten.
-        
+
         Falls beide Knoten bereits in derselben Komponente sind, wird nichts getan.
         Andernfalls werden die beiden Komponenten verschmolzen, wobei der Baum
         mit kleinerem Rang unter den Baum mit größerem Rang gehängt wird.
@@ -82,7 +83,7 @@ class UF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -105,16 +106,16 @@ class UF:
 
     def find(self, p: int) -> int:
         """Findet die Wurzel der Komponente, die den Knoten p enthält.
-        
+
         Verwendet Path Compression durch Halbierung für bessere Performance.
         Der Komponenten-Identifier ist die Wurzel des Baums.
 
         Args:
             p: Knoten, dessen Komponenten-Wurzel gesucht wird
-            
+
         Returns:
             int: Komponenten-Identifier (Wurzel des Baums)
-            
+
         Raises:
             ValueError: wenn p ein ungültiger Index ist
         """
@@ -131,10 +132,10 @@ class UF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Returns:
             bool: True wenn beide Knoten in derselben Komponente sind, False sonst
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -142,7 +143,7 @@ class UF:
 
     def count(self) -> int:
         """Gibt die Anzahl der Komponenten zurück.
-        
+
         Returns:
             int: Aktuelle Anzahl der separaten Komponenten
         """
@@ -150,7 +151,7 @@ class UF:
 
     def is_empty(self) -> bool:
         """Prüft, ob die Union-Find-Struktur leer ist.
-        
+
         Returns:
             bool: True wenn keine Knoten vorhanden sind
         """
@@ -158,7 +159,7 @@ class UF:
 
     def size(self) -> int:
         """Gibt die Gesamtanzahl der Knoten zurück.
-        
+
         Returns:
             int: Gesamtanzahl der Knoten in der Datenstruktur
         """
@@ -167,16 +168,16 @@ class UF:
 
 class QuickUnionUF:
     """Quick Union - Einfache Union-Find Implementation
-    
+
     Diese Implementation verwendet Quick Union ohne Optimierungen. Die Initialisierung
-    einer Datenstruktur mit n Knoten benötigt lineare Zeit. Die union-, find- und 
+    einer Datenstruktur mit n Knoten benötigt lineare Zeit. Die union-, find- und
     connected-Operationen können im schlechtesten Fall lineare Zeit benötigen.
-    
+
     Zeitkomplexität:
     - Konstruktor: O(n)
     - union(p, q): O(n) im schlechtesten Fall
     - find(p): O(n) im schlechtesten Fall
-    - connected(p, q): O(n) im schlechtesten Fall  
+    - connected(p, q): O(n) im schlechtesten Fall
     - count(): O(1)
     """
 
@@ -185,7 +186,7 @@ class QuickUnionUF:
 
         Args:
             n: Anzahl der Knoten (muss positiv sein)
-            
+
         Raises:
             ValueError: wenn n <= 0
         """
@@ -206,7 +207,7 @@ class QuickUnionUF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -223,10 +224,10 @@ class QuickUnionUF:
 
         Args:
             p: Knoten, dessen Komponenten-Wurzel gesucht wird
-            
+
         Returns:
             int: Komponenten-Identifier (Wurzel des Baums)
-            
+
         Raises:
             ValueError: wenn p ein ungültiger Index ist
         """
@@ -241,10 +242,10 @@ class QuickUnionUF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Returns:
             bool: True wenn beide Knoten in derselben Komponente sind, False sonst
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -252,7 +253,7 @@ class QuickUnionUF:
 
     def count(self) -> int:
         """Gibt die Anzahl der Komponenten zurück.
-        
+
         Returns:
             int: Aktuelle Anzahl der separaten Komponenten
         """
@@ -261,12 +262,12 @@ class QuickUnionUF:
 
 class WeightedQuickUnionUF:
     """Weighted Quick Union - Union-Find nach Größe gewichtet
-    
+
     Diese Implementation verwendet Weighted Quick Union by Size (ohne Path Compression).
-    Die Initialisierung einer Datenstruktur mit n Knoten benötigt lineare Zeit. 
-    Die union-, find- und connected-Operationen benötigen logarithmische Zeit 
+    Die Initialisierung einer Datenstruktur mit n Knoten benötigt lineare Zeit.
+    Die union-, find- und connected-Operationen benötigen logarithmische Zeit
     im schlechtesten Fall.
-    
+
     Zeitkomplexität:
     - Konstruktor: O(n)
     - union(p, q): O(log n)
@@ -280,7 +281,7 @@ class WeightedQuickUnionUF:
 
         Args:
             n: Anzahl der Knoten (muss positiv sein)
-            
+
         Raises:
             ValueError: wenn n <= 0
         """
@@ -298,13 +299,13 @@ class WeightedQuickUnionUF:
 
     def union(self, p: int, q: int) -> None:
         """Verbindet die Komponenten, die die Knoten p und q enthalten.
-        
+
         Hängt den kleineren Baum unter den größeren Baum.
 
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -328,10 +329,10 @@ class WeightedQuickUnionUF:
 
         Args:
             p: Knoten, dessen Komponenten-Wurzel gesucht wird
-            
+
         Returns:
             int: Komponenten-Identifier (Wurzel des Baums)
-            
+
         Raises:
             ValueError: wenn p ein ungültiger Index ist
         """
@@ -346,10 +347,10 @@ class WeightedQuickUnionUF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Returns:
             bool: True wenn beide Knoten in derselben Komponente sind, False sonst
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -357,7 +358,7 @@ class WeightedQuickUnionUF:
 
     def count(self) -> int:
         """Gibt die Anzahl der Komponenten zurück.
-        
+
         Returns:
             int: Aktuelle Anzahl der separaten Komponenten
         """
@@ -366,11 +367,11 @@ class WeightedQuickUnionUF:
 
 class QuickFindUF:
     """Quick Find - Union-Find mit schneller Find-Operation
-    
+
     Diese Implementation verwendet Quick Find. Die Initialisierung einer Datenstruktur
     mit n Knoten benötigt lineare Zeit. Die find-, connected- und count-Operationen
     benötigen konstante Zeit, aber die union-Operation benötigt lineare Zeit.
-    
+
     Zeitkomplexität:
     - Konstruktor: O(n)
     - union(p, q): O(n)
@@ -384,7 +385,7 @@ class QuickFindUF:
 
         Args:
             n: Anzahl der Knoten (muss positiv sein)
-            
+
         Raises:
             ValueError: wenn n <= 0
         """
@@ -401,13 +402,13 @@ class QuickFindUF:
 
     def union(self, p: int, q: int) -> None:
         """Verbindet die Komponenten, die die Knoten p und q enthalten.
-        
+
         Ändert alle Knoten mit der ID von p zur ID von q.
 
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -432,10 +433,10 @@ class QuickFindUF:
 
         Args:
             p: Knoten, dessen Komponenten-ID gesucht wird
-            
+
         Returns:
             int: Komponenten-Identifier
-            
+
         Raises:
             ValueError: wenn p ein ungültiger Index ist
         """
@@ -448,10 +449,10 @@ class QuickFindUF:
         Args:
             p: Erster Knoten
             q: Zweiter Knoten
-            
+
         Returns:
             bool: True wenn beide Knoten in derselben Komponente sind, False sonst
-            
+
         Raises:
             ValueError: wenn p oder q ungültige Indizes sind
         """
@@ -461,7 +462,7 @@ class QuickFindUF:
 
     def count(self) -> int:
         """Gibt die Anzahl der Komponenten zurück.
-        
+
         Returns:
             int: Aktuelle Anzahl der separaten Komponenten
         """
@@ -476,43 +477,43 @@ if __name__ == "__main__":
     """
     print("Union-Find Demo")
     print("Geben Sie die Anzahl der Knoten ein:")
-    
+
     try:
         n = int(input())
         if n <= 0:
             print("Fehler: Anzahl der Knoten muss positiv sein")
             exit(1)
-            
+
         uf = UF(n)
         print(f"Union-Find-Struktur mit {n} Knoten initialisiert")
         print("Geben Sie Knotenpaare ein (p q), leere Zeile zum Beenden:")
-        
+
         while True:
             line = input().strip()
             if not line:
                 break
-                
+
             try:
                 parts = line.split()
                 if len(parts) != 2:
                     print("Fehler: Geben Sie genau zwei Zahlen ein")
                     continue
-                    
+
                 p, q = int(parts[0]), int(parts[1])
-                
+
                 if uf.connected(p, q):
                     print(f"{p} und {q} sind bereits verbunden")
                 else:
                     uf.union(p, q)
                     print(f"{p} {q} verbunden")
-                    
+
             except ValueError as e:
                 print(f"Fehler: {e}")
             except Exception as e:
                 print(f"Unerwarteter Fehler: {e}")
-                
+
         print(f"Anzahl der Komponenten: {uf.count()}")
-        
+
     except KeyboardInterrupt:
         print("\nProgramm beendet")
     except Exception as e:

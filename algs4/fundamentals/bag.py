@@ -139,7 +139,7 @@ class Bag(Generic[T]):
             return 0
 
         count = 0
-        
+
         # Entferne alle Vorkommen am Anfang der Liste
         while self._first is not None and self._first.item == item:
             self._first = self._first.next
@@ -198,7 +198,7 @@ class Bag(Generic[T]):
         """
         if self.is_empty():
             return "{}"
-            
+
         out = "{"
         items = list(self)
         for i, elem in enumerate(items):

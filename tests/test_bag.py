@@ -147,7 +147,6 @@ class TestBag(unittest.TestCase):
         self.assertIn(3, elements)
         self.assertIn(4, elements)
 
-
     # Tests für die erweiterten Methoden
     def test_contains(self):
         """Testet die contains-Methode."""
@@ -155,7 +154,7 @@ class TestBag(unittest.TestCase):
         self.bag.add(1)
         self.bag.add(2)
         self.bag.add(3)
-        
+
         self.assertTrue(self.bag.contains(1))
         self.assertTrue(self.bag.contains(2))
         self.assertTrue(self.bag.contains(3))
@@ -168,7 +167,7 @@ class TestBag(unittest.TestCase):
         self.bag.add(1)
         self.bag.add(2)
         self.bag.add(3)
-        
+
         self.assertTrue(1 in self.bag)
         self.assertTrue(2 in self.bag)
         self.assertTrue(3 in self.bag)
@@ -182,7 +181,7 @@ class TestBag(unittest.TestCase):
         self.bag.add(2)
         self.bag.add(3)
         self.bag.add(2)  # Doppeltes Element für Tests
-        
+
         # Entferne ein vorhandenes Element
         self.assertTrue(self.bag.remove(1))
         self.assertEqual(self.bag.size(), 3)
@@ -243,7 +242,7 @@ class TestBag(unittest.TestCase):
         # Füge einige Elemente für die Tests hinzu
         self.bag.add(1)
         self.bag.add(2)
-        
+
         self.assertFalse(self.bag.is_empty())
         self.bag.clear()
         self.assertTrue(self.bag.is_empty())
@@ -259,19 +258,19 @@ class TestBag(unittest.TestCase):
         # Erstelle eine neue Bag mit bekannter Reihenfolge
         test_bag = Bag()
         test_bag.add(10)
-        
+
         # Das erste Element sollte 10 sein
         self.assertEqual(test_bag.peek(), 10)
-        
+
         # Peek sollte die Bag nicht verändern
         self.assertEqual(test_bag.size(), 1)
-        
+
         # Füge ein weiteres Element hinzu
         test_bag.add(20)
-        
+
         # Das erste Element sollte jetzt 20 sein (LIFO-Verhalten)
         self.assertEqual(test_bag.peek(), 20)
-        
+
         # Leere Bag
         test_bag.clear()
         self.assertIsNone(test_bag.peek())
@@ -283,22 +282,22 @@ class TestBag(unittest.TestCase):
         self.bag.add(2)
         self.bag.add(3)
         self.bag.add(2)  # Doppeltes Element
-        
+
         # Konvertiere die Bag in eine Liste
         bag_list = self.bag.to_list()
-        
+
         # Überprüfe die Länge
         self.assertEqual(len(bag_list), 4)
-        
+
         # Überprüfe, dass alle Elemente in der Liste sind
         self.assertIn(1, bag_list)
         self.assertIn(2, bag_list)
         self.assertIn(3, bag_list)
-        
+
         # Überprüfe, dass die Liste das doppelte Element enthält
         count_2 = bag_list.count(2)
         self.assertEqual(count_2, 2)
-        
+
         # Leere Bag
         empty_bag = Bag()
         self.assertEqual(empty_bag.to_list(), [])
@@ -309,19 +308,19 @@ class TestBag(unittest.TestCase):
         self.bag.add(1)
         self.bag.add(2)
         self.bag.add(3)
-        
+
         # Teste mit normaler Bag
         repr_str = repr(self.bag)
         self.assertTrue(repr_str.startswith("{"))
         self.assertTrue(repr_str.endswith("}"))
-        
+
         # Überprüfe, dass keine überflüssigen Kommas am Ende stehen
         self.assertNotIn(", }", repr_str)
-        
+
         # Teste mit leerer Bag
         empty_bag = Bag()
         self.assertEqual(repr(empty_bag), "{}")
-        
+
         # Teste mit Bag, die nur ein Element enthält
         single_bag = Bag()
         single_bag.add(42)
