@@ -148,5 +148,185 @@ class TestBag(unittest.TestCase):
         self.assertIn(4, elements)
 
 
+    # Tests für die erweiterten Methoden
+    def test_contains(self):
+        """Testet die contains-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        
+        self.assertTrue(self.bag.contains(1))
+        self.assertTrue(self.bag.contains(2))
+        self.assertTrue(self.bag.contains(3))
+        self.assertFalse(self.bag.contains(4))
+        self.assertFalse(self.bag.contains("nicht vorhanden"))
+
+    def test_contains_operator(self):
+        """Testet den 'in'-Operator (implementiert durch __contains__)."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        
+        self.assertTrue(1 in self.bag)
+        self.assertTrue(2 in self.bag)
+        self.assertTrue(3 in self.bag)
+        self.assertFalse(4 in self.bag)
+        self.assertFalse("nicht vorhanden" in self.bag)
+
+    def test_remove(self):
+        """Testet die remove-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        self.bag.add(2)  # Doppeltes Element für Tests
+        
+        # Entferne ein vorhandenes Element
+        self.assertTrue(self.bag.remove(1))
+        self.assertEqual(self.bag.size(), 3)
+        self.assertFalse(self.bag.contains(1))
+
+        # Entferne ein Element, das mehrfach vorkommt (nur ein Vorkommen wird entfernt)
+        self.assertTrue(self.bag.remove(2))
+        self.assertEqual(self.bag.size(), 2)
+        self.assertTrue(self.bag.contains(2))  # Es gibt noch ein weiteres '2'
+
+        # Entferne ein nicht vorhandenes Element
+        self.assertFalse(self.bag.remove(4))
+        self.assertEqual(self.bag.size(), 2)
+
+        # Entferne alle verbleibenden Elemente
+        self.assertTrue(self.bag.remove(2))
+        self.assertTrue(self.bag.remove(3))
+        self.assertEqual(self.bag.size(), 0)
+        self.assertTrue(self.bag.is_empty())
+
+        # Versuche, aus einer leeren Bag zu entfernen
+        self.assertFalse(self.bag.remove(1))
+
+    def test_remove_all(self):
+        """Testet die remove_all-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        self.bag.add(2)  # Doppeltes Element
+        self.bag.add(2)  # Weiteres doppeltes Element
+        self.bag.add(2)  # Weiteres doppeltes Element
+
+        # Entferne alle Vorkommen von 2
+        self.assertEqual(self.bag.remove_all(2), 4)
+        self.assertEqual(self.bag.size(), 2)
+        self.assertFalse(self.bag.contains(2))
+
+        # Entferne ein Element, das nur einmal vorkommt
+        self.assertEqual(self.bag.remove_all(1), 1)
+        self.assertEqual(self.bag.size(), 1)
+        self.assertFalse(self.bag.contains(1))
+
+        # Entferne ein nicht vorhandenes Element
+        self.assertEqual(self.bag.remove_all(4), 0)
+        self.assertEqual(self.bag.size(), 1)
+
+        # Entferne alle verbleibenden Elemente
+        self.assertEqual(self.bag.remove_all(3), 1)
+        self.assertEqual(self.bag.size(), 0)
+
+        # Leere Bag
+        self.bag.clear()
+        self.assertEqual(self.bag.remove_all(1), 0)
+
+    def test_clear(self):
+        """Testet die clear-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        
+        self.assertFalse(self.bag.is_empty())
+        self.bag.clear()
+        self.assertTrue(self.bag.is_empty())
+        self.assertEqual(self.bag.size(), 0)
+
+        # Erneutes Leeren einer bereits leeren Bag
+        self.bag.clear()
+        self.assertTrue(self.bag.is_empty())
+        self.assertEqual(self.bag.size(), 0)
+
+    def test_peek(self):
+        """Testet die peek-Methode."""
+        # Erstelle eine neue Bag mit bekannter Reihenfolge
+        test_bag = Bag()
+        test_bag.add(10)
+        
+        # Das erste Element sollte 10 sein
+        self.assertEqual(test_bag.peek(), 10)
+        
+        # Peek sollte die Bag nicht verändern
+        self.assertEqual(test_bag.size(), 1)
+        
+        # Füge ein weiteres Element hinzu
+        test_bag.add(20)
+        
+        # Das erste Element sollte jetzt 20 sein (LIFO-Verhalten)
+        self.assertEqual(test_bag.peek(), 20)
+        
+        # Leere Bag
+        test_bag.clear()
+        self.assertIsNone(test_bag.peek())
+
+    def test_to_list(self):
+        """Testet die to_list-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        self.bag.add(2)  # Doppeltes Element
+        
+        # Konvertiere die Bag in eine Liste
+        bag_list = self.bag.to_list()
+        
+        # Überprüfe die Länge
+        self.assertEqual(len(bag_list), 4)
+        
+        # Überprüfe, dass alle Elemente in der Liste sind
+        self.assertIn(1, bag_list)
+        self.assertIn(2, bag_list)
+        self.assertIn(3, bag_list)
+        
+        # Überprüfe, dass die Liste das doppelte Element enthält
+        count_2 = bag_list.count(2)
+        self.assertEqual(count_2, 2)
+        
+        # Leere Bag
+        empty_bag = Bag()
+        self.assertEqual(empty_bag.to_list(), [])
+
+    def test_improved_repr(self):
+        """Testet die verbesserte __repr__-Methode."""
+        # Füge einige Elemente für die Tests hinzu
+        self.bag.add(1)
+        self.bag.add(2)
+        self.bag.add(3)
+        
+        # Teste mit normaler Bag
+        repr_str = repr(self.bag)
+        self.assertTrue(repr_str.startswith("{"))
+        self.assertTrue(repr_str.endswith("}"))
+        
+        # Überprüfe, dass keine überflüssigen Kommas am Ende stehen
+        self.assertNotIn(", }", repr_str)
+        
+        # Teste mit leerer Bag
+        empty_bag = Bag()
+        self.assertEqual(repr(empty_bag), "{}")
+        
+        # Teste mit Bag, die nur ein Element enthält
+        single_bag = Bag()
+        single_bag.add(42)
+        self.assertEqual(repr(single_bag), "{42}")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,318 @@
+= Bag-Klasse: Erweiterungen und Funktionalität
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Übersicht
+
+Die `Bag`-Klasse wurde um mehrere nützliche Methoden erweitert, um die Funktionalität zu verbessern und eine umfassendere API bereitzustellen. Diese Dokumentation beschreibt die implementierten Erweiterungen und ihre Verwendung.
+
+== Grundlegende Funktionalität
+
+Die `Bag`-Klasse repräsentiert einen Beutel (oder Multiset) von generischen Elementen. Sie unterstützt das Einfügen und Iterieren über die Elemente in beliebiger Reihenfolge. Die Implementierung verwendet eine einfach verkettete Liste.
+
+Bereits vorhandene Methoden:
+
+* `is_empty()`: Prüft, ob der Beutel leer ist
+* `size()`: Gibt die Anzahl der Elemente im Beutel zurück
+* `add(item)`: Fügt ein Element zum Beutel hinzu
+* `__iter__()`: Ermöglicht die Iteration über die Elemente
+* `__len__()`: Implementiert den `len()`-Operator
+
+== Neue Methoden
+
+=== Elementprüfung
+
+==== `contains(item)`
+
+Prüft, ob ein Element im Beutel enthalten ist.
+
+[source,python]
+----
+def contains(self, item: T) -> bool:
+    """Prüft, ob ein Element im Beutel enthalten ist.
+
+    :param item: Das zu suchende Element
+    :returns: True, wenn das Element im Beutel enthalten ist,
+              False andernfalls
+
+    Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+if bag.contains(1):
+    print("Element 1 ist im Beutel enthalten")
+----
+
+==== `__contains__(item)`
+
+Implementiert den `in`-Operator für den Beutel.
+
+[source,python]
+----
+def __contains__(self, item: T) -> bool:
+    """Implementiert den 'in'-Operator für den Beutel.
+
+    :param item: Das zu suchende Element
+    :returns: True, wenn das Element im Beutel enthalten ist,
+              False andernfalls
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+if 1 in bag:
+    print("Element 1 ist im Beutel enthalten")
+----
+
+=== Elementmanipulation
+
+==== `remove(item)`
+
+Entfernt ein Element aus dem Beutel, falls vorhanden.
+
+[source,python]
+----
+def remove(self, item: T) -> bool:
+    """Entfernt ein Element aus dem Beutel, falls vorhanden.
+
+    :param item: Das zu entfernende Element
+    :returns: True, wenn das Element gefunden und entfernt wurde,
+              False andernfalls
+
+    Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+if bag.remove(1):
+    print("Element 1 wurde entfernt")
+----
+
+==== `remove_all(item)`
+
+Entfernt alle Vorkommen eines Elements aus dem Beutel.
+
+[source,python]
+----
+def remove_all(self, item: T) -> int:
+    """Entfernt alle Vorkommen eines Elements aus dem Beutel.
+
+    :param item: Das zu entfernende Element
+    :returns: Die Anzahl der entfernten Elemente
+
+    Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+bag.add(2)  # Doppeltes Element
+
+count = bag.remove_all(2)
+print(f"{count} Vorkommen von Element 2 wurden entfernt")
+----
+
+==== `clear()`
+
+Entfernt alle Elemente aus dem Beutel.
+
+[source,python]
+----
+def clear(self) -> None:
+    """Entfernt alle Elemente aus dem Beutel.
+
+    Zeitkomplexität: O(1)
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+bag.clear()  # Beutel ist jetzt leer
+----
+
+=== Zugriffsmethoden
+
+==== `peek()`
+
+Gibt das erste Element des Beutels zurück, ohne es zu entfernen.
+
+[source,python]
+----
+def peek(self) -> Optional[T]:
+    """Gibt das erste Element des Beutels zurück, ohne es zu entfernen.
+
+    :returns: Das erste Element des Beutels oder None, wenn der Beutel leer ist
+
+    Zeitkomplexität: O(1)
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+first_element = bag.peek()  # Gibt 2 zurück (LIFO-Verhalten)
+----
+
+==== `to_list()`
+
+Konvertiert den Beutel in eine Liste.
+
+[source,python]
+----
+def to_list(self) -> List[T]:
+    """Konvertiert den Beutel in eine Liste.
+
+    :returns: Eine Liste mit allen Elementen des Beutels
+
+    Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+elements = bag.to_list()  # Gibt [2, 1] zurück
+----
+
+=== Verbesserte Darstellung
+
+==== `__repr__()`
+
+Gibt eine verbesserte String-Repräsentation des Beutels zurück.
+
+[source,python]
+----
+def __repr__(self) -> str:
+    """Gibt eine String-Repräsentation des Beutels zurück.
+
+    :returns: Eine String-Repräsentation des Beutels
+    """
+----
+
+*Beispiel:*
+
+[source,python]
+----
+bag = Bag()
+bag.add(1)
+bag.add(2)
+
+print(bag)  # Gibt {2, 1} aus
+----
+
+== Zeitkomplexität
+
+Die Zeitkomplexität der implementierten Methoden ist wie folgt:
+
+[cols="1,1,2"]
+|===
+|Methode |Zeitkomplexität |Beschreibung
+
+|`contains(item)` |O(n) |Muss im schlimmsten Fall die gesamte Liste durchlaufen
+|`remove(item)` |O(n) |Muss im schlimmsten Fall die gesamte Liste durchlaufen
+|`remove_all(item)` |O(n) |Muss die gesamte Liste durchlaufen
+|`clear()` |O(1) |Setzt nur Referenzen zurück
+|`peek()` |O(1) |Greift nur auf das erste Element zu
+|`to_list()` |O(n) |Muss alle Elemente in eine neue Liste kopieren
+|===
+
+== Testabdeckung
+
+Für alle neuen Methoden wurden umfassende Tests implementiert, die verschiedene Szenarien abdecken:
+
+* Normale Anwendungsfälle
+* Grenzfälle (z.B. leerer Beutel)
+* Fehlerbehandlung
+
+Die Tests befinden sich in der Datei `tests/test_bag_extended.py` und können mit pytest ausgeführt werden:
+
+[source,bash]
+----
+python -m pytest tests/test_bag_extended.py -v
+----
+
+== Beispielanwendungen
+
+=== Zählen von Elementen
+
+[source,python]
+----
+def count_occurrences(bag, item):
+    """Zählt, wie oft ein Element im Beutel vorkommt."""
+    count = 0
+    for element in bag:
+        if element == item:
+            count += 1
+    return count
+
+# Alternativ mit der neuen to_list-Methode
+def count_occurrences_alt(bag, item):
+    return bag.to_list().count(item)
+----
+
+=== Entfernen von Duplikaten
+
+[source,python]
+----
+def remove_duplicates(bag):
+    """Entfernt alle Duplikate aus dem Beutel."""
+    unique_items = set()
+    for item in bag.to_list():
+        if item in unique_items:
+            bag.remove(item)
+        else:
+            unique_items.add(item)
+----
+
+== Fazit
+
+Die erweiterten Methoden der `Bag`-Klasse bieten eine umfassendere API, die mehr Flexibilität und Funktionalität für verschiedene Anwendungsfälle bietet. Die Implementierung folgt den Prinzipien der ursprünglichen Klasse und behält die Effizienz bei, während sie zusätzliche nützliche Operationen bereitstellt.

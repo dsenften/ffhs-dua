@@ -1,4 +1,4 @@
-from typing import Generic, Iterator, Optional, TypeVar
+from typing import Generic, Iterator, Optional, TypeVar, List
 
 T = TypeVar("T")
 S = TypeVar("S")
@@ -73,8 +73,136 @@ class Bag(Generic[T]):
             yield current.item
             current = current.next
 
+    def contains(self, item: T) -> bool:
+        """Prüft, ob ein Element im Beutel enthalten ist.
+
+        :param item: Das zu suchende Element
+        :returns: True, wenn das Element im Beutel enthalten ist,
+                  False andernfalls
+
+        Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+        """
+        current = self._first
+        while current is not None:
+            if current.item == item:
+                return True
+            current = current.next
+        return False
+
+    def __contains__(self, item: T) -> bool:
+        """Implementiert den 'in'-Operator für den Beutel.
+
+        :param item: Das zu suchende Element
+        :returns: True, wenn das Element im Beutel enthalten ist,
+                  False andernfalls
+        """
+        return self.contains(item)
+
+    def remove(self, item: T) -> bool:
+        """Entfernt ein Element aus dem Beutel, falls vorhanden.
+
+        :param item: Das zu entfernende Element
+        :returns: True, wenn das Element gefunden und entfernt wurde,
+                  False andernfalls
+
+        Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+        """
+        if self.is_empty():
+            return False
+
+        # Sonderfall: Das erste Element ist das zu entfernende
+        if self._first is not None and self._first.item == item:
+            self._first = self._first.next
+            self._n -= 1
+            return True
+
+        # Suche nach dem Element in der Liste
+        current = self._first
+        while current is not None and current.next is not None:
+            if current.next.item == item:
+                current.next = current.next.next
+                self._n -= 1
+                return True
+            current = current.next
+
+        return False
+
+    def remove_all(self, item: T) -> int:
+        """Entfernt alle Vorkommen eines Elements aus dem Beutel.
+
+        :param item: Das zu entfernende Element
+        :returns: Die Anzahl der entfernten Elemente
+
+        Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+        """
+        if self.is_empty():
+            return 0
+
+        count = 0
+        
+        # Entferne alle Vorkommen am Anfang der Liste
+        while self._first is not None and self._first.item == item:
+            self._first = self._first.next
+            self._n -= 1
+            count += 1
+
+        # Entferne alle weiteren Vorkommen
+        if self._first is not None:
+            current = self._first
+            while current.next is not None:
+                if current.next.item == item:
+                    current.next = current.next.next
+                    self._n -= 1
+                    count += 1
+                else:
+                    current = current.next
+
+        return count
+
+    def clear(self) -> None:
+        """Entfernt alle Elemente aus dem Beutel.
+
+        Zeitkomplexität: O(1)
+        """
+        self._first = None
+        self._n = 0
+
+    def peek(self) -> Optional[T]:
+        """Gibt das erste Element des Beutels zurück, ohne es zu entfernen.
+
+        :returns: Das erste Element des Beutels oder None, wenn der Beutel leer ist
+
+        Zeitkomplexität: O(1)
+        """
+        if self.is_empty():
+            return None
+        assert self._first is not None and self._first.item is not None
+        return self._first.item
+
+    def to_list(self) -> List[T]:
+        """Konvertiert den Beutel in eine Liste.
+
+        :returns: Eine Liste mit allen Elementen des Beutels
+
+        Zeitkomplexität: O(n), wobei n die Anzahl der Elemente im Beutel ist
+        """
+        result = []
+        for item in self:
+            result.append(item)
+        return result
+
     def __repr__(self) -> str:
+        """Gibt eine String-Repräsentation des Beutels zurück.
+
+        :returns: Eine String-Repräsentation des Beutels
+        """
+        if self.is_empty():
+            return "{}"
+            
         out = "{"
-        for elem in self:
-            out += "{}, ".format(elem)
+        items = list(self)
+        for i, elem in enumerate(items):
+            out += f"{elem}"
+            if i < len(items) - 1:
+                out += ", "
         return out + "}"
