@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """FFHS-DUA Algorithmen und Datenstrukturen
 
 Eine Python-Implementierung grundlegender Datenstrukturen basierend auf

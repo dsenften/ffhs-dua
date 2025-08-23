@@ -1,4 +1,5 @@
 = Testdokumentation für Bag-Implementierung
+:encoding: utf-8
 :toc:
 :toc-title: Inhaltsverzeichnis
 :source-highlighter: highlight.js

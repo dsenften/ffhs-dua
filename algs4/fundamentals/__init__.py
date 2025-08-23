@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Fundamentals - Grundlegende Datenstrukturen
 
 Dieses Modul enthält die grundlegenden Datenstrukturen aus dem ersten

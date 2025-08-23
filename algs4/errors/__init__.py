@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Errors - Benutzerdefinierte Exception-Klassen
 
 Dieses Modul enthält spezielle Exception-Klassen, die in den

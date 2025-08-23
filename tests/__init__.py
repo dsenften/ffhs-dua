@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Tests - Testsuiten für alle Datenstrukturen
 
 Dieses Paket enthält umfassende Testsuiten für alle implementierten

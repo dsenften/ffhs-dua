@@ -1,9 +1,10 @@
 = Sierpinski-Dreieck: Implementation und Analyse
+:encoding: utf-8
 :author: Daniel Senften
 :revdate: {docdate}
 :toc:
 :toclevels: 3
-:source-highlighter: pygments
+:source-highlighter: highlight.js
 :icons: font
 :numbered:
 
