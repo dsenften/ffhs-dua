@@ -1,0 +1,516 @@
+= O-Notation: Komplexitätsanalyse von Algorithmen
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Einführung
+
+Die O-Notation (auch Big-O-Notation genannt) ist ein fundamentales Werkzeug der theoretischen Informatik zur Analyse der Effizienz von Algorithmen. Sie beschreibt das asymptotische Verhalten einer Funktion für grosse Eingabegrössen.
+
+=== Was beschreibt die O-Notation?
+
+Die O-Notation gibt eine obere Schranke für das Wachstum einer Funktion an. Mathematisch ausgedrückt: Eine Funktion f(n) ist O(g(n)), wenn es positive Konstanten c und n₀ gibt, sodass f(n) ≤ c · g(n) für alle n ≥ n₀.
+
+[IMPORTANT]
+====
+In der Praxis bedeutet dies: **Wie verhält sich die Laufzeit oder der Speicherbedarf eines Algorithmus, wenn die Eingabegrösse gegen unendlich geht?**
+====
+
+== Komplexitätsklassen-Hierarchie
+
+**Vom schnellsten zum langsamsten Wachstum:**
+
+----
+O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)
+----
+
+== Detaillierte Analyse mit Code-Beispielen
+
+=== O(1) - Konstante Zeit
+
+**Charakteristik:** Unabhängig von der Eingabegrösse
+
+[source,python]
+----
+def constant_time_example(arr):
+    # Alle diese Operationen sind O(1)
+    if len(arr) == 0:
+        return None
+    
+    first = arr[0]           # Direkter Zugriff
+    last = arr[-1]           # Direkter Zugriff
+    arr.append(42)           # Amortisiert O(1) bei Python-Listen
+    
+    return first + last
+----
+
+=== O(log n) - Logarithmische Zeit
+
+**Charakteristik:** Halbiert den Suchraum in jedem Schritt
+
+[source,python]
+----
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:        # Maximal log₂(n) Iterationen
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1      # Halbiert den Suchraum
+        else:
+            right = mid - 1     # Halbiert den Suchraum
+    
+    return -1
+
+# Beispiel: Bei 1.000.000 Elementen maximal ~20 Vergleiche!
+----
+
+=== O(n) - Lineare Zeit
+
+**Charakteristik:** Proportionales Wachstum zur Eingabegrösse
+
+[source,python]
+----
+def linear_search(arr, target):
+    for i, element in enumerate(arr):  # Maximal n Iterationen
+        if element == target:
+            return i
+    return -1
+
+def sum_array(arr):
+    total = 0
+    for num in arr:         # Genau n Iterationen
+        total += num        # O(1) pro Iteration
+    return total
+----
+
+=== O(n log n) - Linearithmische Zeit
+
+**Charakteristik:** Typisch für effiziente Sortieralgorithmen
+
+[source,python]
+----
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    # Teile: O(1)
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])    # T(n/2)
+    right = merge_sort(arr[mid:])   # T(n/2)
+    
+    # Herrsche: O(n)
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    # O(n) - Verschmelzen der sortierten Hälften
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+# Rekurrenzrelation: T(n) = 2T(n/2) + O(n) = O(n log n)
+
+# Auch Python's sorted() und list.sort() sind O(n log n)
+def efficient_sort(arr):
+    return sorted(arr)  # Timsort-Algorithmus
+----
+
+=== O(n²) - Quadratische Zeit
+
+**Charakteristik:** Verschachtelte Schleifen über die Eingabe
+
+[source,python]
+----
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):              # n Iterationen
+        for j in range(0, n-i-1):   # Bis zu n Iterationen
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]  # O(1)
+    return arr
+
+def find_all_pairs(arr):
+    pairs = []
+    for i in range(len(arr)):           # n Iterationen
+        for j in range(i+1, len(arr)): # Bis zu n Iterationen
+            pairs.append((arr[i], arr[j]))
+    return pairs
+----
+
+=== O(n³) - Kubische Zeit
+
+**Charakteristik:** Dreifach verschachtelte Schleifen
+
+[source,python]
+----
+def three_nested_loops(arr):
+    result = []
+    n = len(arr)
+    
+    for i in range(n):          # n Iterationen
+        for j in range(n):      # n Iterationen
+            for k in range(n):  # n Iterationen
+                if arr[i] + arr[j] + arr[k] == 0:
+                    result.append((arr[i], arr[j], arr[k]))
+    
+    return result  # Gesamtkomplexität: O(n³)
+
+# Praktisches Beispiel: Floyd-Warshall Algorithmus
+def floyd_warshall(graph):
+    n = len(graph)
+    dist = [row[:] for row in graph]  # Kopie erstellen
+    
+    for k in range(n):      # n Iterationen
+        for i in range(n):  # n Iterationen
+            for j in range(n):  # n Iterationen
+                dist[i][j] = min(dist[i][j], 
+                               dist[i][k] + dist[k][j])
+    return dist
+
+# Auch Matrix-Multiplikation (naiver Ansatz) ist O(n³)
+def matrix_multiplication_naive(A, B):
+    n = len(A)
+    C = [[0 for _ in range(n)] for _ in range(n)]
+    
+    for i in range(n):      # n Iterationen
+        for j in range(n):  # n Iterationen
+            for k in range(n):  # n Iterationen → O(n³)!
+                C[i][j] += A[i][k] * B[k][j]
+    return C
+----
+
+=== O(2ⁿ) - Exponenzielle Zeit
+
+**Charakteristik:** Jede Erhöhung der Eingabe verdoppelt die Laufzeit
+
+[WARNING]
+====
+Exponenzielle Algorithmen sind für grosse Eingaben praktisch nicht durchführbar!
+====
+
+[source,python]
+----
+def fibonacci_naive(n):
+    if n <= 1:
+        return n
+    # Zwei rekursive Aufrufe pro Ebene!
+    return fibonacci_naive(n-1) + fibonacci_naive(n-2)
+
+def power_set(arr):
+    """Alle Teilmengen einer Menge generieren"""
+    if not arr:
+        return [[]]
+    
+    # Für jedes Element: mit oder ohne → 2^n Möglichkeiten
+    rest_subsets = power_set(arr[1:])
+    new_subsets = []
+    
+    for subset in rest_subsets:
+        new_subsets.append(subset)          # Ohne aktuelles Element
+        new_subsets.append([arr[0]] + subset)  # Mit aktuellem Element
+    
+    return new_subsets
+
+# Beispiel: power_set([1,2,3]) → 8 Teilmengen (2³)
+----
+
+=== O(n!) - Faktorielle Zeit
+
+**Charakteristik:** Alle Permutationen/Anordnungen
+
+[WARNING]
+====
+Faktorielle Algorithmen sind bereits bei kleinen Eingaben extrem langsam!
+====
+
+[source,python]
+----
+def generate_permutations(arr):
+    """Alle Permutationen generieren"""
+    if len(arr) <= 1:
+        return [arr]
+    
+    result = []
+    for i in range(len(arr)):
+        # Wähle Element an Position i
+        current = arr[i]
+        remaining = arr[:i] + arr[i+1:]
+        
+        # Permutiere den Rest
+        for perm in generate_permutations(remaining):
+            result.append([current] + perm)
+    
+    return result
+
+def traveling_salesman_brute_force(cities):
+    """TSP durch Ausprobieren aller Routen"""
+    from itertools import permutations
+    
+    min_distance = float('inf')
+    best_route = None
+    
+    # n! verschiedene Routen
+    for route in permutations(cities):
+        distance = calculate_route_distance(route)
+        if distance < min_distance:
+            min_distance = distance
+            best_route = route
+    
+    return best_route, min_distance
+----
+
+== Komplexe Analyse-Beispiele
+
+=== Mehrschrittige Analyse
+
+[source,python]
+----
+def complex_algorithm(data):
+    n = len(data)
+    result = []
+    
+    # Schritt 1: O(n log n) - Sortierung
+    sorted_data = sorted(data)
+    
+    # Schritt 2: O(n) - Durchlauf
+    for item in sorted_data:
+        result.append(item * 2)
+    
+    # Schritt 3: O(n²) - Verschachtelte Schleifen
+    pairs = []
+    for i in range(n):
+        for j in range(i+1, n):
+            pairs.append((result[i], result[j]))
+    
+    # Schritt 4: O(n² log n) - Sortierung der Paare
+    pairs.sort()
+    
+    return pairs
+
+# Analyse: O(n log n) + O(n) + O(n²) + O(n² log n) = O(n² log n)
+# Die höchste Ordnung dominiert!
+----
+
+=== Rekursive Analyse
+
+[source,python]
+----
+def binary_tree_traversal(node):
+    if node is None:
+        return []
+    
+    # Besuche jeden Knoten genau einmal
+    result = [node.value]
+    result.extend(binary_tree_traversal(node.left))   # T(n/2)
+    result.extend(binary_tree_traversal(node.right))  # T(n/2)
+    
+    return result
+
+# Rekurrenzrelation: T(n) = 2T(n/2) + O(1) = O(n)
+----
+
+== Praktische Analysehilfen
+
+=== Schnelle Identifikation
+
+[cols="2,3,1"]
+|===
+|Muster |Beschreibung |Komplexität
+
+|Eine Schleife über n
+|Direkter Durchlauf aller Elemente
+|O(n)
+
+|Zwei verschachtelte Schleifen
+|Für jedes Element alle anderen betrachten
+|O(n²)
+
+|Halbierung in jedem Schritt
+|Binäre Suche, Teile-und-Herrsche
+|O(log n)
+
+|Sortieren (effizient)
+|Merge Sort, Quick Sort, Heap Sort
+|O(n log n)
+
+|Alle Teilmengen/Kombinationen
+|Exponentielles Wachstum
+|O(2ⁿ)
+
+|Alle Permutationen
+|Factorial growth
+|O(n!)
+|===
+
+=== Faustregeln für die Analyse
+
+. **Sequenzielle Operationen**: Addiere die Komplexitäten
+. **Verschachtelte Schleifen**: Multipliziere die Komplexitäten  
+. **Dominanzregel**: Die höchste Ordnung bestimmt das Ergebnis
+. **Konstanten ignorieren**: O(3n) = O(n), O(n/2) = O(n)
+
+=== Wachstumsvergleich
+
+[cols="2,6"]
+|===
+|Komplexität |Bei n=1000 Operationen
+
+|O(1)
+|1 Operation
+
+|O(log n)
+|~10 Operationen
+
+|O(n)
+|1.000 Operationen
+
+|O(n log n)
+|~10.000 Operationen
+
+|O(n²)
+|1.000.000 Operationen
+
+|O(n³)
+|1.000.000.000 Operationen
+
+|O(2ⁿ)
+|2^1000 Operationen (praktisch unmöglich!)
+
+|O(n!)
+|1000! Operationen (noch unmöglicher!)
+|===
+
+== Übungsaufgaben
+
+=== Aufgabe 1: Komplexitätsbestimmung
+Bestimmen Sie die Komplexität folgender Code-Snippets:
+
+[source,python]
+----
+# Snippet A
+def mystery_a(arr):
+    for i in range(len(arr)):
+        print(arr[i])
+
+# Snippet B  
+def mystery_b(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr)):
+            if arr[i] == arr[j] and i != j:
+                return True
+    return False
+
+# Snippet C
+def mystery_c(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = mystery_c(arr[:mid])
+    right = mystery_c(arr[mid:])
+    return merge_sorted(left, right)  # O(n)
+----
+
+=== Aufgabe 2: Optimierung
+Optimieren Sie folgenden O(n²) Algorithmus:
+
+[source,python]
+----
+def find_duplicates(arr):
+    duplicates = []
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            if arr[i] == arr[j]:
+                duplicates.append(arr[i])
+    return duplicates
+----
+
+[TIP]
+====
+**Lösungshinweise:**
+
+*Aufgabe 1:*
+
+- Snippet A: O(n) - Eine Schleife über alle Elemente
+- Snippet B: O(n²) - Verschachtelte Schleifen
+- Snippet C: O(n log n) - Teile-und-Herrsche mit linearer Merge-Operation
+
+*Aufgabe 2:*
+
+Verwenden Sie ein Set für O(1) Lookups:
+
+[source,python]
+----
+def find_duplicates_optimized(arr):
+    seen = set()
+    duplicates = set()
+    
+    for item in arr:  # O(n)
+        if item in seen:  # O(1) im Durchschnitt
+            duplicates.add(item)
+        else:
+            seen.add(item)
+    
+    return list(duplicates)
+# Optimierte Komplexität: O(n)
+----
+====
+
+== Zusammenfassung
+
+Die O-Notation ist essentiell für:
+
+- **Algorithmus-Vergleich**: Welcher Ansatz ist effizienter?
+- **Skalierbarkeit**: Wie verhält sich der Code bei grossen Datenmengen?
+- **Ressourcenplanung**: Wie viel Zeit/Speicher wird benötigt?
+- **Code-Optimierung**: Wo sind die Bottlenecks?
+
+[NOTE]
+====
+**Wichtige Erkenntnisse:**
+
+- Konstanten und niedrige Ordnungen werden ignoriert
+- Die dominierende Komponente bestimmt die Gesamtkomplexität
+- Praktische Laufzeiten können von der theoretischen Analyse abweichen
+- Big-O beschreibt das Worst-Case-Verhalten
+====
+
+== Weiterführende Ressourcen
+
+=== Literatur
+- **"Introduction to Algorithms"** von Cormen, Leiserson, Rivest, Stein (Kapitel 3-4)
+- **"Algorithmen - Eine Einführung"** von Cormen et al. (Deutsche Ausgabe)
+- **"Algorithm Design Manual"** von Steven S. Skiena
+
+=== Online-Ressourcen
+- **Big-O Cheat Sheet**: https://bigocheatsheet.com/
+- **Khan Academy**: Asymptotic Notation
+- **MIT OpenCourseWare**: Introduction to Algorithms
+
+=== Praktische Übungen
+- **LeetCode**: Time Complexity Problems
+- **HackerRank**: Algorithm Challenges
+- **Codewars**: Algorithm Kata
+
+---
+
+*Die Komplexitätsanalyse wird mit der Zeit intuitiver. Beginnen Sie mit einfachen Beispielen und arbeiten Sie sich zu komplexeren Algorithmen vor!*
