@@ -16,6 +16,11 @@ Dieses Projekt implementiert die wichtigsten Datenstrukturen aus dem ersten Teil
   - `ResizingArrayStack`: Dynamisches Array mit automatischer Größenanpassung
 - **Queue (Warteschlange)**: FIFO-Datenstruktur
 - **Bag (Sammlung)**: Ungeordnete Sammlung von Elementen
+- **Union-Find (Disjoint-Set)**: Vier Implementierungen für dynamische Konnektivität
+  - `UF`: Optimierte Version mit Weighted Quick Union by Rank und Path Compression
+  - `QuickUnionUF`: Einfache Quick Union Implementation
+  - `WeightedQuickUnionUF`: Weighted Quick Union by Size
+  - `QuickFindUF`: Quick Find Implementation mit konstanter Find-Zeit
 
 Alle Implementierungen unterstützen generische Typen und folgen den Python-Konventionen für Container-Klassen.
 
@@ -134,6 +139,24 @@ queue.enqueue("Drittes")
 first_element = queue.dequeue()  # Gibt "Erstes" zurück
 ```
 
+### Beispiel: Union-Find verwenden
+
+```python
+from algs4.fundamentals.uf import UF
+
+# Erstelle Union-Find-Struktur für 10 Elemente
+uf = UF(10)
+
+# Verbinde verschiedene Elemente
+uf.union(0, 1)
+uf.union(2, 3)
+uf.union(1, 2)  # Verbindet {0,1} mit {2,3}
+
+# Prüfe Verbindungen
+print(f"0 und 3 verbunden: {uf.connected(0, 3)}")  # True
+print(f"Anzahl Komponenten: {uf.count()}")  # 7 (original 10 - 3 unions)
+```
+
 ### Beispiel: Sierpinski-Dreieck verwenden
 
 ```python
@@ -160,7 +183,8 @@ ffhs-dua/
 │   │   ├── __init__.py
 │   │   ├── stack.py          # Stack-Implementierungen
 │   │   ├── queue.py          # Queue-Implementierungen
-│   │   └── bag.py            # Bag-Implementierung
+│   │   ├── bag.py            # Bag-Implementierung
+│   │   └── uf.py             # Union-Find-Implementierungen
 │   └── errors/               # Benutzerdefinierte Exceptions
 │       ├── __init__.py
 │       └── errors.py
@@ -173,11 +197,15 @@ ffhs-dua/
 │   ├── __init__.py
 │   ├── test_stack.py
 │   ├── test_queue.py
-│   └── test_bag.py
+│   ├── test_bag.py
+│   └── test_uf.py            # Union-Find Tests
 ├── docs/                     # Dokumentation
-│   ├── test_stack_documentation.adoc
+│   ├── komplexitaetsanalyse.adoc
+│   ├── union_find_documentation.adoc
+│   ├── uv_tutorial.adoc
+│   ├── test_bag_documentation.adoc
 │   ├── test_queue_documentation.adoc
-│   └── test_bag_documentation.adoc
+│   └── test_stack_documentation.adoc
 ├── pyproject.toml           # Projektkonfiguration
 ├── uv.lock                  # Dependency-Lock-Datei
 ├── README.md                # Diese Datei

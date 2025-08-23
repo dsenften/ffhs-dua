@@ -35,7 +35,8 @@ algs4/
 ├── fundamentals/          # Grundlegende Datenstrukturen
 │   ├── stack.py          # Stack-Implementierungen (3 Varianten)
 │   ├── queue.py          # Queue-Implementierungen
-│   └── bag.py            # Bag-Datenstruktur
+│   ├── bag.py            # Bag-Datenstruktur
+│   └── uf.py             # Union-Find-Implementierungen (4 Varianten)
 └── errors/               # Benutzerdefinierte Fehlerklassen
     └── errors.py
 pva1/                     # Praktische Vertiefungsaufgaben 1
@@ -62,6 +63,13 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 1. **Stack**: Verkettete Liste-Implementierung mit dynamischer Größe
 2. **FixedCapacityStack**: Feste Array-Größe-Implementierung
 3. **ResizingArrayStack**: Dynamisches Array mit automatischer Größenanpassung
+
+#### Union-Find-Implementierungen
+
+1. **UF**: Optimierte Version mit Weighted Quick Union by Rank und Path Compression (O(α(n)))
+2. **QuickUnionUF**: Einfache Quick Union Implementation (O(n) worst case)
+3. **WeightedQuickUnionUF**: Weighted Quick Union by Size (O(log n))
+4. **QuickFindUF**: Quick Find Implementation mit konstanter Find-Zeit (O(1) find, O(n) union)
 
 #### Fehlerbehandlung
 

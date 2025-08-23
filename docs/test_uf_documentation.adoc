@@ -1,0 +1,118 @@
+= Union-Find Tests Dokumentation
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Übersicht
+
+Diese Dokumentation beschreibt die Implementierung und Struktur der Tests für die Union-Find (Disjoint-Set) Datenstrukturen im Projekt. Sie erklärt insbesondere die Lösung für das Problem mit der abstrakten Basisklasse und deren Testausführung.
+
+== Teststruktur
+
+Die Tests für die Union-Find Datenstrukturen sind in der Datei `tests/test_uf.py` implementiert und folgen einem hierarchischen Aufbau:
+
+* `TestUnionFindBase`: Abstrakte Basisklasse mit gemeinsamen Tests
+* `TestUF`: Tests für die optimierte UF-Implementation
+* `TestQuickUnionUF`: Tests für die QuickUnionUF-Implementation
+* `TestWeightedQuickUnionUF`: Tests für die WeightedQuickUnionUF-Implementation
+* `TestQuickFindUF`: Tests für die QuickFindUF-Implementation
+
+Zusätzlich gibt es zwei weitere Testklassen:
+
+* `TestPerformanceVergleich`: Vergleicht die Performance der verschiedenen Implementierungen
+* `TestEdgeCases`: Testet spezielle Grenzfälle und Fehlerbedingungen
+
+== Problem: Abstrakte Basisklasse und pytest
+
+=== Problembeschreibung
+
+Die Testklasse `TestUnionFindBase` ist als abstrakte Basisklasse konzipiert, die gemeinsame Tests für alle Union-Find-Implementierungen enthält. Sie sollte nicht direkt instanziiert oder getestet werden, da die Methode `get_uf_class()` in dieser Klasse abstrakt ist und `NotImplementedError` wirft.
+
+Das Problem bestand darin, dass pytest diese abstrakte Basisklasse trotzdem als Testklasse erkannte und versuchte, die Tests direkt auszuführen, was zu Fehlern führte.
+
+=== Lösungsansätze
+
+Verschiedene Ansätze wurden getestet, um dieses Problem zu lösen:
+
+1. *Verwendung von `@pytest.mark.skip`*: Dies führte dazu, dass auch alle abgeleiteten Klassen übersprungen wurden, da Dekoratoren vererbt werden.
+
+2. *Verwendung von `__test__ = False`*: Dies verhinderte die Testausführung für die Basisklasse, aber es bestand die Gefahr, dass es auch die Tests in den abgeleiteten Klassen beeinflusst.
+
+3. *Bedingtes Überspringen in Testmethoden*: Dies erforderte Änderungen in jeder einzelnen Testmethode.
+
+== Implementierte Lösung
+
+Die endgültige Lösung kombiniert mehrere Mechanismen, um eine robuste Behandlung der abstrakten Basisklasse zu gewährleisten:
+
+=== 1. Klassen-Attribut `__test__`
+
+[source,python]
+----
+class TestUnionFindBase:
+    # Diese Klasse soll nicht direkt getestet werden
+    __test__ = False
+    # ...
+----
+
+In allen Unterklassen:
+
+[source,python]
+----
+class TestUF(TestUnionFindBase):
+    __test__ = True
+    # ...
+----
+
+=== 2. Skip-Logik in `get_uf_class()`
+
+[source,python]
+----
+def get_uf_class(self) -> Type:
+    """Muss von Unterklassen überschrieben werden.
+    
+    Diese Methode wird von allen Testmethoden aufgerufen, daher ist sie
+    der ideale Ort, um Tests zu überspringen, wenn sie direkt in der
+    Basisklasse aufgerufen werden.
+    """
+    # Überspringe Test, wenn direkt in der Basisklasse aufgerufen
+    if self.__class__ is TestUnionFindBase:
+        pytest.skip("Abstrakte Basisklasse, sollte nicht direkt ausgeführt werden")
+    raise NotImplementedError("Unterklassen müssen get_uf_class() implementieren")
+----
+
+=== 3. pytest-Hook in `conftest.py`
+
+[source,python]
+----
+def pytest_collection_modifyitems(items):
+    """Modifiziert die gesammelten Testitems.
+    
+    Überspringt Tests, die direkt von der TestUnionFindBase-Klasse stammen,
+    da diese eine abstrakte Basisklasse ist und nicht direkt getestet werden sollte.
+    """
+    for item in items:
+        if item.cls and item.cls.__name__ == "TestUnionFindBase":
+            item.add_marker(pytest.mark.skip(reason="Abstrakte Basisklasse, sollte nicht direkt ausgeführt werden"))
+----
+
+== Vorteile der mehrschichtigen Lösung
+
+Diese mehrschichtige Lösung bietet mehrere Vorteile:
+
+1. *Robustheit*: Selbst wenn eine der Methoden nicht wie erwartet funktioniert, sorgen die anderen dafür, dass die abstrakte Basisklasse nicht getestet wird.
+
+2. *Klarheit*: Der Code kommuniziert deutlich, dass `TestUnionFindBase` nicht direkt getestet werden soll.
+
+3. *Flexibilität*: Die Lösung funktioniert mit verschiedenen pytest-Versionen und -Konfigurationen.
+
+4. *Wartbarkeit*: Änderungen an der Teststruktur erfordern keine Anpassungen an der Skip-Logik.
+
+== Fazit
+
+Die implementierte Lösung stellt sicher, dass die abstrakte Basisklasse `TestUnionFindBase` nicht direkt getestet wird, während alle konkreten Testklassen für die verschiedenen Union-Find-Implementierungen korrekt ausgeführt werden. Dies ermöglicht eine saubere Teststruktur mit gemeinsam genutztem Code in der Basisklasse, ohne dass es zu Fehlern bei der Testausführung kommt.

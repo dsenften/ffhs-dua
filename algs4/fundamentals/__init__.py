@@ -7,6 +7,7 @@ Teil des "Algorithms, 4th Edition" Lehrbuchs:
 - Stack: Last-In-First-Out (LIFO) Stapel in drei Implementierungen
 - Queue: First-In-First-Out (FIFO) Warteschlange
 - Bag: Ungeordnete Sammlung von Elementen
+- Union-Find: Datenstruktur für dynamische Konnektivität in vier Varianten
 
 Alle Implementierungen unterstützen generische Typen und folgen den
 Python-Konventionen für Container-Klassen.
@@ -15,6 +16,7 @@ Python-Konventionen für Container-Klassen.
 from .stack import Stack, FixedCapacityStack, ResizingArrayStack
 from .queue import Queue
 from .bag import Bag
+from .uf import UF, QuickUnionUF, WeightedQuickUnionUF, QuickFindUF
 
 __all__ = [
     # Stack-Implementierungen
@@ -25,4 +27,9 @@ __all__ = [
     "Queue",
     # Bag-Implementierung
     "Bag",
+    # Union-Find-Implementierungen
+    "UF",
+    "QuickUnionUF",
+    "WeightedQuickUnionUF",
+    "QuickFindUF",
 ]
