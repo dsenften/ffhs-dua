@@ -177,9 +177,9 @@ zeichne_sierpinski_progression()
 
 ```text
 ffhs-dua/
-├── algs4/                     # Hauptpaket
+├── algs4/                    # Hauptpaket
 │   ├── __init__.py
-│   ├── fundamentals/          # Grundlegende Datenstrukturen
+│   ├── fundamentals/         # Grundlegende Datenstrukturen
 │   │   ├── __init__.py
 │   │   ├── stack.py          # Stack-Implementierungen
 │   │   ├── queue.py          # Queue-Implementierungen
@@ -209,7 +209,7 @@ ffhs-dua/
 ├── pyproject.toml           # Projektkonfiguration
 ├── uv.lock                  # Dependency-Lock-Datei
 ├── README.md                # Diese Datei
-└── CLAUDE.md               # Entwicklungsrichtlinien
+└── CLAUDE.md                # Entwicklungsrichtlinien
 ```
 
 ## Besonderheiten
@@ -246,3 +246,9 @@ Dieses Projekt ist für akademische Zwecke an der FFHS entwickelt worden.
 ## Unterstützung
 
 Bei Fragen oder Problemen wenden Sie sich an die Dozierenden des Moduls oder erstellen Sie ein Issue in diesem Repository.
+
+## Referenzen
+
+- [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/)
+- [ALGS4, Python Version](https://github.com/shellfly/algs4-py)
+- [IT University of Copenhagen](https://github.com/itu-algorithms)
