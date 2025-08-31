@@ -1,14 +1,13 @@
 # FFHS-DUA - Datenstrukturen und Algorithmen
 
-Eine professionelle Python-Implementierung grundlegender Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition"
-von Robert Sedgewick und Kevin Wayne, optimiert für Test-Driven Development und moderne Softwareentwicklungspraktiken
-an der Fernfachhochschule Schweiz (FFHS) im Studiengang Data and Analytics (DUA).
+Eine professionelle Python-Implementierung grundlegender Datenstrukturen und Algorithmen für das Modul
+**Datenstrukturen und Algorithmen (DUA)** an der Fernfachhochschule Schweiz (FFHS).
+Das Projekt ist optimiert für Test-Driven Development und moderne Softwareentwicklungspraktiken.
 
 ## Projektübersicht
 
-Dieses Projekt implementiert die wichtigsten Datenstrukturen aus dem ersten Teil des Algorithms-Lehrbuchs in Python.
-Alle Implementierungen folgen den Prinzipien des Buches, sind aber an die Python-Sprache und moderne Programmierkonzepte
-angepasst.
+Dieses Projekt implementiert die wichtigsten Datenstrukturen und Algorithmen basierend auf den folgenden Lehrbüchern.
+Alle Implementierungen sind an die Python-Sprache und moderne Programmierkonzepte angepasst.
 
 ### Implementierte Datenstrukturen
 
@@ -340,8 +339,32 @@ Dieses Projekt ist für akademische Zwecke an der FFHS entwickelt worden.
 
 Bei Fragen oder Problemen wenden Sie sich an die Dozierenden des Moduls oder erstellen Sie ein Issue in diesem Repository.
 
-## Referenzen
+## Literaturgrundlagen
 
-- [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/)
-- [ALGS4, Python Version](https://github.com/shellfly/algs4-py)
-- [IT University of Copenhagen](https://github.com/itu-algorithms)
+Das Modul **Datenstrukturen und Algorithmen (DUA)** basiert auf folgenden Lehrbüchern:
+
+1. **Praktische Algorithmik mit Python**  
+   Tobias Häberlein  
+   ISBN: 978-3-486-71390-9
+
+2. **Grokking Algorithms**  
+   Aditya Y. Bhargava  
+   ISBN: 978-1-633-43853-8
+
+3. **Grokking Data Structures**  
+   Marcello La Rocca  
+   ISBN: 978-1-633-43699-2
+
+4. **Learning Algorithms**  
+   George Heineman  
+   ISBN: 978-1-492-09106-6
+
+5. **Programmieren mit Python**  
+   Tobias Häberlein  
+   ISBN: 978-3-662-68677-5
+
+## Zusätzliche Referenzen
+
+- [Python Documentation](https://docs.python.org/)
+- [pytest Documentation](https://docs.pytest.org/)
+- [Type Hints (PEP 484)](https://peps.python.org/pep-0484/)
