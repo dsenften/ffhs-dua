@@ -1,13 +1,12 @@
-import unittest
-from typing import List
-import sys
 import os
+import sys
+import unittest
 
 # Füge das Hauptverzeichnis zum Pfad hinzu, um die Module zu finden
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from algs4.fundamentals.queue import Queue
 from algs4.errors.errors import NoSuchElementException
+from algs4.fundamentals.queue import Queue
 
 
 class TestQueue(unittest.TestCase):
@@ -107,7 +106,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(str_queue.peek(), "test")
 
         # Liste
-        list_queue = Queue[List[int]]()
+        list_queue = Queue[list[int]]()
         test_list = [1, 2, 3]
         list_queue.enqueue(test_list)
         self.assertEqual(list_queue.peek(), test_list)

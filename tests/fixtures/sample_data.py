@@ -2,15 +2,15 @@
 Beispieldaten für Tests.
 """
 
-from typing import List, Dict, Any
+from typing import Any
 
 
-def get_small_integer_dataset() -> List[int]:
+def get_small_integer_dataset() -> list[int]:
     """Kleine Integer-Datensätze für Unit-Tests."""
     return [1, 5, 3, 9, 2, 8, 4, 7, 6]
 
 
-def get_medium_string_dataset() -> List[str]:
+def get_medium_string_dataset() -> list[str]:
     """Mittlere String-Datensätze für Integration-Tests."""
     return [
         "apple", "banana", "cherry", "date", "elderberry",
@@ -19,12 +19,12 @@ def get_medium_string_dataset() -> List[str]:
     ]
 
 
-def get_large_integer_dataset() -> List[int]:
+def get_large_integer_dataset() -> list[int]:
     """Große Integer-Datensätze für Performance-Tests."""
     return list(range(10000))
 
 
-def get_sorting_test_cases() -> Dict[str, List[int]]:
+def get_sorting_test_cases() -> dict[str, list[int]]:
     """Verschiedene Test-Fälle für Sortieralgorithmen."""
     return {
         "already_sorted": [1, 2, 3, 4, 5],
@@ -37,7 +37,7 @@ def get_sorting_test_cases() -> Dict[str, List[int]]:
     }
 
 
-def get_graph_test_data() -> Dict[str, Any]:
+def get_graph_test_data() -> dict[str, Any]:
     """Test-Daten für Graph-Algorithmen."""
     return {
         "simple_graph": {

@@ -1,8 +1,6 @@
-import unittest
-from typing import List
-
-import sys
 import os
+import sys
+import unittest
 
 # Füge das Hauptverzeichnis zum Pfad hinzu, um die Module zu finden
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -103,7 +101,7 @@ class TestBag(unittest.TestCase):
         self.assertEqual(elements[0], "test")
 
         # Liste
-        list_bag = Bag[List[int]]()
+        list_bag = Bag[list[int]]()
         test_list = [1, 2, 3]
         list_bag.add(test_list)
         elements = list(list_bag)

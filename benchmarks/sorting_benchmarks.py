@@ -2,13 +2,14 @@
 Performance-Benchmarks für Sortieralgorithmen.
 """
 
-import time
 import random
-from typing import List, Callable, Dict
+import time
+from collections.abc import Callable
+
 from src.algs4.sorting.shell import shell_sort
 
 
-def generate_test_data(size: int, data_type: str = "random") -> List[int]:
+def generate_test_data(size: int, data_type: str = "random") -> list[int]:
     """Generiert Testdaten für Benchmarks."""
     if data_type == "random":
         return [random.randint(1, size) for _ in range(size)]
@@ -28,7 +29,7 @@ def generate_test_data(size: int, data_type: str = "random") -> List[int]:
         raise ValueError(f"Unbekannter Datentyp: {data_type}")
 
 
-def benchmark_algorithm(algorithm: Callable, data: List[int]) -> float:
+def benchmark_algorithm(algorithm: Callable, data: list[int]) -> float:
     """Misst die Ausführungszeit eines Sortieralgorithmus."""
     data_copy = data.copy()
     start_time = time.perf_counter()
@@ -37,30 +38,30 @@ def benchmark_algorithm(algorithm: Callable, data: List[int]) -> float:
     return end_time - start_time
 
 
-def run_sorting_benchmarks() -> Dict[str, Dict[str, float]]:
+def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
     """Führt umfassende Benchmarks für Sortieralgorithmen durch."""
     algorithms = {
         "Shell Sort": shell_sort
     }
-    
+
     data_sizes = [100, 1000, 10000]
     data_types = ["random", "sorted", "reverse", "nearly_sorted"]
-    
+
     results = {}
-    
+
     for alg_name, algorithm in algorithms.items():
         results[alg_name] = {}
-        
+
         for size in data_sizes:
             for data_type in data_types:
                 test_data = generate_test_data(size, data_type)
                 execution_time = benchmark_algorithm(algorithm, test_data)
-                
+
                 key = f"{data_type}_{size}"
                 results[alg_name][key] = execution_time
-                
+
                 print(f"{alg_name} - {data_type} ({size} Elemente): {execution_time:.4f}s")
-    
+
     return results
 
 

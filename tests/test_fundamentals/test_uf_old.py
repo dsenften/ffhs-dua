@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Testsuiten für Union-Find (Disjoint-Set) Datenstrukturen
 
 Diese Testsuiten prüfen alle vier Implementierungen der Union-Find-Datenstruktur:
@@ -10,10 +9,10 @@ Diese Testsuiten prüfen alle vier Implementierungen der Union-Find-Datenstruktu
 Die Tests validieren Funktionalität, Grenzfälle und Fehlerbehandlung für alle Varianten.
 """
 
-import pytest
-from typing import Type
 
-from algs4.fundamentals.uf import UF, QuickUnionUF, WeightedQuickUnionUF, QuickFindUF
+import pytest
+
+from algs4.fundamentals.uf import UF, QuickFindUF, QuickUnionUF, WeightedQuickUnionUF
 
 
 # Abstrakte Basisklasse, die nicht direkt getestet werden sollte
@@ -21,12 +20,12 @@ class TestUnionFindBase:
     # Diese Klasse soll nicht direkt getestet werden
     __test__ = False
     """Basis-Testklasse für alle Union-Find-Implementierungen
-    
+
     Enthält gemeinsame Tests, die für alle Implementierungen gelten.
     Wird von den spezifischen Testklassen geerbt.
     """
 
-    def get_uf_class(self) -> Type:
+    def get_uf_class(self) -> type:
         """Muss von Unterklassen überschrieben werden.
 
         Diese Methode wird von allen Testmethoden aufgerufen, daher ist sie

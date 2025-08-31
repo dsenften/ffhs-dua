@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
 import warnings
+
+import matplotlib.patches as patches
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Unterdrücke matplotlib Warnungen
 warnings.filterwarnings("ignore", category=UserWarning, module="matplotlib")

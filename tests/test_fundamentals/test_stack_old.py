@@ -1,13 +1,11 @@
-import unittest
-from typing import List
-
-import sys
 import os
+import sys
+import unittest
 
 # Füge das Hauptverzeichnis zum Pfad hinzu, um die Module zu finden
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from algs4.fundamentals.stack import Stack, FixedCapacityStack, ResizingArrayStack
+from algs4.fundamentals.stack import FixedCapacityStack, ResizingArrayStack, Stack
 
 
 class TestStack(unittest.TestCase):
@@ -104,7 +102,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(str_stack.peek(), "test")
 
         # Liste
-        list_stack = Stack[List[int]]()
+        list_stack = Stack[list[int]]()
         test_list = [1, 2, 3]
         list_stack.push(test_list)
         self.assertEqual(list_stack.peek(), test_list)

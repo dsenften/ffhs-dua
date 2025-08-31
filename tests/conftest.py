@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 """Pytest-Konfiguration für die Tests des Projekts.
 
 Diese Datei enthält Konfigurationen und Hilfsfunktionen für pytest.
 Gemeinsame Test-Fixtures für das ALGS4-Projekt.
 """
 
+
 import pytest
-from typing import List
+
 from src.algs4.fundamentals.bag import Bag
 from src.algs4.fundamentals.queue import Queue
 from src.algs4.fundamentals.stack import Stack

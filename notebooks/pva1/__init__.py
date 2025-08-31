@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """PVA1 - Praktische Vertiefungsaufgaben 1
 
 Dieses Modul enthält die Implementierungen für die ersten praktischen
