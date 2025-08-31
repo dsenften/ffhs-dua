@@ -1,0 +1,78 @@
+= Fundamentals API-Dokumentation
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Bag (Sammlung)
+
+Die `Bag`-Klasse implementiert eine ungeordnete Sammlung von Elementen.
+
+=== Klasse: `Bag[T]`
+
+[source,python]
+----
+from src.algs4.fundamentals.bag import Bag
+
+bag = Bag[int]()
+----
+
+==== Methoden
+
+- `add(item: T) -> None`: Fügt ein Element hinzu
+- `is_empty() -> bool`: Prüft, ob die Sammlung leer ist
+- `size() -> int`: Gibt die Anzahl der Elemente zurück
+- `contains(item: T) -> bool`: Prüft, ob ein Element enthalten ist
+- `remove(item: T) -> bool`: Entfernt ein Element
+- `clear() -> None`: Entfernt alle Elemente
+
+==== Zeitkomplexität
+
+- `add()`: O(1)
+- `contains()`: O(n)
+- `remove()`: O(n)
+- `size()`: O(1)
+
+== Queue (Warteschlange)
+
+FIFO-Datenstruktur (First In, First Out).
+
+=== Klasse: `Queue[T]`
+
+[source,python]
+----
+from src.algs4.fundamentals.queue import Queue
+
+queue = Queue[str]()
+----
+
+== Stack (Stapel)
+
+LIFO-Datenstruktur (Last In, First Out).
+
+=== Klasse: `Stack[T]`
+
+[source,python]
+----
+from src.algs4.fundamentals.stack import Stack
+
+stack = Stack[int]()
+----
+
+== Union-Find
+
+Datenstruktur für dynamische Konnektivität.
+
+=== Klasse: `UF`
+
+[source,python]
+----
+from src.algs4.fundamentals.uf import UF
+
+uf = UF(10)  # 10 Elemente
+----

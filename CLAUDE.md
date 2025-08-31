@@ -1,10 +1,12 @@
 # CLAUDE.md
 
-Diese Datei bietet Anleitungen für Claude Code (claude.ai/code) beim Arbeiten mit Code in diesem Repository.
+Diese Datei enthält spezifische Richtlinien für die Arbeit mit Claude AI an diesem Projekt.
 
 ## Projektübersicht
 
-Dies ist eine Python-Implementierung grundlegender Datenstrukturen aus dem Lehrbuch "Algorithms, 4th Edition" (algs4), angepasst für den akademischen Gebrauch an der FFHS-DUA. Das Projekt enthält deutsche Dokumentation und umfassende Testsuiten.
+Dies ist eine Python-Implementierung grundlegender Datenstrukturen aus dem Lehrbuch "Algorithms, 4th Edition" (algs4),
+angepasst für den akademischen Gebrauch an der FFHS-DUA. Das Projekt enthält deutsche Dokumentation und umfassende
+Testsuiten.
 
 ## Entwicklungsbefehle
 
@@ -102,4 +104,6 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 
 ## Testphilosophie
 
-Tests sind auf Deutsch geschrieben und folgen akademischen Mustern. Jede Datenstruktur hat umfassende Testabdeckung einschließlich Grenzfälle, Typsicherheit und Verhaltenskorrektheit. Die Teststruktur spiegelt die Klassenhierarchie mit separaten Testklassen für jede Implementierungsvariante wider.
+Tests sind auf Deutsch geschrieben und folgen akademischen Mustern. Jede Datenstruktur hat umfassende Testabdeckung
+einschließlich Grenzfälle, Typsicherheit und Verhaltenskorrektheit. Die Teststruktur spiegelt die Klassenhierarchie
+mit separaten Testklassen für jede Implementierungsvariante wider.

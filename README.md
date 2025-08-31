@@ -1,10 +1,14 @@
-# FFHS-DUA Algorithmen und Datenstrukturen
+# FFHS-DUA - Datenstrukturen und Algorithmen
 
-Eine Python-Implementierung grundlegender Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne, angepasst für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) im Studiengang Data and Analytics (DUA).
+Eine professionelle Python-Implementierung grundlegender Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition"
+von Robert Sedgewick und Kevin Wayne, optimiert für Test-Driven Development und moderne Softwareentwicklungspraktiken
+an der Fernfachhochschule Schweiz (FFHS) im Studiengang Data and Analytics (DUA).
 
 ## Projektübersicht
 
-Dieses Projekt implementiert die wichtigsten Datenstrukturen aus dem ersten Teil des Algorithms-Lehrbuchs in Python. Alle Implementierungen folgen den Prinzipien des Buches, sind aber an die Python-Sprache und moderne Programmierkonzepte angepasst.
+Dieses Projekt implementiert die wichtigsten Datenstrukturen aus dem ersten Teil des Algorithms-Lehrbuchs in Python.
+Alle Implementierungen folgen den Prinzipien des Buches, sind aber an die Python-Sprache und moderne Programmierkonzepte
+angepasst.
 
 ### Implementierte Datenstrukturen
 
@@ -39,51 +43,86 @@ Alle Implementierungen unterstützen generische Typen und folgen den Python-Konv
 - Python 3.13.1 oder höher
 - uv Package Manager (empfohlen) oder pip
 
-### Installation
+### Schnellstart
 
 ```bash
 # Repository klonen
 git clone <repository-url>
 cd ffhs-dua
 
-# Abhängigkeiten installieren (mit uv)
+# Entwicklungsumgebung automatisch einrichten
+python scripts/setup_dev.py
+
+# Oder manuell:
+uv sync --dev
+uv run pre-commit install
+```
+
+### Manuelle Installation
+
+```bash
+# Nur Produktionsabhängigkeiten
 uv sync
 
+# Mit Entwicklungsabhängigkeiten
+uv sync --dev
+
 # Oder mit pip
-pip install -e .
+pip install -e ".[dev]"
 ```
 
 ## Entwicklung
 
-### Tests ausführen
+### Test-Driven Development
+
+Dieses Projekt folgt TDD-Prinzipien. Schreiben Sie Tests vor der Implementierung:
 
 ```bash
-# Alle Tests
-pytest tests/
+# Alle Tests ausführen
+uv run pytest
+
+# Tests mit Coverage-Report
+uv run pytest --cov=src/algs4 --cov-report=html
+
+# Spezifische Test-Kategorien
+uv run pytest -m unit          # Nur Unit-Tests
+uv run pytest -m integration   # Nur Integration-Tests
+uv run pytest -m "not slow"    # Ohne langsame Tests
 
 # Spezifische Testdatei
-pytest tests/test_stack.py
+uv run pytest tests/test_fundamentals/test_bag.py
 
-# Spezifische Testklasse
-pytest tests/test_stack.py::TestStack
-
-# Mit Ausgabe der Testergebnisse
-pytest tests/ -v
+# Mit detaillierter Ausgabe
+uv run pytest -v
 ```
 
-### Code-Qualität
-
-#### Linting und Formatierung
+### Code-Qualität und Formatierung
 
 ```bash
-# Code formatieren
-ruff format
+# Code automatisch formatieren
+uv run ruff format
 
 # Linting überprüfen
-ruff check
+uv run ruff check
 
 # Automatische Fehlerbehebung
-ruff check --fix
+uv run ruff check --fix
+
+# Type-Checking mit mypy
+uv run mypy src/
+
+# Alle Qualitätschecks auf einmal
+uv run pre-commit run --all-files
+```
+
+### Performance-Tests
+
+```bash
+# Benchmark-Tests ausführen
+uv run python benchmarks/sorting_benchmarks.py
+
+# Performance-Tests mit pytest-benchmark
+uv run pytest tests/ --benchmark-only
 ```
 
 ### Jupyter Notebooks
@@ -101,7 +140,7 @@ jupyter notebook
 ### Beispiel: Stack verwenden
 
 ```python
-from algs4.fundamentals.stack import Stack
+from src.algs4.fundamentals.stack import Stack
 
 # Neuen Stack erstellen
 stack = Stack[int]()
@@ -125,7 +164,7 @@ size = stack.size()  # 2
 ### Beispiel: Queue verwenden
 
 ```python
-from algs4.fundamentals.queue import Queue
+from src.algs4.fundamentals.queue import Queue
 
 # Neue Queue erstellen
 queue = Queue[str]()
@@ -142,7 +181,7 @@ first_element = queue.dequeue()  # Gibt "Erstes" zurück
 ### Beispiel: Union-Find verwenden
 
 ```python
-from algs4.fundamentals.uf import UF
+from src.algs4.fundamentals.uf import UF
 
 # Erstelle Union-Find-Struktur für 10 Elemente
 uf = UF(10)
@@ -160,7 +199,7 @@ print(f"Anzahl Komponenten: {uf.count()}")  # 7 (original 10 - 3 unions)
 ### Beispiel: Sierpinski-Dreieck verwenden
 
 ```python
-from pva1.sierpinski import sierpinski, zeichne_sierpinski_progression
+from notebooks.pva1.sierpinski import sierpinski, zeichne_sierpinski_progression
 
 # Einzelnes Sierpinski-Dreieck zeichnen
 import matplotlib.pyplot as plt
@@ -173,62 +212,116 @@ plt.show()
 zeichne_sierpinski_progression()
 ```
 
+### Beispiel: Test-Driven Development
+
+```python
+# 1. Test schreiben (tests/test_fundamentals/test_stack.py)
+def test_stack_push_pop():
+    stack = Stack[str]()
+    stack.push("first")
+    stack.push("second")
+    assert stack.pop() == "second"
+    assert stack.pop() == "first"
+    assert stack.is_empty()
+
+# 2. Test ausführen (sollte fehlschlagen)
+# uv run pytest tests/test_fundamentals/test_stack.py::test_stack_push_pop
+
+# 3. Implementierung schreiben
+# 4. Test erneut ausführen (sollte erfolgreich sein)
+```
+
 ## Projektstruktur
 
 ```text
 ffhs-dua/
-├── algs4/                    # Hauptpaket
-│   ├── __init__.py
-│   ├── fundamentals/         # Grundlegende Datenstrukturen
-│   │   ├── __init__.py
-│   │   ├── stack.py          # Stack-Implementierungen
-│   │   ├── queue.py          # Queue-Implementierungen
-│   │   ├── bag.py            # Bag-Implementierung
-│   │   └── uf.py             # Union-Find-Implementierungen
-│   └── errors/               # Benutzerdefinierte Exceptions
+├── src/
+│   └── algs4/                    # Hauptpaket
 │       ├── __init__.py
-│       └── errors.py
-├── pva1/                     # Praktische Vertiefungsaufgaben 1
+│       ├── fundamentals/         # Grundlegende Datenstrukturen
+│       │   ├── __init__.py
+│       │   ├── bag.py            # Bag-Implementierung
+│       │   ├── queue.py          # Queue-Implementierungen
+│       │   ├── stack.py          # Stack-Implementierungen
+│       │   └── uf.py             # Union-Find-Implementierungen
+│       ├── sorting/              # Sortieralgorithmen
+│       │   ├── __init__.py
+│       │   └── shell.py          # Shell Sort
+│       ├── searching/            # Suchalgorithmen
+│       │   └── __init__.py
+│       ├── graphs/               # Graph-Algorithmen
+│       │   └── __init__.py
+│       └── errors/               # Benutzerdefinierte Exceptions
+│           ├── __init__.py
+│           └── errors.py
+├── tests/                        # Test-Struktur spiegelt src/
 │   ├── __init__.py
-│   ├── sierpinski.py         # Sierpinski-Dreieck Implementation
-│   ├── sierpinski.adoc       # Sierpinski-Dokumentation
-│   └── grundlagen.ipynb      # Grundlagen-Jupyter-Notebook
-├── tests/                    # Testsuiten
+│   ├── conftest.py               # Gemeinsame Test-Fixtures
+│   ├── test_fundamentals/
+│   │   ├── __init__.py
+│   │   ├── test_bag.py
+│   │   ├── test_queue.py
+│   │   ├── test_stack.py
+│   │   └── test_uf.py
+│   ├── test_sorting/
+│   │   └── __init__.py
+│   └── fixtures/
+│       └── sample_data.py        # Test-Daten
+├── notebooks/                    # Jupyter Notebooks für Lehrzwecke
+│   └── pva1/
+│       ├── __init__.py
+│       ├── grundlagen.ipynb      # Grundlagen-Notebook
+│       ├── sierpinski.py         # Sierpinski-Implementierung
+│       └── sierpinski.adoc       # Sierpinski-Dokumentation
+├── docs/                         # Dokumentation
+│   ├── api/                      # API-Dokumentation
+│   ├── tutorials/                # Tutorials
+│   ├── examples/                 # Beispiele
+│   └── *.adoc                    # AsciiDoc-Dateien
+├── benchmarks/                   # Performance-Messungen
 │   ├── __init__.py
-│   ├── test_stack.py
-│   ├── test_queue.py
-│   ├── test_bag.py
-│   └── test_uf.py            # Union-Find Tests
-├── docs/                     # Dokumentation
-│   ├── komplexitaetsanalyse.adoc
-│   ├── union_find_documentation.adoc
-│   ├── uv_tutorial.adoc
-│   ├── test_bag_documentation.adoc
-│   ├── test_queue_documentation.adoc
-│   └── test_stack_documentation.adoc
-├── pyproject.toml           # Projektkonfiguration
-├── uv.lock                  # Dependency-Lock-Datei
-├── README.md                # Diese Datei
-└── CLAUDE.md                # Entwicklungsrichtlinien
+│   └── sorting_benchmarks.py
+├── scripts/                      # Hilfsskripte
+│   └── setup_dev.py              # Entwicklungsumgebung einrichten
+├── data/                         # Testdaten
+│   ├── small/                    # Kleine Testdaten
+│   ├── medium/                   # Mittlere Datensätze
+│   └── large/                    # Große Datensätze
+├── .pre-commit-config.yaml       # Pre-commit Hooks
+├── pyproject.toml                # Projektkonfiguration mit Testing
+├── uv.lock                       # Dependency-Lock-Datei
+├── README.md                     # Diese Datei
+└── CLAUDE.md                     # Entwicklungsrichtlinien
 ```
 
 ## Besonderheiten
 
-### Deutsche Dokumentation
+### Professionelle Entwicklungspraktiken
 
-Alle Docstrings, Kommentare und Fehlermeldungen sind auf Deutsch verfasst, um dem akademischen Kontext der FFHS zu entsprechen.
+#### TDD-Ansatz
 
-### Typsicherheit
+Das Projekt folgt TDD-Prinzipien mit umfassender Test-Abdeckung:
 
-Das Projekt macht extensiven Gebrauch von Python's Type-Hints und generischen Typen für maximale Typsicherheit.
+- **Unit-Tests**: Testen einzelne Funktionen und Klassen
+- **Integration-Tests**: Testen das Zusammenspiel mehrerer Komponenten  
+- **Performance-Tests**: Messen Laufzeiten und Speicherverbrauch
+- **Fixtures**: Wiederverwendbare Test-Daten und -Objekte
 
-### Akademischer Fokus
+#### Code-Qualität und Typsicherheit
 
-Die Implementierungen folgen den Lehrbuchkonzepten und sind für Lernzwecke optimiert, nicht unbedingt für Produktionsumgebungen.
+- **Type Hints**: Vollständige Typisierung mit generischen Typen
+- **Linting**: Automatische Code-Überprüfung mit Ruff
+- **Formatierung**: Einheitlicher Code-Stil mit Ruff Format
+- **Pre-commit Hooks**: Automatische Qualitätschecks vor jedem Commit
 
-### Multiple Implementierungen
+#### Akademischer Fokus
 
-Jede Datenstruktur wird in mehreren Varianten implementiert, um verschiedene Algorithmuskonzepte zu demonstrieren (verkettete Listen vs. Arrays, feste vs. dynamische Größe).
+Die Implementierungen folgen den Lehrbuchkonzepten und sind für Lernzwecke optimiert:
+
+- Deutsche Dokumentation und Kommentare
+- Schritt-für-Schritt Erklärungen
+- Multiple Implementierungsvarianten für Vergleiche
+- Jupyter Notebooks für interaktives Lernen
 
 ## Beitragen
 

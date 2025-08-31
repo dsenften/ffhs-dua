@@ -1,0 +1,81 @@
+= Erste Schritte mit ALGS4
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Installation
+
+=== Repository klonen
+
+[source,bash]
+----
+git clone <repository-url>
+cd ffhs-dua
+----
+
+=== Entwicklungsumgebung einrichten
+
+[source,bash]
+----
+python scripts/setup_dev.py
+----
+
+== Ihr erstes Programm
+
+=== Stack-Beispiel
+
+[source,python]
+----
+from src.algs4.fundamentals.stack import Stack
+
+# Stack erstellen
+stack = Stack[str]()
+
+# Elemente hinzufügen
+stack.push("Erstes Element")
+stack.push("Zweites Element")
+
+# Element entfernen
+element = stack.pop()
+print(f"Entfernt: {element}")  # "Zweites Element"
+----
+
+=== Test schreiben
+
+[source,python]
+----
+# tests/test_mein_stack.py
+from src.algs4.fundamentals.stack import Stack
+
+def test_mein_stack():
+    stack = Stack[int]()
+    stack.push(42)
+    assert stack.pop() == 42
+    assert stack.is_empty()
+----
+
+=== Test ausführen
+
+[source,bash]
+----
+uv run pytest tests/test_mein_stack.py -v
+----
+
+== TDD-Workflow
+
+. **Test schreiben** (rot)
+. **Minimale Implementierung** (grün)
+. **Code verbessern** (refactor)
+. **Wiederholen**
+
+== Nächste Schritte
+
+- Erkunden Sie die Jupyter Notebooks in `notebooks/`
+- Lesen Sie die API-Dokumentation in `docs/api/`
+- Führen Sie Performance-Tests aus: `python benchmarks/sorting_benchmarks.py`

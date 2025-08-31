@@ -1,14 +1,22 @@
 {
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(ruff check:*)",
       "Bash(ruff format:*)",
       "Bash(pytest:*)",
       "mcp__ide__getDiagnostics",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(find:*)",
+      "Bash(tree:*)",
+      "Bash(git checkout:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(test:*)",
+      "Bash(echo $PWD)",
+      "mcp__ide__executeCode",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []
-  },
-  "includeCoAuthoredBy": false
+  }
 }
