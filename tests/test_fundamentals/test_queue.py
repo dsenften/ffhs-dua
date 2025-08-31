@@ -7,8 +7,8 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.fundamentals.queue import Queue
 from src.algs4.errors.errors import NoSuchElementException
+from src.algs4.fundamentals.queue import Queue
 
 
 class TestQueue:
@@ -93,7 +93,7 @@ class TestQueue:
         """Test: String-Repräsentation der Queue."""
         leere_queue.enqueue("first")
         leere_queue.enqueue("second")
-        
+
         repr_str = repr(leere_queue)
         assert "first" in repr_str
         assert "second" in repr_str
@@ -114,18 +114,18 @@ class TestQueue:
     def test_large_dataset_performance(self, grosser_datensatz):
         """Test: Performance mit großem Datensatz."""
         queue = Queue[int]()
-        
+
         # Alle Elemente einreihen
         for item in grosser_datensatz:
             queue.enqueue(item)
-        
+
         assert queue.size() == len(grosser_datensatz)
-        
+
         # Alle Elemente ausreihen
         dequeued_items = []
         while not queue.is_empty():
             dequeued_items.append(queue.dequeue())
-        
+
         assert dequeued_items == grosser_datensatz
 
     def test_mixed_operations(self, leere_queue):
@@ -133,14 +133,14 @@ class TestQueue:
         # Einige Elemente einreihen
         leere_queue.enqueue("a")
         leere_queue.enqueue("b")
-        
+
         # Ein Element ausreihen
         assert leere_queue.dequeue() == "a"
-        
+
         # Weitere Elemente einreihen
         leere_queue.enqueue("c")
         leere_queue.enqueue("d")
-        
+
         # Verbleibende Elemente in korrekter Reihenfolge
         assert leere_queue.dequeue() == "b"
         assert leere_queue.dequeue() == "c"

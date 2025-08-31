@@ -7,8 +7,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.fundamentals.stack import Stack, FixedCapacityStack, ResizingArrayStack
-from src.algs4.errors.errors import NoSuchElementException, StackOverflowException
+from src.algs4.fundamentals.stack import FixedCapacityStack, ResizingArrayStack, Stack
 
 
 class TestStack:
@@ -93,7 +92,7 @@ class TestStack:
         """Test: String-Repräsentation des Stacks."""
         leerer_stack.push("first")
         leerer_stack.push("second")
-        
+
         repr_str = repr(leerer_stack)
         assert "first" in repr_str
         assert "second" in repr_str
@@ -114,18 +113,18 @@ class TestStack:
     def test_large_dataset_performance(self, grosser_datensatz):
         """Test: Performance mit großem Datensatz."""
         stack = Stack[int]()
-        
+
         # Alle Elemente auf Stack legen
         for item in grosser_datensatz:
             stack.push(item)
-        
+
         assert stack.size() == len(grosser_datensatz)
-        
+
         # Alle Elemente vom Stack nehmen
         popped_items = []
         while not stack.is_empty():
             popped_items.append(stack.pop())
-        
+
         assert popped_items == list(reversed(grosser_datensatz))
 
 
@@ -144,7 +143,7 @@ class TestFixedCapacityStack:
         stack.push(1)
         stack.push(2)
         stack.push(3)
-        
+
         assert stack.size() == 3
         assert not stack.is_empty()
 
@@ -153,7 +152,7 @@ class TestFixedCapacityStack:
         stack = FixedCapacityStack[str](2)
         stack.push("first")
         stack.push("second")
-        
+
         with pytest.raises(IndexError):
             stack.push("third")
 
@@ -161,10 +160,10 @@ class TestFixedCapacityStack:
         """Test: LIFO-Verhalten bei FixedCapacityStack."""
         stack = FixedCapacityStack[str](3)
         items = ["first", "second", "third"]
-        
+
         for item in items:
             stack.push(item)
-        
+
         for expected_item in reversed(items):
             assert stack.pop() == expected_item
 
@@ -181,13 +180,13 @@ class TestResizingArrayStack:
     def test_automatic_resizing_up(self):
         """Test: Automatische Vergrößerung des Arrays."""
         stack = ResizingArrayStack[int]()
-        
+
         # Viele Elemente hinzufügen (mehr als initiale Kapazität)
         for i in range(20):
             stack.push(i)
-        
+
         assert stack.size() == 20
-        
+
         # Alle Elemente in korrekter LIFO-Reihenfolge
         for i in range(19, -1, -1):
             assert stack.pop() == i
@@ -195,16 +194,16 @@ class TestResizingArrayStack:
     def test_automatic_resizing_down(self):
         """Test: Automatische Verkleinerung des Arrays."""
         stack = ResizingArrayStack[str]()
-        
+
         # Viele Elemente hinzufügen
         items = [f"item_{i}" for i in range(20)]
         for item in items:
             stack.push(item)
-        
+
         # Die meisten Elemente entfernen
         for _ in range(18):
             stack.pop()
-        
+
         # Stack sollte noch funktionieren
         assert stack.size() == 2
         assert not stack.is_empty()
@@ -212,18 +211,18 @@ class TestResizingArrayStack:
     def test_mixed_operations_resizing(self):
         """Test: Gemischte Push/Pop-Operationen mit Resizing."""
         stack = ResizingArrayStack[str]()
-        
+
         # Elemente hinzufügen
         stack.push("a")
         stack.push("b")
-        
+
         # Ein Element entfernen
         assert stack.pop() == "b"
-        
+
         # Weitere Elemente hinzufügen
         stack.push("c")
         stack.push("d")
-        
+
         # Verbleibende Elemente in korrekter Reihenfolge
         assert stack.pop() == "d"
         assert stack.pop() == "c"
@@ -234,16 +233,16 @@ class TestResizingArrayStack:
     def test_large_dataset_resizing_performance(self, grosser_datensatz):
         """Test: Performance mit großem Datensatz und Resizing."""
         stack = ResizingArrayStack[int]()
-        
+
         # Alle Elemente hinzufügen (mehrfache Resizing-Operationen)
         for item in grosser_datensatz:
             stack.push(item)
-        
+
         assert stack.size() == len(grosser_datensatz)
-        
+
         # Alle Elemente entfernen
         popped_items = []
         while not stack.is_empty():
             popped_items.append(stack.pop())
-        
+
         assert popped_items == list(reversed(grosser_datensatz))
