@@ -1,6 +1,8 @@
 # FFHS-DUA: Algorithmen und Datenstrukturen
 
-Eine umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS).
+Eine umfassende Python-Implementierung grundlegender Algorithmen und
+Datenstrukturen für den akademischen Gebrauch an der
+Fernfachhochschule Schweiz (FFHS).
 
 ## Inhalt
 
@@ -56,5 +58,5 @@ Vollständige Dokumentation und Tutorials in `docs/index.adoc`
 
 ## Autor
 
-**Daniel Senften** - daniel.senften@ffhs.ch
+**Daniel Senften** - [daniel.senften@ffhs.ch](mailto:daniel.senften@ffhs.ch)
 Fernfachhochschule Schweiz (FFHS)
