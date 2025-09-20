@@ -9,7 +9,7 @@ Gebrauch an der Fernfachhochschule Schweiz (FFHS).
 
 Module:
     fundamentals: Grundlegende Datenstrukturen (Stack, Queue, Bag, Union-Find)
-    sorting: Sortieralgorithmen (Shell-Sort, Quick-Sort)
+    sorting: Sortieralgorithmen (Shell-Sort, Quick-Sort, Heap-Sort)
     errors: Benutzerdefinierte Exception-Klassen
 """
 

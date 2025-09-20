@@ -10,7 +10,7 @@ Diese Dokumentation beschreibt die Testfälle für die Stack-Implementierungen i
 
 1. `Stack` - Eine Implementierung mit verketteter Liste
 2. `FixedCapacityStack` - Eine Implementierung mit fester Kapazität
-3. `ResizingArrayStack` - Eine Implementierung mit dynamisch anpassbarer Array-Größe
+3. `ResizingArrayStack` - Eine Implementierung mit dynamisch anpassbarer Array-Grösse
 
 == Testfälle für Stack-Klasse
 
@@ -113,14 +113,14 @@ Testet die grundlegenden Push- und Pop-Operationen für den FixedCapacityStack.
 
 Testet die grundlegenden Push- und Pop-Operationen für den ResizingArrayStack.
 
-=== Größenanpassung
+=== Grössenanpassung
 
 ==== Resize-Test (`test_resize`)
 
-Überprüft die automatische Größenanpassung des ResizingArrayStacks:
+Überprüft die automatische Grössenanpassung des ResizingArrayStacks:
 
-* Die interne Array-Größe wird erhöht, wenn mehr Elemente hinzugefügt werden
-* Die interne Array-Größe wird verkleinert, wenn Elemente entfernt werden
+* Die interne Array-Grösse wird erhöht, wenn mehr Elemente hinzugefügt werden
+* Die interne Array-Grösse wird verkleinert, wenn Elemente entfernt werden
 
 === Iterator-Funktionalität
 
@@ -155,7 +155,7 @@ Die Tests decken folgende Aspekte der Stack-Implementierungen ab:
 * Ausnahmefälle und Fehlerbehandlung
 * Verschiedene Datentypen
 * Kapazitätsverwaltung (für FixedCapacityStack)
-* Dynamische Größenanpassung (für ResizingArrayStack)
+* Dynamische Grössenanpassung (für ResizingArrayStack)
 
 == Best Practices
 

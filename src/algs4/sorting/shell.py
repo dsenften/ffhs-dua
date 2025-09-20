@@ -1,7 +1,7 @@
 """Shell Sort Implementierung.
 
 Diese Klasse implementiert den Shell-Sort-Algorithmus, der eine Erweiterung
-des Insertion-Sort-Algorithmus ist und für größere Datenmengen besser geeignet ist.
+des Insertion-Sort-Algorithmus ist und für grössere Datenmengen besser geeignet ist.
 
 Beispiele:
     % more tiny.txt

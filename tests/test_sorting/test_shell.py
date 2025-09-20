@@ -71,7 +71,7 @@ class TestShell:
         assert Shell.is_sorted(result)
 
     def test_strings_case_sensitive(self):
-        """Test: Sortieren von Strings mit Groß-/Kleinschreibung."""
+        """Test: Sortieren von Strings mit Gross-/Kleinschreibung."""
         arr = ["Zebra", "apple", "Banana", "cherry"]
         expected = ["Banana", "Zebra", "apple", "cherry"]
         result = Shell.sort(arr)
@@ -96,7 +96,7 @@ class TestShell:
 
     @pytest.mark.slow
     def test_large_list(self, grosser_datensatz):
-        """Test: Sortieren einer größeren Liste."""
+        """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
         random.shuffle(shuffled)
@@ -167,8 +167,8 @@ class TestShell:
         assert original == [1, 1, 3, 4, 5]
 
     def test_knuth_gap_sequence(self):
-        """Test: Indirekt die Knuth-Gap-Sequenz durch Sortierung verschiedener Größen."""
-        # Teste verschiedene Listengrößen, um verschiedene Gap-Werte zu triggern
+        """Test: Indirekt die Knuth-Gap-Sequenz durch Sortierung verschiedener Grössen."""
+        # Teste verschiedene Listengrössen, um verschiedene Gap-Werte zu triggern
         for size in [3, 4, 13, 14, 40, 41]:
             arr = list(range(size, 0, -1))
             expected = list(range(1, size + 1))

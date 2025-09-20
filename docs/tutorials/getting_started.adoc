@@ -63,6 +63,27 @@ print(f"Sortiert: {sorted_numbers}")
 print(f"Ist sortiert: {Quick.is_sorted(sorted_numbers)}")
 ----
 
+=== Heap Sort-Beispiel
+
+[source,python]
+----
+from src.algs4.sorting.heap import Heap
+
+# Liste sortieren (garantierte O(n log n) Performance)
+numbers = [64, 34, 25, 12, 22, 11, 90]
+print(f"Unsortiert: {numbers}")
+
+sorted_numbers = Heap.sort(numbers)
+print(f"Sortiert: {sorted_numbers}")
+
+# Überprüfung
+print(f"Ist sortiert: {Heap.is_sorted(sorted_numbers)}")
+
+# Heap Sort ist besonders gut für Worst-Case-Garantien
+worst_case = list(range(100, 0, -1))  # Umgekehrt sortiert
+Heap.sort(worst_case)  # Immer noch O(n log n)!
+----
+
 === Union-Find-Beispiel
 
 [source,python]
@@ -122,9 +143,10 @@ uv run pytest tests/test_mein_stack.py -v
 === Praktische Übungen
 - Erkunden Sie die Jupyter Notebooks in `notebooks/`
 - Führen Sie Performance-Tests aus: `python benchmarks/sorting_benchmarks.py`
-- Experimentieren Sie mit verschiedenen Datengrößen und -typen
+- Experimentieren Sie mit verschiedenen Datengrössen und -typen
 
 === Erweiterte Themen
 - **link:../komplexitaetsanalyse.adoc[Komplexitätsanalyse]**: Verstehen Sie die Performance-Charakteristika
 - **link:../union_find_documentation.adoc[Union-Find]**: Lernen Sie über dynamische Konnektivität
+- **link:../heap_sort_documentation.adoc[Heap Sort]**: Detaillierte Heap-Sort-Dokumentation
 - **Test-Dokumentation**: Verstehen Sie die umfassenden Test-Strategien

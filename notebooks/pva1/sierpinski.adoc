@@ -29,7 +29,7 @@ Das Sierpinski-Dreieck besitzt mehrere faszinierende mathematische Eigenschaften
 
 * **Selbstähnlichkeit**: Jeder Teil ähnelt dem Ganzen
 * **Fraktale Dimension**: log(3)/log(2) ≈ 1.585
-* **Unendliche Komplexität**: Beliebig viele Details auf allen Maßstabsebenen
+* **Unendliche Komplexität**: Beliebig viele Details auf allen Massstabsebenen
 
 === Rekursive Konstruktion
 
@@ -97,7 +97,7 @@ def sierpinski_iteration(triangles, iteration):
     new_triangles = []
     
     for x, y, size in triangles:
-        # Größe der neuen kleineren Dreiecke
+        # Grösse der neuen kleineren Dreiecke
         new_size = size / 2
         height = size * np.sqrt(3) / 2
         
@@ -129,7 +129,7 @@ def sierpinski_iteration(triangles, iteration):
 
 * **Tail Recursion**: Optimierte rekursive Struktur
 * **Positionsberechnung**: Exakte mathematische Platzierung der Unterdreiecke
-* **Skalierung**: Jede Iteration halbiert die Dreiecksgröße
+* **Skalierung**: Jede Iteration halbiert die Dreiecksgrösse
 
 === Rekursive Implementation
 
@@ -144,7 +144,7 @@ def sierpinski_recursive(x, y, n, level):
         draw_filled_triangle(x, y, n)
         return
     
-    # Rekursionsschritt: drei kleinere Dreiecke mit halber Größe
+    # Rekursionsschritt: drei kleinere Dreiecke mit halber Grösse
     new_size = n / 2
     height = n * np.sqrt(3) / 2
     
@@ -256,10 +256,10 @@ Erweitern Sie die Implementation um verschiedene Farben für unterschiedliche Re
 Implementieren Sie eine schrittweise Visualisierung des Konstruktionsprozesses.
 
 === Aufgabe 3: Interaktive Parameter
-Erstellen Sie eine Version mit veränderbaren Parametern (Größe, Iterationen, Farben).
+Erstellen Sie eine Version mit veränderbaren Parametern (Grösse, Iterationen, Farben).
 
 === Aufgabe 4: Performance-Optimierung
-Optimieren Sie den Algorithmus für große Iterationszahlen.
+Optimieren Sie den Algorithmus für grosse Iterationszahlen.
 
 == Fazit
 

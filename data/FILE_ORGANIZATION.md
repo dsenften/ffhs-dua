@@ -15,7 +15,7 @@ Alle Testdaten wurden erfolgreich von `algs4/data/` nach `/data/*` migriert und 
 - **`data/compression/`** - Binäre Dateien und Kompressionsalgorithmen
 - **`data/misc/`** - CSV-Dateien und sonstige Anwendungsdaten
 
-### Größenkategorien (Fallback)
+### Grössenkategorien (Fallback)
 
 - **`data/small/`** - Dateien < 100KB
 - **`data/medium/`** - Dateien 100KB - 10MB  
@@ -24,7 +24,7 @@ Alle Testdaten wurden erfolgreich von `algs4/data/` nach `/data/*` migriert und 
 ## Migration Statistik
 
 - **Dateien migriert:** 82
-- **Gesamtgröße:** 1.040,4 MB
+- **Gesamtgrösse:** 1.040,4 MB
 - **Fehler:** 0
 - **Ursprungsverzeichnis:** `algs4/data/` ✅ gelöscht
 

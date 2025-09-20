@@ -75,7 +75,7 @@ class UF:
 
         Falls beide Knoten bereits in derselben Komponente sind, wird nichts getan.
         Andernfalls werden die beiden Komponenten verschmolzen, wobei der Baum
-        mit kleinerem Rang unter den Baum mit größerem Rang gehängt wird.
+        mit kleinerem Rang unter den Baum mit grösserem Rang gehaengt wird.
 
         Args:
             p: Erster Knoten
@@ -89,7 +89,7 @@ class UF:
         if root_p == root_q:
             return
 
-        # Hänge Wurzel mit kleinerem Rang unter Wurzel mit größerem Rang
+        # Haenge Wurzel mit kleinerem Rang unter Wurzel mit grösserem Rang
         if self._rank[root_p] < self._rank[root_q]:
             self._parent[root_p] = root_q
         elif self._rank[root_p] > self._rank[root_q]:
@@ -118,7 +118,7 @@ class UF:
         """
         self._validate(p)
         while p != self._parent[p]:
-            # Path Compression durch Halbierung: jeder Knoten zeigt auf seinen Großelternknoten
+            # Path Compression durch Halbierung: jeder Knoten zeigt auf seinen Grosselternknoten
             self._parent[p] = self._parent[self._parent[p]]
             p = self._parent[p]
         return p
@@ -258,7 +258,7 @@ class QuickUnionUF:
 
 
 class WeightedQuickUnionUF:
-    """Weighted Quick Union - Union-Find nach Größe gewichtet
+    """Weighted Quick Union - Union-Find nach Grösse gewichtet
 
     Diese Implementation verwendet Weighted Quick Union by Size (ohne Path Compression).
     Die Initialisierung einer Datenstruktur mit n Knoten benötigt lineare Zeit.
@@ -297,7 +297,7 @@ class WeightedQuickUnionUF:
     def union(self, p: int, q: int) -> None:
         """Verbindet die Komponenten, die die Knoten p und q enthalten.
 
-        Hängt den kleineren Baum unter den größeren Baum.
+        Haengt den kleineren Baum unter den grösseren Baum.
 
         Args:
             p: Erster Knoten
@@ -311,7 +311,7 @@ class WeightedQuickUnionUF:
         if root_p == root_q:
             return
 
-        # Hänge Wurzel mit kleinerer Größe unter Wurzel mit größerer Größe
+        # Haenge Wurzel mit kleinerer Grösse unter Wurzel mit grösserer Grösse
         if self._size[root_p] < self._size[root_q]:
             small, large = root_p, root_q
         else:

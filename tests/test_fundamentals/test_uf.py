@@ -104,7 +104,7 @@ class TestUF:
 
     @pytest.mark.slow
     def test_large_dataset_performance(self, grosser_datensatz):
-        """Test: Performance mit großem Datensatz."""
+        """Test: Performance mit grossem Datensatz."""
         n = len(grosser_datensatz)
         uf = UF(n)
 
@@ -140,7 +140,7 @@ class TestQuickFindUF:
         assert uf.count() == 3
 
     def test_quick_find_large_component(self):
-        """Test: Große Komponente bei QuickFindUF."""
+        """Test: Grosse Komponente bei QuickFindUF."""
         uf = QuickFindUF(10)
 
         # Verbinde alle Elemente zu einer Komponente
@@ -203,13 +203,13 @@ class TestWeightedQuickUnionUF:
         """Test: Gewichtete Union hält Bäume balanciert."""
         uf = WeightedQuickUnionUF(8)
 
-        # Erstelle zwei Komponenten unterschiedlicher Größe
+        # Erstelle zwei Komponenten unterschiedlicher Grösse
         uf.union(0, 1)  # Komponente 1: {0, 1}
         uf.union(2, 3)  # Komponente 2: {2, 3}
         uf.union(2, 4)  # Komponente 2: {2, 3, 4}
         uf.union(2, 5)  # Komponente 2: {2, 3, 4, 5}
 
-        # Verbinde die Komponenten - größere sollte Wurzel werden
+        # Verbinde die Komponenten - grössere sollte Wurzel werden
         uf.union(0, 2)
 
         # Alle sollten verbunden sein
@@ -292,4 +292,4 @@ class TestUnionFindComparison:
         # Finale Überprüfungen
         assert uf.connected(0, 7)
         assert uf.connected(4, 9)
-        assert uf.count() == 2  # Zwei große Komponenten
+        assert uf.count() == 2  # Zwei grosse Komponenten

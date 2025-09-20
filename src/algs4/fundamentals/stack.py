@@ -20,7 +20,7 @@ class Stack(Generic[T]):
     Diese Implementierung verwendet eine einfach verkettete Liste mit einer statischen
     verschachtelten Klasse für die Listenknoten. Siehe LinkedStack für die Version aus
     dem Lehrbuch, die eine nicht-statische verschachtelte Klasse verwendet. Siehe
-    ResizingArrayStack für eine Version, die ein Array mit dynamischer Größenanpassung verwendet.
+    ResizingArrayStack für eine Version, die ein Array mit dynamischer Grössenanpassung verwendet.
     Die push-, pop-, peek-, size- und is_empty-Operationen benötigen alle konstante
     Zeit im schlimmsten Fall.
 
@@ -121,7 +121,7 @@ class Stack(Generic[T]):
 class FixedCapacityStack(Generic[T]):
     """Die FixedCapacityStack-Klasse repräsentiert einen Stack mit fester Kapazität.
 
-    Diese Implementierung verwendet ein Array mit fester Größe, um die Elemente zu speichern.
+    Diese Implementierung verwendet ein Array mit fester Grösse, um die Elemente zu speichern.
     Die push-, pop-, size- und is_empty-Operationen benötigen konstante Zeit.
     """
 
@@ -168,15 +168,15 @@ class FixedCapacityStack(Generic[T]):
 
 
 class ResizingArrayStack(Generic[T]):
-    """Die ResizingArrayStack-Klasse repräsentiert einen Stack mit dynamischer Größenanpassung.
+    """Die ResizingArrayStack-Klasse repräsentiert einen Stack mit dynamischer Grössenanpassung.
 
-    Diese Implementierung verwendet ein Array, dessen Größe dynamisch angepasst wird,
+    Diese Implementierung verwendet ein Array, dessen Grösse dynamisch angepasst wird,
     um die Elemente zu speichern. Die push- und pop-Operationen benötigen amortisiert
     konstante Zeit. Die size- und is_empty-Operationen benötigen konstante Zeit.
     """
 
     def __init__(self) -> None:
-        """Initialisiert einen leeren Stack mit dynamischer Größenanpassung."""
+        """Initialisiert einen leeren Stack mit dynamischer Grössenanpassung."""
         self.a: list[T | None] = [None]
         self.n: int = 0
 
@@ -194,7 +194,7 @@ class ResizingArrayStack(Generic[T]):
         return self.size()
 
     def resize(self, capacity: int) -> None:
-        """Passt die Größe des Arrays an die angegebene Kapazität an.
+        """Passt die Grösse des Arrays an die angegebene Kapazität an.
 
         :param capacity: Die neue Kapazität des Arrays
         """

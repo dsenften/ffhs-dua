@@ -58,6 +58,7 @@ Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
 
 ==== Algorithmen
 * **link:quick_sort_documentation.adoc[Quick Sort]**: Effizienter Divide-and-Conquer-Algorithmus
+* **link:heap_sort_documentation.adoc[Heap Sort]**: Garantiert effizienter Heap-basierter Algorithmus
 * **Shell Sort**: Erweiterte Insertion-Sort-Variante
 
 ==== API-Dokumentation
@@ -65,6 +66,7 @@ Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
 
 ==== Test-Dokumentation
 * **link:test_quick_documentation.adoc[Quick Sort Tests]**: Umfassende Test-Suite für Quick Sort
+* **link:test_heap_documentation.adoc[Heap Sort Tests]**: Umfassende Test-Suite für Heap Sort
 
 == Spezielle Dokumentation
 
@@ -121,12 +123,17 @@ print(uf.connected(0, 1))  # True
 
 [source,python]
 ----
-from src.algs4.sorting import Quick, Shell
+from src.algs4.sorting import Quick, Shell, Heap
 
 # Quick Sort
 numbers = [64, 34, 25, 12, 22, 11, 90]
 sorted_numbers = Quick.sort(numbers)
 print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
+
+# Heap Sort (garantierte O(n log n) Performance)
+numbers2 = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers2 = Heap.sort(numbers2)
+print(sorted_numbers2)  # [11, 12, 22, 25, 34, 64, 90]
 
 # Shell Sort
 words = ["zebra", "apple", "banana", "cherry"]

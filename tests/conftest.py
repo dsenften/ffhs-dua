@@ -62,9 +62,9 @@ def beispiel_zeichenketten():
 
 @pytest.fixture
 def grosser_datensatz():
-    """Test-Vorrichtung: Großer Datensatz für Performance-Tests.
+    """Test-Vorrichtung: Grosser Datensatz für Performance-Tests.
 
-    Erstellt einen großen Datensatz mit 1000 Elementen für
+    Erstellt einen grossen Datensatz mit 1000 Elementen für
     Leistungstests und Skalierbarkeitsanalysen.
     """
     return list(range(1000))

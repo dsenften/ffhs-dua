@@ -127,7 +127,7 @@ echo "" >> datei.md
 
 **Problem:** Leerzeichen am Zeilenende
 
-**Lösung:** Leerzeichen am Zeilenende entfernen (außer für Zeilenumbrüche mit 2 Leerzeichen)
+**Lösung:** Leerzeichen am Zeilenende entfernen (ausser für Zeilenumbrüche mit 2 Leerzeichen)
 
 == Integration in Pre-commit Hooks
 

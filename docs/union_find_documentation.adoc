@@ -126,7 +126,7 @@ class QuickFindUF:
 - Einfache Implementierung
 
 **Nachteile**:
-- union() in O(n) - zu langsam für große Datenmengen
+- union() in O(n) - zu langsam für grosse Datenmengen
 - N² Operationen für n-1 union-Aufrufe
 
 === 2. Quick Union
@@ -169,7 +169,7 @@ class QuickUnionUF:
 
 === 3. Weighted Quick Union
 
-**Idee**: Verhindere tiefe Bäume durch Gewichtung nach Baumgröße.
+**Idee**: Verhindere tiefe Bäume durch Gewichtung nach Baumgrösse.
 
 [source,python]
 ----
@@ -185,7 +185,7 @@ class WeightedQuickUnionUF:
         if root_p == root_q:
             return
         
-        # Hänge kleineren Baum unter größeren
+        # Hänge kleineren Baum unter grösseren
         if self._size[root_p] < self._size[root_q]:
             small, large = root_p, root_q
         else:
@@ -196,7 +196,7 @@ class WeightedQuickUnionUF:
         self._count -= 1
 ----
 
-**Verbesserung**: Baumhöhe ist maximal log₂(n), da sich die Baumgröße mindestens verdoppelt, wenn die Höhe um 1 steigt.
+**Verbesserung**: Baumhöhe ist maximal log₂(n), da sich die Baumgrösse mindestens verdoppelt, wenn die Höhe um 1 steigt.
 
 === 4. Weighted Quick Union + Path Compression
 
@@ -212,7 +212,7 @@ class UF:
     
     def find(self, p):
         while p != self._parent[p]:
-            # Path Compression: Zeige auf Großeltern
+            # Path Compression: Zeige auf Grosseltern
             self._parent[p] = self._parent[self._parent[p]]
             p = self._parent[p]
         return p
@@ -239,8 +239,8 @@ class UF:
 ====
 **Path Compression Varianten**:
 
-1. **Path Halving** (implementiert): Jeder Knoten zeigt auf seinen Großeltern
-2. **Path Splitting**: Jeder zweite Knoten zeigt auf seinen Großeltern  
+1. **Path Halving** (implementiert): Jeder Knoten zeigt auf seinen Grosseltern
+2. **Path Splitting**: Jeder zweite Knoten zeigt auf seinen Grosseltern  
 3. **Full Path Compression**: Alle Knoten zeigen direkt auf die Wurzel (rekursiv)
 ====
 
@@ -457,7 +457,7 @@ def benchmark_implementations(n: int, operations: List[Tuple[int, int]]):
 |Gut
 |Sehr gut
 
-|**Große Datasets** (n > 10000)
+|**Grosse Datasets** (n > 10000)
 |Sehr langsam
 |Sehr langsam*
 |Gut
@@ -489,7 +489,7 @@ class ExtendedUF(UF):
     
     def __init__(self, n):
         super().__init__(n)
-        self._size = [1] * n  # Größe jeder Komponente
+        self._size = [1] * n  # Grösse jeder Komponente
     
     def union(self, p, q):
         root_p = self.find(p)
@@ -514,12 +514,12 @@ class ExtendedUF(UF):
         return True  # Union durchgeführt
     
     def component_size(self, p):
-        """Gibt die Größe der Komponente zurück, die p enthält."""
+        """Gibt die Grösse der Komponente zurück, die p enthält."""
         root = self.find(p)
         return self._size[root]
     
     def largest_component(self):
-        """Gibt die Größe der größten Komponente zurück."""
+        """Gibt die Grösse der grössten Komponente zurück."""
         return max(self._size[self.find(i)] for i in range(len(self._parent)))
     
     def get_components(self):
@@ -596,7 +596,7 @@ Verbessern Sie Ihre Implementation durch:
 Modellieren Sie ein soziales Netzwerk:
 - Personen können Freunde werden (`union`)
 - Prüfen Sie, ob zwei Personen im gleichen Freundeskreis sind
-- Finden Sie die Größe des größten Freundeskreises
+- Finden Sie die Grösse des grössten Freundeskreises
 
 === Aufgabe 4: Anwendung - Labyrinth
 Verwenden Sie Union-Find zur Labyrinth-Generierung:
@@ -607,7 +607,7 @@ Verwenden Sie Union-Find zur Labyrinth-Generierung:
 === Aufgabe 5: Erweiterte Analyse
 Analysieren Sie die Laufzeit verschiedener Union-Find-Varianten:
 1. Implementieren Sie alle vier Versionen
-2. Messen Sie die Performance für verschiedene Eingabegrößen
+2. Messen Sie die Performance für verschiedene Eingabegrössen
 3. Visualisieren Sie die Ergebnisse
 
 [TIP]

@@ -17,7 +17,7 @@ Quick Sort ist einer der wichtigsten und am häufigsten verwendeten Sortieralgor
 
 Quick Sort funktioniert nach dem Divide-and-Conquer-Prinzip:
 
-1. **Divide**: Wähle ein Element als *Pivot* und partitioniere das Array so, dass alle Elemente kleiner als das Pivot links und alle größeren Elemente rechts davon stehen
+1. **Divide**: Wähle ein Element als *Pivot* und partitioniere das Array so, dass alle Elemente kleiner als das Pivot links und alle grösseren Elemente rechts davon stehen
 2. **Conquer**: Sortiere rekursiv die beiden Teilarrays links und rechts vom Pivot
 3. **Combine**: Da die Partitionierung bereits die richtige Reihenfolge gewährleistet, ist keine weitere Kombination nötig
 
@@ -93,15 +93,15 @@ def quicksort(cls, arr: list, lo: int, hi: int) -> list:
 
 |**Best Case**
 |O(n log n)
-|Pivot teilt das Array immer in zwei gleich große Hälften
+|Pivot teilt das Array immer in zwei gleich grosse Hälften
 
 |**Average Case**
 |O(n log n)
-|Pivot teilt das Array in etwa gleich große Teile
+|Pivot teilt das Array in etwa gleich grosse Teile
 
 |**Worst Case**
 |O(n²)
-|Pivot ist immer das kleinste oder größte Element (bereits sortierte Arrays)
+|Pivot ist immer das kleinste oder grösste Element (bereits sortierte Arrays)
 |===
 
 === Speicherkomplexität
@@ -114,7 +114,7 @@ def quicksort(cls, arr: list, lo: int, hi: int) -> list:
 
 ==== Best Case: O(n log n)
 
-Im besten Fall teilt das Pivot-Element das Array immer in zwei gleich große Hälften:
+Im besten Fall teilt das Pivot-Element das Array immer in zwei gleich grosse Hälften:
 
 ----
 T(n) = 2T(n/2) + O(n)
@@ -124,7 +124,7 @@ Nach dem Master-Theorem ergibt sich: T(n) = O(n log n)
 
 ==== Worst Case: O(n²)
 
-Der Worst Case tritt auf, wenn das Pivot immer das kleinste oder größte Element ist:
+Der Worst Case tritt auf, wenn das Pivot immer das kleinste oder grösste Element ist:
 
 ----
 T(n) = T(n-1) + O(n) = O(n²)
@@ -274,7 +274,7 @@ print(is_sorted)  # True
 **Nachteile:**
 * Worst-Case O(n²) Performance
 * Nicht stabil
-* Rekursive Implementierung kann bei großen Arrays zu Stack Overflow führen
+* Rekursive Implementierung kann bei grossen Arrays zu Stack Overflow führen
 
 **Empfehlung:**
 Quick Sort ist ideal für allgemeine Sortieraufgaben, wenn:
@@ -378,10 +378,10 @@ def measure_performance(size):
     
     return end_time - start_time
 
-# Teste verschiedene Größen
+# Teste verschiedene Grössen
 for size in [1000, 5000, 10000, 50000]:
     time_taken = measure_performance(size)
-    print(f"Größe {size}: {time_taken:.4f} Sekunden")
+    print(f"Grösse {size}: {time_taken:.4f} Sekunden")
 ----
 
 == Häufige Fehlerquellen
@@ -399,7 +399,7 @@ if lo < hi:  # Sollte lo >= hi sein für Abbruch
 
 === 2. Array-Grenzen
 
-**Problem**: Zugriff außerhalb der Array-Grenzen bei der Partitionierung.
+**Problem**: Zugriff ausserhalb der Array-Grenzen bei der Partitionierung.
 
 [source,python]
 ----

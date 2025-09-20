@@ -111,7 +111,7 @@ class TestStack:
 
     @pytest.mark.slow
     def test_large_dataset_performance(self, grosser_datensatz):
-        """Test: Performance mit großem Datensatz."""
+        """Test: Performance mit grossem Datensatz."""
         stack = Stack[int]()
 
         # Alle Elemente auf Stack legen
@@ -178,7 +178,7 @@ class TestResizingArrayStack:
         assert stack.size() == 0
 
     def test_automatic_resizing_up(self):
-        """Test: Automatische Vergrößerung des Arrays."""
+        """Test: Automatische Vergrösserung des Arrays."""
         stack = ResizingArrayStack[int]()
 
         # Viele Elemente hinzufügen (mehr als initiale Kapazität)
@@ -231,7 +231,7 @@ class TestResizingArrayStack:
 
     @pytest.mark.slow
     def test_large_dataset_resizing_performance(self, grosser_datensatz):
-        """Test: Performance mit großem Datensatz und Resizing."""
+        """Test: Performance mit grossem Datensatz und Resizing."""
         stack = ResizingArrayStack[int]()
 
         # Alle Elemente hinzufügen (mehrfache Resizing-Operationen)

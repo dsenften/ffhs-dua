@@ -100,7 +100,7 @@ class TestBag:
 
         peeked_item = leerer_bag.peek()
         assert peeked_item == "second"  # Letztes hinzugefügtes Element
-        assert leerer_bag.size() == 2  # Größe sollte unverändert sein
+        assert leerer_bag.size() == 2  # Grösse sollte unverändert sein
 
     def test_to_list_conversion(self, leerer_bag, beispiel_zeichenketten):
         """Test: Konvertierung zu Liste."""
@@ -139,7 +139,7 @@ class TestBag:
 
     @pytest.mark.slow
     def test_large_dataset_performance(self, grosser_datensatz):
-        """Test: Performance mit großem Datensatz."""
+        """Test: Performance mit grossem Datensatz."""
         bag = Bag[int]()
 
         # Hinzufügen vieler Elemente

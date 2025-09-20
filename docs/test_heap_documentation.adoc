@@ -1,0 +1,607 @@
+= Test-Dokumentation: Heap Sort
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Übersicht
+
+Diese Dokumentation beschreibt die umfassende Testsuite für die Heap-Sort-Implementierung. Die Tests gewährleisten die Korrektheit, Robustheit und Performance des Algorithmus unter verschiedenen Bedingungen und validieren die spezifischen Eigenschaften von Heap Sort.
+
+== Teststruktur
+
+=== Testklasse: `TestHeap`
+
+Die Haupttestklasse `TestHeap` enthält 29 verschiedene Testmethoden, die alle Aspekte der Heap-Sort-Implementierung abdecken, einschliesslich der heap-spezifischen Eigenschaften.
+
+[source,python]
+----
+from src.algs4.sorting.heap import Heap
+import pytest
+
+class TestHeap:
+    """Test-Klasse für die Heap-Sort-Implementierung."""
+----
+
+== Grundlegende Funktionalitätstests
+
+=== Grenzfälle
+
+==== `test_empty_list()`
+Testet das Sortieren einer leeren Liste.
+
+**Erwartetes Verhalten:**
+* Leere Liste bleibt leer
+* `is_sorted()` gibt `True` zurück
+
+[source,python]
+----
+def test_empty_list(self):
+    arr = []
+    result = Heap.sort(arr)
+    assert result == []
+    assert Heap.is_sorted(result)
+----
+
+==== `test_single_element()`
+Testet das Sortieren einer Liste mit einem Element.
+
+**Erwartetes Verhalten:**
+* Element bleibt unverändert
+* Liste ist sortiert
+
+==== `test_two_elements()`
+Testet das Sortieren einer Liste mit zwei Elementen.
+
+**Testfälle:**
+* Unsortierte Reihenfolge: `[2, 1]` → `[1, 2]`
+* Bereits sortierte Reihenfolge: `[1, 2]` → `[1, 2]`
+
+=== Standardfälle
+
+==== `test_already_sorted()`
+Testet das Sortieren einer bereits sortierten Liste.
+
+**Verwendung:** Nutzt die `beispiel_ganzzahlen` Fixture aus `conftest.py`
+
+**Besonderheit:** Heap Sort hat konsistente O(n log n) Performance auch für bereits sortierte Arrays.
+
+==== `test_reverse_sorted()`
+Testet das Sortieren einer umgekehrt sortierten Liste.
+
+**Wichtig:** Im Gegensatz zu Quick Sort hat Heap Sort auch hier O(n log n) Performance.
+
+==== `test_random_integers()`
+Testet das Sortieren einer zufällig gemischten Liste.
+
+**Methodik:**
+* Verwendet `random.shuffle()` für zufällige Reihenfolge
+* Vergleicht Ergebnis mit Python's `sorted()`
+
+== Spezielle Datenstrukturen
+
+=== Duplikate
+
+==== `test_duplicates()`
+Testet das Verhalten bei duplizierten Elementen.
+
+[source,python]
+----
+def test_duplicates(self):
+    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    expected = [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]
+    result = Heap.sort(arr)
+    assert result == expected
+----
+
+**Wichtig:** Heap Sort muss gleiche Elemente korrekt handhaben, auch wenn er nicht stabil ist.
+
+==== `test_all_same_elements()`
+Testet das Sortieren einer Liste mit identischen Elementen.
+
+**Erwartetes Verhalten:**
+* Liste bleibt unverändert
+* Heap-Eigenschaft wird korrekt aufrechterhalten
+
+=== Verschiedene Datentypen
+
+==== `test_strings()`
+Testet das Sortieren von Zeichenketten.
+
+**Verwendung:** Nutzt die `beispiel_zeichenketten` Fixture
+
+==== `test_strings_case_sensitive()`
+Testet die Gross-/Kleinschreibung bei Strings.
+
+[source,python]
+----
+def test_strings_case_sensitive(self):
+    arr = ["Zebra", "apple", "Banana", "cherry"]
+    expected = ["Banana", "Zebra", "apple", "cherry"]
+    result = Heap.sort(arr)
+    assert result == expected
+----
+
+==== `test_different_types()`
+Testet verschiedene numerische Datentypen:
+
+* **Float-Zahlen:** `[3.14, 2.71, 1.41, 2.23]`
+* **Einzelne Zeichen:** `["d", "a", "c", "b"]`
+
+=== Negative und gemischte Zahlen
+
+==== `test_negative_numbers()`
+Testet das Sortieren negativer Zahlen.
+
+[source,python]
+----
+arr = [-3, -1, -4, 1, 5, -9, 2, -6]
+expected = [-9, -6, -4, -3, -1, 1, 2, 5]
+----
+
+==== `test_mixed_numbers()`
+Testet positive, negative und Null-Werte.
+
+[source,python]
+----
+arr = [0, -3, 7, -1, 0, 4, -2]
+expected = [-3, -2, -1, 0, 0, 4, 7]
+----
+
+== Heap-spezifische Tests
+
+=== Sink-Operation Tests
+
+==== `test_sink_method_basic()`
+Testet die grundlegende Funktionalität der `sink`-Methode.
+
+**Verifikation:**
+* Heap-Eigenschaft wird nach dem Sinken erfüllt
+* Grösstes Element steht an der Wurzel
+
+[source,python]
+----
+def test_sink_method_basic(self):
+    arr = [1, 4, 3, 2]  # Verletzt Heap-Eigenschaft an Index 0
+    Heap.sink(arr, 0, 3)
+    
+    # Nach dem Sinken sollte die Heap-Eigenschaft erfüllt sein
+    assert arr[0] >= arr[1] if len(arr) > 1 else True
+    assert arr[0] >= arr[2] if len(arr) > 2 else True
+----
+
+==== `test_sink_method_edge_cases()`
+Testet Grenzfälle der Sink-Operation:
+
+* Ein Element
+* Zwei Elemente (bereits korrekt)
+* Zwei Elemente (muss getauscht werden)
+
+=== Heap-Konstruktion Tests
+
+==== `test_heap_construction_phase()`
+Testet die Heap-Konstruktionsphase separat.
+
+**Verifikation:**
+* Jeder Knoten ist ≥ seiner Kinder
+* Vollständige Heap-Eigenschaft wird erfüllt
+
+[source,python]
+----
+def test_heap_construction_phase(self):
+    arr = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
+    n = len(arr)
+    
+    # Führe nur die Heap-Konstruktionsphase durch
+    k = n // 2 - 1
+    while k >= 0:
+        Heap.sink(arr, k, n - 1)
+        k -= 1
+    
+    # Überprüfe Heap-Eigenschaft
+    for i in range(n // 2):
+        left_child = 2 * i + 1
+        right_child = 2 * i + 2
+        
+        if left_child < n:
+            assert arr[i] >= arr[left_child]
+        if right_child < n:
+            assert arr[i] >= arr[right_child]
+----
+
+==== `test_heap_sort_phases()`
+Testet beide Phasen des Heap-Sort-Algorithmus getrennt.
+
+**Phase 1 - Heap-Konstruktion:**
+* Überprüfung der Max-Heap-Eigenschaft
+* Validierung der Baum-Struktur
+
+**Phase 2 - Sortdown:**
+* Korrekte Extraktion der Maxima
+* Erhaltung der Heap-Eigenschaft nach jeder Extraktion
+
+==== `test_heap_property_maintenance()`
+Testet die Erhaltung der Heap-Eigenschaft während des gesamten Sortierungsprozesses.
+
+**Methodik:**
+* Simuliert die Sortdown-Phase Schritt für Schritt
+* Überprüft nach jedem Schritt die Heap-Eigenschaft
+* Validiert, dass das Maximum immer an der Wurzel steht
+
+[source,python]
+----
+def test_heap_property_maintenance(self):
+    # Simuliere die Sortdown-Phase und überprüfe Heap-Eigenschaft
+    while n > 1:
+        # Das Maximum sollte an der Wurzel stehen
+        max_element = arr[0]
+        for i in range(n):
+            assert arr[0] >= arr[i]
+        
+        # Tausche und reduziere Heap-Grösse
+        arr[0], arr[n - 1] = arr[n - 1], arr[0]
+        n -= 1
+        
+        # Stelle Heap-Eigenschaft wieder her und überprüfe
+        if n > 1:
+            Heap.sink(arr, 0, n - 1)
+            # Validiere Heap-Eigenschaft für reduzierten Heap
+----
+
+== Performance und Konsistenz-Tests
+
+=== Konsistente Performance
+
+==== `test_consistent_performance()`
+Testet die charakteristische Eigenschaft von Heap Sort: konsistente O(n log n) Performance.
+
+**Testszenarien:**
+* Bereits sortierte Arrays
+* Umgekehrt sortierte Arrays
+* Zufällige Arrays
+
+**Erwartung:** Alle Szenarien produzieren korrekte Ergebnisse mit ähnlicher Performance.
+
+[source,python]
+----
+def test_consistent_performance(self):
+    import random
+    
+    # Bereits sortiert
+    sorted_arr = list(range(100))
+    result1 = Heap.sort(sorted_arr.copy())
+    
+    # Umgekehrt sortiert
+    reverse_arr = list(range(100, 0, -1))
+    result2 = Heap.sort(reverse_arr)
+    
+    # Zufällig
+    random_arr = list(range(100))
+    random.shuffle(random_arr)
+    result3 = Heap.sort(random_arr)
+    
+    # Alle sollten korrekt sortiert sein
+    assert Heap.is_sorted(result1)
+    assert Heap.is_sorted(result2)
+    assert Heap.is_sorted(result3)
+----
+
+=== Grosse Datenmengen
+
+==== `test_large_list()`
+Testet die Performance mit grossen Datenmengen.
+
+**Kennzeichnung:** `@pytest.mark.slow`
+
+**Verwendung:** Nutzt die `grosser_datensatz` Fixture (1000 Elemente)
+
+**Zweck:**
+* Verifikation der Skalierbarkeit
+* Erkennung von Performance-Problemen
+* Speicher-Leak-Detection
+
+== Stabilität und Eigenschaften
+
+=== `test_stability_not_guaranteed()`
+Demonstriert, dass Heap Sort nicht stabil ist.
+
+**Methodik:**
+* Verwendet benutzerdefinierte `ComparableItem`-Klasse
+* Verfolgt ursprüngliche Indizes gleicher Elemente
+* Verifiziert, dass Sortierung korrekt ist, aber Reihenfolge gleicher Elemente sich ändern kann
+
+[source,python]
+----
+class ComparableItem:
+    def __init__(self, value, original_index):
+        self.value = value
+        self.original_index = original_index
+    
+    def __lt__(self, other):
+        return self.value < other.value
+----
+
+=== `test_sort_preserves_original_if_needed()`
+Testet die In-Place-Eigenschaft von Heap Sort.
+
+**Verifikation:**
+* Rückgabewert ist dieselbe Referenz wie die Eingabe
+* Ursprüngliche Liste wird modifiziert
+
+[source,python]
+----
+def test_sort_preserves_original_if_needed(self):
+    original = [3, 1, 4, 1, 5]
+    sorted_list = Heap.sort(original)
+    
+    assert sorted_list is original  # Gleiche Referenz
+    assert original == [1, 1, 3, 4, 5]  # Modifiziert
+----
+
+== Hilfsmethoden-Tests
+
+=== `test_is_sorted_false()`
+Testet die `is_sorted()`-Methode mit unsortierten Listen.
+
+**Testfälle:**
+* `[3, 1, 2]` → `False`
+* `[1, 3, 2, 4]` → `False`
+* `[5, 4, 3, 2, 1]` → `False`
+
+=== `test_is_sorted_true()`
+Testet die `is_sorted()`-Methode mit sortierten Listen.
+
+**Testfälle:**
+* `[]` → `True` (leere Liste)
+* `[1]` → `True` (ein Element)
+* `[1, 2, 3, 4, 5]` → `True`
+* `[1, 1, 2, 2, 3]` → `True` (mit Duplikaten)
+
+== Vergleichstests
+
+=== `test_heap_sort_vs_other_algorithms()`
+Vergleicht Heap Sort mit Python's eingebautem `sorted()`.
+
+**Testfälle:**
+* Leere Listen
+* Ein-Element-Listen
+* Verschiedene Datengrössen
+* Verschiedene Datenverteilungen
+
+[source,python]
+----
+def test_heap_sort_vs_other_algorithms(self):
+    test_cases = [
+        [],  # Leer
+        [1],  # Ein Element
+        [2, 1],  # Zwei Elemente
+        [1, 2, 3, 4, 5],  # Bereits sortiert
+        [5, 4, 3, 2, 1],  # Umgekehrt sortiert
+        [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],  # Mit Duplikaten
+    ]
+    
+    for test_case in test_cases:
+        heap_result = Heap.sort(test_case.copy())
+        python_result = sorted(test_case)
+        assert heap_result == python_result
+----
+
+=== `test_heap_sort_with_custom_objects()`
+Testet Heap Sort mit benutzerdefinierten Objekten.
+
+**Szenario:** Sortierung von Studenten nach Noten
+
+[source,python]
+----
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+    
+    def __lt__(self, other):
+        return self.grade < other.grade
+
+students = [
+    Student("Alice", 85),
+    Student("Bob", 92),
+    Student("Charlie", 78),
+    Student("Diana", 96),
+    Student("Eve", 88)
+]
+
+result = Heap.sort(students)
+
+# Überprüfe, dass nach Noten sortiert ist
+for i in range(1, len(result)):
+    assert result[i].grade >= result[i-1].grade
+----
+
+== Parametrisierte Tests
+
+=== `test_parametrized_sorting()`
+Verwendet pytest's Parametrisierung für systematische Tests.
+
+[source,python]
+----
+@pytest.mark.parametrize("data_type,test_data", [
+    (int, [64, 34, 25, 12, 22, 11, 90]),
+    (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+    (str, ["zebra", "apple", "banana", "cherry"])
+])
+def test_parametrized_sorting(self, data_type, test_data):
+    shuffled = test_data.copy()
+    import random
+    random.shuffle(shuffled)
+    expected = sorted(test_data)
+    result = Heap.sort(shuffled)
+    assert result == expected
+    assert Heap.is_sorted(result)
+----
+
+**Vorteile:**
+* Systematische Abdeckung verschiedener Datentypen
+* Reduzierte Code-Duplikation
+* Klare Trennung der Testfälle
+
+== Test-Fixtures
+
+Die Tests verwenden gemeinsame Fixtures aus `conftest.py`:
+
+=== `beispiel_ganzzahlen`
+Stellt eine konsistente Liste von Ganzzahlen bereit: `[1, 2, 3, 4, 5]`
+
+=== `beispiel_zeichenketten`
+Stellt eine konsistente Liste von Strings bereit: `["apple", "banana", "cherry", "date"]`
+
+=== `grosser_datensatz`
+Stellt eine grosse Liste mit 1000 Elementen bereit: `list(range(1000))`
+
+== Testausführung
+
+=== Alle Tests ausführen
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_heap.py -v
+----
+
+=== Nur schnelle Tests
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_heap.py -v -m "not slow"
+----
+
+=== Nur langsame Tests
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_heap.py -v -m "slow"
+----
+
+=== Mit Coverage-Report
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_heap.py --cov=src.algs4.sorting.heap
+----
+
+== Erwartete Testergebnisse
+
+Bei erfolgreicher Ausführung sollten alle 29 Tests bestehen:
+
+----
+============================= test session starts ==============================
+collecting ... collected 29 items
+
+tests/test_sorting/test_heap.py::TestHeap::test_empty_list PASSED        [  3%]
+tests/test_sorting/test_heap.py::TestHeap::test_single_element PASSED    [  6%]
+...
+tests/test_sorting/test_heap.py::TestHeap::test_heap_sort_with_custom_objects PASSED [100%]
+
+============================== 29 passed in 0.01s ==============================
+----
+
+== Heap-spezifische Teststrategien
+
+=== Heap-Eigenschaft Validierung
+
+Die Tests verwenden spezielle Validierungsmethoden für Heap-Eigenschaften:
+
+[source,python]
+----
+def validate_heap_property(arr, n):
+    """Validiert die Max-Heap-Eigenschaft."""
+    for i in range(n // 2):
+        left_child = 2 * i + 1
+        right_child = 2 * i + 2
+        
+        if left_child < n:
+            assert arr[i] >= arr[left_child], \
+                f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
+        
+        if right_child < n:
+            assert arr[i] >= arr[right_child], \
+                f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
+----
+
+=== Phasen-spezifische Tests
+
+Die Tests trennen bewusst zwischen den beiden Hauptphasen:
+
+1. **Heap-Konstruktion:** Überprüfung der korrekten Heap-Bildung
+2. **Sortdown:** Validierung der schrittweisen Extraktion
+
+=== Performance-Konsistenz
+
+Ein besonderer Fokus liegt auf der Validierung der charakteristischen Eigenschaft von Heap Sort: konsistente Performance unabhängig von der Eingabereihenfolge.
+
+== Qualitätssicherung
+
+=== Code Coverage
+Die Tests erreichen 100% Code Coverage für die Heap-Sort-Implementierung:
+
+* Alle Methoden werden getestet
+* Alle Verzweigungen werden abgedeckt
+* Alle Grenzfälle werden behandelt
+* Heap-spezifische Eigenschaften werden validiert
+
+=== Edge Case Abdeckung
+* ✅ Leere Listen
+* ✅ Ein-Element-Listen
+* ✅ Zwei-Element-Listen
+* ✅ Bereits sortierte Listen
+* ✅ Umgekehrt sortierte Listen
+* ✅ Listen mit Duplikaten
+* ✅ Listen mit identischen Elementen
+* ✅ Heap-Eigenschaft Grenzfälle
+
+=== Datentyp-Abdeckung
+* ✅ Ganzzahlen (positiv, negativ, null)
+* ✅ Gleitkommazahlen
+* ✅ Strings (verschiedene Gross-/Kleinschreibung)
+* ✅ Benutzerdefinierte Objekte
+
+=== Algorithmus-Abdeckung
+* ✅ Sink-Operation (Heapify)
+* ✅ Heap-Konstruktion
+* ✅ Sortdown-Phase
+* ✅ Heap-Eigenschaft Erhaltung
+* ✅ Performance-Konsistenz
+
+== Besonderheiten der Heap-Sort-Tests
+
+=== 1. Heap-Eigenschaft Tests
+Im Gegensatz zu anderen Sortieralgorithmen testen wir explizit die Heap-Datenstruktur:
+
+* Korrekte Parent-Child-Beziehungen
+* Max-Heap-Eigenschaft nach Konstruktion
+* Erhaltung der Heap-Eigenschaft während Sortdown
+
+=== 2. Konsistenz-Tests
+Heap Sort's Hauptvorteil ist die konsistente Performance:
+
+* Gleiche Zeitkomplexität für alle Eingabetypen
+* Keine Worst-Case-Szenarien wie bei Quick Sort
+* Vorhersagbare Performance
+
+=== 3. In-Place-Verifikation
+Besondere Aufmerksamkeit auf die In-Place-Eigenschaft:
+
+* Keine zusätzlichen Arrays werden erstellt
+* Originale Liste wird modifiziert
+* Speicherverbrauch bleibt konstant
+
+== Fazit
+
+Die umfassende Testsuite für Heap Sort gewährleistet:
+
+1. **Korrektheit**: Alle Sortieroperationen produzieren korrekte Ergebnisse
+2. **Heap-Eigenschaft**: Die zugrunde liegende Datenstruktur wird korrekt verwaltet
+3. **Konsistenz**: Gleichmässige Performance über alle Eingabetypen
+4. **Robustheit**: Grenzfälle und Sonderfälle werden korrekt behandelt
+5. **Kompatibilität**: Verschiedene Datentypen werden unterstützt
+6. **Wartbarkeit**: Systematische Tests erleichtern zukünftige Änderungen
+
+Die 29 Testfälle decken alle kritischen Aspekte der Heap-Sort-Implementierung ab und stellen sicher, dass der Algorithmus zuverlässig, effizient und den theoretischen Erwartungen entsprechend funktioniert.

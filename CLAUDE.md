@@ -63,7 +63,7 @@ ffhs-dua/
 
 Jede grundlegende Datenstruktur folgt diesem Muster:
 
-- Mehrere Implementierungsvarianten (z.B. verkettete Liste, festes Array, größenveränderliches Array)
+- Mehrere Implementierungsvarianten (z.B. verkettete Liste, festes Array, grössenveränderliches Array)
 - Generische Typisierung mit `TypeVar("T")`
 - Deutsche Docstrings nach akademischen Konventionen
 - Standardmethoden: `is_empty()`, `size()`, `__len__()`, `__iter__()`, `__repr__()`
@@ -71,9 +71,9 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 
 #### Stack-Implementierungen
 
-1. **Stack**: Verkettete Liste-Implementierung mit dynamischer Größe
-2. **FixedCapacityStack**: Feste Array-Größe-Implementierung
-3. **ResizingArrayStack**: Dynamisches Array mit automatischer Größenanpassung
+1. **Stack**: Verkettete Liste-Implementierung mit dynamischer Grösse
+2. **FixedCapacityStack**: Feste Array-Grösse-Implementierung
+3. **ResizingArrayStack**: Dynamisches Array mit automatischer Grössenanpassung
 
 #### Union-Find-Implementierungen
 
@@ -91,7 +91,7 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
 - Deutsche Fehlermeldungen (z.B. "Stack-Unterlauf")
-- Ordnungsgemäße Type-Assertions für Sicherheit
+- Ordnungsgemässe Type-Assertions für Sicherheit
 
 #### Teststrategie
 
@@ -120,5 +120,5 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 ## Testphilosophie
 
 Tests sind auf Deutsch geschrieben und folgen akademischen Mustern. Jede Datenstruktur hat umfassende Testabdeckung
-einschließlich Grenzfälle, Typsicherheit und Verhaltenskorrektheit. Die Teststruktur spiegelt die Klassenhierarchie
+einschliesslich Grenzfälle, Typsicherheit und Verhaltenskorrektheit. Die Teststruktur spiegelt die Klassenhierarchie
 mit separaten Testklassen für jede Implementierungsvariante wider.

@@ -71,7 +71,7 @@ class TestQuick:
         assert Quick.is_sorted(result)
 
     def test_strings_case_sensitive(self):
-        """Test: Sortieren von Strings mit Groß-/Kleinschreibung."""
+        """Test: Sortieren von Strings mit Gross-/Kleinschreibung."""
         arr = ["Zebra", "apple", "Banana", "cherry"]
         expected = ["Banana", "Zebra", "apple", "cherry"]
         result = Quick.sort(arr)
@@ -96,7 +96,7 @@ class TestQuick:
 
     @pytest.mark.slow
     def test_large_list(self, grosser_datensatz):
-        """Test: Sortieren einer größeren Liste."""
+        """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
         random.shuffle(shuffled)
@@ -200,7 +200,7 @@ class TestQuick:
 
     def test_quicksort_recursive_calls(self):
         """Test: Indirekte Tests der rekursiven quicksort-Methode."""
-        # Test mit verschiedenen Array-Größen
+        # Test mit verschiedenen Array-Grössen
         for size in [3, 5, 10, 20]:
             arr = list(range(size, 0, -1))  # Umgekehrt sortiert
             expected = list(range(1, size + 1))

@@ -20,7 +20,7 @@ def get_medium_string_dataset() -> list[str]:
 
 
 def get_large_integer_dataset() -> list[int]:
-    """Große Integer-Datensätze für Performance-Tests."""
+    """Grosse Integer-Datensaetze für Performance-Tests."""
     return list(range(10000))
 
 

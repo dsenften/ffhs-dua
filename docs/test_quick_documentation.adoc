@@ -118,7 +118,7 @@ Testet das Sortieren von Zeichenketten.
 **Verwendung:** Nutzt die `beispiel_zeichenketten` Fixture
 
 ==== `test_strings_case_sensitive()`
-Testet die Groß-/Kleinschreibung bei Strings.
+Testet die Gross-/Kleinschreibung bei Strings.
 
 [source,python]
 ----
@@ -129,7 +129,7 @@ def test_strings_case_sensitive(self):
     assert result == expected
 ----
 
-**Hinweis:** Großbuchstaben haben in ASCII niedrigere Werte als Kleinbuchstaben.
+**Hinweis:** Grossbuchstaben haben in ASCII niedrigere Werte als Kleinbuchstaben.
 
 ==== `test_different_types()`
 Testet verschiedene numerische Datentypen:
@@ -197,15 +197,15 @@ Testet Grenzfälle der Partitionierung:
 Testet die rekursive `quicksort()`-Methode direkt.
 
 **Testmethodik:**
-* Verschiedene Array-Größen (3, 5, 10, 20)
+* Verschiedene Array-Grössen (3, 5, 10, 20)
 * Umgekehrt sortierte Eingaben als Worst-Case
 
 == Performance-Tests
 
-=== Große Datenmengen
+=== Grosse Datenmengen
 
 ==== `test_large_list()`
-Testet die Performance mit großen Datenmengen.
+Testet die Performance mit grossen Datenmengen.
 
 **Kennzeichnung:** `@pytest.mark.slow`
 
@@ -321,7 +321,7 @@ Stellt eine konsistente Liste von Ganzzahlen bereit: `[1, 2, 3, 4, 5]`
 Stellt eine konsistente Liste von Strings bereit: `["apple", "banana", "cherry", "date"]`
 
 === `grosser_datensatz`
-Stellt eine große Liste mit 1000 Elementen bereit: `list(range(1000))`
+Stellt eine grosse Liste mit 1000 Elementen bereit: `list(range(1000))`
 
 == Testausführung
 
@@ -386,7 +386,7 @@ Die Tests erreichen 100% Code Coverage für die Quick-Sort-Implementierung:
 === Datentyp-Abdeckung
 * ✅ Ganzzahlen (positiv, negativ, null)
 * ✅ Gleitkommazahlen
-* ✅ Strings (verschiedene Groß-/Kleinschreibung)
+* ✅ Strings (verschiedene Gross-/Kleinschreibung)
 * ✅ Benutzerdefinierte Objekte
 
 === Algorithmus-Abdeckung
@@ -401,7 +401,7 @@ Die umfassende Testsuite für Quick Sort gewährleistet:
 
 1. **Korrektheit**: Alle Sortieroperationen produzieren korrekte Ergebnisse
 2. **Robustheit**: Grenzfälle und Sonderfälle werden korrekt behandelt
-3. **Performance**: Große Datenmengen werden effizient verarbeitet
+3. **Performance**: Grosse Datenmengen werden effizient verarbeitet
 4. **Kompatibilität**: Verschiedene Datentypen werden unterstützt
 5. **Wartbarkeit**: Systematische Tests erleichtern zukünftige Änderungen
 

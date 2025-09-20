@@ -38,7 +38,7 @@ def sierpinski_iteration(triangles, iteration):
     new_triangles = []
 
     for x, y, size in triangles:
-        # Größe der neuen kleineren Dreiecke
+        # Grösse der neuen kleineren Dreiecke
         new_size = size / 2
         height = size * np.sqrt(3) / 2
 
@@ -116,7 +116,7 @@ def sierpinski_recursive(x, y, n, level):
         draw_filled_triangle(x, y, n)
         return
 
-    # Rekursionsschritt: drei kleinere Dreiecke mit halber Größe
+    # Rekursionsschritt: drei kleinere Dreiecke mit halber Grösse
     new_size = n / 2
     height = n * np.sqrt(3) / 2
 

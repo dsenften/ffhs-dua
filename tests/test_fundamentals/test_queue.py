@@ -112,7 +112,7 @@ class TestQueue:
 
     @pytest.mark.slow
     def test_large_dataset_performance(self, grosser_datensatz):
-        """Test: Performance mit großem Datensatz."""
+        """Test: Performance mit grossem Datensatz."""
         queue = Queue[int]()
 
         # Alle Elemente einreihen
