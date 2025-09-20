@@ -11,7 +11,7 @@
 
 == Willkommen
 
-Willkommen zur Dokumentation des FFHS-DUA Projekts - einer umfassenden Python-Implementierung grundlegender Algorithmen und Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
+Willkommen zur Dokumentation des FFHS-DUA Projekts - einer umfassenden Python-Implementierung grundlegender Algorithmen und Datenstrukturen.
 
 Dieses Projekt wurde für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) entwickelt und bietet eine vollständige, gut dokumentierte und getestete Sammlung von Algorithmen und Datenstrukturen.
 
@@ -227,9 +227,6 @@ Fernfachhochschule Schweiz (FFHS) +
 Studiengang: Informatik +
 Modul: Datenstrukturen und Algorithmen
 
-=== Basierend auf
-"Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne +
-Princeton University
 
 == Weiterführende Ressourcen
 

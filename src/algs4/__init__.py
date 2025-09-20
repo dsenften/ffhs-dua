@@ -1,11 +1,9 @@
 """FFHS-DUA Algorithmen und Datenstrukturen
 
-Eine Python-Implementierung grundlegender Datenstrukturen basierend auf
-das Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
+Eine Python-Implementierung grundlegender Datenstrukturen und Algorithmen.
 
-Dieses Paket implementiert die wichtigsten Datenstrukturen aus dem ersten
-Teil des Algorithms-Lehrbuchs in Python, angepasst für den akademischen
-Gebrauch an der Fernfachhochschule Schweiz (FFHS).
+Dieses Paket implementiert die wichtigsten Datenstrukturen und Algorithmen
+in Python, angepasst für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS).
 
 Module:
     fundamentals: Grundlegende Datenstrukturen (Stack, Queue, Bag, Union-Find)

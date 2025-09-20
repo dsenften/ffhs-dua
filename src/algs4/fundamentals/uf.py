@@ -20,7 +20,7 @@ Implementierte Varianten:
 - WeightedQuickUnionUF: Weighted Quick Union by Size (ohne Path Compression)
 - QuickFindUF: Quick Find Implementation
 
-Basiert auf Kapitel 1.5 von "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
+Implementiert verschiedene Union-Find-Algorithmen für dynamische Konnektivitätsprobleme.
 """
 
 
