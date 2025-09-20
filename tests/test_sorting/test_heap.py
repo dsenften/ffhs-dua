@@ -171,7 +171,7 @@ class TestHeap:
         # Teste sink mit einem einfachen Heap
         arr = [1, 4, 3, 2]  # Verletzt Heap-Eigenschaft an Index 0
         Heap.sink(arr, 0, 3)
-        
+
         # Nach dem Sinken sollte die Heap-Eigenschaft erfüllt sein
         # Das groesste Element sollte an der Wurzel stehen
         assert arr[0] >= arr[1] if len(arr) > 1 else True
@@ -183,12 +183,12 @@ class TestHeap:
         arr = [5]
         Heap.sink(arr, 0, 0)
         assert arr == [5]
-        
+
         # Zwei Elemente - bereits korrekt
         arr = [5, 3]
         Heap.sink(arr, 0, 1)
         assert arr[0] >= arr[1]
-        
+
         # Zwei Elemente - muss getauscht werden
         arr = [3, 5]
         Heap.sink(arr, 0, 1)
@@ -198,21 +198,21 @@ class TestHeap:
         """Test: Heap-Konstruktionsphase separat testen."""
         arr = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
         n = len(arr)
-        
+
         # Führe nur die Heap-Konstruktionsphase durch
         k = n // 2 - 1
         while k >= 0:
             Heap.sink(arr, k, n - 1)
             k -= 1
-        
+
         # Überprüfe Heap-Eigenschaft: Jeder Knoten >= seiner Kinder
         for i in range(n // 2):
             left_child = 2 * i + 1
             right_child = 2 * i + 2
-            
+
             if left_child < n:
                 assert arr[i] >= arr[left_child], f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
-            
+
             if right_child < n:
                 assert arr[i] >= arr[right_child], f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
 
@@ -221,29 +221,29 @@ class TestHeap:
         arr = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
         original_arr = arr.copy()
         n = len(arr)
-        
+
         # Phase 1: Heap-Konstruktion
         k = n // 2 - 1
         while k >= 0:
             Heap.sink(arr, k, n - 1)
             k -= 1
-        
+
         # Überprüfe, dass ein gültiger Max-Heap erstellt wurde
         for i in range(n // 2):
             left_child = 2 * i + 1
             right_child = 2 * i + 2
-            
+
             if left_child < n:
                 assert arr[i] >= arr[left_child]
             if right_child < n:
                 assert arr[i] >= arr[right_child]
-        
+
         # Phase 2: Sortdown
         while n > 1:
             arr[0], arr[n - 1] = arr[n - 1], arr[0]
             n -= 1
             Heap.sink(arr, 0, n - 1)
-        
+
         # Überprüfe, dass das Array sortiert ist
         assert Heap.is_sorted(arr)
         # Überprüfe, dass es die gleichen Elemente enthält
@@ -253,34 +253,32 @@ class TestHeap:
         """Test: Erhaltung der Heap-Eigenschaft während des Sortierens."""
         arr = [9, 5, 6, 2, 3, 7, 1, 4, 8]
         n = len(arr)
-        
+
         # Baue initial einen Max-Heap
         k = n // 2 - 1
         while k >= 0:
             Heap.sink(arr, k, n - 1)
             k -= 1
-        
+
         # Simuliere die Sortdown-Phase und überprüfe Heap-Eigenschaft nach jedem Schritt
-        original_n = n
         while n > 1:
             # Das Maximum sollte an der Wurzel stehen
-            max_element = arr[0]
             for i in range(n):
                 assert arr[0] >= arr[i], f"Maximum nicht an Wurzel: arr[0]={arr[0]} < arr[{i}]={arr[i]}"
-            
+
             # Tausche und reduziere Heap-Grösse
             arr[0], arr[n - 1] = arr[n - 1], arr[0]
             n -= 1
-            
+
             # Stelle Heap-Eigenschaft wieder her
             if n > 1:
                 Heap.sink(arr, 0, n - 1)
-                
+
                 # Überprüfe Heap-Eigenschaft für den reduzierten Heap
                 for i in range(n // 2):
                     left_child = 2 * i + 1
                     right_child = 2 * i + 2
-                    
+
                     if left_child < n:
                         assert arr[i] >= arr[left_child]
                     if right_child < n:
@@ -305,23 +303,23 @@ class TestHeap:
         """Test: Heap Sort hat konsistente O(n log n) Performance."""
         # Heap Sort sollte für alle Eingabetypen ähnliche Performance haben
         import random
-        
+
         # Bereits sortiert
         sorted_arr = list(range(100))
         result1 = Heap.sort(sorted_arr.copy())
         assert Heap.is_sorted(result1)
-        
+
         # Umgekehrt sortiert
         reverse_arr = list(range(100, 0, -1))
         result2 = Heap.sort(reverse_arr)
         assert Heap.is_sorted(result2)
-        
+
         # Zufällig
         random_arr = list(range(100))
         random.shuffle(random_arr)
         result3 = Heap.sort(random_arr)
         assert Heap.is_sorted(result3)
-        
+
         # Alle sollten das gleiche Ergebnis haben
         expected = list(range(100))
         assert result1 == expected
@@ -334,22 +332,22 @@ class TestHeap:
             def __init__(self, value, original_index):
                 self.value = value
                 self.original_index = original_index
-            
+
             def __lt__(self, other):
                 return self.value < other.value
-            
+
             def __le__(self, other):
                 return self.value <= other.value
-            
+
             def __gt__(self, other):
                 return self.value > other.value
-            
+
             def __ge__(self, other):
                 return self.value >= other.value
-            
+
             def __eq__(self, other):
                 return self.value == other.value
-            
+
             def __repr__(self):
                 return f"({self.value}, {self.original_index})"
 
@@ -361,13 +359,13 @@ class TestHeap:
             ComparableItem(2, 3),
             ComparableItem(1, 4)
         ]
-        
+
         result = Heap.sort(arr)
-        
+
         # Überprüfe, dass sortiert ist
         for i in range(1, len(result)):
             assert result[i].value >= result[i-1].value
-        
+
         # Heap Sort ist nicht stabil, also testen wir nur die Korrektheit der Sortierung
         values = [item.value for item in result]
         assert values == [1, 1, 2, 3, 3]
@@ -375,7 +373,7 @@ class TestHeap:
     def test_heap_sort_vs_other_algorithms(self):
         """Test: Vergleiche Heap Sort mit Python's eingebautem sort."""
         import random
-        
+
         test_cases = [
             [],  # Leer
             [1],  # Ein Element
@@ -385,7 +383,7 @@ class TestHeap:
             [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],  # Mit Duplikaten
             [random.randint(1, 100) for _ in range(50)]  # Zufällig
         ]
-        
+
         for test_case in test_cases:
             heap_result = Heap.sort(test_case.copy())
             python_result = sorted(test_case)
@@ -397,22 +395,22 @@ class TestHeap:
             def __init__(self, name, grade):
                 self.name = name
                 self.grade = grade
-            
+
             def __lt__(self, other):
                 return self.grade < other.grade
-            
+
             def __le__(self, other):
                 return self.grade <= other.grade
-            
+
             def __gt__(self, other):
                 return self.grade > other.grade
-            
+
             def __ge__(self, other):
                 return self.grade >= other.grade
-            
+
             def __eq__(self, other):
                 return self.grade == other.grade
-            
+
             def __repr__(self):
                 return f"{self.name}: {self.grade}"
 
@@ -423,13 +421,13 @@ class TestHeap:
             Student("Diana", 96),
             Student("Eve", 88)
         ]
-        
+
         result = Heap.sort(students)
-        
+
         # Überprüfe, dass nach Noten sortiert ist
         for i in range(1, len(result)):
             assert result[i].grade >= result[i-1].grade
-        
+
         # Überprüfe spezifische Reihenfolge
         expected_names = ["Charlie", "Alice", "Eve", "Bob", "Diana"]
         actual_names = [student.name for student in result]

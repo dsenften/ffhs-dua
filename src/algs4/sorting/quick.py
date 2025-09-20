@@ -41,24 +41,24 @@ class Quick:
         v = arr[lo]
         i = lo
         j = hi + 1
-        
+
         while True:
             # Finde Element von links, das >= Pivot ist
             while True:
                 i += 1
                 if not (i < hi and arr[i] < v):
                     break
-            
+
             # Finde Element von rechts, das <= Pivot ist
             while True:
                 j -= 1
                 if not (j > lo and arr[j] > v):
                     break
-            
+
             # Überprüfe, ob sich die Zeiger gekreuzt haben
             if i >= j:
                 break
-            
+
             # Tausche Elemente
             arr[i], arr[j] = arr[j], arr[i]
 
@@ -83,11 +83,11 @@ class Quick:
 
         # Partitioniere das Array und erhalte die Pivot-Position
         j = cls.partition(arr, lo, hi)
-        
+
         # Sortiere rekursiv die beiden Teilarrays
         cls.quicksort(arr, lo, j - 1)
         cls.quicksort(arr, j + 1, hi)
-        
+
         return arr
 
     @classmethod

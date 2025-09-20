@@ -171,14 +171,14 @@ class TestQuick:
         # Test mit einfachem Array
         arr = [3, 1, 4, 1, 5, 9, 2, 6]
         pivot_index = Quick.partition(arr, 0, len(arr) - 1)
-        
+
         # Überprüfe, dass das Pivot-Element korrekt positioniert ist
         pivot_value = arr[pivot_index]
-        
+
         # Alle Elemente links vom Pivot sollten <= Pivot sein
         for i in range(pivot_index):
             assert arr[i] <= pivot_value
-        
+
         # Alle Elemente rechts vom Pivot sollten >= Pivot sein
         for i in range(pivot_index + 1, len(arr)):
             assert arr[i] >= pivot_value
@@ -190,7 +190,7 @@ class TestQuick:
         pivot_index = Quick.partition(arr, 0, 1)
         assert pivot_index in [0, 1]
         assert Quick.is_sorted(arr) or arr == [2, 1]  # Kann sortiert oder unverändert sein
-        
+
         # Alle gleichen Elemente
         arr = [5, 5, 5, 5]
         pivot_index = Quick.partition(arr, 0, 3)
@@ -250,22 +250,22 @@ class TestQuick:
             def __init__(self, value, original_index):
                 self.value = value
                 self.original_index = original_index
-            
+
             def __lt__(self, other):
                 return self.value < other.value
-            
+
             def __le__(self, other):
                 return self.value <= other.value
-            
+
             def __gt__(self, other):
                 return self.value > other.value
-            
+
             def __ge__(self, other):
                 return self.value >= other.value
-            
+
             def __eq__(self, other):
                 return self.value == other.value
-            
+
             def __repr__(self):
                 return f"({self.value}, {self.original_index})"
 
@@ -277,13 +277,13 @@ class TestQuick:
             ComparableItem(2, 3),
             ComparableItem(1, 4)
         ]
-        
+
         result = Quick.sort(arr)
-        
+
         # Überprüfe, dass sortiert ist
         for i in range(1, len(result)):
             assert result[i].value >= result[i-1].value
-        
+
         # Quick-Sort ist nicht stabil, also testen wir nur die Korrektheit der Sortierung
         values = [item.value for item in result]
         assert values == [1, 1, 2, 3, 3]

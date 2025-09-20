@@ -42,15 +42,15 @@ class Heap:
         while 2 * i + 1 <= length:
             # Finde den Index des linken Kindes
             j = 2 * i + 1
-            
+
             # Waehle das grössere der beiden Kinder
             if j < length and arr[j] < arr[j + 1]:
                 j += 1
-            
+
             # Wenn das aktuelle Element bereits grösser ist, sind wir fertig
             if arr[i] >= arr[j]:
                 break
-            
+
             # Tausche das aktuelle Element mit dem grösseren Kind
             arr[i], arr[j] = arr[j], arr[i]
             i = j
@@ -70,7 +70,7 @@ class Heap:
             Die sortierte Liste (in-place modifiziert).
         """
         n = len(arr)
-        
+
         # Phase 1: Heap-Konstruktion (Heapify)
         # Beginne mit dem letzten Nicht-Blatt-Knoten und arbeite rückwärts
         k = n // 2 - 1
