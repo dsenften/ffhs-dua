@@ -1,0 +1,317 @@
+= Sorting API-Dokumentation
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Übersicht
+
+Das `sorting`-Modul enthält verschiedene Sortieralgorithmen aus dem "Algorithms, 4th Edition" Lehrbuch. Alle Implementierungen arbeiten in-place und unterstützen verschiedene Datentypen, die das Vergleichsprotokoll implementieren.
+
+== Shell Sort
+
+Shell Sort ist eine Erweiterung des Insertion Sort-Algorithmus, die für größere Datenmengen besser geeignet ist.
+
+=== Klasse: `Shell`
+
+[source,python]
+----
+from src.algs4.sorting.shell import Shell
+
+# Beispiel-Verwendung
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Shell.sort(numbers)
+----
+
+==== Methoden
+
+===== `sort(arr: list) -> list`
+
+Sortiert eine Liste mit dem Shell-Sort-Algorithmus.
+
+**Parameter:**
+* `arr: list` - Die zu sortierende Liste
+
+**Rückgabe:**
+* `list` - Die sortierte Liste (in-place modifiziert)
+
+**Zeitkomplexität:**
+* Best Case: O(n log n)
+* Average Case: O(n^1.25)
+* Worst Case: O(n²)
+
+**Beispiel:**
+[source,python]
+----
+arr = [3, 1, 4, 1, 5, 9, 2, 6]
+result = Shell.sort(arr)
+print(result)  # [1, 1, 2, 3, 4, 5, 6, 9]
+----
+
+===== `is_sorted(arr: list) -> bool`
+
+Überprüft, ob eine Liste sortiert ist.
+
+**Parameter:**
+* `arr: list` - Die zu überprüfende Liste
+
+**Rückgabe:**
+* `bool` - True, wenn die Liste sortiert ist, sonst False
+
+**Zeitkomplexität:** O(n)
+
+**Beispiel:**
+[source,python]
+----
+Shell.is_sorted([1, 2, 3, 4, 5])  # True
+Shell.is_sorted([3, 1, 2])        # False
+----
+
+== Quick Sort
+
+Quick Sort ist ein effizienter Divide-and-Conquer-Sortieralgorithmus mit durchschnittlicher Zeitkomplexität O(n log n).
+
+=== Klasse: `Quick`
+
+[source,python]
+----
+from src.algs4.sorting.quick import Quick
+
+# Beispiel-Verwendung
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Quick.sort(numbers)
+----
+
+==== Methoden
+
+===== `sort(arr: list) -> list`
+
+Sortiert eine Liste mit dem Quick-Sort-Algorithmus.
+
+**Parameter:**
+* `arr: list` - Die zu sortierende Liste
+
+**Rückgabe:**
+* `list` - Die sortierte Liste (in-place modifiziert)
+
+**Zeitkomplexität:**
+* Best Case: O(n log n)
+* Average Case: O(n log n)
+* Worst Case: O(n²)
+
+**Speicherkomplexität:** O(log n) für Rekursionsstack
+
+**Beispiel:**
+[source,python]
+----
+arr = [3, 1, 4, 1, 5, 9, 2, 6]
+result = Quick.sort(arr)
+print(result)  # [1, 1, 2, 3, 4, 5, 6, 9]
+----
+
+===== `is_sorted(arr: list) -> bool`
+
+Überprüft, ob eine Liste sortiert ist.
+
+**Parameter:**
+* `arr: list` - Die zu überprüfende Liste
+
+**Rückgabe:**
+* `bool` - True, wenn die Liste sortiert ist, sonst False
+
+**Zeitkomplexität:** O(n)
+
+**Beispiel:**
+[source,python]
+----
+Quick.is_sorted([1, 2, 3, 4, 5])  # True
+Quick.is_sorted([3, 1, 2])        # False
+----
+
+===== `partition(arr: list, lo: int, hi: int) -> int`
+
+Partitioniert das Array um ein Pivot-Element (interne Methode).
+
+**Parameter:**
+* `arr: list` - Die zu partitionierende Liste
+* `lo: int` - Der untere Index des zu partitionierenden Bereichs
+* `hi: int` - Der obere Index des zu partitionierenden Bereichs
+
+**Rückgabe:**
+* `int` - Der Index des Pivot-Elements nach der Partitionierung
+
+**Zeitkomplexität:** O(n)
+
+**Hinweis:** Diese Methode wird normalerweise nicht direkt aufgerufen, sondern intern von `sort()` verwendet.
+
+===== `quicksort(arr: list, lo: int, hi: int) -> list`
+
+Rekursive Quick-Sort-Implementierung (interne Methode).
+
+**Parameter:**
+* `arr: list` - Die zu sortierende Liste
+* `lo: int` - Der untere Index des zu sortierenden Bereichs
+* `hi: int` - Der obere Index des zu sortierenden Bereichs
+
+**Rückgabe:**
+* `list` - Die sortierte Liste
+
+**Zeitkomplexität:** O(n log n) im Durchschnitt, O(n²) im Worst Case
+
+**Hinweis:** Diese Methode wird normalerweise nicht direkt aufgerufen, sondern intern von `sort()` verwendet.
+
+== Vergleich der Algorithmen
+
+[cols="2,2,2,2,2,2"]
+|===
+|Algorithmus |Best Case |Average Case |Worst Case |Speicher |Stabil
+
+|**Shell Sort**
+|O(n log n)
+|O(n^1.25)
+|O(n²)
+|O(1)
+|❌
+
+|**Quick Sort**
+|O(n log n)
+|O(n log n)
+|O(n²)
+|O(log n)
+|❌
+|===
+
+== Verwendungsempfehlungen
+
+=== Shell Sort verwenden, wenn:
+* Einfache Implementierung gewünscht ist
+* Konstanter Speicherverbrauch wichtig ist
+* Moderate Datenmengen sortiert werden sollen
+* Adaptive Eigenschaften nicht benötigt werden
+
+=== Quick Sort verwenden, wenn:
+* Beste durchschnittliche Performance gewünscht ist
+* Große Datenmengen effizient sortiert werden sollen
+* Worst-Case-Performance akzeptabel ist
+* Stabilität nicht erforderlich ist
+
+== Gemeinsame Eigenschaften
+
+=== Unterstützte Datentypen
+
+Alle Sortieralgorithmen unterstützen jeden Datentyp, der das Vergleichsprotokoll implementiert:
+
+[source,python]
+----
+# Ganzzahlen
+Quick.sort([3, 1, 4, 1, 5])
+
+# Gleitkommazahlen
+Quick.sort([3.14, 2.71, 1.41])
+
+# Strings
+Quick.sort(["zebra", "apple", "banana"])
+
+# Benutzerdefinierte Objekte
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def __lt__(self, other):
+        return self.age < other.age
+
+people = [Person("Alice", 30), Person("Bob", 25)]
+Quick.sort(people)  # Sortiert nach Alter
+----
+
+=== In-Place Sortierung
+
+Alle Algorithmen modifizieren die ursprüngliche Liste direkt:
+
+[source,python]
+----
+original = [3, 1, 4, 1, 5]
+result = Quick.sort(original)
+
+print(original)  # [1, 1, 3, 4, 5] - wurde modifiziert
+print(result is original)  # True - gleiche Referenz
+----
+
+=== Fehlerbehandlung
+
+Die Algorithmen sind robust und handhaben Grenzfälle korrekt:
+
+[source,python]
+----
+# Leere Liste
+Quick.sort([])  # []
+
+# Ein Element
+Quick.sort([42])  # [42]
+
+# Alle gleichen Elemente
+Quick.sort([5, 5, 5, 5])  # [5, 5, 5, 5]
+
+# Bereits sortiert
+Quick.sort([1, 2, 3, 4, 5])  # [1, 2, 3, 4, 5]
+----
+
+== Beispiele
+
+=== Performance-Vergleich
+
+[source,python]
+----
+import time
+import random
+from src.algs4.sorting import Quick, Shell
+
+def benchmark_algorithm(algorithm, data):
+    start = time.time()
+    algorithm.sort(data.copy())
+    return time.time() - start
+
+# Teste mit verschiedenen Datengrößen
+sizes = [1000, 5000, 10000]
+for size in sizes:
+    data = [random.randint(1, 1000) for _ in range(size)]
+    
+    quick_time = benchmark_algorithm(Quick, data)
+    shell_time = benchmark_algorithm(Shell, data)
+    
+    print(f"Größe {size}:")
+    print(f"  Quick Sort: {quick_time:.4f}s")
+    print(f"  Shell Sort: {shell_time:.4f}s")
+----
+
+=== Sortierung mit benutzerdefinierten Vergleichen
+
+[source,python]
+----
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+    
+    def __lt__(self, other):
+        # Sortiere nach Note (aufsteigend)
+        return self.grade < other.grade
+    
+    def __repr__(self):
+        return f"{self.name}({self.grade})"
+
+students = [
+    Student("Alice", 85),
+    Student("Bob", 92),
+    Student("Charlie", 78)
+]
+
+Quick.sort(students)
+print(students)  # [Charlie(78), Alice(85), Bob(92)]
+----

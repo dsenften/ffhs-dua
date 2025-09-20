@@ -1,39 +1,53 @@
-# FFHS-DUA - Datenstrukturen und Algorithmen
+# FFHS-DUA: Algorithmen und Datenstrukturen
 
-Eine professionelle Python-Implementierung grundlegender Datenstrukturen und Algorithmen für das Modul
-**Datenstrukturen und Algorithmen (DUA)** an der Fernfachhochschule Schweiz (FFHS).
-Das Projekt ist optimiert für Test-Driven Development und moderne Softwareentwicklungspraktiken.
+Eine umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
+
+Dieses Projekt wurde für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) entwickelt und bietet eine vollständige, gut dokumentierte und getestete Sammlung von Algorithmen und Datenstrukturen.
 
 ## Projektübersicht
 
-Dieses Projekt implementiert die wichtigsten Datenstrukturen und Algorithmen basierend auf den folgenden Lehrbüchern.
-Alle Implementierungen sind an die Python-Sprache und moderne Programmierkonzepte angepasst.
+### Ziele
 
-### Implementierte Datenstrukturen
+* **Bildung**: Bereitstellung klarer, verständlicher Implementierungen für Lernzwecke
+* **Qualität**: Hochwertige, gut getestete und dokumentierte Code-Basis
+* **Praxis**: Anwendbare Implementierungen für reale Probleme
+* **Standards**: Einhaltung moderner Python-Entwicklungsstandards
 
-#### Fundamentals (Grundlagen)
+### Prinzipien
 
-- **Stack (Stapel)**: Drei verschiedene Implementierungen
-  - `Stack`: Verkettete Liste mit dynamischer Größe
+* **Deutsche Dokumentation**: Alle Dokumentation und Kommentare auf Deutsch
+* **Type Hints**: Vollständige Typisierung für bessere Code-Qualität
+* **Umfassende Tests**: Hohe Testabdeckung mit pytest
+* **Clean Code**: Lesbare, wartbare Implementierungen
+
+## Module
+
+### Fundamentals (Grundlagen)
+
+Das `fundamentals`-Modul enthält die grundlegenden Datenstrukturen:
+
+#### Datenstrukturen
+* **Stack**: Last-In-First-Out (LIFO) Stapel in drei Implementierungen
+  - `Stack`: Verkettete Liste mit dynamischer Grösse
   - `FixedCapacityStack`: Festes Array mit vorgegebener Kapazität
-  - `ResizingArrayStack`: Dynamisches Array mit automatischer Größenanpassung
-- **Queue (Warteschlange)**: FIFO-Datenstruktur
-- **Bag (Sammlung)**: Ungeordnete Sammlung von Elementen
-- **Union-Find (Disjoint-Set)**: Vier Implementierungen für dynamische Konnektivität
+  - `ResizingArrayStack`: Dynamisches Array mit automatischer Grössenanpassung
+* **Queue**: First-In-First-Out (FIFO) Warteschlange
+* **Bag**: Ungeordnete Sammlung von Elementen
+* **Union-Find**: Datenstruktur für dynamische Konnektivität in vier Implementierungen
   - `UF`: Optimierte Version mit Weighted Quick Union by Rank und Path Compression
   - `QuickUnionUF`: Einfache Quick Union Implementation
   - `WeightedQuickUnionUF`: Weighted Quick Union by Size
   - `QuickFindUF`: Quick Find Implementation mit konstanter Find-Zeit
 
+### Sorting (Sortieralgorithmen)
+
+Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
+
+#### Algorithmen
+* **Quick Sort**: Effizienter Divide-and-Conquer-Algorithmus
+* **Shell Sort**: Erweiterte Insertion-Sort-Variante
+
 Alle Implementierungen unterstützen generische Typen und folgen den Python-Konventionen für Container-Klassen.
-
-#### PVA1 (Praktische Vertiefungsaufgaben)
-
-- **Sierpinski-Dreieck**: Fraktal-Implementation mit rekursiven und iterativen Algorithmen
-  - Mathematisch korrekte Positionierung
-  - Visualisierung der Iterationsschritte
-  - Umfassende AsciiDoc-Dokumentation
-- **Grundlagen-Notebook**: Interaktive Jupyter-Übungen
 
 ## Installation und Setup
 
@@ -49,12 +63,12 @@ Alle Implementierungen unterstützen generische Typen und folgen den Python-Konv
 git clone <repository-url>
 cd ffhs-dua
 
-# Entwicklungsumgebung automatisch einrichten
-python scripts/setup_dev.py
+# Virtuelle Umgebung erstellen
+python3 -m venv .venv
+source .venv/bin/activate
 
-# Oder manuell:
-uv sync --dev
-uv run pre-commit install
+# Abhängigkeiten installieren
+pip install -e .
 ```
 
 ### Manuelle Installation
@@ -78,50 +92,50 @@ Dieses Projekt folgt TDD-Prinzipien. Schreiben Sie Tests vor der Implementierung
 
 ```bash
 # Alle Tests ausführen
-uv run pytest
+python3 -m pytest tests/ -v
 
 # Tests mit Coverage-Report
-uv run pytest --cov=src/algs4 --cov-report=html
+python3 -m pytest tests/ --cov=src.algs4 --cov-report=html
 
 # Spezifische Test-Kategorien
-uv run pytest -m unit          # Nur Unit-Tests
-uv run pytest -m integration   # Nur Integration-Tests
-uv run pytest -m "not slow"    # Ohne langsame Tests
+python3 -m pytest -m unit          # Nur Unit-Tests
+python3 -m pytest -m integration   # Nur Integration-Tests
+python3 -m pytest -m "not slow"    # Ohne langsame Tests
 
 # Spezifische Testdatei
-uv run pytest tests/test_fundamentals/test_bag.py
+python3 -m pytest tests/test_fundamentals/test_bag.py
 
 # Mit detaillierter Ausgabe
-uv run pytest -v
+python3 -m pytest -v
 ```
 
 ### Code-Qualität und Formatierung
 
 ```bash
 # Code automatisch formatieren
-uv run ruff format
+ruff format
 
 # Linting überprüfen
-uv run ruff check
+ruff check
 
 # Automatische Fehlerbehebung
-uv run ruff check --fix
+ruff check --fix
 
 # Type-Checking mit mypy
-uv run mypy src/
+mypy src/
 
 # Alle Qualitätschecks auf einmal
-uv run pre-commit run --all-files
+pre-commit run --all-files
 ```
 
 ### Performance-Tests
 
 ```bash
 # Benchmark-Tests ausführen
-uv run python benchmarks/sorting_benchmarks.py
+python benchmarks/sorting_benchmarks.py
 
 # Performance-Tests mit pytest-benchmark
-uv run pytest tests/ --benchmark-only
+python3 -m pytest tests/ --benchmark-only
 ```
 
 ### Jupyter Notebooks
@@ -195,20 +209,20 @@ print(f"0 und 3 verbunden: {uf.connected(0, 3)}")  # True
 print(f"Anzahl Komponenten: {uf.count()}")  # 7 (original 10 - 3 unions)
 ```
 
-### Beispiel: Sierpinski-Dreieck verwenden
+### Beispiel: Sortieralgorithmen verwenden
 
 ```python
-from notebooks.pva1.sierpinski import sierpinski, zeichne_sierpinski_progression
+from src.algs4.sorting import Quick, Shell
 
-# Einzelnes Sierpinski-Dreieck zeichnen
-import matplotlib.pyplot as plt
-plt.figure(figsize=(8, 8))
-sierpinski(0, 0, 3, max_iterations=5)
-plt.axis('equal')
-plt.show()
+# Quick Sort
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Quick.sort(numbers)
+print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
 
-# Progression der ersten 5 Iterationen
-zeichne_sierpinski_progression()
+# Shell Sort
+words = ["zebra", "apple", "banana", "cherry"]
+sorted_words = Shell.sort(words)
+print(sorted_words)  # ['apple', 'banana', 'cherry', 'zebra']
 ```
 
 ### Beispiel: Test-Driven Development
@@ -224,7 +238,7 @@ def test_stack_push_pop():
     assert stack.is_empty()
 
 # 2. Test ausführen (sollte fehlschlagen)
-# uv run pytest tests/test_fundamentals/test_stack.py::test_stack_push_pop
+# python3 -m pytest tests/test_fundamentals/test_stack.py::test_stack_push_pop
 
 # 3. Implementierung schreiben
 # 4. Test erneut ausführen (sollte erfolgreich sein)
@@ -235,62 +249,32 @@ def test_stack_push_pop():
 ```text
 ffhs-dua/
 ├── src/
-│   └── algs4/                    # Hauptpaket
-│       ├── __init__.py
-│       ├── fundamentals/         # Grundlegende Datenstrukturen
-│       │   ├── __init__.py
-│       │   ├── bag.py            # Bag-Implementierung
-│       │   ├── queue.py          # Queue-Implementierungen
-│       │   ├── stack.py          # Stack-Implementierungen
-│       │   └── uf.py             # Union-Find-Implementierungen
-│       ├── sorting/              # Sortieralgorithmen
-│       │   ├── __init__.py
-│       │   └── shell.py          # Shell Sort
-│       ├── searching/            # Suchalgorithmen
-│       │   └── __init__.py
-│       ├── graphs/               # Graph-Algorithmen
-│       │   └── __init__.py
-│       └── errors/               # Benutzerdefinierte Exceptions
-│           ├── __init__.py
-│           └── errors.py
-├── tests/                        # Test-Struktur spiegelt src/
-│   ├── __init__.py
-│   ├── conftest.py               # Gemeinsame Test-Fixtures
-│   ├── test_fundamentals/
-│   │   ├── __init__.py
-│   │   ├── test_bag.py
-│   │   ├── test_queue.py
-│   │   ├── test_stack.py
-│   │   └── test_uf.py
-│   ├── test_sorting/
-│   │   └── __init__.py
-│   └── fixtures/
-│       └── sample_data.py        # Test-Daten
-├── notebooks/                    # Jupyter Notebooks für Lehrzwecke
-│   └── pva1/
-│       ├── __init__.py
-│       ├── grundlagen.ipynb      # Grundlagen-Notebook
-│       ├── sierpinski.py         # Sierpinski-Implementierung
-│       └── sierpinski.adoc       # Sierpinski-Dokumentation
-├── docs/                         # Dokumentation
-│   ├── api/                      # API-Dokumentation
-│   ├── tutorials/                # Tutorials
-│   ├── examples/                 # Beispiele
-│   └── *.adoc                    # AsciiDoc-Dateien
-├── benchmarks/                   # Performance-Messungen
-│   ├── __init__.py
-│   └── sorting_benchmarks.py
-├── scripts/                      # Hilfsskripte
-│   └── setup_dev.py              # Entwicklungsumgebung einrichten
-├── data/                         # Testdaten
-│   ├── small/                    # Kleine Testdaten
-│   ├── medium/                   # Mittlere Datensätze
-│   └── large/                    # Große Datensätze
-├── .pre-commit-config.yaml       # Pre-commit Hooks
-├── pyproject.toml                # Projektkonfiguration mit Testing
-├── uv.lock                       # Dependency-Lock-Datei
-├── README.md                     # Diese Datei
-└── CLAUDE.md                     # Entwicklungsrichtlinien
+│   └── algs4/
+│       ├── fundamentals/          # Grundlegende Datenstrukturen
+│       │   ├── stack.py           # Stack-Implementierungen
+│       │   ├── queue.py           # Queue-Implementierung
+│       │   ├── bag.py             # Bag-Implementierung
+│       │   └── uf.py              # Union-Find-Implementierungen
+│       ├── sorting/               # Sortieralgorithmen
+│       │   ├── quick.py           # Quick Sort
+│       │   └── shell.py           # Shell Sort
+│       └── errors/                # Benutzerdefinierte Exceptions
+├── tests/                         # Umfassende Test-Suite
+│   ├── test_fundamentals/         # Tests für Grundlagen
+│   └── test_sorting/              # Tests für Sortieralgorithmen
+├── docs/                          # Dokumentation (AsciiDoc)
+│   ├── api/                       # API-Dokumentation
+│   └── tutorials/                 # Tutorials und Anleitungen
+├── benchmarks/                    # Performance-Benchmarks
+├── data/                          # Testdaten
+│   ├── small/                     # Kleine Testdaten
+│   ├── medium/                    # Mittlere Datensätze
+│   └── large/                     # Grosse Datensätze
+├── notebooks/                     # Jupyter Notebooks
+│   └── pva1/                      # Praktische Vertiefungsaufgaben
+├── pyproject.toml                 # Projektkonfiguration
+├── README.md                      # Diese Datei
+└── CLAUDE.md                      # Entwicklungsrichtlinien
 ```
 
 ## Besonderheiten
@@ -315,56 +299,61 @@ Das Projekt folgt TDD-Prinzipien mit umfassender Test-Abdeckung:
 
 #### Akademischer Fokus
 
-Die Implementierungen folgen den Lehrbuchkonzepten und sind für Lernzwecke optimiert:
+Die Implementierungen folgen den Lehrbuchkonzepten aus "Algorithms, 4th Edition" und sind für Lernzwecke optimiert:
 
 - Deutsche Dokumentation und Kommentare
 - Schritt-für-Schritt Erklärungen
 - Multiple Implementierungsvarianten für Vergleiche
-- Jupyter Notebooks für interaktives Lernen
+- Comprehensive AsciiDoc-Dokumentation
 
 ## Beitragen
 
 Dieses Projekt folgt akademischen Standards:
 
-- Alle neuen Features müssen umfassend getestet werden
-- Code muss den Ruff-Linting-Standards entsprechen
-- Dokumentation muss auf Deutsch verfasst werden
-- Implementierungen sollten den Algorithmen aus dem Lehrbuch folgen
+1. **Code-Stil**: Befolgen Sie die bestehenden Konventionen
+2. **Dokumentation**: Alle neuen Features müssen dokumentiert werden
+3. **Tests**: Neue Implementierungen benötigen umfassende Tests
+4. **Type Hints**: Vollständige Typisierung ist erforderlich
 
-## Lizenz
+### Commit-Nachrichten
 
-Dieses Projekt ist für akademische Zwecke an der FFHS entwickelt worden.
+Verwenden Sie konventionelle Commit-Nachrichten:
 
-## Unterstützung
+```text
+feat: Neue Funktionalität hinzufügen
+fix: Fehler beheben
+docs: Dokumentation aktualisieren
+test: Tests hinzufügen oder ändern
+refactor: Code umstrukturieren
+```
 
-Bei Fragen oder Problemen wenden Sie sich an die Dozierenden des Moduls oder erstellen Sie ein Issue in diesem Repository.
+## Lizenz und Kontakt
 
-## Literaturgrundlagen
+### Autor
+**Daniel Senften**
+Email: daniel.senften@ffhs.ch
 
-Das Modul **Datenstrukturen und Algorithmen (DUA)** basiert auf folgenden Lehrbüchern:
+### Akademischer Kontext
+Fernfachhochschule Schweiz (FFHS)
+Studiengang: Informatik
+Modul: Datenstrukturen und Algorithmen
 
-1. **Praktische Algorithmik mit Python**  
-   Tobias Häberlein  
-   ISBN: 978-3-486-71390-9
+### Basierend auf
+"Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne
+Princeton University
 
-2. **Grokking Algorithms**  
-   Aditya Y. Bhargava  
-   ISBN: 978-1-633-43853-8
+## Weiterführende Ressourcen
 
-3. **Grokking Data Structures**  
-   Marcello La Rocca  
-   ISBN: 978-1-633-43699-2
+### Externe Links
+* https://algs4.cs.princeton.edu/[Algorithms 4th Edition Website]
+* https://docs.python.org/3/[Python 3 Dokumentation]
+* https://pytest.org/[pytest Dokumentation]
 
-4. **Learning Algorithms**  
-   George Heineman  
-   ISBN: 978-1-492-09106-6
+### Interne Verweise
+* **Komplexitätsanalyse**: Detaillierte Performance-Analyse
+* **Getting Started**: Ausführliche Einführung
+* **API-Dokumentation**: Vollständige Referenz aller Module
 
-5. **Programmieren mit Python**  
-   Tobias Häberlein  
-   ISBN: 978-3-662-68677-5
+---
 
-## Zusätzliche Referenzen
-
-- [Python Documentation](https://docs.python.org/)
-- [pytest Documentation](https://docs.pytest.org/)
-- [Type Hints (PEP 484)](https://peps.python.org/pep-0484/)
+_Diese Dokumentation wird kontinuierlich aktualisiert und erweitert._

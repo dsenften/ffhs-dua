@@ -1,0 +1,241 @@
+= FFHS-DUA: Algorithmen und Datenstrukturen
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Willkommen
+
+Willkommen zur Dokumentation des FFHS-DUA Projekts - einer umfassenden Python-Implementierung grundlegender Algorithmen und Datenstrukturen basierend auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne.
+
+Dieses Projekt wurde für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) entwickelt und bietet eine vollständige, gut dokumentierte und getestete Sammlung von Algorithmen und Datenstrukturen.
+
+== Projektübersicht
+
+=== Ziele
+
+* **Bildung**: Bereitstellung klarer, verständlicher Implementierungen für Lernzwecke
+* **Qualität**: Hochwertige, gut getestete und dokumentierte Code-Basis
+* **Praxis**: Anwendbare Implementierungen für reale Probleme
+* **Standards**: Einhaltung moderner Python-Entwicklungsstandards
+
+=== Prinzipien
+
+* **Deutsche Dokumentation**: Alle Dokumentation und Kommentare auf Deutsch
+* **Type Hints**: Vollständige Typisierung für bessere Code-Qualität
+* **Umfassende Tests**: Hohe Testabdeckung mit pytest
+* **Clean Code**: Lesbare, wartbare Implementierungen
+
+== Module
+
+=== Fundamentals (Grundlagen)
+
+Das `fundamentals`-Modul enthält die grundlegenden Datenstrukturen:
+
+==== Datenstrukturen
+* **link:union_find_documentation.adoc[Union-Find]**: Datenstruktur für dynamische Konnektivität
+* **Stack**: Last-In-First-Out (LIFO) Stapel in drei Implementierungen
+* **Queue**: First-In-First-Out (FIFO) Warteschlange
+* **Bag**: Ungeordnete Sammlung von Elementen
+
+==== API-Dokumentation
+* **link:api/fundamentals.adoc[Fundamentals API]**: Vollständige API-Referenz
+
+==== Test-Dokumentation
+* **link:test_stack_documentation.adoc[Stack Tests]**: Umfassende Test-Dokumentation
+* **link:test_queue_documentation.adoc[Queue Tests]**: Test-Strategien und -Fälle
+* **link:test_bag_documentation.adoc[Bag Tests]**: Bag-spezifische Tests
+* **link:test_uf_documentation.adoc[Union-Find Tests]**: Konnektivitäts-Tests
+
+=== Sorting (Sortieralgorithmen)
+
+Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
+
+==== Algorithmen
+* **link:quick_sort_documentation.adoc[Quick Sort]**: Effizienter Divide-and-Conquer-Algorithmus
+* **Shell Sort**: Erweiterte Insertion-Sort-Variante
+
+==== API-Dokumentation
+* **link:api/sorting.adoc[Sorting API]**: Vollständige API-Referenz für alle Sortieralgorithmen
+
+==== Test-Dokumentation
+* **link:test_quick_documentation.adoc[Quick Sort Tests]**: Umfassende Test-Suite für Quick Sort
+
+== Spezielle Dokumentation
+
+=== Erweiterungen und Analysen
+* **link:bag_erweiterungen.adoc[Bag-Erweiterungen]**: Erweiterte Bag-Funktionalitäten
+* **link:komplexitaetsanalyse.adoc[Komplexitätsanalyse]**: Detaillierte Analyse der Algorithmus-Komplexität
+
+=== Entwicklung und Qualität
+* **link:markdown-linting.adoc[Markdown-Linting]**: Dokumentations-Qualitätsstandards
+
+=== Tutorials
+* **link:tutorials/getting_started.adoc[Erste Schritte]**: Einführung in die Verwendung des Projekts
+
+== Schnellstart
+
+=== Installation
+
+[source,bash]
+----
+# Repository klonen
+git clone <repository-url>
+cd ffhs-dua
+
+# Virtuelle Umgebung erstellen
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Abhängigkeiten installieren
+pip install -e .
+----
+
+=== Grundlegende Verwendung
+
+==== Fundamentals
+
+[source,python]
+----
+from src.algs4.fundamentals import Stack, Queue, Bag
+from src.algs4.fundamentals.uf import UF
+
+# Stack verwenden
+stack = Stack[int]()
+stack.push(1)
+stack.push(2)
+print(stack.pop())  # 2
+
+# Union-Find verwenden
+uf = UF(10)
+uf.union(0, 1)
+print(uf.connected(0, 1))  # True
+----
+
+==== Sorting
+
+[source,python]
+----
+from src.algs4.sorting import Quick, Shell
+
+# Quick Sort
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Quick.sort(numbers)
+print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
+
+# Shell Sort
+words = ["zebra", "apple", "banana", "cherry"]
+sorted_words = Shell.sort(words)
+print(sorted_words)  # ['apple', 'banana', 'cherry', 'zebra']
+----
+
+== Tests ausführen
+
+=== Alle Tests
+
+[source,bash]
+----
+python3 -m pytest tests/ -v
+----
+
+=== Spezifische Module
+
+[source,bash]
+----
+# Nur Fundamentals
+python3 -m pytest tests/test_fundamentals/ -v
+
+# Nur Sorting
+python3 -m pytest tests/test_sorting/ -v
+
+# Nur Quick Sort
+python3 -m pytest tests/test_sorting/test_quick.py -v
+----
+
+=== Mit Coverage
+
+[source,bash]
+----
+python3 -m pytest tests/ --cov=src.algs4 --cov-report=html
+----
+
+== Projektstruktur
+
+----
+ffhs-dua/
+├── src/
+│   └── algs4/
+│       ├── fundamentals/          # Grundlegende Datenstrukturen
+│       │   ├── stack.py           # Stack-Implementierungen
+│       │   ├── queue.py           # Queue-Implementierung
+│       │   ├── bag.py             # Bag-Implementierung
+│       │   └── uf.py              # Union-Find-Implementierungen
+│       ├── sorting/               # Sortieralgorithmen
+│       │   ├── quick.py           # Quick Sort
+│       │   └── shell.py           # Shell Sort
+│       └── errors/                # Benutzerdefinierte Exceptions
+├── tests/                         # Umfassende Test-Suite
+│   ├── test_fundamentals/         # Tests für Grundlagen
+│   └── test_sorting/              # Tests für Sortieralgorithmen
+├── docs/                          # Dokumentation (AsciiDoc)
+│   ├── api/                       # API-Dokumentation
+│   └── tutorials/                 # Tutorials und Anleitungen
+└── benchmarks/                    # Performance-Benchmarks
+----
+
+== Beitragen
+
+=== Entwicklungsrichtlinien
+
+1. **Code-Stil**: Befolgen Sie die bestehenden Konventionen
+2. **Dokumentation**: Alle neuen Features müssen dokumentiert werden
+3. **Tests**: Neue Implementierungen benötigen umfassende Tests
+4. **Type Hints**: Vollständige Typisierung ist erforderlich
+
+=== Commit-Nachrichten
+
+Verwenden Sie konventionelle Commit-Nachrichten:
+
+----
+feat: Neue Funktionalität hinzufügen
+fix: Fehler beheben
+docs: Dokumentation aktualisieren
+test: Tests hinzufügen oder ändern
+refactor: Code umstrukturieren
+----
+
+== Lizenz und Kontakt
+
+=== Autor
+**Daniel Senften** +
+Email: daniel.senften@ffhs.ch
+
+=== Akademischer Kontext
+Fernfachhochschule Schweiz (FFHS) +
+Studiengang: Informatik +
+Modul: Datenstrukturen und Algorithmen
+
+=== Basierend auf
+"Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne +
+Princeton University
+
+== Weiterführende Ressourcen
+
+=== Externe Links
+* https://algs4.cs.princeton.edu/[Algorithms 4th Edition Website]
+* https://docs.python.org/3/[Python 3 Dokumentation]
+* https://pytest.org/[pytest Dokumentation]
+
+=== Interne Verweise
+* **link:komplexitaetsanalyse.adoc[Komplexitätsanalyse]**: Detaillierte Performance-Analyse
+* **link:tutorials/getting_started.adoc[Getting Started]**: Ausführliche Einführung
+* **API-Dokumentation**: Vollständige Referenz aller Module
+
+---
+
+_Diese Dokumentation wird kontinuierlich aktualisiert und erweitert._

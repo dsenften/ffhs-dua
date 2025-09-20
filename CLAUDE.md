@@ -4,18 +4,18 @@ Diese Datei enthält spezifische Richtlinien für die Arbeit mit Claude AI an di
 
 ## Projektübersicht
 
-Dies ist eine Python-Implementierung grundlegender Datenstrukturen aus dem Lehrbuch "Algorithms, 4th Edition" (algs4),
-angepasst für den akademischen Gebrauch an der FFHS-DUA. Das Projekt enthält deutsche Dokumentation und umfassende
-Testsuiten.
+Dies ist eine umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen.
+Das Projekt enthält deutsche Dokumentation und umfassende Testsuiten.
 
 ## Entwicklungsbefehle
 
 ### Testen
 
-- Alle Tests ausführen: `pytest tests/`
-- Spezifische Testdatei ausführen: `pytest tests/test_stack.py`
-- Spezifische Testklasse ausführen: `pytest tests/test_stack.py::TestStack`
-- Spezifische Testmethode ausführen: `pytest tests/test_stack.py::TestStack::test_push_pop`
+- Alle Tests ausführen: `python3 -m pytest tests/ -v`
+- Spezifische Testdatei ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py`
+- Spezifische Testklasse ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack`
+- Spezifische Testmethode ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack::test_push_pop`
+- Tests mit Coverage: `python3 -m pytest tests/ --cov=src.algs4 --cov-report=html`
 
 ### Linting und Formatierung
 
@@ -32,20 +32,29 @@ Testsuiten.
 ### Projektstruktur
 
 ```text
-algs4/
-├── __init__.py
-├── fundamentals/          # Grundlegende Datenstrukturen
-│   ├── stack.py          # Stack-Implementierungen (3 Varianten)
-│   ├── queue.py          # Queue-Implementierungen
-│   ├── bag.py            # Bag-Datenstruktur
-│   └── uf.py             # Union-Find-Implementierungen (4 Varianten)
-└── errors/               # Benutzerdefinierte Fehlerklassen
-    └── errors.py
-pva1/                     # Praktische Vertiefungsaufgaben 1
-├── __init__.py
-├── sierpinski.py         # Sierpinski-Dreieck Fraktal-Implementierungen
-├── sierpinski.adoc       # Sierpinski-Dokumentation
-└── grundlagen.ipynb      # Grundlagen-Jupyter-Notebook
+ffhs-dua/
+├── src/
+│   └── algs4/
+│       ├── fundamentals/          # Grundlegende Datenstrukturen
+│       │   ├── stack.py           # Stack-Implementierungen (3 Varianten)
+│       │   ├── queue.py           # Queue-Implementierung
+│       │   ├── bag.py             # Bag-Datenstruktur
+│       │   └── uf.py              # Union-Find-Implementierungen (4 Varianten)
+│       ├── sorting/               # Sortieralgorithmen
+│       │   ├── quick.py           # Quick Sort
+│       │   └── shell.py           # Shell Sort
+│       └── errors/                # Benutzerdefinierte Fehlerklassen
+│           └── errors.py
+├── tests/                         # Umfassende Test-Suite
+│   ├── test_fundamentals/         # Tests für Grundlagen
+│   └── test_sorting/              # Tests für Sortieralgorithmen
+├── docs/                          # AsciiDoc-Dokumentation
+├── notebooks/                     # Jupyter Notebooks
+│   └── pva1/                      # Praktische Vertiefungsaufgaben 1
+│       ├── sierpinski.py          # Sierpinski-Dreieck Implementierung
+│       ├── sierpinski.adoc        # Sierpinski-Dokumentation
+│       └── grundlagen.ipynb       # Grundlagen-Notebook
+└── benchmarks/                    # Performance-Benchmarks
 ```
 
 ### Implementierungsmuster
@@ -73,9 +82,14 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 3. **WeightedQuickUnionUF**: Weighted Quick Union by Size (O(log n))
 4. **QuickFindUF**: Quick Find Implementation mit konstanter Find-Zeit (O(1) find, O(n) union)
 
+#### Sortieralgorithmen
+
+1. **Quick**: Quick Sort mit Hoare-Partitionierung
+2. **Shell**: Shell Sort mit Knuth-Sequenz
+
 #### Fehlerbehandlung
 
-- Benutzerdefinierte Exceptions in `algs4.errors.errors`
+- Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
 - Deutsche Fehlermeldungen (z.B. "Stack-Unterlauf")
 - Ordnungsgemäße Type-Assertions für Sicherheit
 
@@ -86,6 +100,7 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 - Tests für Grenzfälle (leere Strukturen, Kapazitätsgrenzen)
 - Typsicherheitstests mit verschiedenen generischen Typen
 - Iterator- und String-Repräsentationstests
+- Separate Tests für Fundamentals und Sorting Module
 
 ### Code-Konventionen
 

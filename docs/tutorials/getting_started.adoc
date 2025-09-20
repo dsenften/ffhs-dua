@@ -46,6 +46,43 @@ element = stack.pop()
 print(f"Entfernt: {element}")  # "Zweites Element"
 ----
 
+=== Quick Sort-Beispiel
+
+[source,python]
+----
+from src.algs4.sorting.quick import Quick
+
+# Liste sortieren
+numbers = [64, 34, 25, 12, 22, 11, 90]
+print(f"Unsortiert: {numbers}")
+
+sorted_numbers = Quick.sort(numbers)
+print(f"Sortiert: {sorted_numbers}")
+
+# Überprüfung
+print(f"Ist sortiert: {Quick.is_sorted(sorted_numbers)}")
+----
+
+=== Union-Find-Beispiel
+
+[source,python]
+----
+from src.algs4.fundamentals.uf import UF
+
+# Union-Find mit 10 Elementen erstellen
+uf = UF(10)
+
+# Verbindungen erstellen
+uf.union(0, 1)
+uf.union(2, 3)
+uf.union(1, 2)
+
+# Konnektivität prüfen
+print(f"0 und 3 verbunden: {uf.connected(0, 3)}")  # True
+print(f"0 und 4 verbunden: {uf.connected(0, 4)}")  # False
+print(f"Anzahl Komponenten: {uf.count()}")
+----
+
 === Test schreiben
 
 [source,python]
@@ -76,6 +113,18 @@ uv run pytest tests/test_mein_stack.py -v
 
 == Nächste Schritte
 
+=== Dokumentation erkunden
+- **link:../index.adoc[Hauptdokumentation]**: Vollständige Projektübersicht
+- **link:../api/fundamentals.adoc[Fundamentals API]**: API-Referenz für Grundlagen
+- **link:../api/sorting.adoc[Sorting API]**: API-Referenz für Sortieralgorithmen
+- **link:../quick_sort_documentation.adoc[Quick Sort]**: Detaillierte Algorithmus-Dokumentation
+
+=== Praktische Übungen
 - Erkunden Sie die Jupyter Notebooks in `notebooks/`
-- Lesen Sie die API-Dokumentation in `docs/api/`
 - Führen Sie Performance-Tests aus: `python benchmarks/sorting_benchmarks.py`
+- Experimentieren Sie mit verschiedenen Datengrößen und -typen
+
+=== Erweiterte Themen
+- **link:../komplexitaetsanalyse.adoc[Komplexitätsanalyse]**: Verstehen Sie die Performance-Charakteristika
+- **link:../union_find_documentation.adoc[Union-Find]**: Lernen Sie über dynamische Konnektivität
+- **Test-Dokumentation**: Verstehen Sie die umfassenden Test-Strategien

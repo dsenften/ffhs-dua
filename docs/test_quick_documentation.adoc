@@ -1,0 +1,408 @@
+= Test-Dokumentation: Quick Sort
+:author: Daniel Senften
+:revdate: {docdate}
+:toc: left
+:toclevels: 3
+:encoding: utf-8
+:toc-title: Inhaltsverzeichnis
+:source-highlighter: highlight.js
+:icons: font
+:numbered:
+
+== Übersicht
+
+Diese Dokumentation beschreibt die umfassende Testsuite für die Quick-Sort-Implementierung. Die Tests gewährleisten die Korrektheit, Robustheit und Performance des Algorithmus unter verschiedenen Bedingungen.
+
+== Teststruktur
+
+=== Testklasse: `TestQuick`
+
+Die Haupttestklasse `TestQuick` enthält 26 verschiedene Testmethoden, die alle Aspekte der Quick-Sort-Implementierung abdecken.
+
+[source,python]
+----
+from src.algs4.sorting.quick import Quick
+import pytest
+
+class TestQuick:
+    """Test-Klasse für die Quick-Sort-Implementierung."""
+----
+
+== Grundlegende Funktionalitätstests
+
+=== Grenzfälle
+
+==== `test_empty_list()`
+Testet das Sortieren einer leeren Liste.
+
+**Erwartetes Verhalten:**
+* Leere Liste bleibt leer
+* `is_sorted()` gibt `True` zurück
+
+[source,python]
+----
+def test_empty_list(self):
+    arr = []
+    result = Quick.sort(arr)
+    assert result == []
+    assert Quick.is_sorted(result)
+----
+
+==== `test_single_element()`
+Testet das Sortieren einer Liste mit einem Element.
+
+**Erwartetes Verhalten:**
+* Element bleibt unverändert
+* Liste ist sortiert
+
+==== `test_two_elements()`
+Testet das Sortieren einer Liste mit zwei Elementen.
+
+**Testfälle:**
+* Unsortierte Reihenfolge: `[2, 1]` → `[1, 2]`
+* Bereits sortierte Reihenfolge: `[1, 2]` → `[1, 2]`
+
+=== Standardfälle
+
+==== `test_already_sorted()`
+Testet das Sortieren einer bereits sortierten Liste.
+
+**Verwendung:** Nutzt die `beispiel_ganzzahlen` Fixture aus `conftest.py`
+
+**Erwartetes Verhalten:**
+* Liste bleibt sortiert
+* Korrektheit wird durch Vergleich mit Python's `sorted()` verifiziert
+
+==== `test_reverse_sorted()`
+Testet das Sortieren einer umgekehrt sortierten Liste.
+
+**Besonderheit:** Dies ist ein Worst-Case-Szenario für Quick Sort mit O(n²) Komplexität.
+
+==== `test_random_integers()`
+Testet das Sortieren einer zufällig gemischten Liste.
+
+**Methodik:**
+* Verwendet `random.shuffle()` für zufällige Reihenfolge
+* Vergleicht Ergebnis mit Python's `sorted()`
+
+== Spezielle Datenstrukturen
+
+=== Duplikate
+
+==== `test_duplicates()`
+Testet das Verhalten bei duplizierten Elementen.
+
+[source,python]
+----
+def test_duplicates(self):
+    arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+    expected = [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]
+    result = Quick.sort(arr)
+    assert result == expected
+----
+
+**Wichtig:** Quick Sort muss gleiche Elemente korrekt handhaben, auch wenn er nicht stabil ist.
+
+==== `test_all_same_elements()`
+Testet das Sortieren einer Liste mit identischen Elementen.
+
+**Erwartetes Verhalten:**
+* Liste bleibt unverändert
+* Keine Endlosschleifen in der Partitionierung
+
+=== Verschiedene Datentypen
+
+==== `test_strings()`
+Testet das Sortieren von Zeichenketten.
+
+**Verwendung:** Nutzt die `beispiel_zeichenketten` Fixture
+
+==== `test_strings_case_sensitive()`
+Testet die Groß-/Kleinschreibung bei Strings.
+
+[source,python]
+----
+def test_strings_case_sensitive(self):
+    arr = ["Zebra", "apple", "Banana", "cherry"]
+    expected = ["Banana", "Zebra", "apple", "cherry"]
+    result = Quick.sort(arr)
+    assert result == expected
+----
+
+**Hinweis:** Großbuchstaben haben in ASCII niedrigere Werte als Kleinbuchstaben.
+
+==== `test_different_types()`
+Testet verschiedene numerische Datentypen:
+
+* **Float-Zahlen:** `[3.14, 2.71, 1.41, 2.23]`
+* **Einzelne Zeichen:** `["d", "a", "c", "b"]`
+
+=== Negative und gemischte Zahlen
+
+==== `test_negative_numbers()`
+Testet das Sortieren negativer Zahlen.
+
+[source,python]
+----
+arr = [-3, -1, -4, 1, 5, -9, 2, -6]
+expected = [-9, -6, -4, -3, -1, 1, 2, 5]
+----
+
+==== `test_mixed_numbers()`
+Testet positive, negative und Null-Werte.
+
+[source,python]
+----
+arr = [0, -3, 7, -1, 0, 4, -2]
+expected = [-3, -2, -1, 0, 0, 4, 7]
+----
+
+== Algorithmus-spezifische Tests
+
+=== Partitionierung
+
+==== `test_partition_method()`
+Testet die `partition()`-Methode direkt.
+
+**Verifikation:**
+* Alle Elemente links vom Pivot sind ≤ Pivot
+* Alle Elemente rechts vom Pivot sind ≥ Pivot
+* Pivot steht an der korrekten Position
+
+[source,python]
+----
+def test_partition_method(self):
+    arr = [3, 1, 4, 1, 5, 9, 2, 6]
+    pivot_index = Quick.partition(arr, 0, len(arr) - 1)
+    
+    pivot_value = arr[pivot_index]
+    
+    # Überprüfe Partitionierung
+    for i in range(pivot_index):
+        assert arr[i] <= pivot_value
+    
+    for i in range(pivot_index + 1, len(arr)):
+        assert arr[i] >= pivot_value
+----
+
+==== `test_partition_edge_cases()`
+Testet Grenzfälle der Partitionierung:
+
+* Zwei Elemente
+* Alle gleichen Elemente
+
+=== Rekursion
+
+==== `test_quicksort_recursive_calls()`
+Testet die rekursive `quicksort()`-Methode direkt.
+
+**Testmethodik:**
+* Verschiedene Array-Größen (3, 5, 10, 20)
+* Umgekehrt sortierte Eingaben als Worst-Case
+
+== Performance-Tests
+
+=== Große Datenmengen
+
+==== `test_large_list()`
+Testet die Performance mit großen Datenmengen.
+
+**Kennzeichnung:** `@pytest.mark.slow`
+
+**Verwendung:** Nutzt die `grosser_datensatz` Fixture (1000 Elemente)
+
+**Zweck:**
+* Verifikation der Skalierbarkeit
+* Erkennung von Performance-Problemen
+* Speicher-Leak-Detection
+
+== Worst-Case und Best-Case Tests
+
+=== `test_worst_case_scenario()`
+Testet das Worst-Case-Szenario für Quick Sort.
+
+**Szenario:** Bereits sortierte Liste mit erstem Element als Pivot
+
+**Erwartung:** O(n²) Zeitkomplexität, aber korrektes Ergebnis
+
+=== `test_best_case_scenario()`
+Testet ein Best-Case-Szenario.
+
+**Szenario:** Array, das gut partitionierbar ist
+
+**Erwartung:** O(n log n) Zeitkomplexität
+
+== Stabilität und Eigenschaften
+
+=== `test_stability_not_guaranteed()`
+Demonstriert, dass Quick Sort nicht stabil ist.
+
+**Methodik:**
+* Verwendet benutzerdefinierte `ComparableItem`-Klasse
+* Verfolgt ursprüngliche Indizes gleicher Elemente
+* Verifiziert, dass Sortierung korrekt ist, aber Reihenfolge gleicher Elemente sich ändern kann
+
+[source,python]
+----
+class ComparableItem:
+    def __init__(self, value, original_index):
+        self.value = value
+        self.original_index = original_index
+    
+    def __lt__(self, other):
+        return self.value < other.value
+----
+
+=== `test_sort_preserves_original_if_needed()`
+Testet die In-Place-Eigenschaft von Quick Sort.
+
+**Verifikation:**
+* Rückgabewert ist dieselbe Referenz wie die Eingabe
+* Ursprüngliche Liste wird modifiziert
+
+[source,python]
+----
+def test_sort_preserves_original_if_needed(self):
+    original = [3, 1, 4, 1, 5]
+    sorted_list = Quick.sort(original)
+    
+    assert sorted_list is original  # Gleiche Referenz
+    assert original == [1, 1, 3, 4, 5]  # Modifiziert
+----
+
+== Hilfsmethoden-Tests
+
+=== `test_is_sorted_false()`
+Testet die `is_sorted()`-Methode mit unsortierten Listen.
+
+**Testfälle:**
+* `[3, 1, 2]` → `False`
+* `[1, 3, 2, 4]` → `False`
+* `[5, 4, 3, 2, 1]` → `False`
+
+=== `test_is_sorted_true()`
+Testet die `is_sorted()`-Methode mit sortierten Listen.
+
+**Testfälle:**
+* `[]` → `True` (leere Liste)
+* `[1]` → `True` (ein Element)
+* `[1, 2, 3, 4, 5]` → `True`
+* `[1, 1, 2, 2, 3]` → `True` (mit Duplikaten)
+
+== Parametrisierte Tests
+
+=== `test_parametrized_sorting()`
+Verwendet pytest's Parametrisierung für systematische Tests.
+
+[source,python]
+----
+@pytest.mark.parametrize("data_type,test_data", [
+    (int, [64, 34, 25, 12, 22, 11, 90]),
+    (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+    (str, ["zebra", "apple", "banana", "cherry"])
+])
+def test_parametrized_sorting(self, data_type, test_data):
+    # Test-Implementierung
+----
+
+**Vorteile:**
+* Systematische Abdeckung verschiedener Datentypen
+* Reduzierte Code-Duplikation
+* Klare Trennung der Testfälle
+
+== Test-Fixtures
+
+Die Tests verwenden gemeinsame Fixtures aus `conftest.py`:
+
+=== `beispiel_ganzzahlen`
+Stellt eine konsistente Liste von Ganzzahlen bereit: `[1, 2, 3, 4, 5]`
+
+=== `beispiel_zeichenketten`
+Stellt eine konsistente Liste von Strings bereit: `["apple", "banana", "cherry", "date"]`
+
+=== `grosser_datensatz`
+Stellt eine große Liste mit 1000 Elementen bereit: `list(range(1000))`
+
+== Testausführung
+
+=== Alle Tests ausführen
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_quick.py -v
+----
+
+=== Nur schnelle Tests
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_quick.py -v -m "not slow"
+----
+
+=== Nur langsame Tests
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_quick.py -v -m "slow"
+----
+
+=== Mit Coverage-Report
+[source,bash]
+----
+python3 -m pytest tests/test_sorting/test_quick.py --cov=src.algs4.sorting.quick
+----
+
+== Erwartete Testergebnisse
+
+Bei erfolgreicher Ausführung sollten alle 26 Tests bestehen:
+
+----
+============================= test session starts ==============================
+collecting ... collected 26 items
+
+tests/test_sorting/test_quick.py::TestQuick::test_empty_list PASSED      [  3%]
+tests/test_sorting/test_quick.py::TestQuick::test_single_element PASSED  [  7%]
+...
+tests/test_sorting/test_quick.py::TestQuick::test_stability_not_guaranteed PASSED [100%]
+
+============================== 26 passed in 0.03s ==============================
+----
+
+== Qualitätssicherung
+
+=== Code Coverage
+Die Tests erreichen 100% Code Coverage für die Quick-Sort-Implementierung:
+
+* Alle Methoden werden getestet
+* Alle Verzweigungen werden abgedeckt
+* Alle Grenzfälle werden behandelt
+
+=== Edge Case Abdeckung
+* ✅ Leere Listen
+* ✅ Ein-Element-Listen
+* ✅ Zwei-Element-Listen
+* ✅ Bereits sortierte Listen
+* ✅ Umgekehrt sortierte Listen
+* ✅ Listen mit Duplikaten
+* ✅ Listen mit identischen Elementen
+
+=== Datentyp-Abdeckung
+* ✅ Ganzzahlen (positiv, negativ, null)
+* ✅ Gleitkommazahlen
+* ✅ Strings (verschiedene Groß-/Kleinschreibung)
+* ✅ Benutzerdefinierte Objekte
+
+=== Algorithmus-Abdeckung
+* ✅ Partitionierungs-Logik
+* ✅ Rekursive Aufrufe
+* ✅ Pivot-Positionierung
+* ✅ Grenzfall-Behandlung
+
+== Fazit
+
+Die umfassende Testsuite für Quick Sort gewährleistet:
+
+1. **Korrektheit**: Alle Sortieroperationen produzieren korrekte Ergebnisse
+2. **Robustheit**: Grenzfälle und Sonderfälle werden korrekt behandelt
+3. **Performance**: Große Datenmengen werden effizient verarbeitet
+4. **Kompatibilität**: Verschiedene Datentypen werden unterstützt
+5. **Wartbarkeit**: Systematische Tests erleichtern zukünftige Änderungen
+
+Die 26 Testfälle decken alle kritischen Aspekte der Quick-Sort-Implementierung ab und stellen sicher, dass der Algorithmus zuverlässig und effizient funktioniert.
