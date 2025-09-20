@@ -14,7 +14,9 @@
       "Bash(test:*)",
       "Bash(echo $PWD)",
       "mcp__ide__executeCode",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(python3 -m pytest tests/test_sorting/test_merge.py -v)",
+      "Bash(python3 -m pytest tests/test_sorting/ -v)"
     ],
     "deny": [],
     "ask": []

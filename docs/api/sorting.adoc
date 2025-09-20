@@ -11,12 +11,13 @@
 
 == Übersicht
 
-Das `sorting`-Modul enthält verschiedene Sortieralgorithmen aus dem "Algorithms, 4th Edition" Lehrbuch. Alle Implementierungen arbeiten in-place und unterstützen verschiedene Datentypen, die das Vergleichsprotokoll implementieren.
+Das `sorting`-Modul enthält verschiedene Sortieralgorithmen aus dem "Algorithms, 4th Edition" Lehrbuch. Die meisten Implementierungen arbeiten in-place und unterstützen verschiedene Datentypen, die das Vergleichsprotokoll implementieren. Merge Sort benötigt zusätzlichen Speicher, ist aber stabil.
 
 **Verfügbare Algorithmen:**
 * **Shell Sort**: Erweiterte Insertion-Sort-Variante mit Knuth-Sequenz
-* **Quick Sort**: Divide-and-Conquer-Algorithmus mit Hoare-Partitionierung  
+* **Quick Sort**: Divide-and-Conquer-Algorithmus mit Hoare-Partitionierung
 * **Heap Sort**: Heap-basierter Algorithmus mit garantierter O(n log n) Performance
+* **Merge Sort**: Stabiler Divide-and-Conquer-Algorithmus mit garantierter O(n log n) Performance
 
 == Shell Sort
 
@@ -254,6 +255,221 @@ Lässt ein Element im Heap nach unten sinken (Heapify) - interne Methode.
 * Bewegt ein Element so lange nach unten, bis es an der richtigen Position steht
 * Wählt immer das grössere der beiden Kinder für den Tausch
 
+== Merge Sort
+
+Merge Sort ist ein effizienter, stabiler Divide-and-Conquer-Sortieralgorithmus mit garantierter O(n log n) Zeitkomplexität in allen Fällen.
+
+=== Klasse: `Merge`
+
+[source,python]
+----
+from src.algs4.sorting.merge import Merge
+
+# Beispiel-Verwendung
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Merge.sort(numbers)
+----
+
+==== Methoden
+
+===== `sort(arr: list) -> list`
+
+Sortiert eine Liste mit dem Merge-Sort-Algorithmus.
+
+**Parameter:**
+* `arr: list` - Die zu sortierende Liste
+
+**Rückgabe:**
+* `list` - Die sortierte Liste (in-place modifiziert)
+
+**Zeitkomplexität:**
+* Best Case: O(n log n)
+* Average Case: O(n log n)
+* Worst Case: O(n log n)
+
+**Speicherkomplexität:** O(n) - benötigt zusätzlichen Speicher für Hilfarray
+
+**Eigenschaften:**
+* **Stabil**: Gleiche Elemente behalten ihre relative Reihenfolge
+* **Nicht in-place**: Benötigt zusätzlichen Speicher
+* **Divide-and-Conquer**: Teilt das Problem rekursiv auf
+* **Konsistente Performance**: Immer O(n log n) unabhängig von der Eingabereihenfolge
+
+**Beispiel:**
+[source,python]
+----
+arr = [3, 1, 4, 1, 5, 9, 2, 6]
+result = Merge.sort(arr)
+print(result)  # [1, 1, 2, 3, 4, 5, 6, 9]
+----
+
+===== `is_sorted(arr: list) -> bool`
+
+Überprüft, ob eine Liste sortiert ist.
+
+**Parameter:**
+* `arr: list` - Die zu überprüfende Liste
+
+**Rückgabe:**
+* `bool` - True, wenn die Liste sortiert ist, sonst False
+
+**Zeitkomplexität:** O(n)
+
+**Beispiel:**
+[source,python]
+----
+Merge.is_sorted([1, 2, 3, 4, 5])  # True
+Merge.is_sorted([3, 1, 2])        # False
+----
+
+===== `merge(arr: list, lo: int, mid: int, hi: int) -> None`
+
+Führt zwei sortierte Teilarrays zu einem sortierten Array zusammen - interne Methode.
+
+**Parameter:**
+* `arr: list` - Das Array, das die zu verschmelzenden Teilarrays enthält
+* `lo: int` - Der untere Index des ersten Teilarrays
+* `mid: int` - Der obere Index des ersten Teilarrays
+* `hi: int` - Der obere Index des zweiten Teilarrays
+
+**Rückgabe:**
+* `None` - Modifiziert das Array in-place
+
+**Zeitkomplexität:** O(n)
+
+**Hinweis:** Diese Methode wird normalerweise nicht direkt aufgerufen, sondern intern von `mergesort()` verwendet.
+
+**Funktionsweise:**
+* Nimmt zwei sortierte Teilarrays arr[lo..mid] und arr[mid+1..hi]
+* Führt sie zu einem sortierten Array arr[lo..hi] zusammen
+* Bei Gleichheit wird aus dem ersten Array genommen (Stabilität)
+
+===== `mergesort(arr: list, lo: int, hi: int) -> list`
+
+Sortiert ein Teilarray rekursiv mit dem Merge-Sort-Algorithmus - interne Methode.
+
+**Parameter:**
+* `arr: list` - Die zu sortierende Liste
+* `lo: int` - Der untere Index des zu sortierenden Bereichs
+* `hi: int` - Der obere Index des zu sortierenden Bereichs
+
+**Rückgabe:**
+* `list` - Die sortierte Liste
+
+**Zeitkomplexität:** O(n log n)
+
+**Hinweis:** Diese Methode wird normalerweise nicht direkt aufgerufen, sondern intern von `sort()` verwendet.
+
+== Stabilität von Sortieralgorithmen
+
+=== Was bedeutet Stabilität?
+
+Ein Sortieralgorithmus ist **stabil**, wenn er die relative Reihenfolge von Elementen mit gleichem Wert (gleichen Schlüsseln) beibehält.
+
+**Beispiel:**
+Gegeben seien Studenten mit Namen und Noten:
+[source,python]
+----
+studenten = [
+    ("Alice", 85),
+    ("Bob", 90),
+    ("Charlie", 85),
+    ("Diana", 90)
+]
+----
+
+Bei einer stabilen Sortierung nach Noten würde das Ergebnis sein:
+[source,python]
+----
+# Stabile Sortierung - ursprüngliche Reihenfolge bei gleichen Noten erhalten
+[
+    ("Alice", 85),    # Alice kam vor Charlie, bleibt vor Charlie
+    ("Charlie", 85),
+    ("Bob", 90),      # Bob kam vor Diana, bleibt vor Diana
+    ("Diana", 90)
+]
+----
+
+Bei einer **instabilen** Sortierung könnte das Ergebnis variieren:
+[source,python]
+----
+# Mögliches Ergebnis bei instabiler Sortierung
+[
+    ("Charlie", 85),  # Reihenfolge von Alice und Charlie vertauscht
+    ("Alice", 85),
+    ("Diana", 90),    # Reihenfolge von Bob und Diana vertauscht
+    ("Bob", 90)
+]
+----
+
+=== Warum ist Stabilität wichtig?
+
+1. **Mehrfache Sortierkriterien**: Bei mehreren Sortierkriterien kann man zuerst nach dem sekundären, dann nach dem primären Kriterium sortieren
+2. **Vorhersagbare Ergebnisse**: Das Ergebnis ist deterministisch und reproduzierbar
+3. **Benutzererwartungen**: Oft erwarten Benutzer, dass die ursprüngliche Reihenfolge bei gleichen Werten erhalten bleibt
+
+=== Stabilität der implementierten Algorithmen
+
+[cols="2,2,3"]
+|===
+|Algorithmus |Stabil |Begründung
+
+|**Shell Sort**
+|❌ **Nein**
+|Vertauscht Elemente über grosse Distanzen, kann dabei die relative Reihenfolge ändern
+
+|**Quick Sort**
+|❌ **Nein**
+|Partitionierung kann die relative Reihenfolge gleicher Elemente ändern
+
+|**Heap Sort**
+|❌ **Nein**
+|Heap-Operationen ändern die relative Reihenfolge gleicher Elemente
+
+|**Merge Sort**
+|✅ **Ja**
+|Bei Gleichheit wird bewusst aus dem ersten Teilarray genommen (siehe Zeile 63-67 in merge.py)
+|===
+
+=== Beispiel für Stabilität bei Merge Sort
+
+[source,python]
+----
+# Studenten als Tupel (Name, Note)
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+
+    def __lt__(self, other):
+        return self.grade < other.grade  # Sortiere nur nach Note
+
+    def __repr__(self):
+        return f"{self.name}({self.grade})"
+
+# Ursprüngliche Reihenfolge
+students = [
+    Student("Alice", 85),
+    Student("Bob", 90),
+    Student("Charlie", 85),    # Gleiche Note wie Alice
+    Student("Diana", 90)       # Gleiche Note wie Bob
+]
+
+print("Vor Sortierung:", students)
+# [Alice(85), Bob(90), Charlie(85), Diana(90)]
+
+Merge.sort(students)  # Stabile Sortierung
+print("Nach Merge Sort:", students)
+# [Alice(85), Charlie(85), Bob(90), Diana(90)]
+# Alice bleibt vor Charlie, Bob bleibt vor Diana
+
+# Zum Vergleich: Quick Sort (instabil)
+students2 = [Student("Alice", 85), Student("Bob", 90), Student("Charlie", 85), Student("Diana", 90)]
+Quick.sort(students2)
+print("Nach Quick Sort:", students2)
+# Reihenfolge bei gleichen Noten kann variieren!
+----
+
 == Vergleich der Algorithmen
 
 [cols="2,2,2,2,2,2"]
@@ -280,6 +496,13 @@ Lässt ein Element im Heap nach unten sinken (Heapify) - interne Methode.
 |O(n log n)
 |O(1)
 |❌
+
+|**Merge Sort**
+|O(n log n)
+|O(n log n)
+|O(n log n)
+|O(n)
+|✅
 |===
 
 == Verwendungsempfehlungen
@@ -303,6 +526,14 @@ Lässt ein Element im Heap nach unten sinken (Heapify) - interne Methode.
 * Keine Rekursion gewünscht ist (kein Stack Overflow-Risiko)
 * Stabilität nicht benötigt wird
 
+=== Merge Sort verwenden, wenn:
+* Stabilität erforderlich ist (wichtigstes Alleinstellungsmerkmal)
+* Konsistente O(n log n) Performance garantiert werden muss
+* Zusätzlicher Speicherverbrauch akzeptabel ist
+* Mehrfache Sortierkriterien angewendet werden sollen
+* Vorhersagbare und reproduzierbare Ergebnisse benötigt werden
+* Externe Sortierung grosser Datenmengen durchgeführt werden soll
+
 == Gemeinsame Eigenschaften
 
 === Unterstützte Datentypen
@@ -314,14 +545,17 @@ Alle Sortieralgorithmen unterstützen jeden Datentyp, der das Vergleichsprotokol
 # Ganzzahlen
 Quick.sort([3, 1, 4, 1, 5])
 Heap.sort([3, 1, 4, 1, 5])
+Merge.sort([3, 1, 4, 1, 5])
 
 # Gleitkommazahlen
 Quick.sort([3.14, 2.71, 1.41])
 Heap.sort([3.14, 2.71, 1.41])
+Merge.sort([3.14, 2.71, 1.41])
 
 # Strings
 Quick.sort(["zebra", "apple", "banana"])
 Heap.sort(["zebra", "apple", "banana"])
+Merge.sort(["zebra", "apple", "banana"])
 
 # Benutzerdefinierte Objekte
 class Person:
@@ -335,21 +569,25 @@ class Person:
 people = [Person("Alice", 30), Person("Bob", 25)]
 Quick.sort(people)  # Sortiert nach Alter
 Heap.sort(people)   # Sortiert nach Alter
+Merge.sort(people)  # Sortiert nach Alter (stabil)
 ----
 
 === In-Place Sortierung
 
-Alle Algorithmen modifizieren die ursprüngliche Liste direkt:
+Die meisten Algorithmen modifizieren die ursprüngliche Liste direkt:
 
 [source,python]
 ----
 original = [3, 1, 4, 1, 5]
 result = Quick.sort(original)
 # oder: result = Heap.sort(original)
+# oder: result = Merge.sort(original)
 
 print(original)  # [1, 1, 3, 4, 5] - wurde modifiziert
 print(result is original)  # True - gleiche Referenz
 ----
+
+**Hinweis:** Merge Sort benötigt zusätzlichen Speicher für das Hilfarray, arbeitet aber trotzdem in-place auf der ursprünglichen Liste.
 
 === Fehlerbehandlung
 
@@ -360,18 +598,22 @@ Die Algorithmen sind robust und handhaben Grenzfälle korrekt:
 # Leere Liste
 Quick.sort([])  # []
 Heap.sort([])   # []
+Merge.sort([])  # []
 
 # Ein Element
 Quick.sort([42])  # [42]
 Heap.sort([42])   # [42]
+Merge.sort([42])  # [42]
 
 # Alle gleichen Elemente
 Quick.sort([5, 5, 5, 5])  # [5, 5, 5, 5]
 Heap.sort([5, 5, 5, 5])   # [5, 5, 5, 5]
+Merge.sort([5, 5, 5, 5])  # [5, 5, 5, 5] (stabil)
 
 # Bereits sortiert
 Quick.sort([1, 2, 3, 4, 5])  # [1, 2, 3, 4, 5]
 Heap.sort([1, 2, 3, 4, 5])   # [1, 2, 3, 4, 5]
+Merge.sort([1, 2, 3, 4, 5])  # [1, 2, 3, 4, 5]
 ----
 
 == Beispiele
@@ -382,7 +624,7 @@ Heap.sort([1, 2, 3, 4, 5])   # [1, 2, 3, 4, 5]
 ----
 import time
 import random
-from src.algs4.sorting import Quick, Shell, Heap
+from src.algs4.sorting import Quick, Shell, Heap, Merge
 
 def benchmark_algorithm(algorithm, data):
     start = time.time()
@@ -393,15 +635,17 @@ def benchmark_algorithm(algorithm, data):
 sizes = [1000, 5000, 10000]
 for size in sizes:
     data = [random.randint(1, 1000) for _ in range(size)]
-    
+
     quick_time = benchmark_algorithm(Quick, data)
     shell_time = benchmark_algorithm(Shell, data)
     heap_time = benchmark_algorithm(Heap, data)
-    
+    merge_time = benchmark_algorithm(Merge, data)
+
     print(f"Grösse {size}:")
     print(f"  Quick Sort: {quick_time:.4f}s")
     print(f"  Shell Sort: {shell_time:.4f}s")
     print(f"  Heap Sort:  {heap_time:.4f}s")
+    print(f"  Merge Sort: {merge_time:.4f}s (stabil)")
 ----
 
 === Sortierung mit benutzerdefinierten Vergleichen
@@ -433,4 +677,9 @@ print(students)  # [Charlie(78), Alice(85), Bob(92)]
 students2 = [Student("Alice", 85), Student("Bob", 92), Student("Charlie", 78)]
 Heap.sort(students2)
 print(students2)  # [Charlie(78), Alice(85), Bob(92)]
+
+# Oder mit Merge Sort (stabil, gleiches Ergebnis)
+students3 = [Student("Alice", 85), Student("Bob", 92), Student("Charlie", 78)]
+Merge.sort(students3)
+print(students3)  # [Charlie(78), Alice(85), Bob(92)]
 ----
