@@ -59,6 +59,7 @@ Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
 ==== Algorithmen
 * **link:quick_sort_documentation.adoc[Quick Sort]**: Effizienter Divide-and-Conquer-Algorithmus
 * **link:heap_sort_documentation.adoc[Heap Sort]**: Garantiert effizienter Heap-basierter Algorithmus
+* **Merge Sort**: Stabiler Divide-and-Conquer-Algorithmus mit garantierter O(n log n) Performance
 * **Shell Sort**: Erweiterte Insertion-Sort-Variante
 
 ==== API-Dokumentation
@@ -67,6 +68,8 @@ Das `sorting`-Modul enthält verschiedene Sortieralgorithmen:
 ==== Test-Dokumentation
 * **link:test_quick_documentation.adoc[Quick Sort Tests]**: Umfassende Test-Suite für Quick Sort
 * **link:test_heap_documentation.adoc[Heap Sort Tests]**: Umfassende Test-Suite für Heap Sort
+* **Merge Sort Tests**: Umfassende Test-Suite für Merge Sort
+* **Shell Sort Tests**: Test-Strategien für Shell Sort
 
 == Spezielle Dokumentation
 
@@ -123,7 +126,7 @@ print(uf.connected(0, 1))  # True
 
 [source,python]
 ----
-from src.algs4.sorting import Quick, Shell, Heap
+from src.algs4.sorting import Quick, Shell, Heap, Merge
 
 # Quick Sort
 numbers = [64, 34, 25, 12, 22, 11, 90]
@@ -134,6 +137,11 @@ print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
 numbers2 = [64, 34, 25, 12, 22, 11, 90]
 sorted_numbers2 = Heap.sort(numbers2)
 print(sorted_numbers2)  # [11, 12, 22, 25, 34, 64, 90]
+
+# Merge Sort (stabiler Algorithmus)
+numbers3 = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers3 = Merge.sort(numbers3)
+print(sorted_numbers3)  # [11, 12, 22, 25, 34, 64, 90]
 
 # Shell Sort
 words = ["zebra", "apple", "banana", "cherry"]
@@ -178,21 +186,56 @@ ffhs-dua/
 ├── src/
 │   └── algs4/
 │       ├── fundamentals/          # Grundlegende Datenstrukturen
-│       │   ├── stack.py           # Stack-Implementierungen
+│       │   ├── stack.py           # Stack-Implementierungen (3 Varianten)
 │       │   ├── queue.py           # Queue-Implementierung
 │       │   ├── bag.py             # Bag-Implementierung
-│       │   └── uf.py              # Union-Find-Implementierungen
+│       │   └── uf.py              # Union-Find-Implementierungen (4 Varianten)
 │       ├── sorting/               # Sortieralgorithmen
 │       │   ├── quick.py           # Quick Sort
-│       │   └── shell.py           # Shell Sort
+│       │   ├── shell.py           # Shell Sort
+│       │   ├── heap.py            # Heap Sort
+│       │   └── merge.py           # Merge Sort
 │       └── errors/                # Benutzerdefinierte Exceptions
 ├── tests/                         # Umfassende Test-Suite
 │   ├── test_fundamentals/         # Tests für Grundlagen
+│   │   ├── test_stack.py          # Stack-Tests (alle Varianten)
+│   │   ├── test_queue.py          # Queue-Tests
+│   │   ├── test_bag.py            # Bag-Tests
+│   │   └── test_uf.py             # Union-Find-Tests
 │   └── test_sorting/              # Tests für Sortieralgorithmen
+│       ├── test_quick.py          # Quick Sort Tests
+│       ├── test_shell.py          # Shell Sort Tests
+│       ├── test_heap.py           # Heap Sort Tests
+│       └── test_merge.py          # Merge Sort Tests
 ├── docs/                          # Dokumentation (AsciiDoc)
 │   ├── api/                       # API-Dokumentation
-│   └── tutorials/                 # Tutorials und Anleitungen
-└── benchmarks/                    # Performance-Benchmarks
+│   │   ├── fundamentals.adoc      # Fundamentals API
+│   │   └── sorting.adoc           # Sorting API
+│   ├── tutorials/                 # Tutorials und Anleitungen
+│   │   └── getting_started.adoc   # Erste Schritte
+│   ├── quick_sort_documentation.adoc
+│   ├── heap_sort_documentation.adoc
+│   ├── union_find_documentation.adoc
+│   └── komplexitaetsanalyse.adoc
+├── benchmarks/                    # Performance-Benchmarks
+│   └── sorting_benchmarks.py     # Sortieralgorithmus-Benchmarks
+├── data/                          # Testdaten
+│   ├── small/                     # Kleine Testdaten
+│   ├── medium/                    # Mittlere Datensätze
+│   ├── large/                     # Grosse Datensätze
+│   ├── sorting/                   # Sortier-spezifische Daten
+│   ├── fundamentals/              # Fundamentals-spezifische Daten
+│   └── strings/                   # String-Verarbeitung
+├── notebooks/                     # Jupyter Notebooks
+│   └── pva1/                      # Praktische Vertiefungsaufgaben 1
+│       ├── grundlagen.ipynb       # Grundlagen Notebook
+│       ├── sierpinski.py          # Sierpinski-Implementierung
+│       └── sierpinski.adoc        # Sierpinski-Dokumentation
+├── scripts/                       # Hilfsskripte
+│   └── setup_dev.py              # Entwicklungsumgebung Setup
+├── pyproject.toml                 # Projektkonfiguration
+├── README.md                      # Projekt-Übersicht
+└── CLAUDE.md                      # Entwicklungsrichtlinien
 ----
 
 == Beitragen
