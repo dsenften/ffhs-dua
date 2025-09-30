@@ -18,6 +18,9 @@ Beispiele:
     all bad bed bug dad ... yes yet zoo    [ one string per line ]
 """
 
+import src.utils.timing
+from src.utils import timeit
+
 
 class Heap:
     """Heap-Sort-Implementierung.
@@ -56,6 +59,7 @@ class Heap:
             i = j
 
     @classmethod
+    @timeit
     def sort(cls, arr: list) -> list:
         """Sortiert eine Liste mit dem Heap-Sort-Algorithmus.
 
@@ -106,16 +110,36 @@ class Heap:
 
 
 if __name__ == "__main__":
+    import argparse
     import sys
+
+    # Argument-Parser für --timing Flag
+    parser = argparse.ArgumentParser(description='Heap Sort mit optionaler Zeitmessung')
+    parser.add_argument('--timing', '-t', action='store_true',
+                       help='Aktiviert Zeitmessung für sort() Methode')
+    parser.add_argument('--quiet', '-q', action='store_true',
+                       help='Unterdrückt Array-Ausgabe und zeigt nur Laufzeit')
+    args = parser.parse_args()
+
+    # Aktiviere Zeitmessung falls gewünscht
+    if args.timing:
+        src.utils.timing.ENABLE_TIMING = True
 
     # Lese Eingabe von stdin und erstelle eine Liste von Elementen
     items = []
     for line in sys.stdin:
         items.extend(line.split())
 
-    # Zeige die ursprüngliche und sortierte Liste an
-    print("     items: ", items)
-    print("sort items: ", Heap.sort(items))
+    if not args.quiet:
+        # Zeige die ursprüngliche Liste an
+        print("     items: ", items)
+
+    # Sortiere die Liste (mit optionaler Zeitmessung)
+    sorted_items = Heap.sort(items)
+
+    if not args.quiet:
+        # Zeige die sortierte Liste an
+        print("sort items: ", sorted_items)
 
     # Überprüfe, ob die Liste korrekt sortiert wurde
     assert Heap.is_sorted(items)
