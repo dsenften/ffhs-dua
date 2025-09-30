@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FFHS DUA - Release Notes v1.2.0</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header .version {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .release-info {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .feature-item h3 {
+            margin: 0 0 10px 0;
+            color: #28a745;
+            font-size: 1.1em;
+        }
+        
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            border-radius: 0 5px 5px 0;
+            margin: 15px 0;
+        }
+        
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .usage-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .usage-card h4 {
+            color: #495057;
+            margin-top: 0;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #007bff;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        
+        .badge.new {
+            background: #28a745;
+        }
+        
+        .badge.improved {
+            background: #17a2b8;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>FFHS DUA - Release Notes</h1>
+        <div class="version">Version 1.2.0 - Performance-Messungen & Timing-Utilities</div>
+        <div>30. September 2025</div>
+    </div>
+
+    <div class="release-info">
+        <h2>📋 Überblick</h2>
+        <p>Diese Version erweitert das FFHS DUA Projekt um umfassende <strong>Performance-Messung-Tools</strong> für Sortieralgorithmen. 
+        Studierende können jetzt die Laufzeit verschiedener Algorithmen messen und vergleichen.</p>
+        
+        <div class="highlight">
+            <strong>🎯 Lernziel:</strong> Praktische Erfahrung mit Algorithmus-Performance und empirischer Komplexitätsanalyse
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🚀 Neue Features</h2>
+        
+        <div class="feature-item">
+            <h3><span class="badge new">NEU</span> Timing-Utilities Modul</h3>
+            <p>Vollständiges <code>utils</code>-Paket mit professionellen Performance-Messung-Tools:</p>
+            <ul>
+                <li><strong>@timeit Dekorator:</strong> Automatische Zeitmessung für Funktionen</li>
+                <li><strong>Globale Steuerung:</strong> Ein-/Ausschalten der Zeitmessung über <code>ENABLE_TIMING</code></li>
+                <li><strong>Hilfsfunktionen:</strong> <code>enable_timing()</code>, <code>disable_timing()</code>, <code>measure_execution_time()</code></li>
+            </ul>
+        </div>
+
+        <div class="feature-item">
+            <h3><span class="badge improved">ERWEITERT</span> Sortieralgorithmen mit Timing</h3>
+            <p>MergeSort und HeapSort unterstützen jetzt Performance-Messungen:</p>
+            <ul>
+                <li><strong>--timing Flag:</strong> Aktiviert Zeitmessung</li>
+                <li><strong>--quiet Flag:</strong> Zeigt nur Laufzeit (ohne Arrays)</li>
+                <li><strong>Automatische Integration:</strong> Nahtlose Einbindung in bestehende Algorithmen</li>
+            </ul>
+        </div>
+
+        <div class="feature-item">
+            <h3><span class="badge new">NEU</span> Umfassende Dokumentation</h3>
+            <p>Vollständige Anleitung und Beispiele im <code>src/utils/README.md</code></p>
+        </div>
+
+        <div class="feature-item">
+            <h3><span class="badge new">NEU</span> Test-Suite</h3>
+            <p>100% Test-Coverage für alle Timing-Funktionen mit 7 umfassenden Tests</p>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>💡 Praktische Anwendung für Studierende</h2>
+        
+        <div class="usage-grid">
+            <div class="usage-card">
+                <h4>🔍 Performance-Vergleiche</h4>
+                <p>Vergleichen Sie verschiedene Sortieralgorithmen empirisch:</p>
+                <div class="code-example">echo "5 2 8 1 9 3 7 4 6" | uv run src/algs4/sorting/merge.py --timing
+echo "5 2 8 1 9 3 7 4 6" | uv run src/algs4/sorting/heap.py --timing</div>
+            </div>
+
+            <div class="usage-card">
+                <h4>📊 Saubere Messungen</h4>
+                <p>Fokus auf Laufzeit ohne Array-Ausgabe:</p>
+                <div class="code-example">echo "5 2 8 1 9 3 7 4 6" | uv run src/algs4/sorting/merge.py --timing --quiet</div>
+            </div>
+
+            <div class="usage-card">
+                <h4>🧪 Eigene Experimente</h4>
+                <p>Integrieren Sie Timing in eigene Algorithmen:</p>
+                <div class="code-example">from src.utils import timeit
+import src.utils.timing
+
+src.utils.timing.ENABLE_TIMING = True
+
+@timeit
+def my_algorithm(data):
+    # Ihr Code hier
+    return result</div>
+            </div>
+
+            <div class="usage-card">
+                <h4>🎯 Komplexitätsanalyse</h4>
+                <p>Testen Sie verschiedene Eingabegrössen:</p>
+                <div class="code-example"># Kleine Eingabe
+echo "3 1 2" | uv run src/algs4/sorting/merge.py -t -q
+
+# Grössere Eingabe  
+echo "9 5 2 8 1 7 4 6 3" | uv run src/algs4/sorting/merge.py -t -q</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🛠️ Technische Details</h2>
+        
+        <div class="feature-item">
+            <h3>Architektur</h3>
+            <ul>
+                <li><strong>Modularer Aufbau:</strong> Wiederverwendbare Utilities in <code>src/utils/</code></li>
+                <li><strong>Decorator Pattern:</strong> Elegante Integration ohne Code-Änderungen</li>
+                <li><strong>Globale Konfiguration:</strong> Zentrale Steuerung der Timing-Funktionalität</li>
+            </ul>
+        </div>
+
+        <div class="feature-item">
+            <h3>Code-Qualität</h3>
+            <ul>
+                <li><strong>Ruff Linting:</strong> Automatische Code-Formatierung</li>
+                <li><strong>Type Hints:</strong> Vollständige Typisierung</li>
+                <li><strong>Docstrings:</strong> Umfassende Dokumentation</li>
+                <li><strong>Tests:</strong> 100% Coverage mit pytest</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>📚 Lernressourcen</h2>
+        
+        <div class="highlight">
+            <h4>Empfohlene Übungen:</h4>
+            <ol>
+                <li><strong>Algorithmus-Vergleich:</strong> Messen Sie MergeSort vs. HeapSort bei verschiedenen Eingabegrössen</li>
+                <li><strong>Worst-Case-Analyse:</strong> Testen Sie bereits sortierte vs. umgekehrt sortierte Arrays</li>
+                <li><strong>Eigene Implementierung:</strong> Fügen Sie Timing zu QuickSort hinzu</li>
+                <li><strong>Komplexitätsverifikation:</strong> Überprüfen Sie theoretische O(n log n) Komplexität empirisch</li>
+            </ol>
+        </div>
+
+        <div class="usage-card">
+            <h4>📖 Dokumentation</h4>
+            <ul>
+                <li><code>src/utils/README.md</code> - Vollständige API-Dokumentation</li>
+                <li><code>tests/test_utils/</code> - Beispiele und Test-Cases</li>
+                <li>Inline-Docstrings in allen Modulen</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🔧 Installation & Setup</h2>
+        
+        <div class="code-example"># Repository aktualisieren
+git pull origin develop
+
+# Dependencies installieren (falls nötig)
+uv sync
+
+# Tests ausführen
+uv run python -m pytest tests/test_utils/ -v
+
+# Beispiel ausprobieren
+echo "5 2 8 1 9 3" | uv run src/algs4/sorting/merge.py --timing</div>
+    </div>
+
+    <div class="footer">
+        <p><strong>FFHS - Fachhochschule Schweiz</strong><br>
+        Datenstrukturen und Algorithmen (DUA)<br>
+        <em>Entwickelt für praxisnahe Algorithmus-Analyse</em></p>
+    </div>
+</body>
+</html>
