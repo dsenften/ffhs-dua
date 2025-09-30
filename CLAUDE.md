@@ -42,7 +42,9 @@ ffhs-dua/
 │       │   └── uf.py              # Union-Find-Implementierungen (4 Varianten)
 │       ├── sorting/               # Sortieralgorithmen
 │       │   ├── quick.py           # Quick Sort
-│       │   └── shell.py           # Shell Sort
+│       │   ├── shell.py           # Shell Sort
+│       │   ├── heap.py            # Heap Sort
+│       │   └── merge.py           # Merge Sort
 │       └── errors/                # Benutzerdefinierte Fehlerklassen
 │           └── errors.py
 ├── tests/                         # Umfassende Test-Suite
@@ -54,7 +56,23 @@ ffhs-dua/
 │       ├── sierpinski.py          # Sierpinski-Dreieck Implementierung
 │       ├── sierpinski.adoc        # Sierpinski-Dokumentation
 │       └── grundlagen.ipynb       # Grundlagen-Notebook
-└── benchmarks/                    # Performance-Benchmarks
+├── benchmarks/                    # Performance-Benchmarks
+│   └── sorting_benchmarks.py      # Sortieralgorithmus-Benchmarks
+├── src/
+│   ├── algs4/                     # Hauptalgorithmus-Package
+│   └── utils/                     # Wiederverwendbare Hilfsfunktionen
+│       ├── timing.py              # Timing-Utilities und @timeit Dekorator
+│       └── README.md              # Utils-Dokumentation
+└── data/                          # Testdaten (thematisch organisiert)
+    ├── fundamentals/              # Union-Find, Stacks, Queues, Priority Queues
+    ├── sorting/                   # Sortieralgorithmen und Integer-Arrays
+    ├── graphs/                    # Graph-Algorithmen
+    ├── strings/                   # String-Algorithmen, Texte
+    ├── compression/               # Binäre Dateien und Kompression
+    ├── small/                     # Kleine Testdaten (< 100KB)
+    ├── medium/                    # Mittlere Datensätze (100KB - 10MB)
+    ├── large/                     # Grosse Datensätze (> 10MB)
+    └── misc/                      # CSV-Dateien und sonstige Daten
 ```
 
 ### Implementierungsmuster
@@ -86,6 +104,8 @@ Jede grundlegende Datenstruktur folgt diesem Muster:
 
 1. **Quick**: Quick Sort mit Hoare-Partitionierung
 2. **Shell**: Shell Sort mit Knuth-Sequenz
+3. **Heap**: Heap Sort mit garantierter O(n log n) Performance
+4. **Merge**: Merge Sort mit stabiler Sortierung
 
 #### Fehlerbehandlung
 

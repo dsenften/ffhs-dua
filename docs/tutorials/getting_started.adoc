@@ -23,6 +23,10 @@ cd ffhs-dua
 
 [source,bash]
 ----
+# Mit uv (empfohlen)
+uv sync
+
+# Oder mit setup-Skript
 python scripts/setup_dev.py
 ----
 
