@@ -119,16 +119,39 @@ class Quick:
 
 
 if __name__ == "__main__":
+    import argparse
     import sys
+    import time
+
+    # Argument-Parser für --quiet Flag
+    parser = argparse.ArgumentParser(description='Quick Sort mit optionaler Zeitmessung')
+    parser.add_argument('--quiet', '-q', action='store_true',
+                       help='Unterdrückt Array-Ausgabe und zeigt nur Laufzeit')
+    args = parser.parse_args()
 
     # Lese Eingabe von stdin und erstelle eine Liste von Elementen
     items = []
     for line in sys.stdin:
         items.extend(line.split())
 
-    # Zeige die ursprüngliche und sortierte Liste an
-    print("     items: ", items)
-    print("sort items: ", Quick.sort(items))
+    if not args.quiet:
+        # Zeige die ursprüngliche Liste an
+        print("     items: ", items)
+
+    # Messe die Sortierzeit
+    start_time = time.perf_counter()
+    sorted_items = Quick.sort(items)
+    end_time = time.perf_counter()
+
+    sorting_time = end_time - start_time
+
+    if args.quiet:
+        # Nur Laufzeit ausgeben
+        print(f"Sortierzeit: {sorting_time:.6f} Sekunden")
+    else:
+        # Zeige die sortierte Liste an
+        print("sort items: ", sorted_items)
+        print(f"Sortierzeit: {sorting_time:.6f} Sekunden")
 
     # Überprüfe, ob die Liste korrekt sortiert wurde
     assert Quick.is_sorted(items)

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.css">
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 { color: #2c3e50; }
+        .reveal .slides section { text-align: left; }
+        .reveal .centered { text-align: center; }
+        .algorithm-step { 
+            background: #ecf0f1; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-left: 4px solid #3498db; 
+        }
+        .complexity { 
+            background: #e8f5e8; 
+            padding: 8px; 
+            border-radius: 5px; 
+            margin: 5px 0; 
+        }
+        .example-array {
+            font-family: monospace;
+            font-size: 1.2em;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Phase 1: Grundlagenwiederholung -->
+            <section>
+                <section>
+                    <h2 class="centered">Phase 1: Grundlagenwiederholung</h2>
+                    <h3>O-Notation Recap</h3>
+                    <ul>
+                        <li><strong>O(1)</strong> - Konstante Zeit</li>
+                        <li><strong>O(n)</strong> - Lineare Zeit</li>
+                        <li><strong>O(n²)</strong> - Quadratische Zeit</li>
+                        <li><strong>O(log n)</strong> - Logarithmische Zeit</li>
+                    </ul>
+                    <br>
+                    <p><em>Welche Komplexitäten kennen Sie bereits?</em></p>
+                </section>
+                
+                <section>
+                    <h3>Was bedeutet "sortiert"?</h3>
+                    <div class="example-array">
+                        Unsortiert: [3, 1, 4, 2, 5]<br>
+                        Sortiert:   [1, 2, 3, 4, 5]
+                    </div>
+                    <br>
+                    <h4>Diskussion:</h4>
+                    <ul>
+                        <li>Welche Sortierverfahren kennen Sie?</li>
+                        <li>Wo begegnen Ihnen sortierte Daten?</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h3>Warum ist Sortieren wichtig?</h3>
+                    <ul>
+                        <li><strong>Suchen</strong> wird effizienter (Binärsuche)</li>
+                        <li><strong>Datenbanken</strong> nutzen sortierte Indizes</li>
+                        <li><strong>Algorithmen</strong> arbeiten oft mit sortierten Daten</li>
+                        <li><strong>Benutzerfreundlichkeit</strong> (alphabetische Listen)</li>
+                    </ul>
+                    <br>
+                    <p class="centered"><em>Sortieren ist ein Grundbaustein der Informatik!</em></p>
+                </section>
+            </section>
+
+            <!-- Phase 2: Bubble Sort -->
+            <section>
+                <section>
+                    <h2 class="centered">Phase 2: Bubble Sort</h2>
+                    <h3>Grundidee</h3>
+                    <div class="algorithm-step">
+                        <strong>Prinzip:</strong> Grosse Elemente "blubbern" nach rechts
+                    </div>
+                    <ul>
+                        <li>Vergleiche benachbarte Elemente</li>
+                        <li>Vertausche, wenn in falscher Reihenfolge</li>
+                        <li>Wiederhole für alle Positionen</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h3>Bubble Sort - Beispiel</h3>
+                    <div class="example-array">
+                        Start:     [3, 1, 4, 2]<br>
+                        Schritt 1: [1, 3, 4, 2] (3↔1)<br>
+                        Schritt 2: [1, 3, 4, 2] (3&lt;4)<br>
+                        Schritt 3: [1, 3, 2, 4] (4↔2)<br>
+                        ...
+                    </div>
+                    <br>
+                    <p><strong>Beobachtung:</strong> Nach jedem Durchlauf ist das grösste Element am Ende positioniert.</p>
+                </section>
+                
+                <section>
+                    <h3>Bubble Sort - Komplexität</h3>
+                    <div class="complexity">
+                        <strong>Best Case:</strong> O(n) - bereits sortiert
+                    </div>
+                    <div class="complexity">
+                        <strong>Average Case:</strong> O(n²) - zufällige Reihenfolge
+                    </div>
+                    <div class="complexity">
+                        <strong>Worst Case:</strong> O(n²) - umgekehrt sortiert
+                    </div>
+                    <br>
+                    <p><strong>Speicher:</strong> O(1) - in-place Sortierung</p>
+                </section>
+            </section>
+
+            <!-- Phase 3: Selection Sort -->
+            <section>
+                <section>
+                    <h2 class="centered">Phase 3: Selection Sort</h2>
+                    <h3>Grundidee</h3>
+                    <div class="algorithm-step">
+                        <strong>Prinzip:</strong> Finde das Minimum und tausche es an die richtige Position
+                    </div>
+                    <ul>
+                        <li>Suche das kleinste Element</li>
+                        <li>Vertausche es mit dem ersten Element</li>
+                        <li>Wiederhole für Rest-Array</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h3>Selection Sort - Beispiel</h3>
+                    <div class="example-array">
+                        Start:    [3, 1, 4, 2]<br>
+                        Min=1:    [1, 3, 4, 2] (1↔3)<br>
+                        Min=2:    [1, 2, 4, 3] (2↔3)<br>
+                        Min=3:    [1, 2, 3, 4] (3↔4)<br>
+                        Fertig:   [1, 2, 3, 4]
+                    </div>
+                    <br>
+                    <p><strong>Beobachtung:</strong> Linker Teil ist immer sortiert und wird schrittweise erweitert.</p>
+                </section>
+                
+                <section>
+                    <h3>Selection Sort - Komplexität</h3>
+                    <div class="complexity">
+                        <strong>Alle Fälle:</strong> O(n²)
+                    </div>
+                    <br>
+                    <ul>
+                        <li><strong>Warum immer O(n²)?</strong></li>
+                        <li>Minimum-Suche benötigt immer n-1, n-2, n-3, ... Vergleiche</li>
+                        <li>Unabhängig von der Eingabereihenfolge</li>
+                    </ul>
+                    <br>
+                    <p><strong>Speicher:</strong> O(1) - in-place Sortierung</p>
+                </section>
+            </section>
+
+            <!-- Phase 4: Insertion Sort -->
+            <section>
+                <section>
+                    <h2 class="centered">Phase 4: Insertion Sort</h2>
+                    <h3>Grundidee</h3>
+                    <div class="algorithm-step">
+                        <strong>Analogie:</strong> Wie beim Kartensortieren während des Spiels
+                    </div>
+                    <ul>
+                        <li>Nehme nächstes Element</li>
+                        <li>Füge es an der richtigen Stelle ein</li>
+                        <li>Verschiebe andere Elemente nach rechts</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h3>Insertion Sort - Beispiel</h3>
+                    <div class="example-array">
+                        Start:      [3, 1, 4, 2]<br>
+                        Einfügen 1: [1, 3, 4, 2]<br>
+                        Einfügen 4: [1, 3, 4, 2] (bereits richtig)<br>
+                        Einfügen 2: [1, 2, 3, 4]<br>
+                        Fertig:     [1, 2, 3, 4]
+                    </div>
+                    <br>
+                    <p><strong>Beobachtung:</strong> Linker Teil bleibt immer sortiert.</p>
+                </section>
+                
+                <section>
+                    <h3>Insertion Sort - Komplexität</h3>
+                    <div class="complexity">
+                        <strong>Best Case:</strong> O(n) - bereits sortiert
+                    </div>
+                    <div class="complexity">
+                        <strong>Average Case:</strong> O(n²)
+                    </div>
+                    <div class="complexity">
+                        <strong>Worst Case:</strong> O(n²) - umgekehrt sortiert
+                    </div>
+                    <br>
+                    <p><strong>Praktisch relevant:</strong> Sehr effizient für kleine oder teilweise sortierte Arrays!</p>
+                </section>
+            </section>
+
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            controls: true,
+            progress: true
+        });
+    </script>
+</body>
+</html>

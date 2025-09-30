@@ -1,0 +1,192 @@
+= MergeSort Algorithmus
+:author: Daniel Senften
+:revdate: {docdate}
+:backend: revealjs
+:revealjs_theme: white
+:revealjs_transition: slide
+:source-highlighter: highlight.js
+:icons: font
+
+== MergeSort
+
+* **Divide-and-Conquer Algorithmus**
+* **Garantiert**: O(n log n)
+* **Stabil**: Reihenfolge gleicher Elemente bleibt erhalten
+* Extra Speicher: O(n)
+
+== Grundprinzip
+
+[.step]
+* **Teile** Array in zwei Hälften
+* **Sortiere** rekursiv beide Hälften
+* **Verschmelze** sortierte Hälften
+
+== Divide: Teilen
+
+```python
+def mergesort(cls, arr: list, lo: int, hi: int):
+    if lo >= hi:
+        return arr
+
+    mid = lo + (hi - lo) // 2
+
+    cls.mergesort(arr, lo, mid)      # Erste Hälfte
+    cls.mergesort(arr, mid + 1, hi)  # Zweite Hälfte
+```
+
+[.notes]
+--
+Quellcode: `src/algs4/sorting/merge.py:74-99`
+--
+
+== Conquer: Verschmelzen
+
+```python
+def merge(cls, arr: list, lo: int, mid: int, hi: int):
+    aux = arr[lo : hi + 1]  # Hilfarray
+
+    i = 0              # Zeiger erste Hälfte
+    j = mid - lo + 1   # Zeiger zweite Hälfte
+
+    for k in range(lo, hi + 1):
+        # Verschmelze die beiden Hälften
+```
+
+== Merge-Prozess
+
+[.step]
+. **Kopiere** Bereich in Hilfsarray
+. **Vergleiche** Elemente beider Hälften
+. **Wähle** kleineres Element
+. **Füge** in Originalarray ein
+
+== Merge-Logik
+
+```python
+if i > mid - lo:
+    arr[k] = aux[j]        # Erste Hälfte erschöpft
+    j += 1
+elif j > hi - lo:
+    arr[k] = aux[i]        # Zweite Hälfte erschöpft
+    i += 1
+elif aux[i] <= aux[j]:
+    arr[k] = aux[i]        # Stabilität!
+    i += 1
+else:
+    arr[k] = aux[j]
+    j += 1
+```
+
+== Beispiel: [5, 2, 8, 1]
+
+[.step]
+* **Teile**: [5, 2] | [8, 1]
+* **Sortiere**: [2, 5] | [1, 8]
+* **Merge**:
+  - Vergleiche 2 vs 1 → 1
+  - Vergleiche 2 vs 8 → 2
+  - Vergleiche 5 vs 8 → 5
+  - Vergleiche - vs 8 → 8
+* **Ergebnis**: [1, 2, 5, 8]
+
+== Visualisierung
+
+```
+     [5, 2, 8, 1]
+    /            \
+[5, 2]           [8, 1]
+  |                |
+[2, 5]           [1, 8]
+    \            /
+     [1, 2, 5, 8]
+```
+
+== Hauptmethode
+
+```python
+@classmethod
+def sort(cls, arr: list) -> list:
+    if arr is None:
+        return None
+
+    arr_copy = arr.copy()
+    cls.mergesort(arr_copy, 0, len(arr_copy) - 1)
+    return arr_copy
+```
+
+== Komplexität
+
+[.step]
+* **Best Case**: O(n log n)
+* **Average Case**: O(n log n)
+* **Worst Case**: O(n log n)
+* **Speicher**: O(n)
+
+**Warum garantiert O(n log n)?**
+
+== Rekursionsbaum
+
+```
+Level 0:        n
+Level 1:     n/2  n/2
+Level 2:   n/4 n/4 n/4 n/4
+...
+Level log n: 1 1 1 ... 1
+```
+
+**Jedes Level**: O(n) Arbeit
+**Anzahl Level**: log n
+
+== Eigenschaften
+
+[cols="2*"]
+|===
+|✅ **Vorteile** |❌ **Nachteile**
+
+|Garantiert O(n log n) |Extra Speicher O(n)
+|Stabil |Nicht In-Place
+|Vorhersagbare Performance |Overhead für kleine Arrays
+|Parallisierbar |Rekursion = Stack-Overhead
+|===
+
+== Stabilität
+
+**Wichtig für komplexe Datentypen:**
+
+```python
+students = [
+    ("Alice", 85),
+    ("Bob", 90),
+    ("Charlie", 85)
+]
+```
+
+Nach Sortierung nach Note:
+```python
+[("Alice", 85), ("Charlie", 85), ("Bob", 90)]
+```
+
+Alice bleibt vor Charlie!
+
+== Implementierung
+
+```
+📁 src/algs4/sorting/merge.py
+📁 tests/test_sorting/test_merge.py
+```
+
+**Verwendung:**
+```python
+from src.algs4.sorting import Merge
+
+sorted_array = Merge.sort([5, 2, 8, 1])
+```
+
+== Vielen Dank!
+
+**Fragen?**
+
+[.notes]
+--
+Weitere Details in: `docs/` (Dokumentation folgt)
+--

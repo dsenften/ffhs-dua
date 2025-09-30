@@ -16,7 +16,13 @@
       "mcp__ide__executeCode",
       "Bash(git restore:*)",
       "Bash(python3 -m pytest tests/test_sorting/test_merge.py -v)",
-      "Bash(python3 -m pytest tests/test_sorting/ -v)"
+      "Bash(python3 -m pytest tests/test_sorting/ -v)",
+      "Bash(asciidoctor:*)",
+      "Bash(gem list)",
+      "Bash(gem install:*)",
+      "Bash(sudo gem install:*)",
+      "Bash(npm install:*)",
+      "Bash(asciidoctor-revealjs:*)"
     ],
     "deny": [],
     "ask": []
