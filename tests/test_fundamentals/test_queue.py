@@ -8,7 +8,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 import pytest
 
 from src.algs4.errors.errors import NoSuchElementException
-from src.algs4.fundamentals.queue import Queue
+from src.algs4.pva_1_fundamentals.queue import Queue
 
 
 class TestQueue:

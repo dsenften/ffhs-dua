@@ -1,21 +1,31 @@
 # CLAUDE.md
 
-Diese Datei enthält spezifische Richtlinien für die Arbeit mit Claude AI an diesem Projekt.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Projektübersicht
 
-Dies ist eine umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen.
-Das Projekt enthält deutsche Dokumentation und umfassende Testsuiten.
+Umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen
+für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS).
+Das Projekt enthält deutsche Dokumentation, umfassende Testsuiten und ist nach
+praktischen Vertiefungsaufgaben (PVA) strukturiert.
 
 ## Entwicklungsbefehle
+
+### Package Management
+
+Dieses Projekt verwendet `uv` als Package Manager:
+
+- Abhängigkeiten installieren: `uv sync`
+- Virtuelle Umgebung aktivieren: `source .venv/bin/activate` (wird von uv automatisch erstellt)
 
 ### Testen
 
 - Alle Tests ausführen: `python3 -m pytest tests/ -v`
-- Spezifische Testdatei ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py`
-- Spezifische Testklasse ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack`
-- Spezifische Testmethode ausführen: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack::test_push_pop`
+- Spezifische Testdatei: `python3 -m pytest tests/test_fundamentals/test_stack.py`
+- Spezifische Testklasse: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack`
+- Spezifische Testmethode: `python3 -m pytest tests/test_fundamentals/test_stack.py::TestStack::test_push_pop`
 - Tests mit Coverage: `python3 -m pytest tests/ --cov=src.algs4 --cov-report=html`
+- Langsame Tests überspringen: `python3 -m pytest tests/ -v -m "not slow"`
 
 ### Linting und Formatierung
 
@@ -23,56 +33,62 @@ Das Projekt enthält deutsche Dokumentation und umfassende Testsuiten.
 - Linting überprüfen: `ruff check`
 - Linting-Probleme automatisch beheben: `ruff check --fix`
 
+### CLI-Nutzung
+
+Sortieralgorithmen können direkt von der Kommandozeile ausgeführt werden:
+
+```bash
+# Quick Sort mit Daten aus stdin
+cat data/sorting/tiny.txt | python3 -m src.algs4.pva_2_sorting.quick
+
+# Mit --quiet Flag nur Zeitmessung anzeigen
+cat data/sorting/1Kints.txt | python3 -m src.algs4.pva_2_sorting.quick --quiet
+```
+
 ### Jupyter Notebooks
 
 - Jupyter starten: `jupyter notebook` oder `jupyter lab`
+- Notebooks befinden sich in `notebooks/pva1/` für Praktische Vertiefungsaufgaben 1
 
 ## Architektur
 
-### Projektstruktur
+### Projektstruktur nach PVA-Modulen
 
 ```text
-ffhs-dua/
-├── src/
-│   └── algs4/
-│       ├── fundamentals/          # Grundlegende Datenstrukturen
-│       │   ├── stack.py           # Stack-Implementierungen (3 Varianten)
-│       │   ├── queue.py           # Queue-Implementierung
-│       │   ├── bag.py             # Bag-Datenstruktur
-│       │   └── uf.py              # Union-Find-Implementierungen (4 Varianten)
-│       ├── sorting/               # Sortieralgorithmen
-│       │   ├── quick.py           # Quick Sort
-│       │   ├── shell.py           # Shell Sort
-│       │   ├── heap.py            # Heap Sort
-│       │   └── merge.py           # Merge Sort
-│       └── errors/                # Benutzerdefinierte Fehlerklassen
-│           └── errors.py
-├── tests/                         # Umfassende Test-Suite
-│   ├── test_fundamentals/         # Tests für Grundlagen
-│   └── test_sorting/              # Tests für Sortieralgorithmen
-├── docs/                          # AsciiDoc-Dokumentation
-├── notebooks/                     # Jupyter Notebooks
-│   └── pva1/                      # Praktische Vertiefungsaufgaben 1
-│       ├── sierpinski.py          # Sierpinski-Dreieck Implementierung
-│       ├── sierpinski.adoc        # Sierpinski-Dokumentation
-│       └── grundlagen.ipynb       # Grundlagen-Notebook
-├── benchmarks/                    # Performance-Benchmarks
-│   └── sorting_benchmarks.py      # Sortieralgorithmus-Benchmarks
-├── src/
-│   ├── algs4/                     # Hauptalgorithmus-Package
-│   └── utils/                     # Wiederverwendbare Hilfsfunktionen
-│       ├── timing.py              # Timing-Utilities und @timeit Dekorator
-│       └── README.md              # Utils-Dokumentation
-└── data/                          # Testdaten (thematisch organisiert)
-    ├── fundamentals/              # Union-Find, Stacks, Queues, Priority Queues
-    ├── sorting/                   # Sortieralgorithmen und Integer-Arrays
-    ├── graphs/                    # Graph-Algorithmen
-    ├── strings/                   # String-Algorithmen, Texte
-    ├── compression/               # Binäre Dateien und Kompression
-    ├── small/                     # Kleine Testdaten (< 100KB)
-    ├── medium/                    # Mittlere Datensätze (100KB - 10MB)
-    ├── large/                     # Grosse Datensätze (> 10MB)
-    └── misc/                      # CSV-Dateien und sonstige Daten
+src/algs4/
+├── pva_1_fundamentals/          # Praktische Vertiefungsaufgaben 1
+│   ├── stack.py                 # Stack (3 Varianten: LinkedList, Fixed, Resizing)
+│   ├── queue.py                 # Queue (LinkedList-basiert)
+│   ├── bag.py                   # Bag (ungeordnete Sammlung)
+│   └── uf.py                    # Union-Find (4 Varianten)
+├── pva_2_sorting/               # Praktische Vertiefungsaufgaben 2
+│   ├── quick.py                 # Quick Sort mit CLI
+│   ├── merge.py                 # Merge Sort (stabil)
+│   ├── heap.py                  # Heap Sort
+│   └── shell.py                 # Shell Sort
+├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3 (geplant)
+├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
+└── errors/
+    └── errors.py                # Benutzerdefinierte Exceptions
+
+src/utils/
+├── timing.py                    # @timeit Dekorator und Timing-Funktionen
+└── README.md                    # Utils-Dokumentation
+
+tests/
+├── test_fundamentals/           # Tests für PVA-1
+├── test_sorting/                # Tests für PVA-2
+└── test_utils/                  # Tests für Utility-Module
+
+data/                            # Thematisch organisierte Testdaten
+├── fundamentals/                # Union-Find, Stacks, Queues
+├── sorting/                     # Sortieralgorithmen (tiny.txt, 1Kints.txt, etc.)
+├── graphs/                      # Graph-Algorithmen
+├── strings/                     # String-Algorithmen, Texte
+├── compression/                 # Binäre Dateien
+├── small/                       # < 100KB
+├── medium/                      # 100KB - 10MB
+└── large/                       # > 10MB
 ```
 
 ### Implementierungsmuster
@@ -81,64 +97,86 @@ ffhs-dua/
 
 Jede grundlegende Datenstruktur folgt diesem Muster:
 
-- Mehrere Implementierungsvarianten (z.B. verkettete Liste, festes Array, grössenveränderliches Array)
+- Mehrere Implementierungsvarianten zur Demonstration unterschiedlicher Trade-offs
 - Generische Typisierung mit `TypeVar("T")`
 - Deutsche Docstrings nach akademischen Konventionen
 - Standardmethoden: `is_empty()`, `size()`, `__len__()`, `__iter__()`, `__repr__()`
-- LIFO/FIFO-Verhalten je nach Bedarf
+- LIFO/FIFO-Verhalten je nach Datenstruktur
 
-#### Stack-Implementierungen
+#### Stack-Implementierungen (pva_1_fundamentals/stack.py)
 
-1. **Stack**: Verkettete Liste-Implementierung mit dynamischer Grösse
-2. **FixedCapacityStack**: Feste Array-Grösse-Implementierung
-3. **ResizingArrayStack**: Dynamisches Array mit automatischer Grössenanpassung
+1. **Stack**: Verkettete Liste mit dynamischer Grösse (O(1) push/pop)
+2. **FixedCapacityStack**: Feste Array-Grösse
+3. **ResizingArrayStack**: Dynamisches Array mit amortisiert O(1) push/pop
 
-#### Union-Find-Implementierungen
+#### Union-Find-Implementierungen (pva_1_fundamentals/uf.py)
 
 1. **UF**: Optimierte Version mit Weighted Quick Union by Rank und Path Compression (O(α(n)))
-2. **QuickUnionUF**: Einfache Quick Union Implementation (O(n) worst case)
+2. **QuickUnionUF**: Einfache Quick Union (O(n) worst case)
 3. **WeightedQuickUnionUF**: Weighted Quick Union by Size (O(log n))
-4. **QuickFindUF**: Quick Find Implementation mit konstanter Find-Zeit (O(1) find, O(n) union)
+4. **QuickFindUF**: Quick Find mit O(1) find, aber O(n) union
 
-#### Sortieralgorithmen
+#### Sortieralgorithmen (pva_2_sorting/)
 
-1. **Quick**: Quick Sort mit Hoare-Partitionierung
-2. **Shell**: Shell Sort mit Knuth-Sequenz
-3. **Heap**: Heap Sort mit garantierter O(n log n) Performance
-4. **Merge**: Merge Sort mit stabiler Sortierung
+Alle Sortieralgorithmen haben:
+
+- CLI-Interface mit `--quiet` Flag für Performance-Tests
+- `sort(arr)` Klassenmethode für öffentliche API
+- `is_sorted(arr)` zur Verifikation
+- Zeitmessung mit `time.perf_counter()`
+
+1. **Quick**: Hoare-Partitionierung, O(n log n) durchschnittlich
+2. **Shell**: Knuth-Sequenz, O(n^(3/2)) worst case
+3. **Heap**: Garantierte O(n log n) Performance
+4. **Merge**: Stabile Sortierung, O(n log n) garantiert
 
 #### Fehlerbehandlung
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
-- Deutsche Fehlermeldungen (z.B. "Stack-Unterlauf")
-- Ordnungsgemässe Type-Assertions für Sicherheit
+- Deutsche Fehlermeldungen (z.B. "Stack-Unterlauf", "Index ist nicht zwischen 0 und n-1")
+- Defensive Programmierung mit `assert` für Type-Safety
+- Validierungsmethoden (z.B. `_validate(p)` in Union-Find)
 
-#### Teststrategie
+#### Timing-Utilities (src/utils/timing.py)
 
-- Umfassende Testabdeckung für alle Implementierungen
-- Deutsche Testmethodennamen und Docstrings
-- Tests für Grenzfälle (leere Strukturen, Kapazitätsgrenzen)
-- Typsicherheitstests mit verschiedenen generischen Typen
-- Iterator- und String-Repräsentationstests
-- Separate Tests für Fundamentals und Sorting Module
+```python
+from src.utils.timing import timeit, enable_timing, measure_execution_time
+
+# Dekorator-basierte Zeitmessung
+enable_timing()  # Global aktivieren
+
+@timeit
+def my_algorithm():
+    pass
+
+# Einmalige Zeitmessung
+result, exec_time = measure_execution_time(lambda: sorted([3, 1, 4, 2]))
+```
 
 ### Code-Konventionen
 
-- Deutsche Dokumentation und Kommentare
-- Type-Hints für alle öffentlichen Methoden
-- Defensive Programmierung mit Assertions
-- Konsistente Fehlerbehandlungsmuster
-- Generische Typunterstützung durchgehend
+- **Sprache**: Deutsche Dokumentation, Kommentare und Variablennamen
+- **Type-Hints**: Für alle öffentlichen Methoden erforderlich
+- **Docstrings**: Google-Style auf Deutsch mit Args/Returns/Raises
+- **Defensive Programmierung**: Assertions für interne Invarianten
+- **Generics**: `TypeVar("T")` für typensichere Container
+- **Klassenmethoden**: `@classmethod` für stateless Algorithmen (z.B. Sort)
+
+### Teststrategie
+
+- **Namenskonventionen**: Deutsche Testmethodennamen (z.B. `test_push_pop`)
+- **Testabdeckung**: Grenzfälle (leere Strukturen, volle Kapazität, einzelnes Element)
+- **Typsicherheit**: Tests mit verschiedenen generischen Typen (int, str, float)
+- **Assertions**: `assert` für erwartetes Verhalten, `pytest.raises` für Exceptions
+- **Struktur**: Eine Testklasse pro Implementierungsvariante
+- **Markers**: `@pytest.mark.slow` für Performance-Tests
 
 ## Abhängigkeiten
 
 - Python >=3.13.1
-- pytest für Tests
+- pytest für Tests (mit Coverage-Plugin)
 - ruff für Linting/Formatierung
 - jupyter für Notebook-Entwicklung
+- matplotlib für Visualisierungen
 
-## Testphilosophie
-
-Tests sind auf Deutsch geschrieben und folgen akademischen Mustern. Jede Datenstruktur hat umfassende Testabdeckung
-einschliesslich Grenzfälle, Typsicherheit und Verhaltenskorrektheit. Die Teststruktur spiegelt die Klassenhierarchie
-mit separaten Testklassen für jede Implementierungsvariante wider.
+Package Management erfolgt über `uv` (siehe pyproject.toml).

@@ -7,9 +7,10 @@ Gemeinsame Test-Vorrichtungen für das ALGS4-Projekt.
 
 import pytest
 
-from src.algs4.fundamentals.bag import Bag
-from src.algs4.fundamentals.queue import Queue
-from src.algs4.fundamentals.stack import Stack
+# Aktualisierte Imports für PVA-Struktur
+from src.algs4.pva_1_fundamentals.bag import Bag
+from src.algs4.pva_1_fundamentals.queue import Queue
+from src.algs4.pva_1_fundamentals.stack import Stack
 
 
 @pytest.fixture

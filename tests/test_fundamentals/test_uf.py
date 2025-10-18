@@ -7,7 +7,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.fundamentals.uf import (
+from src.algs4.pva_1_fundamentals.uf import (
     UF,
     QuickFindUF,
     QuickUnionUF,

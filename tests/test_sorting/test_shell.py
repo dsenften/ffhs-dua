@@ -7,7 +7,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.sorting.shell import Shell
+from src.algs4.pva_2_sorting.shell import Shell
 
 
 class TestShell:

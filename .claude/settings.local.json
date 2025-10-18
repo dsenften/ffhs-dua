@@ -22,7 +22,13 @@
       "Bash(gem install:*)",
       "Bash(sudo gem install:*)",
       "Bash(npm install:*)",
-      "Bash(asciidoctor-revealjs:*)"
+      "Bash(asciidoctor-revealjs:*)",
+      "Bash(python3:*)",
+      "WebSearch",
+      "Bash(git reset:*)",
+      "Bash(git mv:*)",
+      "Bash(git rm:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

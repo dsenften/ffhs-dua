@@ -7,7 +7,11 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.fundamentals.stack import FixedCapacityStack, ResizingArrayStack, Stack
+from src.algs4.pva_1_fundamentals.stack import (
+    FixedCapacityStack,
+    ResizingArrayStack,
+    Stack,
+)
 
 
 class TestStack:

@@ -9,7 +9,7 @@ import random
 
 import pytest
 
-from src.algs4.sorting.merge import Merge
+from src.algs4.pva_2_sorting.merge import Merge
 
 
 class TestMerge:

@@ -7,7 +7,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.sorting.quick import Quick
+from src.algs4.pva_2_sorting.quick import Quick
 
 
 class TestQuick:

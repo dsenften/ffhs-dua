@@ -4,31 +4,46 @@ Eine umfassende Python-Implementierung grundlegender Algorithmen und
 Datenstrukturen für den akademischen Gebrauch an der
 Fernfachhochschule Schweiz (FFHS).
 
-## Features
+## ✨ Features
 
-* **Fundamentals**: Stack, Queue, Bag, Union-Find (verschiedene Implementierungen)
-* **Sorting**: Quick Sort, Shell Sort, Heap Sort, Merge Sort
-* **Utils**: Timing-Utilities für Performance-Messungen
-* **Umfassende Tests**: Vollständige Test-Abdeckung aller Implementierungen
+- **Fundamentals**: Stack, Queue, Bag, Union-Find (4 Implementierungsvarianten)
+- **Sorting**: Quick Sort, Merge Sort, Heap Sort, Shell Sort (mit CLI-Interface)
+- **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest
+- **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
-## Schnellstart
+## 🚀 Schnellstart
 
 ```bash
 # Repository klonen
 git clone <repository-url>
 cd ffhs-dua
 
-# Abhängigkeiten installieren (empfohlen: uv)
+# Abhängigkeiten installieren mit uv
 uv sync
+
+# Tests ausführen
+python3 -m pytest tests/ -v
+
+# Sortieralgorithmus ausprobieren
+cat data/sorting/tiny.txt | python3 -m src.algs4.pva_2_sorting.quick
 ```
 
-## Dokumentation
+## 📖 Dokumentation
 
-📚 **[Vollständige Dokumentation](docs/index.adoc)** - Umfassende Projektdokumentation
-🚀 **[Erste Schritte](docs/tutorials/getting_started.adoc)** - Tutorial für Einsteiger
-⚙️ **[Entwicklungsrichtlinien](CLAUDE.md)** - Für Beiträge zum Projekt
+- 📚 **[Vollständige Dokumentation](docs/index.adoc)** - Umfassende Projektdokumentation
+- 🎓 **[Erste Schritte](docs/tutorials/getting_started.adoc)** - Tutorial für Einsteiger
+- ⚙️ **[Entwicklungsrichtlinien](CLAUDE.md)** - Für Entwickler und Beiträge
 
-## Autor
+## 📚 Referenzen
+
+Diese Implementierung basiert auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne:
+
+- 📖 **[Algorithms, 4th Edition](https://algs4.cs.princeton.edu/)** - Offizielles Lehrbuch und Java-Implementierung
+- 🐍 **[algs4-py (Xiao Kui)](https://github.com/shellfly/algs4-py)** - Python-Portierung
+- 🎯 **[itu.algs4 (ITU Copenhagen)](https://github.com/itu-algorithms/itu.algs4)** - Alternative Python-Implementierung
+
+## 👤 Autor
 
 **Daniel Senften** - [daniel.senften@ffhs.ch](mailto:daniel.senften@ffhs.ch)
 Fernfachhochschule Schweiz (FFHS)

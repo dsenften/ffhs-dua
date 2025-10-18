@@ -7,7 +7,7 @@ Verwendet Test-Vorrichtungen aus conftest.py für konsistente Testumgebungen.
 
 import pytest
 
-from src.algs4.sorting.heap import Heap
+from src.algs4.pva_2_sorting.heap import Heap
 
 
 class TestHeap:
