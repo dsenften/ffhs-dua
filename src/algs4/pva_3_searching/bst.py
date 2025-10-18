@@ -689,17 +689,23 @@ if __name__ == "__main__":
                 st.put(key, i)
                 i += 1
 
-        print("\nLevel-Order-Traversierung:")
-        for s in st.level_order():
-            print(f"{s} {st.get(s)}")
+        if st.is_empty():
+            print("\nDer Baum ist leer.")
+        else:
+            print("\nLevel-Order-Traversierung:")
+            for s in st.level_order():
+                print(f"{s} {st.get(s)}")
 
-        print("\nSortierte Reihenfolge (In-Order):")
-        for s in st.keys():
-            print(f"{s} {st.get(s)}")
+            print("\nSortierte Reihenfolge (In-Order):")
+            for s in st.keys():
+                print(f"{s} {st.get(s)}")
 
-        print(f"\nGrösse: {st.size()}")
-        print(f"Minimum: {st.min()}")
-        print(f"Maximum: {st.max()}")
+            print(f"\nGrösse: {st.size()}")
+            print(f"Minimum: {st.min()}")
+            print(f"Maximum: {st.max()}")
+
+            print("\nVisuelle Baumdarstellung:")
+            print(st)
 
     except KeyboardInterrupt:
         print("\nProgramm beendet")
