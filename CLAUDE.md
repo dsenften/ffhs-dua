@@ -67,7 +67,8 @@ src/algs4/
 │   ├── heap.py                  # Heap Sort
 │   └── shell.py                 # Shell Sort
 ├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3
-│   └── bst.py                   # Binary Search Tree (BST)
+│   ├── bst.py                   # Binary Search Tree (BST)
+│   └── avl.py                   # AVL Tree (selbstbalancierend)
 ├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
 └── errors/
     └── errors.py                # Benutzerdefinierte Exceptions
@@ -141,11 +142,20 @@ Alle Symbol-Table-Implementierungen haben:
 - Iteration in sortierter Reihenfolge
 - Deutsche Fehlerbehandlung
 
-1. **BST**: Binary Search Tree mit O(log n) durchschnittlicher Performance
+1. **BST**: Binary Search Tree (unbalanciert)
    - put, get, delete: O(log n) durchschnittlich, O(n) worst case
-   - min, max, floor, ceiling: O(log n)
+   - min, max, floor, ceiling, rank, select: O(log n) durchschnittlich
    - Hibbard Deletion für Knoten mit zwei Kindern
    - Level-Order und In-Order Traversierung
+   - Visuelle Baumdarstellung mit `__str__()`
+
+2. **AVL**: AVL Tree (selbstbalancierend)
+   - put, get, delete: **O(log n) garantiert** (auch worst case!)
+   - Automatische Balancierung durch Rotationen
+   - Balance-Faktor wird für jeden Knoten gespeichert
+   - Vier Rotations-Arten: Left, Right, Left-Right, Right-Left
+   - Maximale Höhe: 1.44 * log₂(n + 2) (Fibonacci-Bäume)
+   - Visuelle Darstellung zeigt Knotenhöhen: `A (h:2)`
 
 #### Fehlerbehandlung
 

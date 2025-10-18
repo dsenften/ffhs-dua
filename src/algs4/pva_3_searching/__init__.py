@@ -4,7 +4,8 @@ Dieses Modul enthält Implementierungen von Symbol Tables (geordneten
 Dictionaries) und Suchalgorithmen.
 
 Module:
-    bst: Binary Search Tree - Binärer Suchbaum
+    bst: Binary Search Tree - Binärer Suchbaum (unbalanciert)
+    avl: AVL Tree - Selbstbalancierender binärer Suchbaum
 
 Beispiel:
     >>> from src.algs4.pva_3_searching.bst import BST
@@ -12,8 +13,15 @@ Beispiel:
     >>> bst.put("key", "value")
     >>> bst.get("key")
     'value'
+
+    >>> from src.algs4.pva_3_searching.avl import AVL
+    >>> avl = AVL()
+    >>> avl.put("key", "value")
+    >>> avl.get("key")
+    'value'
 """
 
+from src.algs4.pva_3_searching.avl import AVL
 from src.algs4.pva_3_searching.bst import BST
 
-__all__ = ["BST"]
+__all__ = ["BST", "AVL"]
