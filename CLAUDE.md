@@ -68,7 +68,8 @@ src/algs4/
 │   └── shell.py                 # Shell Sort
 ├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3
 │   ├── bst.py                   # Binary Search Tree (BST)
-│   └── avl.py                   # AVL Tree (selbstbalancierend)
+│   ├── avl.py                   # AVL Tree (selbstbalancierend)
+│   └── red_black_bst.py         # Red-Black BST (links-lastiger Rot-Schwarz-Baum)
 ├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
 └── errors/
     └── errors.py                # Benutzerdefinierte Exceptions
@@ -156,6 +157,15 @@ Alle Symbol-Table-Implementierungen haben:
    - Vier Rotations-Arten: Left, Right, Left-Right, Right-Left
    - Maximale Höhe: 1.44 * log₂(n + 2) (Fibonacci-Bäume)
    - Visuelle Darstellung zeigt Knotenhöhen: `A (h:2)`
+
+3. **RedBlackBST**: Left-Leaning Red-Black BST (selbstbalancierend)
+   - put, get, delete: **O(log n) garantiert** (auch worst case!)
+   - Basiert auf 2-3 Bäumen (perfekte schwarze Balance)
+   - Rot-Schwarz-Invarianten: Rote Kanten immer links, keine aufeinanderfolgenden roten Kanten
+   - Drei Operationen: Linksrotation, Rechtsrotation, Farbwechsel
+   - Maximale Höhe: 2 * log₂(n + 1) (doppelt so hoch wie perfekt balanciert)
+   - Einfachere Implementierung als Standard Red-Black Trees
+   - Visuelle Darstellung zeigt Knotenfarben: `A (R)` oder `A (B)`
 
 #### Fehlerbehandlung
 
