@@ -613,6 +613,65 @@ class BST(Generic[K, V]):
         keys = list(self.keys())
         return f"BST({keys})"
 
+    def __str__(self) -> str:
+        """Gibt eine visuelle Baumdarstellung zurück.
+
+        Returns:
+            str: Mehrzeilige String-Repräsentation des Baums
+
+        Beispiel:
+            >>> bst = BST()
+            >>> for key in ["E", "B", "G", "A", "D", "F", "H"]:
+            ...     bst.put(key, key.lower())
+            >>> print(bst)
+            E
+            ├── B
+            │   ├── A
+            │   └── D
+            └── G
+                ├── F
+                └── H
+        """
+        if self.is_empty():
+            return "BST()"
+
+        lines: list[str] = []
+        if self._root is not None:
+            lines.append(str(self._root.key))
+            self._build_tree_children(self._root, "", lines)
+        return "\n".join(lines)
+
+    def _build_tree_children(
+        self,
+        node: Node[K, V],
+        prefix: str,
+        lines: list[str],
+    ) -> None:
+        """Rekursive Hilfsmethode zum Aufbau der Baumdarstellung für Kindknoten.
+
+        Args:
+            node: Aktueller Knoten (dessen Kinder dargestellt werden sollen)
+            prefix: Präfix für die Einrückung
+            lines: Liste der Ausgabezeilen
+        """
+        # Kinder sammeln
+        children: list[Node[K, V]] = []
+        if node.left is not None:
+            children.append(node.left)
+        if node.right is not None:
+            children.append(node.right)
+
+        # Kinder ausgeben
+        for i, child in enumerate(children):
+            is_last = i == len(children) - 1
+            connector = "└── " if is_last else "├── "
+            lines.append(f"{prefix}{connector}{child.key}")
+
+            # Präfix für Enkelkinder
+            extension = "    " if is_last else "│   "
+            new_prefix = prefix + extension
+            self._build_tree_children(child, new_prefix, lines)
+
 
 if __name__ == "__main__":
     import sys

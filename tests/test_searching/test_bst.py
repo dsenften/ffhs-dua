@@ -419,6 +419,67 @@ class TestBSTIteration:
         assert "BST" in repr_str
         assert "A" in repr_str
 
+    def test_str_empty_bst(self):
+        """Teste visuelle Baumdarstellung für leeren BST."""
+        bst: BST[str, int] = BST()
+        assert str(bst) == "BST()"
+
+    def test_str_single_node(self):
+        """Teste visuelle Baumdarstellung für einzelnen Knoten."""
+        bst: BST[str, int] = BST()
+        bst.put("A", 1)
+        assert str(bst) == "A"
+
+    def test_str_balanced_tree(self):
+        """Teste visuelle Baumdarstellung für ausgewogenen Baum."""
+        bst: BST[str, int] = BST()
+        for key in ["E", "B", "G", "A", "D", "F", "H"]:
+            bst.put(key, ord(key))
+
+        tree_str = str(bst)
+        # Überprüfe dass alle Knoten in der Ausgabe enthalten sind
+        for key in ["E", "B", "G", "A", "D", "F", "H"]:
+            assert key in tree_str
+
+        # Überprüfe dass Baumzeichen verwendet werden
+        assert "├──" in tree_str or "└──" in tree_str
+
+    def test_str_degenerate_tree_right(self):
+        """Teste visuelle Baumdarstellung für degenerierten Baum (nur rechts)."""
+        bst: BST[str, int] = BST()
+        for key in ["A", "B", "C", "D"]:
+            bst.put(key, ord(key))
+
+        tree_str = str(bst)
+        # Alle Knoten sollten in der Ausgabe sein
+        for key in ["A", "B", "C", "D"]:
+            assert key in tree_str
+
+    def test_str_degenerate_tree_left(self):
+        """Teste visuelle Baumdarstellung für degenerierten Baum (nur links)."""
+        bst: BST[str, int] = BST()
+        for key in ["D", "C", "B", "A"]:
+            bst.put(key, ord(key))
+
+        tree_str = str(bst)
+        # Alle Knoten sollten in der Ausgabe sein
+        for key in ["A", "B", "C", "D"]:
+            assert key in tree_str
+
+    def test_str_numeric_keys(self):
+        """Teste visuelle Baumdarstellung mit numerischen Schlüsseln."""
+        bst: BST[int, str] = BST()
+        for key in [50, 30, 70, 20, 40, 60, 80]:
+            bst.put(key, str(key))
+
+        tree_str = str(bst)
+        # Überprüfe dass die Wurzel 50 ist
+        assert tree_str.startswith("50")
+
+        # Überprüfe dass alle Knoten vorhanden sind
+        for key in [50, 30, 70, 20, 40, 60, 80]:
+            assert str(key) in tree_str
+
 
 class TestBSTTypes:
     """Tests für verschiedene Datentypen."""
