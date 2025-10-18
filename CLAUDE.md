@@ -66,7 +66,8 @@ src/algs4/
 │   ├── merge.py                 # Merge Sort (stabil)
 │   ├── heap.py                  # Heap Sort
 │   └── shell.py                 # Shell Sort
-├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3 (geplant)
+├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3
+│   └── bst.py                   # Binary Search Tree (BST)
 ├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
 └── errors/
     └── errors.py                # Benutzerdefinierte Exceptions
@@ -78,6 +79,7 @@ src/utils/
 tests/
 ├── test_fundamentals/           # Tests für PVA-1
 ├── test_sorting/                # Tests für PVA-2
+├── test_searching/              # Tests für PVA-3
 └── test_utils/                  # Tests für Utility-Module
 
 data/                            # Thematisch organisierte Testdaten
@@ -129,6 +131,21 @@ Alle Sortieralgorithmen haben:
 2. **Shell**: Knuth-Sequenz, O(n^(3/2)) worst case
 3. **Heap**: Garantierte O(n log n) Performance
 4. **Merge**: Stabile Sortierung, O(n log n) garantiert
+
+#### Suchalgorithmen (pva_3_searching/)
+
+Alle Symbol-Table-Implementierungen haben:
+
+- Generische Typisierung mit `TypeVar` für Schlüssel und Werte
+- Geordnete Operationen (min, max, floor, ceiling, rank, select)
+- Iteration in sortierter Reihenfolge
+- Deutsche Fehlerbehandlung
+
+1. **BST**: Binary Search Tree mit O(log n) durchschnittlicher Performance
+   - put, get, delete: O(log n) durchschnittlich, O(n) worst case
+   - min, max, floor, ceiling: O(log n)
+   - Hibbard Deletion für Knoten mit zwei Kindern
+   - Level-Order und In-Order Traversierung
 
 #### Fehlerbehandlung
 

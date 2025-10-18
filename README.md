@@ -8,8 +8,9 @@ Fernfachhochschule Schweiz (FFHS).
 
 - **Fundamentals**: Stack, Queue, Bag, Union-Find (4 Implementierungsvarianten)
 - **Sorting**: Quick Sort, Merge Sort, Heap Sort, Shell Sort (mit CLI-Interface)
+- **Searching**: Binary Search Tree mit geordneten Operationen
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (229 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 🚀 Schnellstart
