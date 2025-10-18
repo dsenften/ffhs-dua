@@ -28,7 +28,7 @@ class TestTiming(unittest.TestCase):
             return "result"
 
         # Bei deaktivierter Zeitmessung sollte keine Ausgabe erfolgen
-        with patch('builtins.print') as mock_print:
+        with patch("builtins.print") as mock_print:
             result = test_function()
             mock_print.assert_not_called()
             self.assertEqual(result, "result")
@@ -43,7 +43,7 @@ class TestTiming(unittest.TestCase):
             return "result"
 
         # Bei aktivierter Zeitmessung sollte Ausgabe erfolgen
-        with patch('builtins.print') as mock_print:
+        with patch("builtins.print") as mock_print:
             result = test_function()
             mock_print.assert_called_once()
             # Prüfe, dass die Ausgabe die Laufzeit enthält
@@ -56,6 +56,7 @@ class TestTiming(unittest.TestCase):
         """Test: enable_timing() und disable_timing() Funktionen."""
         # Initial sollte ENABLE_TIMING False sein
         import src.utils.timing
+
         self.assertFalse(src.utils.timing.ENABLE_TIMING)
 
         # Nach enable_timing() sollte es True sein
@@ -68,6 +69,7 @@ class TestTiming(unittest.TestCase):
 
     def test_measure_execution_time(self):
         """Test: measure_execution_time() Funktion."""
+
         def test_function():
             time.sleep(0.001)  # Kurze Pause für messbare Zeit
             return "result"
@@ -89,7 +91,9 @@ class TestTiming(unittest.TestCase):
 
         # Funktionsname und Docstring sollten erhalten bleiben
         self.assertEqual(documented_function.__name__, "documented_function")
-        self.assertEqual(documented_function.__doc__, "Eine dokumentierte Testfunktion.")
+        self.assertEqual(
+            documented_function.__doc__, "Eine dokumentierte Testfunktion."
+        )
 
     def test_timeit_with_arguments(self):
         """Test: @timeit Dekorator mit Funktionsargumenten."""
@@ -99,7 +103,7 @@ class TestTiming(unittest.TestCase):
         def add_function(a, b, multiplier=1):
             return (a + b) * multiplier
 
-        with patch('builtins.print') as mock_print:
+        with patch("builtins.print") as mock_print:
             result = add_function(2, 3, multiplier=2)
             self.assertEqual(result, 10)
             mock_print.assert_called_once()
@@ -114,7 +118,7 @@ class TestTiming(unittest.TestCase):
             def class_method(cls, value):
                 return value * 2
 
-        with patch('builtins.print') as mock_print:
+        with patch("builtins.print") as mock_print:
             result = TestClass.class_method(5)
             self.assertEqual(result, 10)
             mock_print.assert_called_once()

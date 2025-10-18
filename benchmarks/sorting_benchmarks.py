@@ -1,16 +1,40 @@
 """
 Performance-Benchmarks für Sortieralgorithmen.
+
+Dieses Modul bietet Funktionen zum Benchmarking verschiedener Sortieralgorithmen
+unter verschiedenen Bedingungen (zufällig, sortiert, umgekehrt, fast sortiert).
+
+Beispiel:
+    >>> from benchmarks.sorting_benchmarks import run_sorting_benchmarks
+    >>> results = run_sorting_benchmarks()
+    >>> print(results)
 """
 
 import random
 import time
 from collections.abc import Callable
 
-from src.algs4.sorting.shell import shell_sort
+from src.algs4.pva_2_sorting import Heap, Merge, Quick, Shell
 
 
 def generate_test_data(size: int, data_type: str = "random") -> list[int]:
-    """Generiert Testdaten für Benchmarks."""
+    """
+    Generiert Testdaten für Benchmarks.
+
+    Args:
+        size: Anzahl der zu generierenden Elemente
+        data_type: Typ der Testdaten
+            - 'random': Zufällig generierte Daten
+            - 'sorted': Bereits sortierte Daten (Best-Case)
+            - 'reverse': Umgekehrt sortierte Daten (Worst-Case)
+            - 'nearly_sorted': Fast sortierte Daten (5% Abweichung)
+
+    Returns:
+        Liste mit generierten Testdaten
+
+    Raises:
+        ValueError: Wenn data_type nicht erkannt wird
+    """
     if data_type == "random":
         return [random.randint(1, size) for _ in range(size)]
     elif data_type == "sorted":
@@ -22,7 +46,7 @@ def generate_test_data(size: int, data_type: str = "random") -> list[int]:
         # Vertausche 5% der Elemente
         swaps = size // 20
         for _ in range(swaps):
-            i, j = random.randint(0, size-1), random.randint(0, size-1)
+            i, j = random.randint(0, size - 1), random.randint(0, size - 1)
             data[i], data[j] = data[j], data[i]
         return data
     else:
@@ -30,7 +54,20 @@ def generate_test_data(size: int, data_type: str = "random") -> list[int]:
 
 
 def benchmark_algorithm(algorithm: Callable, data: list[int]) -> float:
-    """Misst die Ausführungszeit eines Sortieralgorithmus."""
+    """
+    Misst die Ausführungszeit eines Sortieralgorithmus.
+
+    Args:
+        algorithm: Sortieralgorithmus-Funktion (z.B. quick_sort, merge_sort)
+        data: Zu sortierende Daten
+
+    Returns:
+        Ausführungszeit in Sekunden (float)
+
+    Note:
+        Die Funktion erstellt eine Kopie der Eingabedaten, um die Originalität
+        zu bewahren und faire Vergleiche zu ermöglichen.
+    """
     data_copy = data.copy()
     start_time = time.perf_counter()
     algorithm(data_copy)
@@ -39,16 +76,51 @@ def benchmark_algorithm(algorithm: Callable, data: list[int]) -> float:
 
 
 def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
-    """Führt umfassende Benchmarks für Sortieralgorithmen durch."""
+    """
+    Führt umfassende Benchmarks für Sortieralgorithmen durch.
+
+    Testet verschiedene Sortieralgorithmen mit verschiedenen Datentypen
+    und Größen:
+    - Datentypen: random, sorted, reverse, nearly_sorted
+    - Größen: 100, 1.000, 10.000 Elemente
+
+    Returns:
+        Dictionary mit Benchmark-Ergebnissen:
+        {
+            "Algorithm Name": {
+                "data_type_size": execution_time_in_seconds,
+                ...
+            },
+            ...
+        }
+
+    Example:
+        >>> results = run_sorting_benchmarks()
+        >>> print(results["Shell Sort"]["random_10000"])
+        0.0123
+
+    Note:
+        Quick Sort wird mit kleineren Datenmengen getestet, da es bei
+        umgekehrt sortierten Daten zu Worst-Case O(n²) führt.
+    """
     algorithms = {
-        "Shell Sort": shell_sort
+        "Shell Sort": Shell.sort,
+        "Merge Sort": Merge.sort,
+        "Heap Sort": Heap.sort,
     }
+
+    # Quick Sort separat mit kleineren Datenmengen
+    quick_sort_algorithms = {"Quick Sort": Quick.sort}
 
     data_sizes = [100, 1000, 10000]
     data_types = ["random", "sorted", "reverse", "nearly_sorted"]
 
-    results = {}
+    # Kleinere Datenmengen für Quick Sort (Worst-Case Schutz)
+    quick_sort_sizes = [100, 1000, 5000]
 
+    results: dict[str, dict[str, float]] = {}
+
+    # Benchmark für stabile Algorithmen
     for alg_name, algorithm in algorithms.items():
         results[alg_name] = {}
 
@@ -60,12 +132,43 @@ def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
                 key = f"{data_type}_{size}"
                 results[alg_name][key] = execution_time
 
-                print(f"{alg_name} - {data_type} ({size} Elemente): {execution_time:.4f}s")
+                print(
+                    f"{alg_name} - {data_type} ({size} Elemente): "
+                    f"{execution_time:.4f}s"
+                )
+
+    # Benchmark für Quick Sort (mit kleineren Datenmengen und nur zufälligen Daten)
+    # Quick Sort hat Worst-Case O(n²) bei sortierten/umgekehrten Daten
+    quick_sort_data_types = ["random", "nearly_sorted"]
+
+    for alg_name, algorithm in quick_sort_algorithms.items():
+        results[alg_name] = {}
+
+        for size in quick_sort_sizes:
+            for data_type in quick_sort_data_types:
+                test_data = generate_test_data(size, data_type)
+                execution_time = benchmark_algorithm(algorithm, test_data)
+
+                key = f"{data_type}_{size}"
+                results[alg_name][key] = execution_time
+
+                print(
+                    f"{alg_name} - {data_type} ({size} Elemente): "
+                    f"{execution_time:.4f}s"
+                )
 
     return results
 
 
 if __name__ == "__main__":
-    print("Starte Sortieralgorithmus-Benchmarks...")
+    print("=" * 60)
+    print("Sortieralgorithmus-Benchmarks für ffhs-dua")
+    print("=" * 60)
+    print()
+
     benchmark_results = run_sorting_benchmarks()
-    print("\nBenchmarks abgeschlossen!")
+
+    print()
+    print("=" * 60)
+    print("Benchmarks abgeschlossen!")
+    print("=" * 60)

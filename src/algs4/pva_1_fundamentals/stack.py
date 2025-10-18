@@ -1,3 +1,20 @@
+"""Stack-Implementierungen.
+
+Dieses Modul enthält verschiedene Stack-Implementierungen:
+- Stack: Verkettete Liste mit dynamischer Grösse
+- FixedCapacityStack: Feste Array-Grösse
+- ResizingArrayStack: Dynamisches Array mit amortisiert O(1) push/pop
+
+Beispiele:
+    >>> stack = Stack()
+    >>> stack.push(1)
+    >>> stack.push(2)
+    >>> stack.pop()
+    2
+    >>> stack.size()
+    1
+"""
+
 from collections.abc import Iterator
 from typing import Generic, TypeVar
 

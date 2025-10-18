@@ -124,9 +124,15 @@ if __name__ == "__main__":
     import time
 
     # Argument-Parser für --quiet Flag
-    parser = argparse.ArgumentParser(description='Quick Sort mit optionaler Zeitmessung')
-    parser.add_argument('--quiet', '-q', action='store_true',
-                       help='Unterdrückt Array-Ausgabe und zeigt nur Laufzeit')
+    parser = argparse.ArgumentParser(
+        description="Quick Sort mit optionaler Zeitmessung"
+    )
+    parser.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help="Unterdrückt Array-Ausgabe und zeigt nur Laufzeit",
+    )
     args = parser.parse_args()
 
     # Lese Eingabe von stdin und erstelle eine Liste von Elementen

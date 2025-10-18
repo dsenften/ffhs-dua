@@ -45,6 +45,7 @@ class TestHeap:
     def test_random_integers(self, beispiel_ganzzahlen):
         """Test: Sortieren einer zufälligen Liste von Ganzzahlen."""
         import random
+
         shuffled = beispiel_ganzzahlen.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_ganzzahlen)
@@ -63,6 +64,7 @@ class TestHeap:
     def test_strings(self, beispiel_zeichenketten):
         """Test: Sortieren einer Liste von Strings."""
         import random
+
         shuffled = beispiel_zeichenketten.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_zeichenketten)
@@ -99,6 +101,7 @@ class TestHeap:
         """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(grosser_datensatz)
         result = Heap.sort(shuffled)
@@ -211,10 +214,14 @@ class TestHeap:
             right_child = 2 * i + 2
 
             if left_child < n:
-                assert arr[i] >= arr[left_child], f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
+                assert arr[i] >= arr[left_child], (
+                    f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
+                )
 
             if right_child < n:
-                assert arr[i] >= arr[right_child], f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
+                assert arr[i] >= arr[right_child], (
+                    f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
+                )
 
     def test_heap_sort_phases(self):
         """Test: Beide Phasen des Heap-Sort-Algorithmus."""
@@ -264,7 +271,9 @@ class TestHeap:
         while n > 1:
             # Das Maximum sollte an der Wurzel stehen
             for i in range(n):
-                assert arr[0] >= arr[i], f"Maximum nicht an Wurzel: arr[0]={arr[0]} < arr[{i}]={arr[i]}"
+                assert arr[0] >= arr[i], (
+                    f"Maximum nicht an Wurzel: arr[0]={arr[0]} < arr[{i}]={arr[i]}"
+                )
 
             # Tausche und reduziere Heap-Grösse
             arr[0], arr[n - 1] = arr[n - 1], arr[0]
@@ -284,15 +293,19 @@ class TestHeap:
                     if right_child < n:
                         assert arr[i] >= arr[right_child]
 
-    @pytest.mark.parametrize("data_type,test_data", [
-        (int, [64, 34, 25, 12, 22, 11, 90]),
-        (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
-        (str, ["zebra", "apple", "banana", "cherry"])
-    ])
+    @pytest.mark.parametrize(
+        "data_type,test_data",
+        [
+            (int, [64, 34, 25, 12, 22, 11, 90]),
+            (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+            (str, ["zebra", "apple", "banana", "cherry"]),
+        ],
+    )
     def test_parametrized_sorting(self, data_type, test_data):
         """Test: Parametrisierte Tests für verschiedene Datentypen."""
         shuffled = test_data.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(test_data)
         result = Heap.sort(shuffled)
@@ -328,6 +341,7 @@ class TestHeap:
 
     def test_stability_not_guaranteed(self):
         """Test: Heap Sort ist nicht stabil - gleiche Elemente können ihre Reihenfolge ändern."""
+
         class ComparableItem:
             def __init__(self, value, original_index):
                 self.value = value
@@ -357,14 +371,14 @@ class TestHeap:
             ComparableItem(1, 1),
             ComparableItem(3, 2),
             ComparableItem(2, 3),
-            ComparableItem(1, 4)
+            ComparableItem(1, 4),
         ]
 
         result = Heap.sort(arr)
 
         # Überprüfe, dass sortiert ist
         for i in range(1, len(result)):
-            assert result[i].value >= result[i-1].value
+            assert result[i].value >= result[i - 1].value
 
         # Heap Sort ist nicht stabil, also testen wir nur die Korrektheit der Sortierung
         values = [item.value for item in result]
@@ -381,16 +395,19 @@ class TestHeap:
             [1, 2, 3, 4, 5],  # Bereits sortiert
             [5, 4, 3, 2, 1],  # Umgekehrt sortiert
             [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],  # Mit Duplikaten
-            [random.randint(1, 100) for _ in range(50)]  # Zufällig
+            [random.randint(1, 100) for _ in range(50)],  # Zufällig
         ]
 
         for test_case in test_cases:
             heap_result = Heap.sort(test_case.copy())
             python_result = sorted(test_case)
-            assert heap_result == python_result, f"Heap Sort Ergebnis {heap_result} != Python sort {python_result} für Input {test_case}"
+            assert heap_result == python_result, (
+                f"Heap Sort Ergebnis {heap_result} != Python sort {python_result} für Input {test_case}"
+            )
 
     def test_heap_sort_with_custom_objects(self):
         """Test: Heap Sort mit benutzerdefinierten Objekten."""
+
         class Student:
             def __init__(self, name, grade):
                 self.name = name
@@ -419,14 +436,14 @@ class TestHeap:
             Student("Bob", 92),
             Student("Charlie", 78),
             Student("Diana", 96),
-            Student("Eve", 88)
+            Student("Eve", 88),
         ]
 
         result = Heap.sort(students)
 
         # Überprüfe, dass nach Noten sortiert ist
         for i in range(1, len(result)):
-            assert result[i].grade >= result[i-1].grade
+            assert result[i].grade >= result[i - 1].grade
 
         # Überprüfe spezifische Reihenfolge
         expected_names = ["Charlie", "Alice", "Eve", "Bob", "Diana"]

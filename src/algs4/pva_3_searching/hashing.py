@@ -53,7 +53,9 @@ class SequentialSearchNode(Generic[K, V]):
         next: Nächster Knoten in der Liste
     """
 
-    def __init__(self, key: K, val: V, next_node: "SequentialSearchNode[K, V] | None") -> None:
+    def __init__(
+        self, key: K, val: V, next_node: "SequentialSearchNode[K, V] | None"
+    ) -> None:
         """Initialisiert einen neuen Knoten.
 
         Args:

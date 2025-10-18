@@ -27,11 +27,7 @@ class TestQueue:
         assert leere_queue.size() == 1
         assert len(leere_queue) == 1
 
-    @pytest.mark.parametrize("items", [
-        [1, 2, 3],
-        ["a", "b", "c"],
-        [1.1, 2.2, 3.3]
-    ])
+    @pytest.mark.parametrize("items", [[1, 2, 3], ["a", "b", "c"], [1.1, 2.2, 3.3]])
     def test_enqueue_multiple_items(self, leere_queue, items):
         """Test: Mehrere Elemente einreihen."""
         for item in items:

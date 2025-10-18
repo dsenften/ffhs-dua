@@ -1,3 +1,20 @@
+"""Bag-Implementierung.
+
+Dieses Modul enthält eine Bag-Implementierung (Multiset) basierend auf
+einer verketteten Liste. Ein Bag ist eine ungeordnete Sammlung von Elementen,
+die Duplikate erlaubt.
+
+Beispiele:
+    >>> bag = Bag()
+    >>> bag.add(1)
+    >>> bag.add(2)
+    >>> bag.add(1)
+    >>> bag.size()
+    3
+    >>> list(bag)
+    [1, 2, 1]
+"""
+
 from collections.abc import Iterator
 from typing import Generic, TypeVar
 

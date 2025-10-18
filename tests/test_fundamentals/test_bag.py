@@ -27,11 +27,7 @@ class TestBag:
         assert len(leerer_bag) == 1
         assert "test" in leerer_bag
 
-    @pytest.mark.parametrize("items", [
-        [1, 2, 3],
-        ["a", "b", "c"],
-        [1.1, 2.2, 3.3]
-    ])
+    @pytest.mark.parametrize("items", [[1, 2, 3], ["a", "b", "c"], [1.1, 2.2, 3.3]])
     def test_add_multiple_items(self, leerer_bag, items):
         """Test: Mehrere Elemente hinzufügen."""
         for item in items:

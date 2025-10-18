@@ -156,11 +156,21 @@ if __name__ == "__main__":
     import sys
 
     # Argument-Parser für --timing Flag
-    parser = argparse.ArgumentParser(description='Merge Sort mit optionaler Zeitmessung')
-    parser.add_argument('--timing', '-t', action='store_true',
-                       help='Aktiviert Zeitmessung für sort() Methode')
-    parser.add_argument('--quiet', '-q', action='store_true',
-                       help='Unterdrückt Array-Ausgabe und zeigt nur Laufzeit')
+    parser = argparse.ArgumentParser(
+        description="Merge Sort mit optionaler Zeitmessung"
+    )
+    parser.add_argument(
+        "--timing",
+        "-t",
+        action="store_true",
+        help="Aktiviert Zeitmessung für sort() Methode",
+    )
+    parser.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help="Unterdrückt Array-Ausgabe und zeigt nur Laufzeit",
+    )
     args = parser.parse_args()
 
     # Aktiviere Zeitmessung falls gewünscht

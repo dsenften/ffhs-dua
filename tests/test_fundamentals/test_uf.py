@@ -249,27 +249,36 @@ class TestWeightedQuickUnionUF:
 class TestUnionFindComparison:
     """Vergleichstests für verschiedene Union-Find-Implementierungen."""
 
-    @pytest.mark.parametrize("uf_class", [
-        UF, QuickFindUF, QuickUnionUF, WeightedQuickUnionUF
-    ])
+    @pytest.mark.parametrize(
+        "uf_class", [UF, QuickFindUF, QuickUnionUF, WeightedQuickUnionUF]
+    )
     def test_consistent_behavior_across_implementations(self, uf_class):
         """Test: Konsistentes Verhalten aller Implementierungen."""
         uf = uf_class(10)
 
         # Dieselben Operationen auf allen Implementierungen
-        operations = [
-            (0, 1), (2, 3), (4, 5), (6, 7), (8, 9),
-            (0, 2), (4, 6), (1, 8)
-        ]
+        operations = [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (0, 2), (4, 6), (1, 8)]
 
         for i, j in operations:
             uf.union(i, j)
 
         # Erwartete Verbindungen testen
         expected_connections = [
-            (0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3),
-            (4, 5), (4, 6), (4, 7), (5, 6), (5, 7), (6, 7),
-            (8, 9), (0, 8), (1, 9)
+            (0, 1),
+            (0, 2),
+            (0, 3),
+            (1, 2),
+            (1, 3),
+            (2, 3),
+            (4, 5),
+            (4, 6),
+            (4, 7),
+            (5, 6),
+            (5, 7),
+            (6, 7),
+            (8, 9),
+            (0, 8),
+            (1, 9),
         ]
 
         for i, j in expected_connections:
@@ -281,8 +290,17 @@ class TestUnionFindComparison:
         uf = UF(10)
 
         connections = [
-            (4, 3), (3, 8), (6, 5), (9, 4), (2, 1),
-            (8, 9), (5, 0), (7, 2), (6, 1), (1, 0), (6, 7)
+            (4, 3),
+            (3, 8),
+            (6, 5),
+            (9, 4),
+            (2, 1),
+            (8, 9),
+            (5, 0),
+            (7, 2),
+            (6, 1),
+            (1, 0),
+            (6, 7),
         ]
 
         for p, q in connections:

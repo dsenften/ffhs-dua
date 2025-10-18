@@ -619,7 +619,9 @@ class AVL(Generic[K, V]):
             ValueError: wenn k ausserhalb des gültigen Bereichs liegt
         """
         if k < 0 or k >= self.size():
-            raise ValueError(f"Index {k} ist ausserhalb des Bereichs [0, {self.size()})")
+            raise ValueError(
+                f"Index {k} ist ausserhalb des Bereichs [0, {self.size()})"
+            )
         node = self._select(self._root, k)
         assert node is not None
         return node.key
@@ -713,9 +715,7 @@ class AVL(Generic[K, V]):
         self._keys(self._root, queue, lo, hi)
         return iter(queue)
 
-    def _keys(
-        self, node: AVLNode[K, V] | None, queue: Queue[K], lo: K, hi: K
-    ) -> None:
+    def _keys(self, node: AVLNode[K, V] | None, queue: Queue[K], lo: K, hi: K) -> None:
         """Rekursive Hilfsmethode für keys (In-Order-Traversierung).
 
         Args:

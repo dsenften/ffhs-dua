@@ -442,7 +442,11 @@ class RedBlackBST(Generic[K, V]):
             return None
 
         if key < node.key:
-            if node.left and not self._is_red(node.left) and not self._is_red(node.left.left):
+            if (
+                node.left
+                and not self._is_red(node.left)
+                and not self._is_red(node.left.left)
+            ):
                 node = self._move_red_left(node)
             node.left = self._delete(node.left, key)
         else:
@@ -450,7 +454,11 @@ class RedBlackBST(Generic[K, V]):
                 node = self._rotate_right(node)
             if key == node.key and node.right is None:
                 return None
-            if node.right and not self._is_red(node.right) and not self._is_red(node.right.left):
+            if (
+                node.right
+                and not self._is_red(node.right)
+                and not self._is_red(node.right.left)
+            ):
                 node = self._move_red_right(node)
 
             if key == node.key:
@@ -669,7 +677,9 @@ class RedBlackBST(Generic[K, V]):
             ValueError: wenn k ausserhalb des gültigen Bereichs liegt
         """
         if k < 0 or k >= self.size():
-            raise ValueError(f"Index {k} ist ausserhalb des Bereichs [0, {self.size()})")
+            raise ValueError(
+                f"Index {k} ist ausserhalb des Bereichs [0, {self.size()})"
+            )
         node = self._select(self._root, k)
         assert node is not None
         return node.key
@@ -763,9 +773,7 @@ class RedBlackBST(Generic[K, V]):
         self._keys(self._root, queue, lo, hi)
         return iter(queue)
 
-    def _keys(
-        self, node: RBNode[K, V] | None, queue: Queue[K], lo: K, hi: K
-    ) -> None:
+    def _keys(self, node: RBNode[K, V] | None, queue: Queue[K], lo: K, hi: K) -> None:
         """Rekursive Hilfsmethode für keys (In-Order-Traversierung).
 
         Args:

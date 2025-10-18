@@ -1,3 +1,18 @@
+"""Queue-Implementierung.
+
+Dieses Modul enthält eine Queue-Implementierung basierend auf einer
+verketteten Liste mit First-In-First-Out (FIFO) Verhalten.
+
+Beispiele:
+    >>> queue = Queue()
+    >>> queue.enqueue(1)
+    >>> queue.enqueue(2)
+    >>> queue.dequeue()
+    1
+    >>> queue.size()
+    1
+"""
+
 from collections.abc import Iterator
 from typing import Generic, Optional, TypeVar
 

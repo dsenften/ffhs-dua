@@ -36,9 +36,10 @@ def timeit(func: Callable) -> Callable:
             pass
         ```
     """
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs) -> Any:
-        if globals().get('ENABLE_TIMING', False):
+        if globals().get("ENABLE_TIMING", False):
             start_time = time.perf_counter()
             result = func(*args, **kwargs)
             end_time = time.perf_counter()
@@ -47,6 +48,7 @@ def timeit(func: Callable) -> Callable:
             return result
         else:
             return func(*args, **kwargs)
+
     return wrapper
 
 

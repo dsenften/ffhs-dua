@@ -97,6 +97,7 @@ class TestMerge:
         """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
+
         random.shuffle(shuffled)
         result = Merge.sort(shuffled)
         assert result == sorted(grosser_datensatz)
@@ -206,15 +207,19 @@ class TestMerge:
         # Sollte alle ursprünglichen Elemente enthalten
         assert sorted(result) == [1, 2, 3, 4, 5, 6, 7, 8]
 
-    @pytest.mark.parametrize("data_type,test_data", [
-        (int, [64, 34, 25, 12, 22, 11, 90]),
-        (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
-        (str, ["zebra", "apple", "banana", "cherry"])
-    ])
+    @pytest.mark.parametrize(
+        "data_type,test_data",
+        [
+            (int, [64, 34, 25, 12, 22, 11, 90]),
+            (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+            (str, ["zebra", "apple", "banana", "cherry"]),
+        ],
+    )
     def test_parametrized_sorting(self, data_type, test_data):
         """Test: Parametrisierte Tests für verschiedene Datentypen."""
         shuffled = test_data.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(test_data)
         result = Merge.sort(shuffled)
@@ -250,6 +255,7 @@ class TestMerge:
 
     def test_stability_guaranteed(self):
         """Test: Merge Sort ist stabil - gleiche Elemente behalten ihre Reihenfolge."""
+
         class ComparableItem:
             def __init__(self, value, original_index):
                 self.value = value
@@ -279,14 +285,14 @@ class TestMerge:
             ComparableItem(1, 1),
             ComparableItem(3, 2),
             ComparableItem(2, 3),
-            ComparableItem(1, 4)
+            ComparableItem(1, 4),
         ]
 
         result = Merge.sort(arr)
 
         # Überprüfe, dass sortiert ist
         for i in range(1, len(result)):
-            assert result[i].value >= result[i-1].value
+            assert result[i].value >= result[i - 1].value
 
         # Überprüfe Stabilität: Elemente mit gleichem Wert sollten
         # ihre ursprüngliche Reihenfolge beibehalten
@@ -314,6 +320,7 @@ class TestMerge:
 
     def test_merge_sort_with_custom_objects(self):
         """Test: Merge Sort mit benutzerdefinierten Objekten."""
+
         class Student:
             def __init__(self, name, grade):
                 self.name = name
@@ -342,14 +349,14 @@ class TestMerge:
             Student("Bob", 92),
             Student("Charlie", 78),
             Student("Diana", 96),
-            Student("Eve", 88)
+            Student("Eve", 88),
         ]
 
         result = Merge.sort(students)
 
         # Überprüfe, dass nach Noten sortiert ist
         for i in range(1, len(result)):
-            assert result[i].grade >= result[i-1].grade
+            assert result[i].grade >= result[i - 1].grade
 
         # Überprüfe spezifische Reihenfolge
         expected_names = ["Charlie", "Alice", "Eve", "Bob", "Diana"]

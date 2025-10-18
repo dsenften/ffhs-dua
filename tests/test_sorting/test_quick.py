@@ -45,6 +45,7 @@ class TestQuick:
     def test_random_integers(self, beispiel_ganzzahlen):
         """Test: Sortieren einer zufälligen Liste von Ganzzahlen."""
         import random
+
         shuffled = beispiel_ganzzahlen.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_ganzzahlen)
@@ -63,6 +64,7 @@ class TestQuick:
     def test_strings(self, beispiel_zeichenketten):
         """Test: Sortieren einer Liste von Strings."""
         import random
+
         shuffled = beispiel_zeichenketten.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_zeichenketten)
@@ -99,6 +101,7 @@ class TestQuick:
         """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(grosser_datensatz)
         result = Quick.sort(shuffled)
@@ -189,7 +192,10 @@ class TestQuick:
         arr = [2, 1]
         pivot_index = Quick.partition(arr, 0, 1)
         assert pivot_index in [0, 1]
-        assert Quick.is_sorted(arr) or arr == [2, 1]  # Kann sortiert oder unverändert sein
+        assert Quick.is_sorted(arr) or arr == [
+            2,
+            1,
+        ]  # Kann sortiert oder unverändert sein
 
         # Alle gleichen Elemente
         arr = [5, 5, 5, 5]
@@ -208,15 +214,19 @@ class TestQuick:
             assert result == expected
             assert Quick.is_sorted(result)
 
-    @pytest.mark.parametrize("data_type,test_data", [
-        (int, [64, 34, 25, 12, 22, 11, 90]),
-        (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
-        (str, ["zebra", "apple", "banana", "cherry"])
-    ])
+    @pytest.mark.parametrize(
+        "data_type,test_data",
+        [
+            (int, [64, 34, 25, 12, 22, 11, 90]),
+            (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+            (str, ["zebra", "apple", "banana", "cherry"]),
+        ],
+    )
     def test_parametrized_sorting(self, data_type, test_data):
         """Test: Parametrisierte Tests für verschiedene Datentypen."""
         shuffled = test_data.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(test_data)
         result = Quick.sort(shuffled)
@@ -245,6 +255,7 @@ class TestQuick:
 
     def test_stability_not_guaranteed(self):
         """Test: Quick-Sort ist nicht stabil - gleiche Elemente können ihre Reihenfolge ändern."""
+
         # Verwende Tupel um Stabilität zu testen
         class ComparableItem:
             def __init__(self, value, original_index):
@@ -275,14 +286,14 @@ class TestQuick:
             ComparableItem(1, 1),
             ComparableItem(3, 2),
             ComparableItem(2, 3),
-            ComparableItem(1, 4)
+            ComparableItem(1, 4),
         ]
 
         result = Quick.sort(arr)
 
         # Überprüfe, dass sortiert ist
         for i in range(1, len(result)):
-            assert result[i].value >= result[i-1].value
+            assert result[i].value >= result[i - 1].value
 
         # Quick-Sort ist nicht stabil, also testen wir nur die Korrektheit der Sortierung
         values = [item.value for item in result]

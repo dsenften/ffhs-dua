@@ -30,11 +30,7 @@ class TestStack:
         assert leerer_stack.size() == 1
         assert len(leerer_stack) == 1
 
-    @pytest.mark.parametrize("items", [
-        [1, 2, 3],
-        ["a", "b", "c"],
-        [1.1, 2.2, 3.3]
-    ])
+    @pytest.mark.parametrize("items", [[1, 2, 3], ["a", "b", "c"], [1.1, 2.2, 3.3]])
     def test_push_multiple_items(self, leerer_stack, items):
         """Test: Mehrere Elemente auf Stack legen."""
         for item in items:

@@ -523,7 +523,11 @@ class TestAVLIteration:
 
         level_order_keys = list(avl.level_order())
         # Level-Order: Wurzel, dann Kinder von links nach rechts
-        assert level_order_keys[0] in ["E", "C", "D"]  # Wurzel kann variieren durch Balancierung
+        assert level_order_keys[0] in [
+            "E",
+            "C",
+            "D",
+        ]  # Wurzel kann variieren durch Balancierung
 
     def test_iterator_protocol(self):
         """Teste dass AVL-Baum das Iterator-Protokoll implementiert."""

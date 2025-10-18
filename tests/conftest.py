@@ -4,7 +4,6 @@ Diese Datei enthält Konfigurationen und Hilfsfunktionen für pytest.
 Gemeinsame Test-Vorrichtungen für das ALGS4-Projekt.
 """
 
-
 import pytest
 
 # Aktualisierte Imports für PVA-Struktur

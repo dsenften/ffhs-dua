@@ -45,6 +45,7 @@ class TestShell:
     def test_random_integers(self, beispiel_ganzzahlen):
         """Test: Sortieren einer zufälligen Liste von Ganzzahlen."""
         import random
+
         shuffled = beispiel_ganzzahlen.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_ganzzahlen)
@@ -63,6 +64,7 @@ class TestShell:
     def test_strings(self, beispiel_zeichenketten):
         """Test: Sortieren einer Liste von Strings."""
         import random
+
         shuffled = beispiel_zeichenketten.copy()
         random.shuffle(shuffled)
         expected = sorted(beispiel_zeichenketten)
@@ -99,6 +101,7 @@ class TestShell:
         """Test: Sortieren einer grösseren Liste."""
         shuffled = grosser_datensatz.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(grosser_datensatz)
         result = Shell.sort(shuffled)
@@ -176,15 +179,19 @@ class TestShell:
             assert result == expected
             assert Shell.is_sorted(result)
 
-    @pytest.mark.parametrize("data_type,test_data", [
-        (int, [64, 34, 25, 12, 22, 11, 90]),
-        (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
-        (str, ["zebra", "apple", "banana", "cherry"])
-    ])
+    @pytest.mark.parametrize(
+        "data_type,test_data",
+        [
+            (int, [64, 34, 25, 12, 22, 11, 90]),
+            (float, [3.14, 2.71, 1.41, 2.23, 0.57]),
+            (str, ["zebra", "apple", "banana", "cherry"]),
+        ],
+    )
     def test_parametrized_sorting(self, data_type, test_data):
         """Test: Parametrisierte Tests für verschiedene Datentypen."""
         shuffled = test_data.copy()
         import random
+
         random.shuffle(shuffled)
         expected = sorted(test_data)
         result = Shell.sort(shuffled)

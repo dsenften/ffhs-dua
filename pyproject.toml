@@ -8,25 +8,50 @@ packages = ["src"]
 [project]
 name = "ffhs-dua"
 version = "1.0.0"
-description = "Python-Implementierung grundlegender Datenstrukturen"
+description = "Umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS)"
 readme = "README.md"
 requires-python = ">=3.13.1"
+license = {text = "MIT"}
 authors = [
     {name = "Daniel Senften", email = "daniel.senften@ffhs.ch"}
 ]
-keywords = ["algorithms", "data-structures", "education", "ffhs"]
+maintainers = [
+    {name = "Daniel Senften", email = "daniel.senften@ffhs.ch"}
+]
+keywords = [
+    "algorithms",
+    "data-structures",
+    "education",
+    "ffhs",
+    "sorting",
+    "searching",
+    "union-find",
+    "binary-search-tree",
+    "avl-tree",
+    "red-black-tree"
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: German",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.13",
     "Topic :: Education",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering"
 ]
 dependencies = [
     "matplotlib>=3.10.5",
 ]
+
+[project.urls]
+Homepage = "https://gitlab.com/talent-factory/ffhs/dua"
+Documentation = "https://gitlab.com/talent-factory/ffhs/dua/-/blob/develop/docs/index.adoc"
+Repository = "https://gitlab.com/talent-factory/ffhs/dua.git"
+Issues = "https://gitlab.com/talent-factory/ffhs/dua/-/issues"
+Changelog = "https://gitlab.com/talent-factory/ffhs/dua/-/blob/develop/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
@@ -81,19 +106,29 @@ precision = 2
 [tool.ruff]
 line-length = 88
 target-version = "py313"
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+]
 
 [tool.ruff.lint]
 select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
 ]
 ignore = [
-    "E501", # line too long, handled by formatter
+    "E501",  # line too long, handled by formatter
 ]
 
 [tool.ruff.format]
@@ -114,7 +149,11 @@ warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
 strict_equality = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
 
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false
+disallow_untyped_calls = false
