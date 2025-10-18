@@ -403,7 +403,7 @@ class TestBSTIteration:
         for i, key in enumerate(keys):
             bst.put(key, i)
 
-        collected_keys = [key for key in bst]
+        collected_keys = list(bst)
         assert collected_keys == sorted(keys)
 
     def test_repr(self):

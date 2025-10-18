@@ -3,7 +3,7 @@
 Diese Lösung demonstriert, wie man überprüft, ob ein Binary Search Tree
 die BST-Eigenschaft erfüllt.
 
-Autor: FFHS DUA Kurs
+Autor: Daniel Senften <daniel.senften@ffhs.ch>
 Datum: 2025
 """
 
@@ -210,7 +210,7 @@ def test_invalid_bst_right_subtree() -> None:
           / \
          3   10
             /  \
-           7   14  <- 7 ist kleiner als 8, sollte aber im rechten Teilbaum sein!
+           7   14  <- 7 ist kleiner als 8, sollte somit im linken Teilbaum sein!
     """
     bst = BST[int, str]()
     bst._root = Node(8, "acht", 5)

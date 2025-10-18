@@ -451,7 +451,7 @@ class TestRedBlackBSTIteration:
         for i, key in enumerate(keys):
             rbt.put(key, i)
 
-        collected_keys = [key for key in rbt]
+        collected_keys = list(rbt)
         assert collected_keys == sorted(keys)
 
     def test_repr(self):

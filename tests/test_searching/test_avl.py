@@ -533,7 +533,7 @@ class TestAVLIteration:
         for i, key in enumerate(keys):
             avl.put(key, i)
 
-        collected_keys = [key for key in avl]
+        collected_keys = list(avl)
         assert collected_keys == sorted(keys)
 
     def test_repr(self):

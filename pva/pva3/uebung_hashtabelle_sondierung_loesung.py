@@ -9,7 +9,7 @@ Datum: 2025
 """
 
 from collections import Counter
-from typing import Callable, List, Tuple
+from collections.abc import Callable
 
 
 class QuadraticProbingHashTable:
@@ -31,7 +31,7 @@ class QuadraticProbingHashTable:
             capacity: Grösse der Hashtabelle (Standard: 23)
         """
         self.capacity = capacity
-        self.table: List[int | None] = [None] * capacity
+        self.table: list[int | None] = [None] * capacity
         self.size = 0
 
     def hash_function(self, x: int) -> int:
@@ -77,7 +77,7 @@ class QuadraticProbingHashTable:
         """
         return (initial_hash + attempt * attempt) % self.capacity
 
-    def insert(self, value: int, verbose: bool = True) -> Tuple[int, List[int]]:
+    def insert(self, value: int, verbose: bool = True) -> tuple[int, list[int]]:
         """Fügt einen Wert in die Hashtabelle ein.
 
         Verwendet quadratisches Sondieren bei Kollisionen.
@@ -158,7 +158,7 @@ def analyze_hash_function(
     # Zeige Verteilung
     print(f"\nWertebereich: {value_range.start} bis {value_range.stop - 1}")
     print(f"Anzahl Werte: {len(value_range)}")
-    print(f"\nVerteilung der Hash-Werte:")
+    print("\nVerteilung der Hash-Werte:")
     print(f"{'Index':<10} {'Häufigkeit':<15} {'Visualisierung'}")
     print("-" * 50)
 
@@ -172,13 +172,13 @@ def analyze_hash_function(
     unused_indices = capacity - used_indices
     max_collisions = max(hash_distribution.values()) if hash_distribution else 0
 
-    print(f"\nStatistiken:")
+    print("\nStatistiken:")
     print(f"  Genutzte Indizes: {used_indices}/{capacity} ({used_indices/capacity*100:.1f}%)")
     print(f"  Ungenutzte Indizes: {unused_indices}/{capacity} ({unused_indices/capacity*100:.1f}%)")
     print(f"  Maximale Kollisionen pro Index: {max_collisions}")
 
     # Zeige einige Beispiele
-    print(f"\nBeispiel-Berechnungen:")
+    print("\nBeispiel-Berechnungen:")
     examples = [0, 1, 5, 10, 25, 50, 100, 150, 200]
     for x in examples:
         if x in value_range:
@@ -345,11 +345,11 @@ def test_part_a() -> None:
     print("\n" + "=" * 60)
     print("ZUSAMMENFASSUNG TEIL A")
     print("=" * 60)
-    print(f"\n✓ Wert 63:")
+    print("\n✓ Wert 63:")
     print(f"  - Initialer Hash: h(63) = {ht.hash_function(63)}")
     print(f"  - Finaler Index: {final_index_63}")
     print(f"  - Anzahl Versuche: {len(probed_indices_63)}")
-    print(f"\n✓ Wert 116:")
+    print("\n✓ Wert 116:")
     print(f"  - Initialer Hash: h(116) = {ht.hash_function(116)}")
     print(f"  - Finaler Index: {final_index_116}")
     print(f"  - Anzahl Versuche: {len(probed_indices_116)}")
@@ -385,7 +385,7 @@ def verify_initial_positions() -> None:
     expected_positions = [2, 8, 15, 20]
 
     print("\nÜberprüfung der gegebenen Positionen:")
-    for value, expected_pos in zip(values, expected_positions):
+    for value, expected_pos in zip(values, expected_positions, strict=False):
         calculated_pos = ht.hash_function(value)
         match = "✓" if calculated_pos == expected_pos else "✗"
         print(f"  h({value:3}) = ({value:3}²) % 23 = {value*value:5} % 23 = {calculated_pos:2} (erwartet: {expected_pos:2}) {match}")

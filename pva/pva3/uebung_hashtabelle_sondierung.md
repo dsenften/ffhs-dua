@@ -50,8 +50,8 @@ wobei `i = 0, 1, 2, 3, ...` die Anzahl der Versuche ist.
 - Ursprünglicher Hash-Wert: `h(x) = 5`
 - 1. Versuch (i=0): Index = `(5 + 0²) % 23 = 5`
 - 2. Versuch (i=1): Index = `(5 + 1²) % 23 = 6`
-- 3. Versuch (i=2): Index = `(5 + 4) % 23 = 9`
-- 4. Versuch (i=3): Index = `(5 + 9) % 23 = 14`
+- 3. Versuch (i=2): Index = `(5 + 3²) % 23 = 9`
+- 4. Versuch (i=3): Index = `(5 + 4²) % 23 = 14`
 - usw.
 
 ## Aufgabenstellung

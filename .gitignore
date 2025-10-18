@@ -1,5 +1,6 @@
-# Local JetBrains Settings
+# Local Settings
 .idea/
+settings.local.json
 
 # Python-generated files
 __pycache__/

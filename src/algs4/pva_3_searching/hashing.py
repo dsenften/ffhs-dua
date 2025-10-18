@@ -40,8 +40,6 @@ Beispiele:
 from collections.abc import Iterator
 from typing import Generic, TypeVar
 
-from src.algs4.pva_1_fundamentals.queue import Queue
-
 K = TypeVar("K")  # Key type (muss hashbar sein)
 V = TypeVar("V")  # Value type
 
@@ -492,7 +490,7 @@ def main() -> None:
 
     # Lösche ein Element
     sc.delete("E")
-    print(f"\nAfter deleting 'E':")
+    print("\nAfter deleting 'E':")
     print(f"Size: {sc.size()}")
     print(f"contains('E'): {sc.contains('E')}")
 
@@ -514,7 +512,7 @@ def main() -> None:
 
     # Lösche ein Element
     lp.delete("E")
-    print(f"\nAfter deleting 'E':")
+    print("\nAfter deleting 'E':")
     print(f"Size: {lp.size()}")
     print(f"contains('E'): {lp.contains('E')}")
 
