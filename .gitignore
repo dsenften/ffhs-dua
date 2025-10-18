@@ -1,6 +1,5 @@
 # Local Settings
 .idea/
-settings.local.json
 .claude/settings.local.json
 
 # Python-generated files
