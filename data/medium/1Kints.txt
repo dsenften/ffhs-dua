@@ -1,15 +1,3 @@
-# This file contains 1000 randomly generated integers for testing sorting algorithms
-# Original file: algs4/data/1Kints.txt
-# First 10 integers from the original:
- 324110
--442472
- 626686
--157678
- 508681
- 123414
- -77867
- 155091
- 129801
- 287381
-# ... (990 more integers)
-# Note: This is a representative sample. The full file contains 1000 integers.
+version https://git-lfs.github.com/spec/v1
+oid sha256:534efbecd9af8e65dbd934184242872b7345ce1b9cb12d641f3761c0e86a1fb9
+size 8000
