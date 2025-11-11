@@ -1,0 +1,11 @@
+= Datenstrukturen und Algorithmen
+:doctype: book
+Daniel Senften <daniel.senften@talent-factory.ch>
+include::locale/attributes-de.adoc[]
+:toc: left
+:sectnums:
+
+
+
+[bibliography]
+include::references.adoc[]

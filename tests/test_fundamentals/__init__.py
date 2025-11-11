@@ -1,3 +1,0 @@
-"""
-Tests für fundamentale Datenstrukturen.
-"""

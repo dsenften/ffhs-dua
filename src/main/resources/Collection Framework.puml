@@ -1,0 +1,69 @@
+@startuml
+
+interface Iterable {
+    forEach(c : Consumer) : void
+    iterator() : Iterator
+}
+
+interface Iterator {
+    forEachRemaining(c : Consumer) : void
+    hastNext() : boolean
+    next() : Element
+}
+
+interface Collection {
+    add(element : E) : boolean
+    contains(o : Object) : boolean
+    isEmpty() : boolean
+    size() : int
+    stream() : Stream
+    toArray() : Object[]
+}
+
+interface List {
+    get(index : int) : Element
+    indexOf(Object) : int
+
+    {static} of(element... : E) : List
+}
+
+interface Queue {
+    peek() : Element
+    poll() : Element
+
+    remove() : Element
+}
+
+interface Deque
+
+interface Set {
+    remove() : Element
+
+    {static} of(element... : E) : List
+}
+
+interface SortedSet
+interface NavigableSet
+
+Iterable <|-- Collection
+Iterable . Iterator
+Collection <|-- List
+Collection <|-- Queue
+Collection <|-- Set
+
+Queue <|-- Deque
+Queue <|.. PriorityQueue
+Deque <|.. ArrayDeque
+
+List <|.. ArrayList
+List <|.. Vector
+List <|.. LinkedList
+Vector <|-- Stack
+
+Set <|.. HashSet
+Set <|.. LinkedHashSet
+Set <|-- SortedSet
+SortedSet <|-- NavigableSet
+NavigableSet <|.. TreeSet
+
+@enduml

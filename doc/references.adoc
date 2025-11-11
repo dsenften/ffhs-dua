@@ -1,0 +1,12 @@
+== Referenzen
+include::locale/attributes-de.adoc[]
+
+:claude: https://claude.ai/
+:jetbrains: https://www.jetbrains.com/help/idea/ai-assistant.html
+:perplexity: https://www.perplexity.ai/
+
+* [[[claude]]] {claude}[Claude AI]
+
+* [[[jetbrains]]] {jetbrains}[JetBrains AI Assistant]
+
+* [[[perplexity]]] {perplexity}[Perplexity AI]
