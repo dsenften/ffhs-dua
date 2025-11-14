@@ -99,10 +99,14 @@ class IndexMinPQ:
         self.qp[m] = -1
         return m
 
-    def is_empty(self, ):
+    def is_empty(
+        self,
+    ):
         return not self.pq
 
-    def size(self, ):
+    def size(
+        self,
+    ):
         return len(self.pq)
 
     def swim(self, k: int) -> None:

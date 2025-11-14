@@ -39,24 +39,24 @@ def partition(cls, arr: list, lo: int, hi: int) -> int:
     v = arr[lo]
     i = lo
     j = hi + 1
-    
+
     while True:
         # Finde Element von links, das >= Pivot ist
         while True:
             i += 1
             if not (i < hi and arr[i] < v):
                 break
-        
+
         # Finde Element von rechts, das <= Pivot ist
         while True:
             j -= 1
             if not (j > lo and arr[j] > v):
                 break
-        
+
         # Überprüfe, ob sich die Zeiger gekreuzt haben
         if i >= j:
             break
-        
+
         # Tausche Elemente
         arr[i], arr[j] = arr[j], arr[i]
 
@@ -75,11 +75,11 @@ def quicksort(cls, arr: list, lo: int, hi: int) -> list:
 
     # Partitioniere das Array und erhalte die Pivot-Position
     j = cls.partition(arr, lo, hi)
-    
+
     # Sortiere rekursiv die beiden Teilarrays
     cls.quicksort(arr, lo, j - 1)
     cls.quicksort(arr, j + 1, hi)
-    
+
     return arr
 ----
 
@@ -324,7 +324,7 @@ Vermeidet Stack Overflow bei tiefer Rekursion:
 ----
 def quicksort_iterative(arr):
     stack = [(0, len(arr) - 1)]
-    
+
     while stack:
         lo, hi = stack.pop()
         if lo < hi:
@@ -343,10 +343,10 @@ class Student:
     def __init__(self, name, grade):
         self.name = name
         self.grade = grade
-    
+
     def __lt__(self, other):
         return self.grade < other.grade
-    
+
     def __repr__(self):
         return f"{self.name}: {self.grade}"
 
@@ -371,11 +371,11 @@ import random
 def measure_performance(size):
     # Generiere zufällige Daten
     data = [random.randint(1, 1000) for _ in range(size)]
-    
+
     start_time = time.time()
     Quick.sort(data.copy())
     end_time = time.time()
-    
+
     return end_time - start_time
 
 # Teste verschiedene Grössen

@@ -1,7 +1,8 @@
 """Tests für DijkstraSP."""
 
 import pytest
-from src.algs4.pva_4_graphs import DijkstraSP, EdgeWeightedDigraph, DirectedEdge
+
+from src.algs4.pva_4_graphs import DijkstraSP, DirectedEdge, EdgeWeightedDigraph
 
 
 class TestDijkstraSP:
@@ -108,4 +109,3 @@ class TestDijkstraSP:
         g.add_edge(DirectedEdge(1, 2, 0.5))
         sp = DijkstraSP(g, 0)
         assert sp.distTo[2] == 0.5
-

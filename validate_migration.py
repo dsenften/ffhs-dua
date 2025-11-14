@@ -11,25 +11,25 @@ def validate_migration():
 
     # Teste Zugriff auf verschiedene Testdaten-Kategorien
     test_files = [
-        'data/sorting/1Kints.txt',
-        'data/graphs/tinyG.txt',
-        'data/strings/mobydick.txt',
-        'data/fundamentals/tinyUF.txt',
-        'data/compression/4runs.bin'
+        "data/sorting/1Kints.txt",
+        "data/graphs/tinyG.txt",
+        "data/strings/mobydick.txt",
+        "data/fundamentals/tinyUF.txt",
+        "data/compression/4runs.bin",
     ]
 
-    print('Validierung der migrierten Testdaten:')
-    print('=' * 40)
+    print("Validierung der migrierten Testdaten:")
+    print("=" * 40)
 
     success_count = 0
     for file_path in test_files:
         path = Path(file_path)
         if path.exists():
             size = path.stat().st_size
-            print(f'✅ {file_path} ({size:,} bytes)')
+            print(f"✅ {file_path} ({size:,} bytes)")
             success_count += 1
         else:
-            print(f'❌ {file_path} - NICHT GEFUNDEN')
+            print(f"❌ {file_path} - NICHT GEFUNDEN")
 
     # Gesamtstatistik
     txt_files = len(list(Path("data").rglob("*.txt")))
@@ -37,27 +37,28 @@ def validate_migration():
     bin_files = len(list(Path("data").rglob("*.bin")))
     total_files = txt_files + csv_files + bin_files
 
-    print('\nGesamtstatistik:')
-    print(f'  TXT-Dateien: {txt_files}')
-    print(f'  CSV-Dateien: {csv_files}')
-    print(f'  BIN-Dateien: {bin_files}')
-    print(f'  Gesamt: {total_files}')
+    print("\nGesamtstatistik:")
+    print(f"  TXT-Dateien: {txt_files}")
+    print(f"  CSV-Dateien: {csv_files}")
+    print(f"  BIN-Dateien: {bin_files}")
+    print(f"  Gesamt: {total_files}")
 
-    print(f'\nValidierung: {success_count}/{len(test_files)} Testdateien erfolgreich')
+    print(f"\nValidierung: {success_count}/{len(test_files)} Testdateien erfolgreich")
 
     # Prüfe ob algs4/data noch existiert
     old_path = Path("algs4/data")
     if old_path.exists():
-        print(f'⚠️  Altes Verzeichnis {old_path} existiert noch!')
+        print(f"⚠️  Altes Verzeichnis {old_path} existiert noch!")
         return False
     else:
-        print('✅ Altes Verzeichnis algs4/data erfolgreich entfernt')
+        print("✅ Altes Verzeichnis algs4/data erfolgreich entfernt")
 
     return success_count == len(test_files)
+
 
 if __name__ == "__main__":
     success = validate_migration()
     if success:
-        print('\n🎉 Migration erfolgreich validiert!')
+        print("\n🎉 Migration erfolgreich validiert!")
     else:
-        print('\n⚠️  Migration unvollständig!')
+        print("\n⚠️  Migration unvollständig!")

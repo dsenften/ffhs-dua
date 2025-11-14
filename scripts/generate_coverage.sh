@@ -102,4 +102,3 @@ python3 -m coverage report --skip-covered 2>/dev/null || true
 
 echo ""
 echo -e "${GREEN}✅ Fertig!${NC}"
-

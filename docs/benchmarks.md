@@ -172,7 +172,7 @@ Beispiel:
 def benchmark_new_algorithm():
     """Benchmark für neuen Algorithmus."""
     from src.algs4.pva_2_sorting.new_sort import new_sort
-    
+
     algorithms = {"New Sort": new_sort}
     # ... Rest der Implementierung
 ```
@@ -182,4 +182,3 @@ def benchmark_new_algorithm():
 - [Algorithms, 4th Edition - Performance Analysis](https://algs4.cs.princeton.edu/14analysis/)
 - [Python Timing Best Practices](https://docs.python.org/3/library/timeit.html)
 - [Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation)
-

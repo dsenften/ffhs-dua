@@ -60,9 +60,9 @@ class EdgeWeightedDigraph:
         for i in range(self.V):
             self.adj[i] = Bag()
 
-        if 'file' in kwargs:
+        if "file" in kwargs:
             # Initialisiere Digraph aus Datei
-            in_file = kwargs['file']
+            in_file = kwargs["file"]
             self.V = int(in_file.readline())
             for i in range(self.V):
                 self.adj[i] = Bag()
@@ -111,5 +111,6 @@ class EdgeWeightedDigraph:
 
 if __name__ == "__main__":
     import sys
+
     graph = EdgeWeightedDigraph(file=open(sys.argv[1]))
     print(graph)

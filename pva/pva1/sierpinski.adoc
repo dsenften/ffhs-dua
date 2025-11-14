@@ -63,15 +63,15 @@ warnings.filterwarnings('ignore', category=UserWarning, module='matplotlib')
 def draw_filled_triangle(x, y, size, color='black'):
     """Zeichnet ein gefülltes gleichschenkliges Dreieck"""
     height = size * np.sqrt(3) / 2
-    
+
     # Dreieck-Koordinaten (Spitze oben)
     triangle_points = np.array([
         [x, y + height * 2/3],        # Obere Spitze
         [x - size/2, y - height/3],   # Linke untere Ecke
         [x + size/2, y - height/3]    # Rechte untere Ecke
     ])
-    
-    triangle = patches.Polygon(triangle_points, closed=True, 
+
+    triangle = patches.Polygon(triangle_points, closed=True,
                              facecolor=color, edgecolor=color)
     plt.gca().add_patch(triangle)
 ----
@@ -93,35 +93,35 @@ def sierpinski_iteration(triangles, iteration):
     """
     if iteration <= 1:
         return triangles
-    
+
     new_triangles = []
-    
+
     for x, y, size in triangles:
         # Grösse der neuen kleineren Dreiecke
         new_size = size / 2
         height = size * np.sqrt(3) / 2
-        
+
         # Drei neue Dreiecks-Positionen berechnen
         # Für korrekte Sierpinski-Konstruktion: Dreiecke berühren sich an den Ecken
-        
+
         # Linkes unteres Dreieck
         left_x = x - new_size / 2
         left_y = y - height / 6
-        
+
         # Rechtes unteres Dreieck
         right_x = x + new_size / 2
         right_y = y - height / 6
-        
+
         # Oberes Dreieck
         top_x = x
         top_y = y + height / 3
-        
+
         new_triangles.extend([
             (left_x, left_y, new_size),
             (right_x, right_y, new_size),
             (top_x, top_y, new_size)
         ])
-    
+
     return sierpinski_iteration(new_triangles, iteration - 1)
 ----
 
@@ -143,14 +143,14 @@ def sierpinski_recursive(x, y, n, level):
     if level == 0:
         draw_filled_triangle(x, y, n)
         return
-    
+
     # Rekursionsschritt: drei kleinere Dreiecke mit halber Grösse
     new_size = n / 2
     height = n * np.sqrt(3) / 2
-    
+
     # Positionen der drei Teildreiecke
     sierpinski_recursive(x - new_size/2, y - height/6, new_size, level - 1)  # Links unten
-    sierpinski_recursive(x + new_size/2, y - height/6, new_size, level - 1)  # Rechts unten  
+    sierpinski_recursive(x + new_size/2, y - height/6, new_size, level - 1)  # Rechts unten
     sierpinski_recursive(x, y + height/3, new_size, level - 1)               # Oben
 ----
 
@@ -201,19 +201,19 @@ def zeichne_sierpinski_progression():
     """
     fig, axes = plt.subplots(1, 5, figsize=(20, 4))
     fig.suptitle('Sierpinski-Dreieck - Erste 5 Iterationen', fontsize=16)
-    
+
     for i in range(5):
         plt.sca(axes[i])
-        
+
         # Zeichne Sierpinski-Dreieck mit entsprechender Iteration
         sierpinski(0, 0, 3, max_iterations=i+1)
-        
+
         plt.xlim(-2, 2)
         plt.ylim(-1.5, 2)
         plt.gca().set_aspect('equal', adjustable='box')
         plt.title(f'Iteration {i+1}')
         plt.axis('off')
-    
+
     plt.tight_layout()
     plt.show()
 ----
@@ -226,8 +226,8 @@ def zeichne_sierpinski_progression():
 if __name__ == "__main__":
     # Iterative Version (mathematisch korrekt)
     zeichne_sierpinski_progression()
-    
-    # Rekursive Version  
+
+    # Rekursive Version
     zeichne_rekursive_version()
 ----
 
@@ -266,7 +266,7 @@ Optimieren Sie den Algorithmus für grosse Iterationszahlen.
 Das Sierpinski-Dreieck demonstriert mehrere wichtige Konzepte:
 
 * **Rekursion**: Elegante Lösung komplexer Probleme
-* **Fraktale Geometrie**: Selbstähnliche mathematische Strukturen  
+* **Fraktale Geometrie**: Selbstähnliche mathematische Strukturen
 * **Algorithmus-Design**: Verschiedene Implementierungsansätze
 * **Visualisierung**: Transformation mathematischer Konzepte in grafische Darstellungen
 

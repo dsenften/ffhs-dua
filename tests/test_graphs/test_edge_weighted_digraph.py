@@ -1,7 +1,8 @@
 """Tests für EdgeWeightedDigraph."""
 
 import pytest
-from src.algs4.pva_4_graphs import EdgeWeightedDigraph, DirectedEdge
+
+from src.algs4.pva_4_graphs import DirectedEdge, EdgeWeightedDigraph
 
 
 class TestEdgeWeightedDigraph:
@@ -94,4 +95,3 @@ class TestEdgeWeightedDigraph:
             g.add_edge(DirectedEdge(i, i + 1, 0.5))
         assert g.E == 50
         assert g.V == 100
-

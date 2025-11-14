@@ -238,7 +238,9 @@ def test_equal_keys() -> None:
     bst._root.right = Node(5, "fünf_dupliziert", 1)  # Gleicher Schlüssel!
 
     validator = BSTValidator(bst)
-    assert not validator.is_valid_bst(), "BST mit duplizierten Schlüsseln sollte ungültig sein"
+    assert (
+        not validator.is_valid_bst()
+    ), "BST mit duplizierten Schlüsseln sollte ungültig sein"
     print("✓ Test 6 bestanden: Duplizierte Schlüssel erkannt")
 
 

@@ -128,4 +128,3 @@ python3 -m pytest tests/test_graphs/ -v
 
 - Sedgewick, R., & Wayne, K. (2011). Algorithms, 4th Edition. Addison-Wesley.
 - https://algs4.cs.princeton.edu/44sp/
-

@@ -1,6 +1,7 @@
 """Tests für DirectedEdge."""
 
 import pytest
+
 from src.algs4.pva_4_graphs import DirectedEdge
 
 
@@ -62,4 +63,3 @@ class TestDirectedEdge:
         """Test: Große Gewichte sind erlaubt."""
         edge = DirectedEdge(0, 1, 999999.0)
         assert edge.weight == 999999.0
-

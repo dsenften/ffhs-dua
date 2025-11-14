@@ -218,4 +218,3 @@ python3 -m coverage report src/algs4/pva_2_sorting/shell.py
 - [Coverage.py Dokumentation](https://coverage.readthedocs.io/)
 - [pytest-cov Dokumentation](https://pytest-cov.readthedocs.io/)
 - [docs/coverage.md](../docs/coverage.md) - Detaillierte Coverage-Dokumentation
-

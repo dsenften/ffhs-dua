@@ -11,7 +11,7 @@ Nach dieser Übung können Sie:
 
 ## Hintergrund
 
-Ein **Binary Search Tree (BST)** ist eine fundamentale Datenstruktur in der Informatik. 
+Ein **Binary Search Tree (BST)** ist eine fundamentale Datenstruktur in der Informatik.
 Die zentrale Eigenschaft eines BST ist die **BST-Invariante**:
 
 > Für jeden Knoten im Baum gilt:
@@ -46,22 +46,22 @@ Hier gilt für jeden Knoten die BST-Eigenschaft.
       4   9 13
 ```
 
-Dieser Baum ist **ungültig**, weil der Knoten mit Schlüssel `9` im linken Teilbaum der Wurzel `8` liegt, 
+Dieser Baum ist **ungültig**, weil der Knoten mit Schlüssel `9` im linken Teilbaum der Wurzel `8` liegt,
 aber grösser als `8` ist. Die BST-Eigenschaft ist verletzt!
 
 ## Aufgabenstellung
 
-Implementieren Sie eine Methode `is_valid_bst()`, die überprüft, ob ein gegebener Binary Search Tree 
+Implementieren Sie eine Methode `is_valid_bst()`, die überprüft, ob ein gegebener Binary Search Tree
 die BST-Eigenschaft erfüllt.
 
 ### Anforderungen
 
-1. **Vollständige Validierung**: Die Methode muss die BST-Eigenschaft für **alle** Knoten überprüfen, 
+1. **Vollständige Validierung**: Die Methode muss die BST-Eigenschaft für **alle** Knoten überprüfen,
 nicht nur für direkte Eltern-Kind-Beziehungen.
 
 2. **Effiziente Implementierung**: Die Methode sollte jeden Knoten nur einmal besuchen (Zeitkomplexität: O(n)).
 
-3. **Korrekte Grenzwerte**: Verwenden Sie Minimal- und Maximalwerte, um sicherzustellen, 
+3. **Korrekte Grenzwerte**: Verwenden Sie Minimal- und Maximalwerte, um sicherzustellen,
 dass jeder Knoten in seinem erlaubten Wertebereich liegt.
 
 4. **Edge Cases**: Ihre Implementierung sollte folgende Spezialfälle korrekt behandeln:
@@ -101,7 +101,7 @@ class BSTValidator(Generic[K, V]):
 
     def __init__(self, bst: BST[K, V]) -> None:
         """Initialisiert den Validator mit einem BST.
-        
+
         Args:
             bst: Der zu validierende Binary Search Tree
         """
@@ -109,7 +109,7 @@ class BSTValidator(Generic[K, V]):
 
     def is_valid_bst(self) -> bool:
         """Überprüft, ob der BST die BST-Eigenschaft erfüllt.
-        
+
         Returns:
             bool: True wenn der BST gültig ist, False sonst
         """
@@ -117,18 +117,18 @@ class BSTValidator(Generic[K, V]):
         pass
 
     def _is_valid_bst_helper(
-        self, 
-        node: Node[K, V] | None, 
-        min_val: K | None, 
+        self,
+        node: Node[K, V] | None,
+        min_val: K | None,
         max_val: K | None
     ) -> bool:
         """Rekursive Hilfsmethode zur BST-Validierung.
-        
+
         Args:
             node: Aktueller Knoten
             min_val: Minimaler erlaubter Schlüsselwert (None = unbeschränkt)
             max_val: Maximaler erlaubter Schlüsselwert (None = unbeschränkt)
-            
+
         Returns:
             bool: True wenn der Teilbaum gültig ist, False sonst
         """
@@ -146,7 +146,7 @@ def test_valid_bst() -> None:
     bst.put(1, "eins")
     bst.put(6, "sechs")
     bst.put(14, "vierzehn")
-    
+
     validator = BSTValidator(bst)
     assert validator.is_valid_bst(), "BST sollte gültig sein"
     print("✓ Test 1 bestanden: Gültiger BST erkannt")
@@ -171,7 +171,7 @@ def test_single_node() -> None:
 
 def test_invalid_bst_manual() -> None:
     """Test: Manuell konstruierter ungültiger BST.
-    
+
     Hinweis: Dieser Test erfordert direkten Zugriff auf die Knoten-Struktur,
     um einen ungültigen BST zu konstruieren (da die put-Methode immer einen
     gültigen BST erzeugt).
@@ -182,14 +182,14 @@ def test_invalid_bst_manual() -> None:
     #     3   10
     #    / \
     #   1   9  <- 9 ist grösser als 8, sollte aber im linken Teilbaum sein!
-    
+
     bst = BST[int, str]()
     bst._root = Node(8, "acht", 4)
     bst._root.left = Node(3, "drei", 3)
     bst._root.right = Node(10, "zehn", 1)
     bst._root.left.left = Node(1, "eins", 1)
     bst._root.left.right = Node(9, "neun", 1)  # Verletzt BST-Eigenschaft!
-    
+
     validator = BSTValidator(bst)
     assert not validator.is_valid_bst(), "BST sollte ungültig sein"
     print("✓ Test 4 bestanden: Ungültiger BST erkannt")
@@ -224,7 +224,7 @@ if __name__ == "__main__":
    - Überprüfen Sie, ob die `n`-Werte (Teilbaumgrössen) korrekt sind
    - Überprüfen Sie, ob der Baum balanciert ist (AVL-Eigenschaft)
 
-3. **Visualisierung**: Erstellen Sie eine Funktion, die einen ungültigen BST visualisiert und die Stelle markiert, 
+3. **Visualisierung**: Erstellen Sie eine Funktion, die einen ungültigen BST visualisiert und die Stelle markiert,
 an der die BST-Eigenschaft verletzt wird.
 
 ## Abgabe

@@ -26,7 +26,7 @@ Gegeben sei eine Menge von n Objekten (0 bis n-1). Wir können Verbindungen zwis
 Die "ist-verbunden-mit"-Relation muss eine **Äquivalenzrelation** sein:
 
 * **Reflexiv**: p ist mit p verbunden
-* **Symmetrisch**: Wenn p mit q verbunden ist, dann ist q mit p verbunden  
+* **Symmetrisch**: Wenn p mit q verbunden ist, dann ist q mit p verbunden
 * **Transitiv**: Wenn p mit q und q mit r verbunden ist, dann ist p mit r verbunden
 ====
 
@@ -51,7 +51,7 @@ Union-Find modelliert eine **Partitionierung** der Menge {0, 1, 2, ..., n-1} in 
 Ursprünglich: {0}, {1}, {2}, {3}, {4}, {5}  // 6 Komponenten
 
 Nach union(0,1): {0,1}, {2}, {3}, {4}, {5}  // 5 Komponenten
-Nach union(2,3): {0,1}, {2,3}, {4}, {5}     // 4 Komponenten  
+Nach union(2,3): {0,1}, {2,3}, {4}, {5}     // 4 Komponenten
 Nach union(0,2): {0,1,2,3}, {4}, {5}        // 3 Komponenten
 ----
 
@@ -100,28 +100,28 @@ class QuickFindUF:
     def __init__(self, n):
         self._id = list(range(n))  # id[i] = Komponenten-ID von i
         self._count = n
-    
+
     def find(self, p):
         return self._id[p]  # O(1) - direkter Zugriff
-    
+
     def union(self, p, q):
         pid = self._id[p]
         qid = self._id[q]
         if pid == qid:
             return
-        
+
         # Ändere alle Elemente mit pid zu qid
         for i in range(len(self._id)):  # O(n)
             if self._id[i] == pid:
                 self._id[i] = qid
-        
+
         self._count -= 1
-    
+
     def connected(self, p, q):
         return self._id[p] == self._id[q]  # O(1)
 ----
 
-**Vorteile**: 
+**Vorteile**:
 - find() und connected() in O(1)
 - Einfache Implementierung
 
@@ -139,23 +139,23 @@ class QuickUnionUF:
     def __init__(self, n):
         self._parent = list(range(n))  # parent[i] = Eltern von i
         self._count = n
-    
+
     def find(self, p):
         # Folge Zeigern bis zur Wurzel
         while p != self._parent[p]:  # O(Baumhöhe)
             p = self._parent[p]
         return p
-    
+
     def union(self, p, q):
         root_p = self.find(p)
         root_q = self.find(q)
         if root_p == root_q:
             return
-        
+
         # Hänge eine Wurzel unter die andere
         self._parent[root_p] = root_q  # O(1) nach find()
         self._count -= 1
-    
+
     def connected(self, p, q):
         return self.find(p) == self.find(q)  # O(Baumhöhe)
 ----
@@ -178,19 +178,19 @@ class WeightedQuickUnionUF:
         self._parent = list(range(n))
         self._size = [1] * n  # size[i] = Anzahl Elemente im Baum mit Wurzel i
         self._count = n
-    
+
     def union(self, p, q):
         root_p = self.find(p)
         root_q = self.find(q)
         if root_p == root_q:
             return
-        
+
         # Hänge kleineren Baum unter grösseren
         if self._size[root_p] < self._size[root_q]:
             small, large = root_p, root_q
         else:
             small, large = root_q, root_p
-        
+
         self._parent[small] = large
         self._size[large] += self._size[small]
         self._count -= 1
@@ -209,20 +209,20 @@ class UF:
         self._parent = list(range(n))
         self._rank = [0] * n  # rank[i] ≈ Höhe des Baums mit Wurzel i
         self._count = n
-    
+
     def find(self, p):
         while p != self._parent[p]:
             # Path Compression: Zeige auf Grosseltern
             self._parent[p] = self._parent[self._parent[p]]
             p = self._parent[p]
         return p
-    
+
     def union(self, p, q):
         root_p = self.find(p)
         root_q = self.find(q)
         if root_p == root_q:
             return
-        
+
         # Union by Rank: Hänge niedrigeren Rang unter höheren
         if self._rank[root_p] < self._rank[root_q]:
             self._parent[root_p] = root_q
@@ -231,7 +231,7 @@ class UF:
         else:
             self._parent[root_q] = root_p
             self._rank[root_p] += 1
-        
+
         self._count -= 1
 ----
 
@@ -240,7 +240,7 @@ class UF:
 **Path Compression Varianten**:
 
 1. **Path Halving** (implementiert): Jeder Knoten zeigt auf seinen Grosseltern
-2. **Path Splitting**: Jeder zweite Knoten zeigt auf seinen Grosseltern  
+2. **Path Splitting**: Jeder zweite Knoten zeigt auf seinen Grosseltern
 3. **Full Path Compression**: Alle Knoten zeigen direkt auf die Wurzel (rekursiv)
 ====
 
@@ -305,18 +305,18 @@ def solve_network_connectivity():
     n = 10  # Computer 0-9
     connections = [(0,1), (1,2), (3,4), (5,6), (6,7), (7,8)]
     queries = [(0,2), (3,8), (1,5), (4,6)]
-    
+
     uf = UF(n)
-    
+
     # Erstelle Verbindungen
     print("Erstelle Netzwerkverbindungen:")
     for p, q in connections:
         if not uf.connected(p, q):
             uf.union(p, q)
             print(f"Computer {p} und {q} verbunden")
-    
+
     print(f"\nAnzahl separate Netzwerke: {uf.count()}")
-    
+
     # Beantworte Konnektivitäts-Anfragen
     print("\nKonnektivitäts-Anfragen:")
     for p, q in queries:
@@ -327,17 +327,17 @@ def solve_network_connectivity():
 
 # Ausgabe:
 # Computer 0 und 1 verbunden
-# Computer 1 und 2 verbunden  
+# Computer 1 und 2 verbunden
 # Computer 3 und 4 verbunden
 # Computer 5 und 6 verbunden
 # Computer 6 und 7 verbunden
 # Computer 7 und 8 verbunden
-# 
+#
 # Anzahl separate Netzwerke: 5
 #
 # Computer 0 und 2 sind im gleichen Netzwerk
 # Computer 3 und 8 sind NICHT verbunden
-# Computer 1 und 5 sind NICHT verbunden  
+# Computer 1 und 5 sind NICHT verbunden
 # Computer 4 und 6 sind NICHT verbunden
 ----
 
@@ -351,46 +351,46 @@ def percolation_simulation(n, probability=0.6):
     """Simuliere Perkolation auf n×n Grid."""
     grid_size = n * n
     uf = UF(grid_size + 2)  # +2 für virtuelle Top/Bottom-Knoten
-    
+
     virtual_top = grid_size
     virtual_bottom = grid_size + 1
-    
+
     def get_index(row, col):
         return row * n + col
-    
+
     # Öffne Zellen zufällig
     opened = [[False] * n for _ in range(n)]
-    
+
     for _ in range(int(grid_size * probability)):
         row = random.randint(0, n-1)
         col = random.randint(0, n-1)
-        
+
         if not opened[row][col]:
             opened[row][col] = True
             current = get_index(row, col)
-            
+
             # Verbinde mit virtuellen Knoten
             if row == 0:  # Top-Reihe
                 uf.union(current, virtual_top)
             if row == n-1:  # Bottom-Reihe
                 uf.union(current, virtual_bottom)
-            
+
             # Verbinde mit Nachbarn
             directions = [(-1,0), (1,0), (0,-1), (0,1)]
             for dr, dc in directions:
                 nr, nc = row + dr, col + dc
-                if (0 <= nr < n and 0 <= nc < n and 
+                if (0 <= nr < n and 0 <= nc < n and
                     opened[nr][nc]):
                     neighbor = get_index(nr, nc)
                     uf.union(current, neighbor)
-    
+
     # Prüfe Perkolation
     percolates = uf.connected(virtual_top, virtual_bottom)
-    
+
     print(f"Grid: {n}×{n}, Wahrscheinlichkeit: {probability}")
     print(f"Perkoliert: {'Ja' if percolates else 'Nein'}")
     print(f"Komponenten: {uf.count()}")
-    
+
     return percolates
 ----
 
@@ -405,36 +405,36 @@ from typing import List, Tuple
 
 def benchmark_implementations(n: int, operations: List[Tuple[int, int]]):
     """Vergleiche Performance verschiedener Union-Find-Implementierungen."""
-    
+
     implementations = {
         'Quick Find': QuickFindUF,
-        'Quick Union': QuickUnionUF, 
+        'Quick Union': QuickUnionUF,
         'Weighted QU': WeightedQuickUnionUF,
         'Optimized UF': UF
     }
-    
+
     results = {}
-    
+
     for name, UF_class in implementations.items():
         uf = UF_class(n)
-        
+
         start_time = time.time()
-        
+
         for p, q in operations:
             uf.union(p, q)
-        
+
         end_time = time.time()
         results[name] = end_time - start_time
-    
+
     # Ergebnisse ausgeben
     print(f"Benchmark für {n} Knoten, {len(operations)} union-Operationen:")
     print("-" * 50)
-    
+
     for name, time_taken in sorted(results.items(), key=lambda x: x[1]):
         print(f"{name:15}: {time_taken:.4f} Sekunden")
 
 # Beispiel-Verwendung:
-# random_ops = [(random.randint(0, 999), random.randint(0, 999)) 
+# random_ops = [(random.randint(0, 999), random.randint(0, 999))
 #               for _ in range(10000)]
 # benchmark_implementations(1000, random_ops)
 ----
@@ -447,7 +447,7 @@ def benchmark_implementations(n: int, operations: List[Tuple[int, int]]):
 
 |**Kleine Datasets** (n < 100)
 |Gut
-|Gut  
+|Gut
 |Gut
 |Gut
 
@@ -463,7 +463,7 @@ def benchmark_implementations(n: int, operations: List[Tuple[int, int]]):
 |Gut
 |Optimal
 
-|**Viele Queries** 
+|**Viele Queries**
 |Gut (find = O(1))
 |Variable
 |Gut
@@ -486,18 +486,18 @@ _*) Kann degenerieren bei ungünstigen Eingabedaten_
 ----
 class ExtendedUF(UF):
     """Erweiterte Union-Find mit zusätzlichen Operationen."""
-    
+
     def __init__(self, n):
         super().__init__(n)
         self._size = [1] * n  # Grösse jeder Komponente
-    
+
     def union(self, p, q):
         root_p = self.find(p)
         root_q = self.find(q)
-        
+
         if root_p == root_q:
             return False  # Bereits verbunden
-        
+
         # Standard union mit size tracking
         if self._rank[root_p] < self._rank[root_q]:
             self._parent[root_p] = root_q
@@ -509,29 +509,29 @@ class ExtendedUF(UF):
             self._parent[root_q] = root_p
             self._rank[root_p] += 1
             self._size[root_p] += self._size[root_q]
-        
+
         self._count -= 1
         return True  # Union durchgeführt
-    
+
     def component_size(self, p):
         """Gibt die Grösse der Komponente zurück, die p enthält."""
         root = self.find(p)
         return self._size[root]
-    
+
     def largest_component(self):
         """Gibt die Grösse der grössten Komponente zurück."""
         return max(self._size[self.find(i)] for i in range(len(self._parent)))
-    
+
     def get_components(self):
         """Gibt alle Komponenten als Liste von Listen zurück."""
         components = {}
-        
+
         for i in range(len(self._parent)):
             root = self.find(i)
             if root not in components:
                 components[root] = []
             components[root].append(i)
-        
+
         return list(components.values())
 ----
 
@@ -541,12 +541,12 @@ class ExtendedUF(UF):
 ----
 class WeightedUF:
     """Union-Find mit gewichteten Verbindungen (für relative Positionen)."""
-    
+
     def __init__(self, n):
         self._parent = list(range(n))
         self._weight = [0] * n  # weight[i] = Gewicht von i relativ zur Wurzel
         self._count = n
-    
+
     def find(self, p):
         if p != self._parent[p]:
             # Path compression mit Gewichts-Update
@@ -554,23 +554,23 @@ class WeightedUF:
             self._parent[p] = self.find(self._parent[p])
             self._weight[p] += self._weight[original_parent]
         return self._parent[p]
-    
+
     def union(self, p, q, weight):
         """Verbinde p und q mit relativem Gewicht: weight[q] - weight[p] = weight"""
         root_p = self.find(p)
         root_q = self.find(q)
-        
+
         if root_p == root_q:
             # Prüfe Konsistenz
             expected = self._weight[q] - self._weight[p]
             return abs(expected - weight) < 1e-9
-        
+
         # Union
         self._parent[root_p] = root_q
         self._weight[root_p] = self._weight[q] - weight - self._weight[p]
         self._count -= 1
         return True
-    
+
     def difference(self, p, q):
         """Gibt weight[q] - weight[p] zurück, falls verbunden."""
         if not self.connected(p, q):

@@ -1,6 +1,7 @@
 """Tests für IndexMinPQ."""
 
 import pytest
+
 from src.algs4.pva_4_graphs import IndexMinPQ
 
 
@@ -106,6 +107,5 @@ class TestIndexMinPQ:
         """Test: decrease_key() mit höherem Wert wirft Exception."""
         pq = IndexMinPQ(5)
         pq.insert(0, 1.0)
-        with pytest.raises(Exception):
+        with pytest.raises((Exception, ValueError)):
             pq.decrease_key(0, 2.0)
-

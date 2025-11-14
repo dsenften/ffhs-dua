@@ -70,4 +70,3 @@ class DirectedEdge:
     def __repr__(self) -> str:
         """Gibt eine detaillierte String-Darstellung zurück."""
         return f"DirectedEdge({self.v}, {self.w}, {self.weight})"
-

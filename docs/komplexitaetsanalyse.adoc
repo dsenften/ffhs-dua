@@ -42,11 +42,11 @@ def constant_time_example(arr):
     # Alle diese Operationen sind O(1)
     if len(arr) == 0:
         return None
-    
+
     first = arr[0]           # Direkter Zugriff
     last = arr[-1]           # Direkter Zugriff
     arr.append(42)           # Amortisiert O(1) bei Python-Listen
-    
+
     return first + last
 ----
 
@@ -58,17 +58,17 @@ def constant_time_example(arr):
 ----
 def binary_search(arr, target):
     left, right = 0, len(arr) - 1
-    
+
     while left <= right:        # Maximal log₂(n) Iterationen
         mid = (left + right) // 2
-        
+
         if arr[mid] == target:
             return mid
         elif arr[mid] < target:
             left = mid + 1      # Halbiert den Suchraum
         else:
             right = mid - 1     # Halbiert den Suchraum
-    
+
     return -1
 
 # Beispiel: Bei 1.000.000 Elementen maximal ~20 Vergleiche!
@@ -102,19 +102,19 @@ def sum_array(arr):
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
-    
+
     # Teile: O(1)
     mid = len(arr) // 2
     left = merge_sort(arr[:mid])    # T(n/2)
     right = merge_sort(arr[mid:])   # T(n/2)
-    
+
     # Herrsche: O(n)
     return merge(left, right)
 
 def merge(left, right):
     result = []
     i = j = 0
-    
+
     # O(n) - Verschmelzen der sortierten Hälften
     while i < len(left) and j < len(right):
         if left[i] <= right[j]:
@@ -123,7 +123,7 @@ def merge(left, right):
         else:
             result.append(right[j])
             j += 1
-    
+
     result.extend(left[i:])
     result.extend(right[j:])
     return result
@@ -166,24 +166,24 @@ def find_all_pairs(arr):
 def three_nested_loops(arr):
     result = []
     n = len(arr)
-    
+
     for i in range(n):          # n Iterationen
         for j in range(n):      # n Iterationen
             for k in range(n):  # n Iterationen
                 if arr[i] + arr[j] + arr[k] == 0:
                     result.append((arr[i], arr[j], arr[k]))
-    
+
     return result  # Gesamtkomplexität: O(n³)
 
 # Praktisches Beispiel: Floyd-Warshall Algorithmus
 def floyd_warshall(graph):
     n = len(graph)
     dist = [row[:] for row in graph]  # Kopie erstellen
-    
+
     for k in range(n):      # n Iterationen
         for i in range(n):  # n Iterationen
             for j in range(n):  # n Iterationen
-                dist[i][j] = min(dist[i][j], 
+                dist[i][j] = min(dist[i][j],
                                dist[i][k] + dist[k][j])
     return dist
 
@@ -191,7 +191,7 @@ def floyd_warshall(graph):
 def matrix_multiplication_naive(A, B):
     n = len(A)
     C = [[0 for _ in range(n)] for _ in range(n)]
-    
+
     for i in range(n):      # n Iterationen
         for j in range(n):  # n Iterationen
             for k in range(n):  # n Iterationen → O(n³)!
@@ -220,15 +220,15 @@ def power_set(arr):
     """Alle Teilmengen einer Menge generieren"""
     if not arr:
         return [[]]
-    
+
     # Für jedes Element: mit oder ohne → 2^n Möglichkeiten
     rest_subsets = power_set(arr[1:])
     new_subsets = []
-    
+
     for subset in rest_subsets:
         new_subsets.append(subset)          # Ohne aktuelles Element
         new_subsets.append([arr[0]] + subset)  # Mit aktuellem Element
-    
+
     return new_subsets
 
 # Beispiel: power_set([1,2,3]) → 8 Teilmengen (2³)
@@ -249,33 +249,33 @@ def generate_permutations(arr):
     """Alle Permutationen generieren"""
     if len(arr) <= 1:
         return [arr]
-    
+
     result = []
     for i in range(len(arr)):
         # Wähle Element an Position i
         current = arr[i]
         remaining = arr[:i] + arr[i+1:]
-        
+
         # Permutiere den Rest
         for perm in generate_permutations(remaining):
             result.append([current] + perm)
-    
+
     return result
 
 def traveling_salesman_brute_force(cities):
     """TSP durch Ausprobieren aller Routen"""
     from itertools import permutations
-    
+
     min_distance = float('inf')
     best_route = None
-    
+
     # n! verschiedene Routen
     for route in permutations(cities):
         distance = calculate_route_distance(route)
         if distance < min_distance:
             min_distance = distance
             best_route = route
-    
+
     return best_route, min_distance
 ----
 
@@ -288,23 +288,23 @@ def traveling_salesman_brute_force(cities):
 def complex_algorithm(data):
     n = len(data)
     result = []
-    
+
     # Schritt 1: O(n log n) - Sortierung
     sorted_data = sorted(data)
-    
+
     # Schritt 2: O(n) - Durchlauf
     for item in sorted_data:
         result.append(item * 2)
-    
+
     # Schritt 3: O(n²) - Verschachtelte Schleifen
     pairs = []
     for i in range(n):
         for j in range(i+1, n):
             pairs.append((result[i], result[j]))
-    
+
     # Schritt 4: O(n² log n) - Sortierung der Paare
     pairs.sort()
-    
+
     return pairs
 
 # Analyse: O(n log n) + O(n) + O(n²) + O(n² log n) = O(n² log n)
@@ -318,12 +318,12 @@ def complex_algorithm(data):
 def binary_tree_traversal(node):
     if node is None:
         return []
-    
+
     # Besuche jeden Knoten genau einmal
     result = [node.value]
     result.extend(binary_tree_traversal(node.left))   # T(n/2)
     result.extend(binary_tree_traversal(node.right))  # T(n/2)
-    
+
     return result
 
 # Rekurrenzrelation: T(n) = 2T(n/2) + O(1) = O(n)
@@ -365,7 +365,7 @@ def binary_tree_traversal(node):
 === Faustregeln für die Analyse
 
 . **Sequenzielle Operationen**: Addiere die Komplexitäten
-. **Verschachtelte Schleifen**: Multipliziere die Komplexitäten  
+. **Verschachtelte Schleifen**: Multipliziere die Komplexitäten
 . **Dominanzregel**: Die höchste Ordnung bestimmt das Ergebnis
 . **Konstanten ignorieren**: O(3n) = O(n), O(n/2) = O(n)
 
@@ -412,7 +412,7 @@ def mystery_a(arr):
     for i in range(len(arr)):
         print(arr[i])
 
-# Snippet B  
+# Snippet B
 def mystery_b(arr):
     for i in range(len(arr)):
         for j in range(len(arr)):
@@ -463,13 +463,13 @@ Verwenden Sie ein Set für O(1) Lookups:
 def find_duplicates_optimized(arr):
     seen = set()
     duplicates = set()
-    
+
     for item in arr:  # O(n)
         if item in seen:  # O(1) im Durchschnitt
             duplicates.add(item)
         else:
             seen.add(item)
-    
+
     return list(duplicates)
 # Optimierte Komplexität: O(n)
 ----

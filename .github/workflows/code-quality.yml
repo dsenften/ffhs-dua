@@ -47,7 +47,6 @@ jobs:
       run: |
         echo "=== Checking for print statements ==="
         ! grep -r "print(" src/ --include="*.py" | grep -v "# pragma: no cover" || true
-        
+
         echo "=== Checking for TODO comments ==="
         grep -r "TODO\|FIXME" src/ --include="*.py" || echo "No TODO/FIXME found"
-

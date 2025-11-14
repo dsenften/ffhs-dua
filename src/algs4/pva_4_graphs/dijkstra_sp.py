@@ -37,7 +37,7 @@ class DijkstraSP:
         pq (IndexMinPQ): Priority Queue für die Verarbeitung von Knoten
     """
 
-    def __init__(self, g: 'EdgeWeightedDigraph', s: int) -> None:
+    def __init__(self, g: "EdgeWeightedDigraph", s: int) -> None:
         """Initialisiert Dijkstras Algorithmus.
 
         Args:
@@ -60,7 +60,7 @@ class DijkstraSP:
         while not self.pq.is_empty():
             self.relax(g, self.pq.del_min())
 
-    def relax(self, g: 'EdgeWeightedDigraph', v: int) -> None:
+    def relax(self, g: "EdgeWeightedDigraph", v: int) -> None:
         """Relaxiert alle Kanten von Knoten v.
 
         Args:
@@ -88,7 +88,7 @@ class DijkstraSP:
         """
         return self.distTo[v] < POSITIVE_INFINITY
 
-    def path_to(self, v: int) -> 'Stack':
+    def path_to(self, v: int) -> "Stack":
         """Gibt den kürzesten Pfad zum Knoten v zurück.
 
         Args:
@@ -109,6 +109,7 @@ class DijkstraSP:
 
 if __name__ == "__main__":
     import sys
+
     graph = EdgeWeightedDigraph(file=open(sys.argv[1]))
     s = int(sys.argv[2])
     sp = DijkstraSP(graph, s)

@@ -252,4 +252,3 @@ Stelle sicher, dass alle URLs in `[project.urls]` gültig sind.
 - [PyPI Classifiers](https://pypi.org/pypi?%3Aaction=list_classifiers)
 - [Semantic Versioning](https://semver.org/)
 - [Hatchling Documentation](https://hatch.pypa.io/)
-

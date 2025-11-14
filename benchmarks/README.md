@@ -155,4 +155,3 @@ Um neue Benchmarks hinzuzufügen:
 ## Weitere Informationen
 
 Siehe `docs/benchmarks.md` für detaillierte Dokumentation.
-

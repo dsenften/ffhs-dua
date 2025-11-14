@@ -169,7 +169,7 @@ Testet die grundlegende Funktionalität der `sink`-Methode.
 def test_sink_method_basic(self):
     arr = [1, 4, 3, 2]  # Verletzt Heap-Eigenschaft an Index 0
     Heap.sink(arr, 0, 3)
-    
+
     # Nach dem Sinken sollte die Heap-Eigenschaft erfüllt sein
     assert arr[0] >= arr[1] if len(arr) > 1 else True
     assert arr[0] >= arr[2] if len(arr) > 2 else True
@@ -196,18 +196,18 @@ Testet die Heap-Konstruktionsphase separat.
 def test_heap_construction_phase(self):
     arr = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
     n = len(arr)
-    
+
     # Führe nur die Heap-Konstruktionsphase durch
     k = n // 2 - 1
     while k >= 0:
         Heap.sink(arr, k, n - 1)
         k -= 1
-    
+
     # Überprüfe Heap-Eigenschaft
     for i in range(n // 2):
         left_child = 2 * i + 1
         right_child = 2 * i + 2
-        
+
         if left_child < n:
             assert arr[i] >= arr[left_child]
         if right_child < n:
@@ -242,11 +242,11 @@ def test_heap_property_maintenance(self):
         max_element = arr[0]
         for i in range(n):
             assert arr[0] >= arr[i]
-        
+
         # Tausche und reduziere Heap-Grösse
         arr[0], arr[n - 1] = arr[n - 1], arr[0]
         n -= 1
-        
+
         # Stelle Heap-Eigenschaft wieder her und überprüfe
         if n > 1:
             Heap.sink(arr, 0, n - 1)
@@ -271,20 +271,20 @@ Testet die charakteristische Eigenschaft von Heap Sort: konsistente O(n log n) P
 ----
 def test_consistent_performance(self):
     import random
-    
+
     # Bereits sortiert
     sorted_arr = list(range(100))
     result1 = Heap.sort(sorted_arr.copy())
-    
+
     # Umgekehrt sortiert
     reverse_arr = list(range(100, 0, -1))
     result2 = Heap.sort(reverse_arr)
-    
+
     # Zufällig
     random_arr = list(range(100))
     random.shuffle(random_arr)
     result3 = Heap.sort(random_arr)
-    
+
     # Alle sollten korrekt sortiert sein
     assert Heap.is_sorted(result1)
     assert Heap.is_sorted(result2)
@@ -321,7 +321,7 @@ class ComparableItem:
     def __init__(self, value, original_index):
         self.value = value
         self.original_index = original_index
-    
+
     def __lt__(self, other):
         return self.value < other.value
 ----
@@ -338,7 +338,7 @@ Testet die In-Place-Eigenschaft von Heap Sort.
 def test_sort_preserves_original_if_needed(self):
     original = [3, 1, 4, 1, 5]
     sorted_list = Heap.sort(original)
-    
+
     assert sorted_list is original  # Gleiche Referenz
     assert original == [1, 1, 3, 4, 5]  # Modifiziert
 ----
@@ -384,7 +384,7 @@ def test_heap_sort_vs_other_algorithms(self):
         [5, 4, 3, 2, 1],  # Umgekehrt sortiert
         [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],  # Mit Duplikaten
     ]
-    
+
     for test_case in test_cases:
         heap_result = Heap.sort(test_case.copy())
         python_result = sorted(test_case)
@@ -402,7 +402,7 @@ class Student:
     def __init__(self, name, grade):
         self.name = name
         self.grade = grade
-    
+
     def __lt__(self, other):
         return self.grade < other.grade
 
@@ -516,11 +516,11 @@ def validate_heap_property(arr, n):
     for i in range(n // 2):
         left_child = 2 * i + 1
         right_child = 2 * i + 2
-        
+
         if left_child < n:
             assert arr[i] >= arr[left_child], \
                 f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
-        
+
         if right_child < n:
             assert arr[i] >= arr[right_child], \
                 f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
