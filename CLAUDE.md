@@ -73,7 +73,10 @@ src/algs4/
 │   └── hashing.py               # Hash Tables
 ├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4
 │   ├── directed_edge.py          # Gerichtete Kante mit Gewicht
+│   ├── edge.py                   # Ungerichtete Kante mit Gewicht
 │   ├── edge_weighted_digraph.py  # Gewichteter gerichteter Graph
+│   ├── edge_weighted_graph.py    # Ungerichteter gewichteter Graph
+│   ├── edge_weighted_directed_cycle.py  # Zyklenerkennung in gerichteten Graphen
 │   ├── index_min_pq.py           # Indexed Min Priority Queue
 │   └── dijkstra_sp.py            # Dijkstras Algorithmus
 ├── errors/
@@ -221,7 +224,18 @@ result, exec_time = measure_execution_time(lambda: sorted([3, 1, 4, 2]))
 - Python >=3.13.1
 - pytest für Tests (mit Coverage-Plugin)
 - ruff für Linting/Formatierung
+- pre-commit für Git Hooks
 - jupyter für Notebook-Entwicklung
 - matplotlib für Visualisierungen
 
 Package Management erfolgt über `uv` (siehe pyproject.toml).
+
+## Test-Statistik
+
+- **Gesamt-Tests**: 440 (100% bestanden)
+- **PVA 1 (Fundamentals)**: 92 Tests
+- **PVA 2 (Sorting)**: 108 Tests
+- **PVA 3 (Searching)**: 162 Tests
+- **PVA 4 (Graphs)**: 78 Tests
+- **Utils**: 7 Tests
+- **Code-Coverage**: 93%+

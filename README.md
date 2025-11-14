@@ -9,9 +9,12 @@ Fernfachhochschule Schweiz (FFHS).
 - **PVA 1 - Fundamentals**: Stack, Queue, Bag, Union-Find (4 Implementierungsvarianten)
 - **PVA 2 - Sorting**: Quick Sort, Merge Sort, Heap Sort, Shell Sort (mit CLI-Interface)
 - **PVA 3 - Searching**: Binary Search Tree (BST), AVL Tree, Red-Black BST (selbstbalancierend), Hash Tables
-- **PVA 4 - Graphs**: Dijkstras Algorithmus, Gewichtete Digraphen, Indexed Min Priority Queue
+- **PVA 4 - Graphs**:
+  - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
+  - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
+  - Utilities: Indexed Min Priority Queue
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (408 Tests)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (440 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 📦 Installation
