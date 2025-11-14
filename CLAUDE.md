@@ -69,10 +69,17 @@ src/algs4/
 ├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3
 │   ├── bst.py                   # Binary Search Tree (BST)
 │   ├── avl.py                   # AVL Tree (selbstbalancierend)
-│   └── red_black_bst.py         # Red-Black BST (links-lastiger Rot-Schwarz-Baum)
-├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
-└── errors/
-    └── errors.py                # Benutzerdefinierte Exceptions
+│   ├── red_black_bst.py         # Red-Black BST (links-lastiger Rot-Schwarz-Baum)
+│   └── hashing.py               # Hash Tables
+├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4
+│   ├── directed_edge.py          # Gerichtete Kante mit Gewicht
+│   ├── edge_weighted_digraph.py  # Gewichteter gerichteter Graph
+│   ├── index_min_pq.py           # Indexed Min Priority Queue
+│   └── dijkstra_sp.py            # Dijkstras Algorithmus
+├── errors/
+│   └── errors.py                # Benutzerdefinierte Exceptions
+└── utils/
+    └── timing.py                # Timing-Utilities
 
 src/utils/
 ├── timing.py                    # @timeit Dekorator und Timing-Funktionen
@@ -82,6 +89,7 @@ tests/
 ├── test_fundamentals/           # Tests für PVA-1
 ├── test_sorting/                # Tests für PVA-2
 ├── test_searching/              # Tests für PVA-3
+├── test_graphs/                 # Tests für PVA-4
 └── test_utils/                  # Tests für Utility-Module
 
 data/                            # Thematisch organisierte Testdaten
