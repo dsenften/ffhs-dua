@@ -161,7 +161,7 @@ Coverage-Reports sollten in CI/CD-Pipelines generiert werden:
 - name: Generate Coverage Report
   run: |
     python3 -m pytest tests/ --cov=src.algs4 --cov-report=xml
-    
+
 - name: Upload Coverage to Codecov
   uses: codecov/codecov-action@v3
   with:
@@ -200,4 +200,3 @@ Das Bag-Modul könnte mit zusätzlichen Tests verbessert werden:
 - [Coverage.py Dokumentation](https://coverage.readthedocs.io/)
 - [pytest-cov Dokumentation](https://pytest-cov.readthedocs.io/)
 - [Code Coverage Best Practices](https://martinfowler.com/bliki/TestCoverage.html)
-

@@ -1,20 +1,3 @@
-# Large dataset: 1 Million randomly generated integers
-# Original file: algs4/data/1Mints.txt (approximately 7.6MB)
-# This file is used for performance testing of sorting algorithms
-# 
-# Sample data from the original file:
- 324110
--442472
- 626686
--157678
- 508681
- 123414
- -77867
- 155091
- 129801
- 287381
-#
-# Note: This is a representative file. The actual 1Mints.txt contains
-# exactly 1,000,000 integers, making it suitable for large-scale
-# performance testing and benchmarking of algorithms.
-# File size: ~7.6MB
+version https://git-lfs.github.com/spec/v1
+oid sha256:4959668a831f42ae6f02ec0ca3ec50e0f6dc60c0a6b2744f46131d4bae238289
+size 8000000

@@ -109,4 +109,3 @@ pre-commit clean
 - [Verfügbare Hooks](https://pre-commit.com/hooks.html)
 - [Ruff Dokumentation](https://docs.astral.sh/ruff/)
 - [Mypy Dokumentation](https://mypy.readthedocs.io/)
-

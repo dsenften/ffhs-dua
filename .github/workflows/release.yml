@@ -59,7 +59,7 @@ jobs:
         release_name: Release ${{ steps.version.outputs.version }}
         body: |
           Release version ${{ steps.version.outputs.version }}
-          
+
           See CHANGELOG.md for details.
         draft: false
         prerelease: false
@@ -73,4 +73,3 @@ jobs:
         asset_path: ./dist/ffhs_dua-${{ steps.version.outputs.version }}-py3-none-any.whl
         asset_name: ffhs_dua-${{ steps.version.outputs.version }}-py3-none-any.whl
         asset_content_type: application/zip
-

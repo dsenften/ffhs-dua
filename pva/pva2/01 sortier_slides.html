@@ -7,17 +7,17 @@
         .reveal h1, .reveal h2, .reveal h3 { color: #2c3e50; }
         .reveal .slides section { text-align: left; }
         .reveal .centered { text-align: center; }
-        .algorithm-step { 
-            background: #ecf0f1; 
-            padding: 10px; 
-            margin: 10px 0; 
-            border-left: 4px solid #3498db; 
+        .algorithm-step {
+            background: #ecf0f1;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #3498db;
         }
-        .complexity { 
-            background: #e8f5e8; 
-            padding: 8px; 
-            border-radius: 5px; 
-            margin: 5px 0; 
+        .complexity {
+            background: #e8f5e8;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
         }
         .example-array {
             font-family: monospace;
@@ -31,7 +31,7 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            
+
             <!-- Phase 1: Grundlagenwiederholung -->
             <section>
                 <section>
@@ -46,7 +46,7 @@
                     <br>
                     <p><em>Welche Komplexitäten kennen Sie bereits?</em></p>
                 </section>
-                
+
                 <section>
                     <h3>Was bedeutet "sortiert"?</h3>
                     <div class="example-array">
@@ -60,7 +60,7 @@
                         <li>Wo begegnen Ihnen sortierte Daten?</li>
                     </ul>
                 </section>
-                
+
                 <section>
                     <h3>Warum ist Sortieren wichtig?</h3>
                     <ul>
@@ -88,7 +88,7 @@
                         <li>Wiederhole für alle Positionen</li>
                     </ul>
                 </section>
-                
+
                 <section>
                     <h3>Bubble Sort - Beispiel</h3>
                     <div class="example-array">
@@ -101,7 +101,7 @@
                     <br>
                     <p><strong>Beobachtung:</strong> Nach jedem Durchlauf ist das grösste Element am Ende positioniert.</p>
                 </section>
-                
+
                 <section>
                     <h3>Bubble Sort - Komplexität</h3>
                     <div class="complexity">
@@ -132,7 +132,7 @@
                         <li>Wiederhole für Rest-Array</li>
                     </ul>
                 </section>
-                
+
                 <section>
                     <h3>Selection Sort - Beispiel</h3>
                     <div class="example-array">
@@ -145,7 +145,7 @@
                     <br>
                     <p><strong>Beobachtung:</strong> Linker Teil ist immer sortiert und wird schrittweise erweitert.</p>
                 </section>
-                
+
                 <section>
                     <h3>Selection Sort - Komplexität</h3>
                     <div class="complexity">
@@ -176,7 +176,7 @@
                         <li>Verschiebe andere Elemente nach rechts</li>
                     </ul>
                 </section>
-                
+
                 <section>
                     <h3>Insertion Sort - Beispiel</h3>
                     <div class="example-array">
@@ -189,7 +189,7 @@
                     <br>
                     <p><strong>Beobachtung:</strong> Linker Teil bleibt immer sortiert.</p>
                 </section>
-                
+
                 <section>
                     <h3>Insertion Sort - Komplexität</h3>
                     <div class="complexity">
@@ -208,7 +208,7 @@
 
         </div>
     </div>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
     <script>
         Reveal.initialize({

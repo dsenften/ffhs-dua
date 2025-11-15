@@ -56,4 +56,3 @@ jobs:
         grep -r "TODO\|FIXME" docs/ || echo "No TODO/FIXME in docs"
         # Check for missing references
         echo "Documentation check completed"
-

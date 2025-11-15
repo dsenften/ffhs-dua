@@ -97,7 +97,9 @@ class QuadraticProbingHashTable:
 
         if verbose:
             print(f"\nBerechnung für Wert {value}:")
-            print(f"h({value}) = ({value} * {value}) % {self.capacity} = {value * value} % {self.capacity} = {initial_hash}")
+            print(
+                f"h({value}) = ({value} * {value}) % {self.capacity} = {value * value} % {self.capacity} = {initial_hash}"
+            )
 
         attempt = 0
         while attempt < self.capacity:
@@ -106,15 +108,21 @@ class QuadraticProbingHashTable:
 
             if verbose:
                 if attempt == 0:
-                    print(f"\nVersuch {attempt + 1} (i={attempt}): Index = ({initial_hash} + {attempt}²) % {self.capacity} = {index}")
+                    print(
+                        f"\nVersuch {attempt + 1} (i={attempt}): Index = ({initial_hash} + {attempt}²) % {self.capacity} = {index}"
+                    )
                 else:
                     calculation = initial_hash + attempt * attempt
-                    print(f"Versuch {attempt + 1} (i={attempt}): Index = ({initial_hash} + {attempt}²) % {self.capacity} = {calculation} % {self.capacity} = {index}")
+                    print(
+                        f"Versuch {attempt + 1} (i={attempt}): Index = ({initial_hash} + {attempt}²) % {self.capacity} = {calculation} % {self.capacity} = {index}"
+                    )
 
                 if self.table[index] is None:
                     print(f"  → Index {index} ist frei ✓")
                 else:
-                    print(f"  → Index {index} ist belegt (Wert: {self.table[index]}) ✗ Kollision!")
+                    print(
+                        f"  → Index {index} ist belegt (Wert: {self.table[index]}) ✗ Kollision!"
+                    )
 
             if self.table[index] is None:
                 self.table[index] = value
@@ -173,8 +181,12 @@ def analyze_hash_function(
     max_collisions = max(hash_distribution.values()) if hash_distribution else 0
 
     print("\nStatistiken:")
-    print(f"  Genutzte Indizes: {used_indices}/{capacity} ({used_indices/capacity*100:.1f}%)")
-    print(f"  Ungenutzte Indizes: {unused_indices}/{capacity} ({unused_indices/capacity*100:.1f}%)")
+    print(
+        f"  Genutzte Indizes: {used_indices}/{capacity} ({used_indices/capacity*100:.1f}%)"
+    )
+    print(
+        f"  Ungenutzte Indizes: {unused_indices}/{capacity} ({unused_indices/capacity*100:.1f}%)"
+    )
     print(f"  Maximale Kollisionen pro Index: {max_collisions}")
 
     # Zeige einige Beispiele
@@ -388,7 +400,9 @@ def verify_initial_positions() -> None:
     for value, expected_pos in zip(values, expected_positions, strict=False):
         calculated_pos = ht.hash_function(value)
         match = "✓" if calculated_pos == expected_pos else "✗"
-        print(f"  h({value:3}) = ({value:3}²) % 23 = {value*value:5} % 23 = {calculated_pos:2} (erwartet: {expected_pos:2}) {match}")
+        print(
+            f"  h({value:3}) = ({value:3}²) % 23 = {value*value:5} % 23 = {calculated_pos:2} (erwartet: {expected_pos:2}) {match}"
+        )
 
 
 def run_all_tests() -> None:

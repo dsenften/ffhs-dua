@@ -69,15 +69,15 @@ def sink(cls, arr: list, i: int, length: int) -> None:
     while 2 * i + 1 <= length:
         # Finde den Index des linken Kindes
         j = 2 * i + 1
-        
+
         # Wähle das grössere der beiden Kinder
         if j < length and arr[j] < arr[j + 1]:
             j += 1
-        
+
         # Wenn das aktuelle Element bereits grösser ist, sind wir fertig
         if arr[i] >= arr[j]:
             break
-        
+
         # Tausche das aktuelle Element mit dem grösseren Kind
         arr[i], arr[j] = arr[j], arr[i]
         i = j
@@ -185,7 +185,7 @@ Heap Sort ist **nicht adaptiv** - die Laufzeit ist unabhängig von der Vorsortie
 
 **Grosser Vorteil**: Heap Sort hat in allen Fällen O(n log n) Zeitkomplexität:
 * Bereits sortierte Arrays: O(n log n)
-* Umgekehrt sortierte Arrays: O(n log n)  
+* Umgekehrt sortierte Arrays: O(n log n)
 * Zufällige Arrays: O(n log n)
 
 == Implementierung
@@ -212,7 +212,7 @@ class Heap:
             Die sortierte Liste (in-place modifiziert).
         """
         n = len(arr)
-        
+
         # Phase 1: Heap-Konstruktion
         k = n // 2 - 1
         while k >= 0:
@@ -330,22 +330,22 @@ Heaps sind die Grundlage für Priority Queues:
 class PriorityQueue:
     def __init__(self):
         self.heap = []
-    
+
     def insert(self, item):
         self.heap.append(item)
         self._swim(len(self.heap) - 1)
-    
+
     def extract_max(self):
         if not self.heap:
             return None
-        
+
         max_item = self.heap[0]
         self.heap[0] = self.heap[-1]
         self.heap.pop()
-        
+
         if self.heap:
             self._sink(0)
-        
+
         return max_item
 ----
 
@@ -361,7 +361,7 @@ def heap_select(arr, k):
     n = len(arr)
     for i in range(n // 2 - 1, -1, -1):
         sink(arr, i, n - 1)
-    
+
     # Extrahiere k Maxima
     result = []
     for _ in range(min(k, n)):
@@ -370,7 +370,7 @@ def heap_select(arr, k):
         n -= 1
         if n > 0:
             sink(arr, 0, n - 1)
-    
+
     return result
 ----
 
@@ -385,22 +385,22 @@ Die Standard-Implementierung kann durch "Bottom-Up" Heapify optimiert werden:
 def bottom_up_heapify(arr):
     """Optimierte Heap-Konstruktion."""
     n = len(arr)
-    
+
     # Beginne mit Blättern und arbeite nach oben
     for i in range(n // 2 - 1, -1, -1):
         # Finde korrekte Position ohne Tauschen
         parent = i
         child = 2 * parent + 1
-        
+
         while child < n:
             # Wähle grösseres Kind
             if child + 1 < n and arr[child] < arr[child + 1]:
                 child += 1
-            
+
             # Wenn Heap-Eigenschaft erfüllt, fertig
             if arr[parent] >= arr[child]:
                 break
-            
+
             # Tausche und gehe weiter nach unten
             arr[parent], arr[child] = arr[child], arr[parent]
             parent = child
@@ -418,15 +418,15 @@ def ternary_sink(arr, i, n):
     while 3 * i + 1 < n:
         # Finde grösstes der drei Kinder
         max_child = 3 * i + 1
-        
+
         for j in range(2, 4):  # Prüfe die anderen beiden Kinder
             child_idx = 3 * i + j
             if child_idx < n and arr[child_idx] > arr[max_child]:
                 max_child = child_idx
-        
+
         if arr[i] >= arr[max_child]:
             break
-        
+
         arr[i], arr[max_child] = arr[max_child], arr[i]
         i = max_child
 ----
@@ -441,7 +441,7 @@ def find_median_heap(arr):
     """Finde den Median mit Heap Sort."""
     sorted_arr = Heap.sort(arr.copy())
     n = len(sorted_arr)
-    
+
     if n % 2 == 1:
         return sorted_arr[n // 2]
     else:
@@ -462,10 +462,10 @@ class Event:
     def __init__(self, time, description):
         self.time = time
         self.description = description
-    
+
     def __lt__(self, other):
         return self.time < other.time
-    
+
     def __repr__(self):
         return f"Event({self.time}, '{self.description}')"
 
@@ -494,35 +494,35 @@ def benchmark_sorting_algorithms(size):
     """Vergleiche Performance verschiedener Sortieralgorithmen."""
     # Generiere Testdaten
     data = [random.randint(1, 1000) for _ in range(size)]
-    
+
     algorithms = [
         ("Heap Sort", Heap.sort),
         ("Quick Sort", Quick.sort),
         ("Shell Sort", Shell.sort),
         ("Python sorted", sorted)
     ]
-    
+
     results = {}
-    
+
     for name, algorithm in algorithms:
         test_data = data.copy()
         start_time = time.time()
-        
+
         if name == "Python sorted":
             result = algorithm(test_data)
         else:
             result = algorithm(test_data)
-        
+
         end_time = time.time()
         results[name] = end_time - start_time
-    
+
     return results
 
 # Teste verschiedene Grössen
 for size in [1000, 5000, 10000]:
     print(f"\nArray-Grösse: {size}")
     results = benchmark_sorting_algorithms(size)
-    
+
     for algorithm, time_taken in results.items():
         print(f"{algorithm}: {time_taken:.4f} Sekunden")
 ----
@@ -539,34 +539,34 @@ class MinHeap:
         """Sink-Operation für Min-Heap."""
         while 2 * i + 1 <= length:
             j = 2 * i + 1
-            
+
             # Wähle das kleinere der beiden Kinder
             if j < length and arr[j] > arr[j + 1]:
                 j += 1
-            
+
             if arr[i] <= arr[j]:
                 break
-            
+
             arr[i], arr[j] = arr[j], arr[i]
             i = j
-    
+
     @classmethod
     def sort_descending(cls, arr):
         """Sortiert absteigend mit Min-Heap."""
         n = len(arr)
-        
+
         # Baue Min-Heap
         k = n // 2 - 1
         while k >= 0:
             cls.sink(arr, k, n - 1)
             k -= 1
-        
+
         # Extrahiere Minima (für absteigende Sortierung)
         while n > 1:
             arr[0], arr[n - 1] = arr[n - 1], arr[0]
             n -= 1
             cls.sink(arr, 0, n - 1)
-        
+
         return arr
 ----
 
@@ -581,13 +581,13 @@ def recursive_sink(arr, i, length):
     largest = i
     left = 2 * i + 1
     right = 2 * i + 2
-    
+
     if left <= length and arr[left] > arr[largest]:
         largest = left
-    
+
     if right <= length and arr[right] > arr[largest]:
         largest = right
-    
+
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]
         recursive_sink(arr, largest, length)

@@ -221,4 +221,3 @@ test: Add coverage for hashing module
 - [GitHub Actions Dokumentation](https://docs.github.com/en/actions)
 - [Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 - [Codecov Integration](https://docs.github.com/en/actions/publishing-packages-with-github-actions)
-

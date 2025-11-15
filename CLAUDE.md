@@ -69,10 +69,20 @@ src/algs4/
 ├── pva_3_searching/             # Praktische Vertiefungsaufgaben 3
 │   ├── bst.py                   # Binary Search Tree (BST)
 │   ├── avl.py                   # AVL Tree (selbstbalancierend)
-│   └── red_black_bst.py         # Red-Black BST (links-lastiger Rot-Schwarz-Baum)
-├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4 (geplant)
-└── errors/
-    └── errors.py                # Benutzerdefinierte Exceptions
+│   ├── red_black_bst.py         # Red-Black BST (links-lastiger Rot-Schwarz-Baum)
+│   └── hashing.py               # Hash Tables
+├── pva_4_graphs/                # Praktische Vertiefungsaufgaben 4
+│   ├── directed_edge.py          # Gerichtete Kante mit Gewicht
+│   ├── edge.py                   # Ungerichtete Kante mit Gewicht
+│   ├── edge_weighted_digraph.py  # Gewichteter gerichteter Graph
+│   ├── edge_weighted_graph.py    # Ungerichteter gewichteter Graph
+│   ├── edge_weighted_directed_cycle.py  # Zyklenerkennung in gerichteten Graphen
+│   ├── index_min_pq.py           # Indexed Min Priority Queue
+│   └── dijkstra_sp.py            # Dijkstras Algorithmus
+├── errors/
+│   └── errors.py                # Benutzerdefinierte Exceptions
+└── utils/
+    └── timing.py                # Timing-Utilities
 
 src/utils/
 ├── timing.py                    # @timeit Dekorator und Timing-Funktionen
@@ -82,6 +92,7 @@ tests/
 ├── test_fundamentals/           # Tests für PVA-1
 ├── test_sorting/                # Tests für PVA-2
 ├── test_searching/              # Tests für PVA-3
+├── test_graphs/                 # Tests für PVA-4
 └── test_utils/                  # Tests für Utility-Module
 
 data/                            # Thematisch organisierte Testdaten
@@ -213,7 +224,18 @@ result, exec_time = measure_execution_time(lambda: sorted([3, 1, 4, 2]))
 - Python >=3.13.1
 - pytest für Tests (mit Coverage-Plugin)
 - ruff für Linting/Formatierung
+- pre-commit für Git Hooks
 - jupyter für Notebook-Entwicklung
 - matplotlib für Visualisierungen
 
 Package Management erfolgt über `uv` (siehe pyproject.toml).
+
+## Test-Statistik
+
+- **Gesamt-Tests**: 440 (100% bestanden)
+- **PVA 1 (Fundamentals)**: 92 Tests
+- **PVA 2 (Sorting)**: 108 Tests
+- **PVA 3 (Searching)**: 162 Tests
+- **PVA 4 (Graphs)**: 78 Tests
+- **Utils**: 7 Tests
+- **Code-Coverage**: 93%+

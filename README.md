@@ -6,11 +6,15 @@ Fernfachhochschule Schweiz (FFHS).
 
 ## ✨ Features
 
-- **Fundamentals**: Stack, Queue, Bag, Union-Find (4 Implementierungsvarianten)
-- **Sorting**: Quick Sort, Merge Sort, Heap Sort, Shell Sort (mit CLI-Interface)
-- **Searching**: Binary Search Tree (BST), AVL Tree, Red-Black BST (selbstbalancierend)
+- **PVA 1 - Fundamentals**: Stack, Queue, Bag, Union-Find (4 Implementierungsvarianten)
+- **PVA 2 - Sorting**: Quick Sort, Merge Sort, Heap Sort, Shell Sort (mit CLI-Interface)
+- **PVA 3 - Searching**: Binary Search Tree (BST), AVL Tree, Red-Black BST (selbstbalancierend), Hash Tables
+- **PVA 4 - Graphs**:
+  - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
+  - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
+  - Utilities: Indexed Min Priority Queue
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (362 Tests)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (440 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 📦 Installation
@@ -93,6 +97,27 @@ bst.put("B", 2)
 print(bst.get("A"))  # 1
 ```
 
+### Graphen-Algorithmen
+
+```python
+from src.algs4.pva_4_graphs import EdgeWeightedDigraph, DijkstraSP, DirectedEdge
+
+# Erstelle einen gewichteten Digraph
+g = EdgeWeightedDigraph(8)
+g.add_edge(DirectedEdge(0, 2, 0.26))
+g.add_edge(DirectedEdge(0, 4, 0.38))
+g.add_edge(DirectedEdge(2, 7, 0.34))
+
+# Berechne kürzeste Pfade von Knoten 0
+sp = DijkstraSP(g, 0)
+
+# Überprüfe ob Pfad zu Knoten 7 existiert
+if sp.has_path_to(7):
+    print(f"Distanz: {sp.distTo[7]}")  # 0.6
+    for edge in sp.path_to(7):
+        print(edge)
+```
+
 ## 📖 Dokumentation
 
 - 📚 **[Vollständige Dokumentation](docs/index.adoc)** - Umfassende Projektdokumentation
@@ -125,10 +150,11 @@ pre-commit run --all-files
 ```
 
 **Aktuelle Metriken:**
-- ✅ 362 Tests (100% bestanden)
+- ✅ 408 Tests (100% bestanden)
 - ✅ 93.08% Code-Coverage
 - ✅ 0 Linting-Fehler
 - ✅ 0 Type-Fehler
+- ✅ 4 PVA-Module (Fundamentals, Sorting, Searching, Graphs)
 
 ## 📊 Projekt-Struktur
 
@@ -138,8 +164,14 @@ ffhs-dua/
 │   ├── pva_1_fundamentals/    # Stack, Queue, Bag, Union-Find
 │   ├── pva_2_sorting/         # Sortieralgorithmen
 │   ├── pva_3_searching/       # Suchbäume und Hash Tables
-│   └── errors/                # Exception-Klassen
-├── tests/                     # Umfassende Test-Suite
+│   ├── pva_4_graphs/          # Graphen-Algorithmen (Dijkstra, etc.)
+│   ├── errors/                # Exception-Klassen
+│   └── utils/                 # Utility-Funktionen
+├── tests/
+│   ├── test_fundamentals/     # Tests für PVA 1
+│   ├── test_sorting/          # Tests für PVA 2
+│   ├── test_searching/        # Tests für PVA 3
+│   └── test_graphs/           # Tests für PVA 4
 ├── docs/                      # Dokumentation
 ├── scripts/                   # Hilfsskripte
 ├── benchmarks/                # Performance-Benchmarks

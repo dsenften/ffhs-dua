@@ -259,4 +259,3 @@ chore: Update dependencies
 - [Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
 - [Codecov Integration](https://docs.github.com/en/actions/publishing-packages-with-github-actions)
 - [.github/workflows/README.md](.github/workflows/README.md) - Detaillierte Workflow-Dokumentation
-

@@ -25,4 +25,3 @@ __all__ = [
     "generate_test_data",
     "run_sorting_benchmarks",
 ]
-

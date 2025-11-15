@@ -108,7 +108,7 @@ class QuadraticProbingHashTable:
 
     def __init__(self, capacity: int = 23) -> None:
         """Initialisiert eine Hashtabelle mit gegebener Kapazität.
-        
+
         Args:
             capacity: Grösse der Hashtabelle (Standard: 23)
         """
@@ -118,10 +118,10 @@ class QuadraticProbingHashTable:
 
     def hash_function(self, x: int) -> int:
         """Berechnet den Hash-Wert für einen Schlüssel.
-        
+
         Args:
             x: Zu hashender Schlüssel
-            
+
         Returns:
             int: Hash-Wert (Index in der Tabelle)
         """
@@ -130,11 +130,11 @@ class QuadraticProbingHashTable:
 
     def quadratic_probe(self, initial_hash: int, attempt: int) -> int:
         """Berechnet den Index beim quadratischen Sondieren.
-        
+
         Args:
             initial_hash: Initialer Hash-Wert
             attempt: Anzahl der bisherigen Versuche (i)
-            
+
         Returns:
             int: Neuer Index zum Prüfen
         """
@@ -143,11 +143,11 @@ class QuadraticProbingHashTable:
 
     def insert(self, value: int, verbose: bool = True) -> Tuple[int, List[int]]:
         """Fügt einen Wert in die Hashtabelle ein.
-        
+
         Args:
             value: Einzufügender Wert
             verbose: Wenn True, werden Berechnungsschritte ausgegeben
-            
+
         Returns:
             Tuple[int, List[int]]: (finaler Index, Liste aller probierten Indizes)
         """
@@ -167,7 +167,7 @@ class QuadraticProbingHashTable:
 
 def analyze_hash_function(hash_func, capacity: int, value_range: range) -> None:
     """Analysiert die Verteilung einer Hashfunktion.
-    
+
     Args:
         hash_func: Zu analysierende Hashfunktion
         capacity: Grösse der Hashtabelle
@@ -183,20 +183,20 @@ def test_part_a() -> None:
     print("=" * 60)
     print("Teil a: Einfügen von Werten mit quadratischem Sondieren")
     print("=" * 60)
-    
+
     # Erstelle Hashtabelle und füge initiale Werte ein
     ht = QuadraticProbingHashTable(capacity=23)
-    
+
     # Initiale Werte: [25, 48, 71, 94] an Positionen [2, 8, 15, 20]
     ht.table[2] = 25
     ht.table[8] = 48
     ht.table[15] = 71
     ht.table[20] = 94
     ht.size = 4
-    
+
     print("\nInitialer Zustand:")
     ht.display()
-    
+
     # Füge 63 ein
     print("\n" + "=" * 60)
     print("Einfügen von Wert: 63")
@@ -204,7 +204,7 @@ def test_part_a() -> None:
     final_index, probed_indices = ht.insert(63, verbose=True)
     print(f"\n✓ Wert 63 wurde an Index {final_index} eingefügt")
     ht.display()
-    
+
     # Füge 116 ein
     print("\n" + "=" * 60)
     print("Einfügen von Wert: 116")
@@ -220,7 +220,7 @@ def test_part_b() -> None:
     print("\n" + "=" * 60)
     print("Teil b: Analyse der Hashfunktion")
     print("=" * 60)
-    
+
     # TODO: Implementieren Sie die Analyse
     pass
 
