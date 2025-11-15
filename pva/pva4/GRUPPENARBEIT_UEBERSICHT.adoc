@@ -28,16 +28,19 @@
 **Dokumentation:** `gruppe_1_bfs_dfs.adoc`
 
 **Themen:**
+
 - Breitensuche (BFS)
 - Tiefensuche (DFS)
 - Topologische Sortierung
 
 **Implementierungen:**
+
 - `src/algs4/pva_4_graphs/bfs.py`
 - `src/algs4/pva_4_graphs/dfs_paths.py`
 - `src/algs4/pva_4_graphs/topological.py`
 
 **Testdaten:**
+
 - `data/graphs/tinyEWG.txt` (8 Knoten, 16 Kanten)
 - `data/graphs/tinyDAG.txt` (13 Knoten, 22 Kanten)
 - `data/graphs/mediumEWG.txt` (250 Knoten)
@@ -49,14 +52,17 @@
 **Dokumentation:** `gruppe_2_kuerzeste_wege.adoc`
 
 **Themen:**
+
 - Dijkstra's Algorithmus
 - Pfadrekonstruktion
 - Anwendungen
 
 **Implementierungen:**
+
 - `src/algs4/pva_4_graphs/dijkstra_sp.py`
 
 **Testdaten:**
+
 - `data/graphs/tinyEWD.txt` (8 Knoten, 15 Kanten)
 - `data/graphs/mediumEWD.txt` (250 Knoten)
 - `data/graphs/largeEWD.txt` (1000+ Knoten)
@@ -68,15 +74,18 @@
 **Dokumentation:** `gruppe_3_spannbaeume.adoc`
 
 **Themen:**
+
 - Kruskal's Algorithmus
 - Prim's Algorithmus
 - Vergleich und Trade-offs
 
 **Implementierungen:**
+
 - `src/algs4/pva_4_graphs/kruskal_mst.py`
 - `src/algs4/pva_4_graphs/prim_mst.py`
 
 **Testdaten:**
+
 - `data/graphs/tinyEWG.txt` (8 Knoten, 16 Kanten)
 - `data/graphs/mediumEWG.txt` (250 Knoten)
 - `data/graphs/largeEWG.txt` (1000+ Knoten)
@@ -88,14 +97,17 @@
 **Dokumentation:** `gruppe_4_union_find.adoc`
 
 **Themen:**
+
 - Union-Find Datenstruktur
 - Optimierungen (Path Compression, Union by Rank)
 - Anwendungen (Zyklenerkennung, Kruskal)
 
 **Implementierungen:**
+
 - `src/algs4/pva_1_fundamentals/uf.py`
 
 **Testdaten:**
+
 - `data/graphs/tinyEWG.txt`
 - `data/graphs/mediumEWG.txt`
 - `data/graphs/largeEWG.txt`
@@ -105,28 +117,32 @@
 === Für jede Gruppe
 
 1. **Dokumentation lesen**
+
    - Öffne `gruppe_X_THEMA.adoc`
    - Verstehe die Algorithmen
    - Studiere die Pseudocodes
 
 2. **Code studieren**
+
    - Schaue dir die Implementierungen an
    - Verstehe die Datenstrukturen
    - Lese die Tests
 
 3. **Übungen durcharbeiten**
+
    - Führe die Übungen durch
    - Experimentiere mit Testdaten
    - Dokumentiere Ergebnisse
 
 4. **Präsentation vorbereiten**
+
    - Nutze `praesentations_template.adoc`
    - Bereite Live-Demo vor
    - Übe die Präsentation
 
 === Ressourcen für alle
 
-* **Buch:** Sedgewick & Wayne, "Algorithms, 4th Edition"
+* **Buch:** Praktische Algorithmik mit Python, Tobias Häberlein
 * **Code:** `src/algs4/pva_4_graphs/` und `src/algs4/pva_1_fundamentals/`
 * **Tests:** `tests/test_graphs/` und `tests/test_fundamentals/`
 * **Testdaten:** `data/graphs/`
@@ -138,7 +154,6 @@
 [cols="1,1,1"]
 |===
 | Gruppe | Thema | Zeit
-
 | 1 | BFS & DFS | 14:40 - 14:52
 | 2 | Kürzeste Wege | 14:52 - 15:04
 | 3 | Spannbäume | 15:04 - 15:16
@@ -148,6 +163,7 @@
 === Bewertung
 
 Jede Präsentation wird bewertet nach:
+
 - Verständnis des Algorithmus (30%)
 - Code-Qualität & Demo (25%)
 - Präsentation & Kommunikation (25%)
