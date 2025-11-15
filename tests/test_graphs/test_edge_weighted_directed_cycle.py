@@ -1,6 +1,5 @@
 """Tests für die EdgeWeightedDirectedCycle-Klasse."""
 
-import pytest
 
 from src.algs4.pva_4_graphs.directed_edge import DirectedEdge
 from src.algs4.pva_4_graphs.edge_weighted_digraph import EdgeWeightedDigraph
@@ -95,4 +94,3 @@ class TestEdgeWeightedDirectedCycle:
         g.add_edge(DirectedEdge(3, 4, 0.9))
         finder = EdgeWeightedDirectedCycle(g)
         assert finder.has_cycle()
-

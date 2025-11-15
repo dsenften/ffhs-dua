@@ -68,4 +68,3 @@ class TestEdge:
         e = Edge(0, 0, 0.5)
         assert e.either() == 0
         assert e.other(0) == 0
-

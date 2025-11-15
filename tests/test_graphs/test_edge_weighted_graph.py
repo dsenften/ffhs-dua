@@ -1,6 +1,5 @@
 """Tests für die EdgeWeightedGraph-Klasse."""
 
-import pytest
 
 from src.algs4.pva_4_graphs.edge import Edge
 from src.algs4.pva_4_graphs.edge_weighted_graph import EdgeWeightedGraph
@@ -92,4 +91,3 @@ class TestEdgeWeightedGraph:
             g.add_edge(Edge(i, i + 1, 0.5))
         assert g.E == 99
         assert len(g.edges()) == 99
-
