@@ -1,0 +1,171 @@
+= Präsentations-Template für Gruppenarbeit
+:toc: left
+:toclevels: 2
+:sectnums:
+:source-highlighter: rouge
+
+== Anleitung
+
+Dieses Template hilft euch, eine strukturierte und professionelle Präsentation vorzubereiten.
+Jede Gruppe sollte ca. 10-12 Minuten präsentieren.
+
+== Zeitbudget
+
+[cols="1,1"]
+|===
+| Phase | Zeit
+
+| Algorithmus-Erklärung | 2-3 Min
+| Live-Demo mit Code | 3-4 Min
+| Ergebnisse & Erkenntnisse | 2-3 Min
+| Fragen | 1-2 Min
+| **TOTAL** | **10-12 Min**
+|===
+
+== 1. Algorithmus-Erklärung (2-3 Min)
+
+=== Was macht der Algorithmus?
+
+* Kurze, prägnante Beschreibung
+* Ziel und Anwendungsfall
+* Warum ist er wichtig?
+
+=== Komplexität
+
+* Zeitkomplexität: O(...)
+* Speicherkomplexität: O(...)
+* Best/Average/Worst Case
+
+=== Pseudocode
+
+* Zeige den Pseudocode
+* Erkläre die Schritte
+* Hebe wichtige Punkte hervor
+
+=== Beispiel
+
+* Kleines Beispiel durchgehen
+* Schritt für Schritt erklären
+* Visualisierung wenn möglich
+
+== 2. Live-Demo mit Code (3-4 Min)
+
+=== Vorbereitung
+
+* Code vorher testen!
+* Testdaten bereitstellen
+* Terminal/IDE vorbereiten
+
+=== Demo-Ablauf
+
+1. Testdaten laden
+2. Algorithmus ausführen
+3. Ergebnisse anzeigen
+4. Code-Highlights erklären
+
+=== Code-Beispiel
+
+[source,python]
+----
+# Beispiel-Template
+from src.algs4.pva_4_graphs import YourAlgorithm
+
+# Daten laden
+with open("data/graphs/tinyXXX.txt") as f:
+    g = YourGraph(f)
+
+# Algorithmus ausführen
+result = YourAlgorithm(g)
+
+# Ergebnisse anzeigen
+print(f"Ergebnis: {result}")
+----
+
+== 3. Ergebnisse & Erkenntnisse (2-3 Min)
+
+=== Wichtigste Erkenntnisse
+
+* Was haben wir gelernt?
+* Überraschende Ergebnisse?
+* Praktische Implikationen?
+
+=== Vergleiche
+
+* Mit anderen Algorithmen
+* Mit Theorie vs. Praxis
+* Performance-Unterschiede
+
+=== Anwendungen
+
+* Wo wird dieser Algorithmus verwendet?
+* Praktische Beispiele
+* Relevanz für die Praxis
+
+== 4. Fragen (1-2 Min)
+
+=== Vorbereitung
+
+* Antizipiere häufige Fragen
+* Bereite Antworten vor
+* Sei bereit für Diskussionen
+
+=== Häufige Fragen
+
+* Warum ist dieser Algorithmus besser als Alternative X?
+* Wie skaliert der Algorithmus?
+* Kann man ihn parallelisieren?
+* Welche Annahmen macht der Algorithmus?
+
+== Tipps für erfolgreiche Präsentationen
+
+=== Allgemein
+
+* [ ] Sprecht deutlich und langsam
+* [ ] Macht Augenkontakt mit dem Publikum
+* [ ] Nutzt Pausen für Verständnis
+* [ ] Seid enthusiastisch!
+
+=== Technisch
+
+* [ ] Testet alles vorher
+* [ ] Habt einen Plan B (Screenshots)
+* [ ] Nutzt große Schriftgrößen
+* [ ] Zeigt Code-Highlights, nicht alles
+
+=== Inhaltlich
+
+* [ ] Startet mit einer Frage oder Hook
+* [ ] Erklärt das "Warum", nicht nur das "Wie"
+* [ ] Gebt konkrete Beispiele
+* [ ] Fasst am Ende zusammen
+
+== Bewertungs-Kriterien
+
+[cols="1,1,1"]
+|===
+| Kriterium | Gewicht | Punkte
+
+| Verständnis des Algorithmus | 30% | /10
+| Code-Qualität & Demo | 25% | /10
+| Präsentation & Kommunikation | 25% | /10
+| Fragen & Diskussion | 20% | /10
+| **TOTAL** | **100%** | **/40**
+|===
+
+== Checkliste vor der Präsentation
+
+* [ ] Alle Gruppenmitglieder kennen den Stoff
+* [ ] Code wurde getestet
+* [ ] Testdaten sind verfügbar
+* [ ] Slides/Notizen sind vorbereitet
+* [ ] Zeitbudget wurde eingehalten
+* [ ] Fragen wurden antizipiert
+* [ ] Backup-Plan existiert
+* [ ] Alle sind nervös aber bereit! 😊
+
+== Ressourcen
+
+* Dokumentation: `gruppe_X_THEMA.adoc`
+* Code: `src/algs4/pva_4_graphs/`
+* Tests: `tests/test_graphs/`
+* Testdaten: `data/graphs/`

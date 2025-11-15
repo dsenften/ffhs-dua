@@ -1,0 +1,177 @@
+= Gruppe 2: Kürzeste Wege (Shortest Paths)
+:toc: left
+:toclevels: 3
+:sectnums:
+:source-highlighter: highlightjs
+
+== Überblick
+
+Diese Gruppe behandelt Algorithmen zur Berechnung kürzester Pfade in gewichteten Graphen:
+
+* **Dijkstra's Algorithmus**: Für nicht-negative Gewichte
+* **Pfadrekonstruktion**: Wie man den Pfad selbst findet
+* **Anwendungen**: Navigation, Netzwerk-Routing
+
+== 1. Algorithmen-Erklärung
+
+=== 1.1 Dijkstra's Algorithmus
+
+**Was macht Dijkstra?**
+- Findet kürzeste Pfade von einem Startknoten zu allen anderen
+- Funktioniert nur mit nicht-negativen Gewichten
+- Greedy-Algorithmus mit Priority Queue
+- Komplexität: O((V + E) log V)
+
+**Pseudocode:**
+[source]
+----
+Dijkstra(G, s):
+  dist[s] = 0
+  for each vertex v != s:
+    dist[v] = ∞
+
+  pq = MinPriorityQueue()
+  pq.insert(s, 0)
+
+  while not pq.is_empty():
+    v = pq.del_min()
+    for each edge (v, w) with weight e:
+      if dist[v] + e.weight < dist[w]:
+        dist[w] = dist[v] + e.weight
+        edge_to[w] = e
+        pq.insert(w, dist[w])
+----
+
+**Warum funktioniert es?**
+- Verarbeitet Knoten in aufsteigender Distanz
+- Garantiert optimale Lösung bei nicht-negativen Gewichten
+- Relaxation: Verbessert Distanzen iterativ
+
+=== 1.2 Pfadrekonstruktion
+
+**Wie findet man den Pfad?**
+- Speichere für jeden Knoten die eingehende Kante
+- Rückwärts vom Zielknoten zum Start folgen
+- Komplexität: O(V)
+
+**Pseudocode:**
+[source]
+----
+path_to(v):
+  if not has_path_to(v):
+    return null
+
+  path = Stack()
+  x = v
+  while dist[x] != 0:
+    path.push(x)
+    x = edge_to[x].from()
+  path.push(s)
+  return path
+----
+
+== 2. Implementierungen
+
+=== 2.1 Dijkstra in Python
+
+[source,python]
+----
+from src.algs4.pva_4_graphs import DijkstraSP, EdgeWeightedDigraph, DirectedEdge
+
+# Graph laden
+with open("data/graphs/tinyEWD.txt") as f:
+    g = EdgeWeightedDigraph(f)
+
+# Dijkstra von Knoten 0
+sp = DijkstraSP(g, 0)
+
+# Kürzeste Distanzen abfragen
+for v in range(g.V):
+    if sp.has_path_to(v):
+        print(f"Zu {v}: Distanz {sp.dist_to(v)}")
+        path = sp.path_to(v)
+        print(f"  Pfad: {list(path)}")
+----
+
+=== 2.2 Vergleich: BFS vs. Dijkstra
+
+[cols="1,1,1"]
+|===
+| Aspekt | BFS | Dijkstra
+
+| Gewichte | Keine | Beliebig (≥0)
+| Komplexität | O(V+E) | O((V+E)log V)
+| Datenstruktur | Queue | Priority Queue
+| Anwendung | Ungewichtet | Gewichtet
+|===
+
+== 3. Übungen
+
+=== Übung 1: Kürzeste Pfade berechnen
+
+**Aufgabe:**
+Berechne die kürzesten Pfade von Knoten 0 zu allen anderen Knoten.
+
+**Testdaten:** `data/graphs/tinyEWD.txt`
+
+**Erwartetes Ergebnis:**
+[cols="1,1,1"]
+|===
+| Ziel | Distanz | Pfad
+
+| 0 | 0.0 | 0
+| 1 | 1.05 | 0 → 4 → 5 → 1
+| 2 | 0.26 | 0 → 2
+| 3 | 0.99 | 0 → 2 → 7 → 3
+| 4 | 0.38 | 0 → 4
+| 5 | 0.73 | 0 → 4 → 5
+| 6 | 1.51 | 0 → 2 → 7 → 6
+| 7 | 0.60 | 0 → 2 → 7
+|===
+
+=== Übung 2: Pfadrekonstruktion
+
+**Aufgabe:**
+Implementiere eine Funktion, die den kompletten Pfad von Start zu Ziel ausgibt.
+
+**Testdaten:** `data/graphs/tinyEWD.txt`
+
+**Erwartetes Ergebnis:**
+Pfad von 0 zu 6: `0 → 4 → 5 → 1 → 3 → 6` mit Gesamtgewicht 2.04
+
+=== Übung 3: Performance-Vergleich
+
+**Aufgabe:**
+Vergleiche Dijkstra auf verschiedenen Graphgrößen.
+
+**Testdaten:** `tinyEWD.txt`, `mediumEWD.txt`, `largeEWD.txt`
+
+**Messung:**
+- Laufzeit für verschiedene Graphgrößen
+- Speicherverbrauch
+- Skalierungsverhalten
+
+== 4. Testdaten
+
+[cols="1,1,1,1"]
+|===
+| Datei | Knoten | Kanten | Verwendung
+
+| tinyEWD.txt | 8 | 15 | Basis-Tests
+| mediumEWD.txt | 250 | ~1000 | Performance-Tests
+| largeEWD.txt | 1000+ | ~10000 | Benchmark
+|===
+
+== 5. Präsentations-Checkliste
+
+* [ ] Dijkstra erklären (2-3 Min)
+* [ ] Live-Demo mit Code (3-4 Min)
+* [ ] Pfadrekonstruktion zeigen (1-2 Min)
+* [ ] Performance-Ergebnisse (1-2 Min)
+* [ ] Fragen beantworten (1-2 Min)
+
+== 6. Ressourcen
+
+* Buch: Sedgewick & Wayne, Kapitel 4.4
+* Code: `src/algs4/pva_4_graphs/dijkstra_sp.py`
+* Tests: `tests/test_graphs/test_dijkstra_sp.py`

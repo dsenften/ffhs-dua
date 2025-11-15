@@ -1,0 +1,190 @@
+= Gruppe 3: Spannbäume (Minimum Spanning Trees)
+:toc: left
+:toclevels: 3
+:sectnums:
+:source-highlighter: highlightjs
+
+== Überblick
+
+Diese Gruppe behandelt Algorithmen zur Berechnung von Minimum Spanning Trees:
+
+* **Kruskal's Algorithmus**: Greedy mit Union-Find
+* **Prim's Algorithmus**: Greedy mit Priority Queue
+* **Vergleich**: Unterschiede und Trade-offs
+
+== 1. Algorithmen-Erklärung
+
+=== 1.1 Kruskal's Algorithmus
+
+**Was macht Kruskal?**
+- Sortiert alle Kanten nach Gewicht
+- Fügt Kanten hinzu, wenn sie keinen Zyklus erzeugen
+- Nutzt Union-Find zur Zyklenerkennung
+- Komplexität: O(E log E)
+
+**Pseudocode:**
+[source]
+----
+Kruskal(G):
+  mst = Queue()
+  uf = UnionFind(G.V)
+
+  edges = sort(G.edges()) by weight
+
+  for each edge (v, w) with weight e in edges:
+    if not uf.connected(v, w):
+      uf.union(v, w)
+      mst.enqueue(e)
+      if mst.size() == G.V - 1:
+        break
+
+  return mst
+----
+
+**Warum funktioniert es?**
+- Cut Property: Leichteste Kante über einen Cut gehört zu MST
+- Zyklenerkennung durch Union-Find
+
+=== 1.2 Prim's Algorithmus
+
+**Was macht Prim?**
+- Startet mit einem Knoten
+- Erweitert Baum um leichteste Kante
+- Nutzt Priority Queue
+- Komplexität: O((V + E) log V)
+
+**Pseudocode:**
+[source]
+----
+Prim(G, s):
+  marked[s] = true
+  pq = MinPriorityQueue()
+
+  for each edge (s, v) in G.adj[s]:
+    pq.insert(v, edge.weight)
+
+  while not pq.is_empty():
+    v = pq.del_min()
+    if marked[v]:
+      continue
+    marked[v] = true
+
+    for each edge (v, w) in G.adj[v]:
+      if not marked[w]:
+        pq.insert(w, edge.weight)
+
+  return mst
+----
+
+=== 1.3 Vergleich: Kruskal vs. Prim
+
+[cols="1,1,1"]
+|===
+| Aspekt | Kruskal | Prim
+
+| Sortierung | Alle Kanten | Keine
+| Datenstruktur | Union-Find | Priority Queue
+| Komplexität | O(E log E) | O((V+E)log V)
+| Beste für | Dünne Graphen | Dichte Graphen
+| Parallelisierbar | Ja | Schwierig
+|===
+
+== 2. Implementierungen
+
+=== 2.1 Kruskal in Python
+
+[source,python]
+----
+from src.algs4.pva_4_graphs import KruskalMST, EdgeWeightedGraph
+
+# Graph laden
+with open("data/graphs/tinyEWG.txt") as f:
+    g = EdgeWeightedGraph(f)
+
+# Kruskal MST
+mst = KruskalMST(g)
+
+# Ergebnisse
+print(f"MST-Gewicht: {mst.weight()}")
+for edge in mst.edges():
+    print(f"  {edge.either()}-{edge.other(edge.either())}: {edge.weight}")
+----
+
+=== 2.2 Prim in Python
+
+[source,python]
+----
+from src.algs4.pva_4_graphs import PrimMST, EdgeWeightedGraph
+
+# Graph laden
+with open("data/graphs/tinyEWG.txt") as f:
+    g = EdgeWeightedGraph(f)
+
+# Prim MST
+mst = PrimMST(g)
+
+# Ergebnisse
+print(f"MST-Gewicht: {mst.weight()}")
+for edge in mst.edges():
+    print(f"  {edge.either()}-{edge.other(edge.either())}: {edge.weight}")
+----
+
+== 3. Übungen
+
+=== Übung 1: MST mit Kruskal
+
+**Aufgabe:**
+Berechne den MST mit Kruskal's Algorithmus.
+
+**Testdaten:** `data/graphs/tinyEWG.txt`
+
+**Erwartetes Ergebnis:**
+MST-Gewicht: 1.81 mit 7 Kanten
+
+=== Übung 2: MST mit Prim
+
+**Aufgabe:**
+Berechne den MST mit Prim's Algorithmus.
+
+**Testdaten:** `data/graphs/tinyEWG.txt`
+
+**Erwartetes Ergebnis:**
+Gleiches MST-Gewicht wie Kruskal: 1.81
+
+=== Übung 3: Vergleich und Analyse
+
+**Aufgabe:**
+Vergleiche Kruskal und Prim auf verschiedenen Graphen.
+
+**Messungen:**
+- Laufzeit für verschiedene Graphgrößen
+- Speicherverbrauch
+- Welcher Algorithmus ist schneller?
+
+**Testdaten:** `tinyEWG.txt`, `mediumEWG.txt`, `largeEWG.txt`
+
+== 4. Testdaten
+
+[cols="1,1,1,1"]
+|===
+| Datei | Knoten | Kanten | Verwendung
+
+| tinyEWG.txt | 8 | 16 | Basis-Tests
+| mediumEWG.txt | 250 | ~1000 | Performance-Tests
+| largeEWG.txt | 1000+ | ~10000 | Benchmark
+|===
+
+== 5. Präsentations-Checkliste
+
+* [ ] Kruskal erklären (2 Min)
+* [ ] Prim erklären (2 Min)
+* [ ] Live-Demo mit Code (3-4 Min)
+* [ ] Vergleich zeigen (2 Min)
+* [ ] Performance-Ergebnisse (1-2 Min)
+* [ ] Fragen beantworten (1-2 Min)
+
+== 6. Ressourcen
+
+* Buch: Sedgewick & Wayne, Kapitel 4.3
+* Code: `src/algs4/pva_4_graphs/kruskal_mst.py`, `prim_mst.py`
+* Tests: `tests/test_graphs/test_kruskal_mst.py`, `test_prim_mst.py`
