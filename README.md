@@ -126,9 +126,21 @@ if sp.has_path_to(7):
 
 ## 📚 Referenzen
 
-Diese Implementierung basiert auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne:
+Diese Implementierung basiert auf zwei Hauptquellen:
 
-- 📖 **[Algorithms, 4th Edition](https://algs4.cs.princeton.edu/)** - Offizielles Lehrbuch und Java-Implementierung
+### Primäre Referenzen
+
+- 📖 **[Algorithms, 4th Edition](https://algs4.cs.princeton.edu/)** - Robert Sedgewick & Kevin Wayne
+  - Offizielles Lehrbuch und Java-Implementierung
+  - Grundlage für die Algorithmen-Implementierungen
+
+- � **[Praktische Algorithmik mit Python](https://www.tobiashaeberlein.net/)** - Tobias Häberlein
+  - Oldenbourg Verlag München, 2012
+  - Verwendet im FFHS Moodle-Kurs und PVA-Übungen
+  - Fokus auf praktische Python-Implementierungen
+
+### Weitere Ressourcen
+
 - 🐍 **[algs4-py (Xiao Kui)](https://github.com/shellfly/algs4-py)** - Python-Portierung
 - 🎯 **[itu.algs4 (ITU Copenhagen)](https://github.com/itu-algorithms/itu.algs4)** - Alternative Python-Implementierung
 
@@ -198,4 +210,9 @@ Fernfachhochschule Schweiz (FFHS)
 
 ## 🙏 Danksagungen
 
-Dieses Projekt basiert auf dem Lehrbuch "Algorithms, 4th Edition" von Robert Sedgewick und Kevin Wayne und wurde für den akademischen Gebrauch an der FFHS angepasst.
+Dieses Projekt basiert auf zwei Hauptquellen:
+
+1. **"Algorithms, 4th Edition"** von Robert Sedgewick und Kevin Wayne - Das Standardwerk für Algorithmen und Datenstrukturen
+2. **"Praktische Algorithmik mit Python"** von Tobias Häberlein - Besonders wertvoll für die praktische Python-Implementierung und Integration in den FFHS Moodle-Kurs
+
+Das Projekt wurde speziell für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) angepasst und integriert die Inhalte aus beiden Lehrbüchern in einem kohärenten Python-Framework.
