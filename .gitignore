@@ -68,8 +68,3 @@ Thumbs.db
 
 # Unterlagen, Bücher, Literatur
 refs/
-
-# Musterlösungen (nicht für Studierende sichtbar)
-MUSTERLOESUNG_*.md
-MUSTERLOESUNG_*.py
-beispiele_gruppe_*.py
