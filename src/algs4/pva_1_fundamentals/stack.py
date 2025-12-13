@@ -16,19 +16,16 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
-
-T = TypeVar("T")
 
 
-class Node(Generic[T]):
+class Node[T]:
     # Hilfsklasse für verkettete Liste
     def __init__(self):
         self.item: T = None
         self.next: Node | None = None
 
 
-class Stack(Generic[T]):
+class Stack[T]:
     """Die Stack-Klasse repräsentiert einen Last-In-First-Out (LIFO) Stapel von generischen
     Elementen. Sie unterstützt die üblichen push- und pop-Operationen, zusammen mit Methoden
     zum Anzeigen des obersten Elements, zum Testen, ob der Stack leer ist, und zum Iterieren
@@ -135,7 +132,7 @@ class Stack(Generic[T]):
             current = current.next
 
 
-class FixedCapacityStack(Generic[T]):
+class FixedCapacityStack[T]:
     """Die FixedCapacityStack-Klasse repräsentiert einen Stack mit fester Kapazität.
 
     Diese Implementierung verwendet ein Array mit fester Grösse, um die Elemente zu speichern.
@@ -184,7 +181,7 @@ class FixedCapacityStack(Generic[T]):
         return item
 
 
-class ResizingArrayStack(Generic[T]):
+class ResizingArrayStack[T]:
     """Die ResizingArrayStack-Klasse repräsentiert einen Stack mit dynamischer Grössenanpassung.
 
     Diese Implementierung verwendet ein Array, dessen Grösse dynamisch angepasst wird,

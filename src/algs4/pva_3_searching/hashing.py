@@ -38,13 +38,9 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
-
-K = TypeVar("K")  # Key type (muss hashbar sein)
-V = TypeVar("V")  # Value type
 
 
-class SequentialSearchNode(Generic[K, V]):
+class SequentialSearchNode[K, V]:
     """Knoten für die sequentielle Suche in verketteten Listen.
 
     Attributes:
@@ -68,7 +64,7 @@ class SequentialSearchNode(Generic[K, V]):
         self.next: SequentialSearchNode[K, V] | None = next_node
 
 
-class SeparateChainingHashST(Generic[K, V]):
+class SeparateChainingHashST[K, V]:
     """Hash Table mit Separate Chaining zur Kollisionsbehandlung.
 
     Diese Implementierung verwendet ein Array von verketteten Listen.
@@ -267,7 +263,7 @@ class SeparateChainingHashST(Generic[K, V]):
         self._st = temp._st
 
 
-class LinearProbingHashST(Generic[K, V]):
+class LinearProbingHashST[K, V]:
     """Hash Table mit Linear Probing zur Kollisionsbehandlung.
 
     Diese Implementierung verwendet zwei parallele Arrays für Schlüssel und Werte.

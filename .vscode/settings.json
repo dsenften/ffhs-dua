@@ -78,6 +78,8 @@
         "boyer",
         "karp",
         "moore",
-        "rabin"
+        "rabin",
+        "shellsort",
+        "shor"
     ]
 }

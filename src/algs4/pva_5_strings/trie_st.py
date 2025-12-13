@@ -31,14 +31,11 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
 
 from src.algs4.pva_1_fundamentals.queue import Queue
 
-V = TypeVar("V")  # Value type
 
-
-class _Node(Generic[V]):
+class _Node[V]:
     """Knoten im Trie.
 
     Attributes:
@@ -52,7 +49,7 @@ class _Node(Generic[V]):
         self.children: dict[str, _Node[V]] = {}
 
 
-class TrieST(Generic[V]):
+class TrieST[V]:
     """Trie Symbol Table - String-basierte Symbol-Tabelle.
 
     Ein geordneter Symbol-Table für String-Schlüssel, implementiert als Trie.

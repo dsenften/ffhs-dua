@@ -29,14 +29,11 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
 
 from src.algs4.pva_1_fundamentals.queue import Queue
 
-V = TypeVar("V")  # Value type
 
-
-class _PatriciaNode(Generic[V]):
+class _PatriciaNode[V]:
     """Knoten im Patricia-Trie.
 
     Attributes:
@@ -56,7 +53,7 @@ class _PatriciaNode(Generic[V]):
         self.prefix: str = prefix
 
 
-class PatriciaTrie(Generic[V]):
+class PatriciaTrie[V]:
     """Patricia Trie - Kompakter String-basierter Symbol-Table.
 
     Ein platzsparender Symbol-Table für String-Schlüssel, bei dem Knoten

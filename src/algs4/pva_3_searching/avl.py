@@ -25,15 +25,11 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
 
 from src.algs4.pva_1_fundamentals.queue import Queue
 
-K = TypeVar("K")  # Key type (muss vergleichbar sein)
-V = TypeVar("V")  # Value type
 
-
-class AVLNode(Generic[K, V]):
+class AVLNode[K, V]:
     """Knoten im AVL-Baum.
 
     Attributes:
@@ -60,7 +56,7 @@ class AVLNode(Generic[K, V]):
         self.right: AVLNode[K, V] | None = None
 
 
-class AVL(Generic[K, V]):
+class AVL[K, V]:
     """AVL Tree - Selbstbalancierender binärer Suchbaum.
 
     Ein geordneter Symbol-Table, implementiert als AVL-Baum.

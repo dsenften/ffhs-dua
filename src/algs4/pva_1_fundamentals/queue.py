@@ -14,15 +14,12 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, Optional, TypeVar
 
 from ..errors.errors import NoSuchElementException
 
-T = TypeVar("T")
 
-
-class Node(Generic[T]):
-    def __init__(self, item: T, next: Optional["Node[T]"]) -> None:
+class Node[T]:
+    def __init__(self, item: T, next: "Node[T] | None") -> None:
         """Initialisiert einen neuen Knoten.
 
         :param item: Das Element, das im Knoten gespeichert werden soll
@@ -33,7 +30,7 @@ class Node(Generic[T]):
         self.next: Node[T] | None = next
 
 
-class Queue(Generic[T]):
+class Queue[T]:
     """Die Queue-Klasse repräsentiert eine First-In-First-Out (FIFO) Warteschlange
     von generischen Elementen.
 
