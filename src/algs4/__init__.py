@@ -33,6 +33,8 @@ Module (nach PVA-Struktur):
     pva_5_strings: String-Algorithmen und Symbol Tables
         - Trie Symbol Table (Dictionary-basiert, O(m) Operationen)
         - Patricia-Trie (Pfadkompression, platzsparend)
+        - KMP String-Suche (Knuth-Morris-Pratt, O(n) garantiert)
+        - Boyer-Moore String-Suche (Bad Character Rule, sublinear im besten Fall)
 
     errors: Benutzerdefinierte Exception-Klassen
 

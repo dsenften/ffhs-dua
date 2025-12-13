@@ -13,7 +13,7 @@ Fernfachhochschule Schweiz (FFHS).
   - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
   - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
   - Utilities: Indexed Min Priority Queue
-- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), KMP String-Suche (Knuth-Morris-Pratt), Präfix-Operationen
+- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), KMP String-Suche (Knuth-Morris-Pratt), Boyer-Moore String-Suche, Präfix-Operationen
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
 - **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (625 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
@@ -172,6 +172,32 @@ print(count)  # 2
 
 # CLI-Nutzung
 # python3 -m src.algs4.pva_5_strings.kmp abracadabra "abacadabrabracabracadabra"
+```
+
+#### Boyer-Moore String-Suche
+
+```python
+from src.algs4.pva_5_strings import BoyerMoore
+
+# Erstelle Boyer-Moore-Instanz mit Muster
+bm = BoyerMoore("NEEDLE")
+
+# Suche Muster im Text (besonders effizient bei großen Alphabeten)
+text = "HAYSTACK WITH NEEDLE IN IT"
+position = bm.search(text)
+print(position)  # 14
+
+# Finde alle Vorkommen
+bm_the = BoyerMoore("the")
+for pos in bm_the.search_all("the quick brown fox jumps over the lazy dog"):
+    print(pos)  # 0, 31
+
+# Zähle Vorkommen
+count = bm_the.count("the quick brown fox jumps over the lazy dog")
+print(count)  # 2
+
+# CLI-Nutzung
+# python3 -m src.algs4.pva_5_strings.boyer_moore NEEDLE "HAYSTACK WITH NEEDLE IN IT"
 ```
 
 ## 📖 Dokumentation

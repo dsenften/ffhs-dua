@@ -48,7 +48,9 @@ class DijkstraSP:
             ValueError: Wenn s außerhalb des gültigen Bereichs liegt
         """
         if s < 0 or s >= g.V:
-            raise ValueError(f"Startknoten {s} ist außerhalb des Bereichs [0, {g.V-1}]")
+            raise ValueError(
+                f"Startknoten {s} ist außerhalb des Bereichs [0, {g.V - 1}]"
+            )
 
         self.edgeTo = [None for _ in range(g.V)]
         self.distTo = [float("inf") for _ in range(g.V)]

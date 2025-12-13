@@ -1,6 +1,5 @@
 """Tests für die EdgeWeightedGraph-Klasse."""
 
-
 from src.algs4.pva_4_graphs.edge import Edge
 from src.algs4.pva_4_graphs.edge_weighted_graph import EdgeWeightedGraph
 

@@ -221,6 +221,16 @@ Alle String-Symbol-Table-Implementierungen haben:
    - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
    - Anwendungen: Textsuche, DNA-Sequenzanalyse, Intrusion Detection, Plagiatserkennung
 
+4. **BoyerMoore**: Boyer-Moore String-Suchalgorithmus
+   - search: **O(n/m) im besten Fall**, O(n×m) im schlechtesten Fall
+   - Konstruktor (Bad Character Table): O(m + R) wobei m = Muster-Länge, R = Alphabet-Grösse
+   - Nutzt Bad Character Rule für große Sprünge im Text
+   - Vergleicht Muster von rechts nach links
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), besonders effizient bei großen Alphabeten
+   - Anwendungen: Textsuche, Editoren, Suchmaschinen (besonders bei langen Mustern)
+
 #### Fehlerbehandlung
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
