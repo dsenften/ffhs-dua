@@ -81,7 +81,8 @@ src/algs4/
 │   └── dijkstra_sp.py            # Dijkstras Algorithmus
 ├── pva_5_strings/               # Praktische Vertiefungsaufgaben 5
 │   ├── trie_st.py                # Trie Symbol Table (Dictionary-basiert)
-│   └── patricia_trie.py          # Patricia-Trie (Pfadkompression)
+│   ├── patricia_trie.py          # Patricia-Trie (Pfadkompression)
+│   └── kmp.py                    # KMP String-Suchalgorithmus
 ├── errors/
 │   └── errors.py                # Benutzerdefinierte Exceptions
 └── utils/
@@ -210,6 +211,16 @@ Alle String-Symbol-Table-Implementierungen haben:
    - Platzsparend bei vielen ähnlichen Schlüsseln
    - Anwendungen: IP-Routing, Netzwerk-Algorithmen
 
+3. **KMP**: Knuth-Morris-Pratt String-Suchalgorithmus
+   - search: **O(n) garantiert** wobei n = Textlänge (auch im Worst-Case!)
+   - Konstruktor (DFA-Aufbau): O(m × R) wobei m = Muster-Länge, R = Alphabet-Grösse (256)
+   - Kein Backtracking im Text (Text-Index läuft nur vorwärts)
+   - Nutzt DFA (Deterministischer Finiter Automat) für effiziente Suche
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Textsuche, DNA-Sequenzanalyse, Intrusion Detection, Plagiatserkennung
+
 #### Fehlerbehandlung
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
@@ -264,11 +275,11 @@ Package Management erfolgt über `uv` (siehe pyproject.toml).
 
 ## Test-Statistik
 
-- **Gesamt-Tests**: 563 (100% bestanden)
+- **Gesamt-Tests**: 625 (100% bestanden)
 - **PVA 1 (Fundamentals)**: 92 Tests
 - **PVA 2 (Sorting)**: 108 Tests
 - **PVA 3 (Searching)**: 162 Tests
 - **PVA 4 (Graphs)**: 78 Tests
-- **PVA 5 (Strings)**: 59 Tests
+- **PVA 5 (Strings)**: 121 Tests (Trie: 59, KMP: 62)
 - **Utils**: 7 Tests
-- **Code-Coverage**: 93%+ (Trie: 99.22%)
+- **Code-Coverage**: 93%+ (Trie: 99.22%, KMP: 100%)

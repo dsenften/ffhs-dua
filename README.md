@@ -13,9 +13,9 @@ Fernfachhochschule Schweiz (FFHS).
   - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
   - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
   - Utilities: Indexed Min Priority Queue
-- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), Präfix-Operationen
+- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), KMP String-Suche (Knuth-Morris-Pratt), Präfix-Operationen
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (563 Tests)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (625 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 📦 Installation
@@ -119,7 +119,9 @@ if sp.has_path_to(7):
         print(edge)
 ```
 
-### String-Algorithmen (Tries)
+### String-Algorithmen
+
+#### Trie Symbol Table
 
 ```python
 from src.algs4.pva_5_strings import TrieST
@@ -143,6 +145,33 @@ print(list(st.keys_that_match(".he")))  # ['she']
 
 # Längster Präfix
 print(st.longest_prefix_of("shellsort"))  # 'shells'
+```
+
+#### KMP String-Suche (Knuth-Morris-Pratt)
+
+```python
+from src.algs4.pva_5_strings import KMP
+
+# Erstelle KMP-Instanz mit Muster
+kmp = KMP("NEEDLE")
+
+# Suche Muster im Text
+text = "HAYSTACK WITH NEEDLE IN IT"
+position = kmp.search(text)
+print(position)  # 14
+
+# Finde alle Vorkommen
+kmp_ab = KMP("ab")
+for pos in kmp_ab.search_all("ababab"):
+    print(pos)  # 0, 2, 4
+
+# Zähle Vorkommen
+kmp_the = KMP("the")
+count = kmp_the.count("the quick brown fox jumps over the lazy dog")
+print(count)  # 2
+
+# CLI-Nutzung
+# python3 -m src.algs4.pva_5_strings.kmp abracadabra "abacadabrabracabracadabra"
 ```
 
 ## 📖 Dokumentation
