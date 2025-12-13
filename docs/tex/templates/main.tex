@@ -1,0 +1,146 @@
+% ConTeXt Hauptvorlage für FFHS-DUA Dokumentation
+% ================================================
+%
+% Diese Vorlage definiert das Layout und die Struktur
+% für die automatisch generierte Dokumentation.
+
+% Basis-Setup
+\setuppapersize[A4]
+\setuplayout[
+    topspace=2.5cm,
+    bottomspace=2.5cm,
+    leftmargin=2.5cm,
+    rightmargin=2.5cm,
+    header=1.5cm,
+    footer=1.5cm,
+    width=middle,
+    height=middle
+]
+
+% Sprache und Encoding
+\mainlanguage[de]
+\enableregime[utf-8]
+
+% Externe Style-Dateien laden
+\input styles/typography
+\input styles/colors
+\input styles/layout
+\input styles/code
+
+% Komponenten laden
+\input components/titlepage
+\input components/toc
+\input components/index
+
+% Metadaten (werden vom Generator gesetzt)
+\setvariables[document][
+    title={FFHS-DUA: Datenstrukturen und Algorithmen},
+    subtitle={Praktische Vertiefungsaufgaben und Implementierungen},
+    author={Daniel Senften},
+    institution={Fernfachhochschule Schweiz (FFHS)},
+    course={Datenstrukturen und Algorithmen},
+    date={\currentdate},
+    version={1.0}
+]
+
+% PDF-Metadaten
+\setupinteraction[
+    state=start,
+    title={\getvariable{document}{title}},
+    subtitle={\getvariable{document}{subtitle}},
+    author={\getvariable{document}{author}},
+    keyword={FFHS, Algorithmen, Datenstrukturen, Python, Java}
+]
+
+% Hyperlinks konfigurieren
+\setupurl[style=\tt, color=linkcolor]
+\setupinteractionscreen[option=bookmark]
+
+% Kopf- und Fußzeilen
+\setupheadertexts
+    [{\getmarking[chapter]}]
+    [{\getvariable{document}{title}}]
+    [{\getvariable{document}{course}}]
+    [{\getmarking[section]}]
+
+\setupfootertexts
+    [{\getvariable{document}{author}}]
+    [{\currentdate}]
+    [Seite \pagenumber\ von \lastpagenumber]
+    [{\getvariable{document}{version}}]
+
+% Kapitel- und Abschnittsnummerierung
+\setuphead[chapter][
+    style=\bfd,
+    color=primarycolor,
+    before={\blank[2*big]},
+    after={\blank[big]},
+    number=yes,
+    conversion=numbers
+]
+
+\setuphead[section][
+    style=\bfb,
+    color=secondarycolor,
+    before={\blank[big]},
+    after={\blank[medium]},
+    number=yes
+]
+
+\setuphead[subsection][
+    style=\bfa,
+    color=accentcolor,
+    before={\blank[medium]},
+    after={\blank[small]},
+    number=yes
+]
+
+% Mathematik-Setup
+\setupformulas[location=left, option=middle]
+\setupmathematics[autopunctuation=yes]
+
+% Tabellen-Setup
+\setupTABLE[frame=off, rulethickness=1pt]
+\setupTABLE[row][first][style=bold, background=color, backgroundcolor=lightgray]
+
+% Listen-Setup
+\setupitemize[1][symbol=•, margin=1em]
+\setupitemize[2][symbol=◦, margin=1.5em]
+\setupitemize[3][symbol=▪, margin=2em]
+
+% Zitate und Verweise
+\setupquotation[before={\blank[medium]}, after={\blank[medium]}, style=italic]
+
+% Index-Setup
+\setupregister[index][
+    balance=yes,
+    compress=yes,
+    indicator=no
+]
+
+% Inhaltsverzeichnis-Setup
+\setupcombinedlist[content][
+    level=3,
+    alternative=c,
+    interaction=all
+]
+
+% Dokument-Struktur
+\starttext
+
+% Titelseite
+\component components/titlepage
+
+% Inhaltsverzeichnis
+\component components/toc
+
+% Hauptinhalt (wird vom Generator eingefügt)
+% CONTENT_PLACEHOLDER
+
+% Index
+\component components/index
+
+% Literaturverzeichnis (falls vorhanden)
+% \component components/bibliography
+
+\stoptext

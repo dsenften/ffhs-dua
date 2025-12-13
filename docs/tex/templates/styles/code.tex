@@ -1,0 +1,235 @@
+% Code-Highlighting und Syntax-Definitionen
+% =========================================
+
+% Basis-Setup für Code-Blöcke
+\setuptyping[
+    style=\tt,
+    color=codecolor,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    margin=1em,
+    numbering=line,
+    numbercolor=lighttext,
+    numberstyle=\tfx,
+    frame=on,
+    framecolor=mediumgray,
+    background=color,
+    backgroundcolor=codebgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt
+]
+
+% Python Syntax-Highlighting
+\definetyping[python]
+\setuptyping[python][
+    option=python,
+    tab=4,
+    style=\tt\tfx
+]
+
+% Java Syntax-Highlighting
+\definetyping[java]
+\setuptyping[java][
+    option=java,
+    tab=4,
+    style=\tt\tfx
+]
+
+% Shell/Bash Syntax-Highlighting
+\definetyping[shell]
+\setuptyping[shell][
+    option=shell,
+    style=\tt\tfx,
+    color=shellcommand
+]
+
+% SQL Syntax-Highlighting
+\definetyping[sql]
+\setuptyping[sql][
+    option=sql,
+    style=\tt\tfx
+]
+
+% XML/HTML Syntax-Highlighting
+\definetyping[xml]
+\setuptyping[xml][
+    option=xml,
+    style=\tt\tfx
+]
+
+% JSON Syntax-Highlighting
+\definetyping[json]
+\setuptyping[json][
+    option=json,
+    style=\tt\tfx
+]
+
+% YAML Syntax-Highlighting
+\definetyping[yaml]
+\setuptyping[yaml][
+    option=yaml,
+    style=\tt\tfx
+]
+
+% Inline-Code
+\definetype[code][
+    style=\tt,
+    color=codecolor,
+    before=,
+    after=
+]
+
+% Dateinamen
+\definetype[filename][
+    style=\tt\bf,
+    color=filenamecolor,
+    before=,
+    after=
+]
+
+% Pfade
+\definetype[path][
+    style=\tt,
+    color=pathcolor,
+    before=,
+    after=
+]
+
+% Kommandozeilen-Befehle
+\definetype[command][
+    style=\tt\bf,
+    color=shellcommand,
+    before=,
+    after=
+]
+
+% Algorithmus-Pseudocode
+\definetyping[algorithm]
+\setuptyping[algorithm][
+    style=\tt,
+    numbering=line,
+    numbercolor=lighttext,
+    numberstyle=\tfx,
+    frame=on,
+    framecolor=primarycolor,
+    background=color,
+    backgroundcolor=lightgray,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Code-Blöcke mit Titel
+\defineframedtext[codeblock][
+    frame=on,
+    framecolor=mediumgray,
+    background=color,
+    backgroundcolor=codebgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Spezielle Code-Umgebungen
+\defineframedtext[pythoncode][
+    frame=on,
+    framecolor=pythonkeyword,
+    background=color,
+    backgroundcolor=codebgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+\defineframedtext[javacode][
+    frame=on,
+    framecolor=javakeyword,
+    background=color,
+    backgroundcolor=codebgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Terminal/Console Output
+\definetyping[terminal]
+\setuptyping[terminal][
+    style=\tt\tfx,
+    color=white,
+    background=color,
+    backgroundcolor=textcolor,
+    frame=on,
+    framecolor=textcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Diff/Patch Darstellung
+\definetyping[diff]
+\setuptyping[diff][
+    style=\tt\tfx,
+    frame=on,
+    framecolor=mediumgray,
+    background=color,
+    backgroundcolor=lightgray,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Konfigurationsdateien
+\definetyping[config]
+\setuptyping[config][
+    style=\tt\tfx,
+    frame=on,
+    framecolor=accentcolor,
+    background=color,
+    backgroundcolor=codebgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Output/Ergebnis-Blöcke
+\defineframedtext[output][
+    frame=on,
+    framecolor=successcolor,
+    background=color,
+    backgroundcolor=infobgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\tt\tfx,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Fehler-Output
+\defineframedtext[error][
+    frame=on,
+    framecolor=errorcolor,
+    background=color,
+    backgroundcolor=errorbgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\tt\tfx,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]

@@ -1,0 +1,166 @@
+# ConTeXt-Dokumentationssystem Konfiguration
+# ===========================================
+
+# Projekt-Einstellungen
+project_root: "."
+template_dir: "docs/tex/templates"
+output_dir: "docs/tex/output"
+assets_dir: "docs/tex/assets"
+
+# Markdown-Verarbeitung
+markdown_dirs:
+  - "README.md"
+  - "docs"
+  - "pva"
+  - "src"
+
+markdown_extensions:
+  - ".md"
+  - ".markdown"
+
+exclude_patterns:
+  - "node_modules"
+  - ".git"
+  - "__pycache__"
+  - "*.pyc"
+  - ".pytest_cache"
+  - "*.tmp"
+  - ".DS_Store"
+
+# ConTeXt-Einstellungen
+context_command: "context"
+context_args:
+  - "--batchmode"
+  - "--nonstopmode"
+  - "--synctex=1"
+
+# PDF-Einstellungen
+pdf_output_name: "ffhs-dua-documentation.pdf"
+pdf_quality: "high"
+
+# Dokument-Metadaten
+document_title: "FFHS-DUA: Datenstrukturen und Algorithmen"
+document_subtitle: "Praktische Vertiefungsaufgaben und Implementierungen"
+document_author: "Daniel Senften"
+document_institution: "Fernfachhochschule Schweiz (FFHS)"
+document_course: "Datenstrukturen und Algorithmen"
+document_version: "1.0"
+
+# Kapitel-Konfiguration
+chapters:
+  introduction:
+    title: "Einführung"
+    files:
+      - "README.md"
+      - "docs/README.md"
+    order: 1
+
+  pva1:
+    title: "PVA 1: Fundamentals"
+    files:
+      - "pva/pva1/**/*.md"
+    order: 2
+
+  pva2:
+    title: "PVA 2: Sorting"
+    files:
+      - "pva/pva2/**/*.md"
+    order: 3
+
+  pva3:
+    title: "PVA 3: Searching"
+    files:
+      - "pva/pva3/**/*.md"
+    order: 4
+
+  pva4:
+    title: "PVA 4: Graphs"
+    files:
+      - "pva/pva4/**/*.md"
+    order: 5
+
+  pva5:
+    title: "PVA 5: Strings"
+    files:
+      - "pva/pva5/**/*.md"
+    order: 6
+
+  implementation:
+    title: "Implementierungen"
+    files:
+      - "src/**/*.md"
+    order: 7
+
+# Style-Einstellungen
+style_config:
+  font_size: "11pt"
+  line_spacing: "1.2em"
+  page_margins:
+    top: "2.5cm"
+    bottom: "2.5cm"
+    left: "2.5cm"
+    right: "2.5cm"
+  colors:
+    primary: "ffhsblue"
+    secondary: "ffhsgray"
+    accent: "ffhsred"
+
+# Index-Einstellungen
+generate_index: true
+index_terms:
+  - "Algorithmus"
+  - "Datenstruktur"
+  - "Komplexität"
+  - "Big-O"
+  - "Stack"
+  - "Queue"
+  - "Bag"
+  - "Union-Find"
+  - "Tree"
+  - "BST"
+  - "AVL"
+  - "Red-Black"
+  - "Graph"
+  - "Hash"
+  - "Trie"
+  - "Sorting"
+  - "Quick Sort"
+  - "Merge Sort"
+  - "Heap Sort"
+  - "Shell Sort"
+  - "Searching"
+  - "Binary Search"
+  - "Dijkstra"
+  - "BFS"
+  - "DFS"
+  - "MST"
+  - "Kruskal"
+  - "Prim"
+  - "String"
+  - "KMP"
+  - "Boyer-Moore"
+  - "Rabin-Karp"
+  - "Python"
+  - "Java"
+  - "Performance"
+  - "Test"
+
+# Logging
+log_level: "INFO"
+log_file: "docs/tex/output/build.log"
+
+# Build-Optionen
+build_options:
+  clean_before_build: true
+  copy_assets: true
+  generate_toc: true
+  generate_index: true
+  include_source_code: true
+  syntax_highlighting: true
+
+# Erweiterte Einstellungen
+advanced:
+  parallel_processing: true
+  max_workers: 4
+  cache_enabled: true
+  cache_dir: "docs/tex/output/.cache"
