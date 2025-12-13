@@ -29,20 +29,6 @@ Beispiele:
     True
 """
 
-from .bfs import BFS
-from .dfs_paths import DFSPaths
-from .dijkstra_sp import DijkstraSP
-from .directed_dfs import DirectedDFS
-from .directed_edge import DirectedEdge
-from .edge import Edge
-from .edge_weighted_digraph import EdgeWeightedDigraph
-from .edge_weighted_directed_cycle import EdgeWeightedDirectedCycle
-from .edge_weighted_graph import EdgeWeightedGraph
-from .index_min_pq import IndexMinPQ
-from .kruskal_mst import KruskalMST
-from .prim_mst import PrimMST
-from .topological import Topological
-
 __all__ = [
     "BFS",
     "DFSPaths",
@@ -58,3 +44,34 @@ __all__ = [
     "PrimMST",
     "Topological",
 ]
+
+# Lazy loading für Module - verhindert RuntimeWarning bei Ausführung als Script
+_LAZY_IMPORTS = {
+    "BFS": (".bfs", "BFS"),
+    "DFSPaths": (".dfs_paths", "DFSPaths"),
+    "DijkstraSP": (".dijkstra_sp", "DijkstraSP"),
+    "DirectedDFS": (".directed_dfs", "DirectedDFS"),
+    "DirectedEdge": (".directed_edge", "DirectedEdge"),
+    "Edge": (".edge", "Edge"),
+    "EdgeWeightedDigraph": (".edge_weighted_digraph", "EdgeWeightedDigraph"),
+    "EdgeWeightedDirectedCycle": (
+        ".edge_weighted_directed_cycle",
+        "EdgeWeightedDirectedCycle",
+    ),
+    "EdgeWeightedGraph": (".edge_weighted_graph", "EdgeWeightedGraph"),
+    "IndexMinPQ": (".index_min_pq", "IndexMinPQ"),
+    "KruskalMST": (".kruskal_mst", "KruskalMST"),
+    "PrimMST": (".prim_mst", "PrimMST"),
+    "Topological": (".topological", "Topological"),
+}
+
+
+def __getattr__(name: str):
+    """Lazy loading von Modulen bei erstem Zugriff."""
+    if name in _LAZY_IMPORTS:
+        module_path, attr_name = _LAZY_IMPORTS[name]
+        import importlib
+
+        module = importlib.import_module(module_path, __package__)
+        return getattr(module, attr_name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

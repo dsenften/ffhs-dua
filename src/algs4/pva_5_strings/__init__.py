@@ -43,12 +43,6 @@ Beispiel:
     14
 """
 
-from src.algs4.pva_5_strings.boyer_moore import BoyerMoore
-from src.algs4.pva_5_strings.kmp import KMP
-from src.algs4.pva_5_strings.patricia_trie import PatriciaTrie
-from src.algs4.pva_5_strings.rabin_karp import RabinKarp
-from src.algs4.pva_5_strings.trie_st import TrieST
-
 __all__ = [
     "TrieST",
     "PatriciaTrie",
@@ -56,3 +50,23 @@ __all__ = [
     "BoyerMoore",
     "RabinKarp",
 ]
+
+# Lazy loading für Module - verhindert RuntimeWarning bei Ausführung als Script
+_LAZY_IMPORTS = {
+    "TrieST": (".trie_st", "TrieST"),
+    "PatriciaTrie": (".patricia_trie", "PatriciaTrie"),
+    "KMP": (".kmp", "KMP"),
+    "BoyerMoore": (".boyer_moore", "BoyerMoore"),
+    "RabinKarp": (".rabin_karp", "RabinKarp"),
+}
+
+
+def __getattr__(name: str):
+    """Lazy loading von Modulen bei erstem Zugriff."""
+    if name in _LAZY_IMPORTS:
+        module_path, attr_name = _LAZY_IMPORTS[name]
+        import importlib
+
+        module = importlib.import_module(module_path, __package__)
+        return getattr(module, attr_name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
