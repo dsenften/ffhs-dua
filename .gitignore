@@ -1,6 +1,5 @@
 # Local Settings
 .idea/
-.vscode/
 .claude/settings.local.json
 
 # Editor temporary files
