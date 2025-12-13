@@ -45,11 +45,11 @@ class DijkstraSP:
             s: Der Startknoten
 
         Raises:
-            ValueError: Wenn s außerhalb des gültigen Bereichs liegt
+            ValueError: Wenn s ausserhalb des gültigen Bereichs liegt
         """
         if s < 0 or s >= g.V:
             raise ValueError(
-                f"Startknoten {s} ist außerhalb des Bereichs [0, {g.V - 1}]"
+                f"Startknoten {s} ist ausserhalb des Bereichs [0, {g.V - 1}]"
             )
 
         self.edgeTo = [None for _ in range(g.V)]

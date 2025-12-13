@@ -8,6 +8,7 @@ Module:
     patricia_trie: Patricia-Trie - Kompakter Trie mit Pfadkompression
     kmp: KMP String-Suchalgorithmus - Knuth-Morris-Pratt Pattern Matching
     boyer_moore: Boyer-Moore String-Suchalgorithmus - Bad Character Rule
+    rabin_karp: Rabin-Karp String-Suchalgorithmus - Rolling Hash
 
 Beispiel:
     >>> from src.algs4.pva_5_strings.trie_st import TrieST
@@ -35,11 +36,17 @@ Beispiel:
     >>> bm = BoyerMoore("NEEDLE")
     >>> bm.search("HAYSTACK WITH NEEDLE IN IT")
     14
+
+    >>> from src.algs4.pva_5_strings.rabin_karp import RabinKarp
+    >>> rk = RabinKarp("NEEDLE")
+    >>> rk.search("HAYSTACK WITH NEEDLE IN IT")
+    14
 """
 
 from src.algs4.pva_5_strings.boyer_moore import BoyerMoore
 from src.algs4.pva_5_strings.kmp import KMP
 from src.algs4.pva_5_strings.patricia_trie import PatriciaTrie
+from src.algs4.pva_5_strings.rabin_karp import RabinKarp
 from src.algs4.pva_5_strings.trie_st import TrieST
 
 __all__ = [
@@ -47,4 +54,5 @@ __all__ = [
     "PatriciaTrie",
     "KMP",
     "BoyerMoore",
+    "RabinKarp",
 ]

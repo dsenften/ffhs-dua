@@ -2,7 +2,7 @@
 
 ## Überblick
 
-Der Boyer-Moore-Algorithmus ist ein effizienter String-Suchalgorithmus, der 1977 von Robert S. Boyer und J Strother Moore entwickelt wurde. Er ist besonders effizient bei der Suche in großen Texten mit langen Mustern und großen Alphabeten. Der Algorithmus wurde einige Jahre nach dem Knuth-Morris-Pratt-Algorithmus entdeckt und ist - zumindest was die Average-Case-Komplexität betrifft - effizienter als KMP.
+Der Boyer-Moore-Algorithmus ist ein effizienter String-Suchalgorithmus, der 1977 von Robert S. Boyer und J Strother Moore entwickelt wurde. Er ist besonders effizient bei der Suche in grossen Texten mit langen Mustern und grossen Alphabeten. Der Algorithmus wurde einige Jahre nach dem Knuth-Morris-Pratt-Algorithmus entdeckt und ist - zumindest was die Average-Case-Komplexität betrifft - effizienter als KMP.
 
 ## Grundprinzip
 
@@ -17,7 +17,7 @@ Im Gegensatz zu naiven String-Suchalgorithmen, die das Muster von links nach rec
    - **Bad Character Rule** (Bad-Character-Heuristik)
    - **Good Suffix Rule** (Good-Suffix-Heuristik)
 
-Der Boyer-Moore-Algorithmus schiebt das Muster um den **größeren der beiden vorgeschlagenen Werte** weiter.
+Der Boyer-Moore-Algorithmus schiebt das Muster um den **grösseren der beiden vorgeschlagenen Werte** weiter.
 
 ## Bad Character Rule (Bad-Character-Heuristik)
 
@@ -43,7 +43,7 @@ Die Bad-Character-Heuristik basiert **alleine auf dem Zeichen `c` des zu durchsu
 def makedelta1(M):
     """Erstellt Bad-Character-Tabelle als Dictionary"""
     delta1 = {}
-    for i in range(len(M) - 1):  # Letztes Zeichen ausschließen
+    for i in range(len(M) - 1):  # Letztes Zeichen ausschliessen
         delta1[M[i]] = i
     return delta1
 
@@ -179,7 +179,7 @@ def makedelta2(M):
 
 ### Speicherkomplexität
 
-- **Bad Character Table**: O(R), wobei R = Alphabet-Größe (256 für ASCII)
+- **Bad Character Table**: O(R), wobei R = Alphabet-Grosse (256 für ASCII)
 - **Good Suffix Table**: O(m), wobei m = Muster-Länge
 - **Gesamt**: O(m + R), wobei m = Muster-Länge
 
@@ -212,7 +212,7 @@ def boyerMoore(T, M):
             bad_char_shift = badChar(delta1, T[i], j)
             good_suffix_shift = delta2[m - 1 - j]
 
-            # Nimm die größere Verschiebung
+            # Nimm die groessere Verschiebung
             i = i_old + max(bad_char_shift, good_suffix_shift)
 ```
 
@@ -292,7 +292,7 @@ class BoyerMoore:
 Mit `aⁿ` = n-malige Wiederholung von 'a':
 
 - **(a)** Muster `ba⁹` in Text `a¹⁰⁰⁰`: **1000 Schritte** (jeder Vergleich schlägt beim letzten Zeichen fehl)
-- **(b)** Muster `a⁹b` in Text `a¹⁰⁰⁰`: **≈100 Schritte** (große Sprünge möglich)
+- **(b)** Muster `a⁹b` in Text `a¹⁰⁰⁰`: **≈100 Schritte** (grosse Sprünge möglich)
 - **(c)** Muster `a⁹` in Text `a¹⁰⁰⁰b`: **≈100 Schritte** (Muster wird schnell gefunden)
 
 ### Aufgabe 7.9: Alternative Bad-Character Implementierung
@@ -315,22 +315,22 @@ def badChar_optimized(delta1, c, j):
 
 ### Boyer-Moore ist besonders effizient bei:
 
-1. **Großen Alphabeten** (Häberlein's Hauptargument)
+1. **Grossen Alphabeten** (Häberlein's Hauptargument)
    - Englische Texte (26 Buchstaben)
    - ASCII-Texte (256 Zeichen)
    - Unicode-Texte
-   - **Grund**: Viele Zeichen kommen nicht im Muster vor → große Sprünge
+   - **Grund**: Viele Zeichen kommen nicht im Muster vor → grosse Sprünge
 
 2. **Langen Mustern**
    - URLs, E-Mail-Adressen
    - Dateinamen, Pfade
    - Komplexe Suchbegriffe
-   - **Grund**: Größere Sprungdistanzen möglich
+   - **Grund**: Groessere Sprungdistanzen möglich
 
-3. **Großen Texten**
+3. **Grossen Texten**
    - Dokumentensuche
    - Log-Datei-Analyse
-   - Genomanalyse (bei großen Alphabeten)
+   - Genomanalyse (bei grossen Alphabeten)
    - **Grund**: Sublineare O(n/m) Performance amortisiert sich
 
 ### Boyer-Moore ist weniger effizient bei:
@@ -338,7 +338,7 @@ def badChar_optimized(delta1, c, j):
 1. **Kleinen Alphabeten** (Häberlein's Warnung)
    - DNA-Sequenzen (4 Basen: A, T, C, G)
    - Binäre Daten (0, 1)
-   - **Grund**: Wenige große Sprünge möglich
+   - **Grund**: Wenige grosse Sprünge möglich
 
 2. **Kurzen Mustern**
    - 1-3 Zeichen lange Muster
@@ -365,7 +365,7 @@ def badChar_optimized(delta1, c, j):
 ### Wann welchen Algorithmus verwenden?
 
 #### Boyer-Moore (nach Häberlein)
-- **Ideal für**: Große Alphabete, lange Muster, große Texte
+- **Ideal für**: Grosse Alphabete, lange Muster, grosse Texte
 - **Beispiele**: Textverarbeitung, Dokumentensuche, Websuche
 - **Vorteil**: Kann sublinear sein (schneller als Text einmal lesen!)
 
@@ -384,11 +384,11 @@ def badChar_optimized(delta1, c, j):
 ### Best-Case Szenario (nach Häberlein)
 
 ```python
-# Häberlein's Beispiel: Großes Alphabet, Zeichen kommen nicht im Muster vor
+# Häberlein's Beispiel: Grosses Alphabet, Zeichen kommen nicht im Muster vor
 bm = BoyerMoore("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 text = "A" * 10000 + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-# Boyer-Moore macht große Sprünge (26 Zeichen pro Schritt)
+# Boyer-Moore macht grosse Sprünge (26 Zeichen pro Schritt)
 # Nur etwa 10000/26 ≈ 385 Vergleiche statt 10000!
 # Sublineare Performance: O(n/m)
 ```
@@ -436,7 +436,7 @@ text = "kakaokakaokakikakaokakis"
 
 # Zeigt verschiedene Mismatch-Situationen:
 # - 'o' kommt im Muster vor → moderate Sprünge
-# - 'x' kommt nicht vor → große Sprünge
+# - 'x' kommt nicht vor → grosse Sprünge
 # - 'a' würde Rückwärtssprung verursachen → Sprung um 1
 ```
 
@@ -465,7 +465,7 @@ Der Boyer-Moore-Algorithmus wurde **einige Jahre nach dem Knuth-Morris-Pratt-Alg
 
 1. **Rückwärtsvergleich ist der Schlüssel**: Mehr Informationen über Verschiebemöglichkeiten durch Vergleich von rechts nach links
 2. **Zwei Heuristiken sind besser als eine**: Bad Character + Good Suffix Rule ergänzen sich optimal
-3. **Alphabet-Größe ist entscheidend**: Bei großen Alphabeten zeigt Boyer-Moore seine wahre Stärke
+3. **Alphabet-Grosse ist entscheidend**: Bei grossen Alphabeten zeigt Boyer-Moore seine wahre Stärke
 4. **Worst-Case ist besser als gedacht**: O(n) statt O(n×m), aber erst 1991 bewiesen
 
 ### Praktische Implementierungsempfehlungen
@@ -473,7 +473,7 @@ Der Boyer-Moore-Algorithmus wurde **einige Jahre nach dem Knuth-Morris-Pratt-Alg
 #### Für Lernzwecke (nach Häberlein)
 - **Beginne mit Bad Character Rule**: Einfacher zu verstehen und implementieren
 - **Erweitere um Good Suffix Rule**: Für vollständige Performance
-- **Teste mit verschiedenen Alphabeten**: Verstehe den Einfluss der Alphabet-Größe
+- **Teste mit verschiedenen Alphabeten**: Verstehe den Einfluss der Alphabet-Grösse
 
 #### Für Produktionsumgebungen
 - **Verwende beide Heuristiken**: Maximale Performance
@@ -482,10 +482,10 @@ Der Boyer-Moore-Algorithmus wurde **einige Jahre nach dem Knuth-Morris-Pratt-Alg
 
 ## Fazit
 
-Der Boyer-Moore-Algorithmus ist ein **revolutionärer String-Suchalgorithmus**, der durch seine **Rückwärts-Vergleichsstrategie** und **zwei komplementäre Heuristiken** in den richtigen Szenarien außergewöhnliche Performance bietet:
+Der Boyer-Moore-Algorithmus ist ein **revolutionärer String-Suchalgorithmus**, der durch seine **Rückwärts-Vergleichsstrategie** und **zwei komplementäre Heuristiken** in den richtigen Szenarien aussergewöhnliche Performance bietet:
 
 ### Häberlein's Hauptargumente:
-- **Sublineare Performance möglich**: O(n/m) bei großen Alphabeten
+- **Sublineare Performance möglich**: O(n/m) bei grossen Alphabeten
 - **Praktisch oft schneller als KMP**: Besonders bei natürlichen Sprachen
 - **Elegante mathematische Grundlage**: Zwei Heuristiken ergänzen sich optimal
 
@@ -495,7 +495,7 @@ Der Boyer-Moore-Algorithmus ist ein **revolutionärer String-Suchalgorithmus**, 
 - **Umfassende Tests**: 59 Tests für alle Szenarien
 
 ### Wann Boyer-Moore verwenden:
-- **Große Alphabete** (Englisch, ASCII, Unicode)
+- **Grosse Alphabete** (Englisch, ASCII, Unicode)
 - **Lange Muster** (URLs, komplexe Suchbegriffe)
 - **Performance-kritische Anwendungen** (Textsuche, Dokumentenanalyse)
 

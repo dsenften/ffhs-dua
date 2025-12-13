@@ -35,6 +35,7 @@ Module (nach PVA-Struktur):
         - Patricia-Trie (Pfadkompression, platzsparend)
         - KMP String-Suche (Knuth-Morris-Pratt, O(n) garantiert)
         - Boyer-Moore String-Suche (Bad Character Rule, sublinear im besten Fall)
+        - Rabin-Karp String-Suche (Rolling Hash, O(n+m) durchschnittlich)
 
     errors: Benutzerdefinierte Exception-Klassen
 

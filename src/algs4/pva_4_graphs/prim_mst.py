@@ -8,7 +8,7 @@ Der Algorithmus funktioniert nach dem Greedy-Prinzip:
 1. Starte mit einem beliebigen Knoten
 2. Wiederhole bis alle Knoten im MST sind:
    - Finde die Kante mit kleinstem Gewicht, die einen Knoten im MST mit einem
-     Knoten außerhalb des MST verbindet
+     Knoten ausserhalb des MST verbindet
    - Füge diese Kante und den neuen Knoten zum MST hinzu
 
 Komplexität: O((V + E) log V) mit IndexMinPQ

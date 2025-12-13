@@ -222,6 +222,26 @@ Alle String-Symbol-Table-Implementierungen haben:
    - Anwendungen: Textsuche, DNA-Sequenzanalyse, Intrusion Detection, Plagiatserkennung
 
 4. **BoyerMoore**: Boyer-Moore String-Suchalgorithmus
+   - search: **O(n/m) bester Fall**, O(n) worst case wobei n = Textlänge, m = Musterlänge
+   - Konstruktor: O(m + R) wobei R = Alphabet-Grösse (256)
+   - Rückwärtsvergleich mit Bad Character Rule
+   - Kann Zeichen überspringen (sublineare Performance möglich)
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Textsuche bei großen Alphabeten, lange Muster, Editoren
+
+5. **RabinKarp**: Rabin-Karp String-Suchalgorithmus
+   - search: **O(n + m) durchschnittlich**, O(n × m) worst case bei vielen Hash-Kollisionen
+   - Konstruktor: O(m) für Hash-Berechnung und Primzahl-Generierung
+   - Rolling Hash mit modularer Arithmetik
+   - Las Vegas Version mit expliziter Verifikation
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Multiple-Pattern-Suche, Plagiatserkennung, DNA-Analyse
+
+4. **BoyerMoore**: Boyer-Moore String-Suchalgorithmus
    - search: **O(n/m) im besten Fall**, O(n×m) im schlechtesten Fall
    - Konstruktor (Bad Character Table): O(m + R) wobei m = Muster-Länge, R = Alphabet-Grösse
    - Nutzt Bad Character Rule für große Sprünge im Text

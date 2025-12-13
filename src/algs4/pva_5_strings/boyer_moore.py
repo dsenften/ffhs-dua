@@ -2,16 +2,16 @@
 
 Der Boyer-Moore-Algorithmus ist ein effizienter String-Suchalgorithmus,
 der einen Muster-String in einem Text-String sucht. Im Gegensatz zu naiven Ansätzen
-nutzt Boyer-Moore die "Bad Character Rule", um große Sprünge im Text zu machen
+nutzt Boyer-Moore die "Bad Character Rule", um grosse Sprünge im Text zu machen
 und dadurch die Anzahl der Vergleiche zu reduzieren.
 
 Zeitkomplexität:
 - Konstruktor (Bad Character Table): O(m + R), wobei m = Musterlänge, R = Alphabet-Grösse
 - search(text): O(n/m) im besten Fall, O(n×m) im schlechtesten Fall
-- Durchschnittlich sehr effizient, besonders bei großen Alphabeten
+- Durchschnittlich sehr effizient, besonders bei grossen Alphabeten
 
 Vorteile:
-- Sehr effizient bei großen Alphabeten und langen Mustern
+- Sehr effizient bei grossen Alphabeten und langen Mustern
 - Kann Text von rechts nach links überspringen
 - Sublineare Laufzeit im besten Fall (O(n/m))
 - Einfache Implementierung der Bad Character Rule
@@ -95,7 +95,7 @@ class BoyerMoore:
     def search(self, text: str) -> int:
         """Sucht das Muster im gegebenen Text.
 
-        Verwendet die Bad Character Rule, um große Sprünge im Text zu machen.
+        Verwendet die Bad Character Rule, um grosse Sprünge im Text zu machen.
         Der Algorithmus vergleicht das Muster von rechts nach links.
 
         Args:

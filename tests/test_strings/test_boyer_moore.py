@@ -289,7 +289,7 @@ class TestBoyerMooreAlgorithmCorrectness:
     def test_boyer_moore_skip_logic(self):
         """Teste Boyer-Moore Skip-Logik."""
         bm = BoyerMoore("NEEDLE")
-        # Bei Mismatch sollte der Algorithmus große Sprünge machen
+        # Bei Mismatch sollte der Algorithmus grosse Sprünge machen
         # Dies ist schwer direkt zu testen, aber wir können Korrektheit prüfen
         text = "HAYSTACK WITH NEEDLE IN IT"
         assert bm.search(text) == 14
@@ -383,7 +383,7 @@ class TestBoyerMoorePerformance:
     """Performance-Tests (nicht zeitkritisch, nur Korrektheit)."""
 
     def test_large_text_performance(self):
-        """Teste Performance mit großem Text."""
+        """Teste Performance mit grossem Text."""
         bm = BoyerMoore("NEEDLE")
         # 100KB Text
         large_text = "HAY" * 30000 + "NEEDLE" + "STACK" * 5000

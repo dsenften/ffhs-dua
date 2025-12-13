@@ -147,48 +147,40 @@ print(list(st.keys_that_match(".he")))  # ['she']
 print(st.longest_prefix_of("shellsort"))  # 'shells'
 ```
 
-#### KMP String-Suche (Knuth-Morris-Pratt)
+#### String-Suchalgorithmen
 
 ```python
-from src.algs4.pva_5_strings import KMP
+from src.algs4.pva_5_strings import KMP, BoyerMoore, RabinKarp
 
-# Erstelle KMP-Instanz mit Muster
-kmp = KMP("NEEDLE")
-
-# Suche Muster im Text
 text = "HAYSTACK WITH NEEDLE IN IT"
+
+# KMP String-Suche (Knuth-Morris-Pratt) - O(n) garantiert
+kmp = KMP("NEEDLE")
 position = kmp.search(text)
 print(position)  # 14
 
-# Finde alle Vorkommen
-kmp_ab = KMP("ab")
-for pos in kmp_ab.search_all("ababab"):
-    print(pos)  # 0, 2, 4
-
-# Zähle Vorkommen
-kmp_the = KMP("the")
-count = kmp_the.count("the quick brown fox jumps over the lazy dog")
-print(count)  # 2
-
-# CLI-Nutzung
-# python3 -m src.algs4.pva_5_strings.kmp abracadabra "abacadabrabracabracadabra"
-```
-
-#### Boyer-Moore String-Suche
-
-```python
-from src.algs4.pva_5_strings import BoyerMoore
-
-# Erstelle Boyer-Moore-Instanz mit Muster
+# Boyer-Moore String-Suche - sublinear im besten Fall
 bm = BoyerMoore("NEEDLE")
-
-# Suche Muster im Text (besonders effizient bei großen Alphabeten)
-text = "HAYSTACK WITH NEEDLE IN IT"
 position = bm.search(text)
 print(position)  # 14
 
-# Finde alle Vorkommen
-bm_the = BoyerMoore("the")
+# Rabin-Karp String-Suche - Rolling Hash
+rk = RabinKarp("NEEDLE")
+position = rk.search(text)
+print(position)  # 14
+
+# Finde alle Vorkommen (alle Algorithmen haben identische API)
+for pos in kmp.search_all("ababab"):
+    print(pos)  # 0, 2, 4
+
+# Zähle Vorkommen
+count = kmp.count("the quick brown fox jumps over the lazy dog")
+print(count)  # 2
+
+# CLI-Nutzung für alle Algorithmen
+# python3 -m src.algs4.pva_5_strings.kmp "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
+# python3 -m src.algs4.pva_5_strings.boyer_moore "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
+# python3 -m src.algs4.pva_5_strings.rabin_karp "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
 for pos in bm_the.search_all("the quick brown fox jumps over the lazy dog"):
     print(pos)  # 0, 31
 
