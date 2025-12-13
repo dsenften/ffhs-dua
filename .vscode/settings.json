@@ -66,5 +66,18 @@
     },
     "terminal.integrated.defaultProfile.osx": "zsh",
     "terminal.integrated.defaultProfile.linux": "bash",
-    "terminal.integrated.defaultProfile.windows": "PowerShell"
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "cSpell.language": "de,de-DE,en",
+    "cSpell.enableFiletypes": [
+        "markdown",
+        "plaintext",
+        "latex",
+        "tex"
+    ],
+    "cSpell.words": [
+        "boyer",
+        "karp",
+        "moore",
+        "rabin"
+    ]
 }
