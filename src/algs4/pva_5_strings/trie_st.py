@@ -2,7 +2,7 @@
 
 Ein Trie (abgeleitet von "retrieval") ist ein Baum, dessen Kanten mit Zeichen
 beschriftet sind. Die Position eines Knotens im Baum bestimmt den Schlüssel,
-den er repräsentiert. Die Suchzeit hängt ausschließlich von der Länge des
+den er repräsentiert. Die Suchzeit hängt ausschliesslich von der Länge des
 Suchschlüssels ab, nicht von der Anzahl der Einträge im Trie.
 
 Zeitkomplexität:

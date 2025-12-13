@@ -4,7 +4,7 @@
 
 Tries sind spezialisierte Baumdatenstrukturen, deren Kanten mit Buchstaben oder Zeichenteilen beschriftet sind. Der Name "Trie" leitet sich vom englischen Wort "retrieval" (Wiederfinden von Informationen) ab. Sie eignen sich besonders für die effiziente Speicherung und Suche von Schlüssel-Wert-Paaren, bei denen die Schlüssel aus Zeichenketten bestehen.
 
-**Kernvorteil**: Die Suchzeit in einem Trie hängt **nicht** von der Gesamtzahl der Einträge ab, sondern **ausschließlich von der Länge des Suchschlüssels**. Eine Suche nach einem kurzen String benötigt immer die gleiche Anzahl Schritte, unabhängig davon, ob der Trie 1.000, 100.000 oder mehrere Milliarden Einträge enthält.
+**Kernvorteil**: Die Suchzeit in einem Trie hängt **nicht** von der Gesamtzahl der Einträge ab, sondern **ausschliesslich von der Länge des Suchschlüssels**. Eine Suche nach einem kurzen String benötigt immer die gleiche Anzahl Schritte, unabhängig davon, ob der Trie 1.000, 100.000 oder mehrere Milliarden Einträge enthält.
 
 ## Hauptmerkmale
 
