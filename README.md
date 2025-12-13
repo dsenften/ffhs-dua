@@ -13,8 +13,9 @@ Fernfachhochschule Schweiz (FFHS).
   - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
   - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
   - Utilities: Indexed Min Priority Queue
+- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), Präfix-Operationen
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (440 Tests)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (563 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 📦 Installation
@@ -118,6 +119,32 @@ if sp.has_path_to(7):
         print(edge)
 ```
 
+### String-Algorithmen (Tries)
+
+```python
+from src.algs4.pva_5_strings import TrieST
+
+# Erstelle einen Trie Symbol Table
+st = TrieST()
+st.put("sea", 1)
+st.put("sells", 2)
+st.put("she", 3)
+st.put("shells", 4)
+st.put("shore", 5)
+
+# Suche nach Schlüssel
+print(st.get("sea"))  # 1
+
+# Präfix-Suche
+print(list(st.keys_with_prefix("sh")))  # ['she', 'shells', 'shore']
+
+# Wildcard-Suche (. = beliebiges Zeichen)
+print(list(st.keys_that_match(".he")))  # ['she']
+
+# Längster Präfix
+print(st.longest_prefix_of("shellsort"))  # 'shells'
+```
+
 ## 📖 Dokumentation
 
 - 📚 **[Vollständige Dokumentation](docs/index.adoc)** - Umfassende Projektdokumentation
@@ -134,7 +161,7 @@ Diese Implementierung basiert auf zwei Hauptquellen:
   - Offizielles Lehrbuch und Java-Implementierung
   - Grundlage für die Algorithmen-Implementierungen
 
-- � **[Praktische Algorithmik mit Python](https://www.tobiashaeberlein.net/)** - Tobias Häberlein
+- 📘 **[Praktische Algorithmik mit Python](https://www.tobiashaeberlein.net/)** - Tobias Häberlein
   - Oldenbourg Verlag München, 2012
   - Verwendet im FFHS Moodle-Kurs und PVA-Übungen
   - Fokus auf praktische Python-Implementierungen
@@ -162,29 +189,33 @@ pre-commit run --all-files
 ```
 
 **Aktuelle Metriken:**
-- ✅ 408 Tests (100% bestanden)
-- ✅ 93.08% Code-Coverage
+
+- ✅ 563 Tests (100% bestanden)
+- ✅ 93%+ Code-Coverage (Trie: 99.22%)
 - ✅ 0 Linting-Fehler
 - ✅ 0 Type-Fehler
-- ✅ 4 PVA-Module (Fundamentals, Sorting, Searching, Graphs)
+- ✅ 5 PVA-Module (Fundamentals, Sorting, Searching, Graphs, Strings)
 
 ## 📊 Projekt-Struktur
 
-```
+```text
 ffhs-dua/
 ├── src/algs4/
 │   ├── pva_1_fundamentals/    # Stack, Queue, Bag, Union-Find
 │   ├── pva_2_sorting/         # Sortieralgorithmen
 │   ├── pva_3_searching/       # Suchbäume und Hash Tables
 │   ├── pva_4_graphs/          # Graphen-Algorithmen (Dijkstra, etc.)
+│   ├── pva_5_strings/         # String-Algorithmen (Trie, Patricia-Trie)
 │   ├── errors/                # Exception-Klassen
 │   └── utils/                 # Utility-Funktionen
 ├── tests/
 │   ├── test_fundamentals/     # Tests für PVA 1
 │   ├── test_sorting/          # Tests für PVA 2
 │   ├── test_searching/        # Tests für PVA 3
-│   └── test_graphs/           # Tests für PVA 4
+│   ├── test_graphs/           # Tests für PVA 4
+│   └── test_strings/          # Tests für PVA 5
 ├── docs/                      # Dokumentation
+│   └── summaries/             # Zusammenfassungen (Tries, etc.)
 ├── scripts/                   # Hilfsskripte
 ├── benchmarks/                # Performance-Benchmarks
 └── .github/workflows/         # CI/CD Pipelines
@@ -212,7 +243,12 @@ Fernfachhochschule Schweiz (FFHS)
 
 Dieses Projekt basiert auf zwei Hauptquellen:
 
-1. **"Algorithms, 4th Edition"** von Robert Sedgewick und Kevin Wayne - Das Standardwerk für Algorithmen und Datenstrukturen
-2. **"Praktische Algorithmik mit Python"** von Tobias Häberlein - Besonders wertvoll für die praktische Python-Implementierung und Integration in den FFHS Moodle-Kurs
+1. **"Algorithms, 4th Edition"** von Robert Sedgewick und Kevin Wayne - Das
+   Standardwerk für Algorithmen und Datenstrukturen
+2. **"Praktische Algorithmik mit Python"** von Tobias Häberlein - Besonders
+   wertvoll für die praktische Python-Implementierung und Integration in den
+   FFHS Moodle-Kurs
 
-Das Projekt wurde speziell für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS) angepasst und integriert die Inhalte aus beiden Lehrbüchern in einem kohärenten Python-Framework.
+Das Projekt wurde speziell für den akademischen Gebrauch an der
+Fernfachhochschule Schweiz (FFHS) angepasst und integriert die Inhalte aus
+beiden Lehrbüchern in einem kohärenten Python-Framework.

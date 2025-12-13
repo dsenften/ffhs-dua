@@ -79,6 +79,9 @@ src/algs4/
 │   ├── edge_weighted_directed_cycle.py  # Zyklenerkennung in gerichteten Graphen
 │   ├── index_min_pq.py           # Indexed Min Priority Queue
 │   └── dijkstra_sp.py            # Dijkstras Algorithmus
+├── pva_5_strings/               # Praktische Vertiefungsaufgaben 5
+│   ├── trie_st.py                # Trie Symbol Table (Dictionary-basiert)
+│   └── patricia_trie.py          # Patricia-Trie (Pfadkompression)
 ├── errors/
 │   └── errors.py                # Benutzerdefinierte Exceptions
 └── utils/
@@ -93,6 +96,7 @@ tests/
 ├── test_sorting/                # Tests für PVA-2
 ├── test_searching/              # Tests für PVA-3
 ├── test_graphs/                 # Tests für PVA-4
+├── test_strings/                # Tests für PVA-5
 └── test_utils/                  # Tests für Utility-Module
 
 data/                            # Thematisch organisierte Testdaten
@@ -178,6 +182,34 @@ Alle Symbol-Table-Implementierungen haben:
    - Einfachere Implementierung als Standard Red-Black Trees
    - Visuelle Darstellung zeigt Knotenfarben: `A (R)` oder `A (B)`
 
+#### String-Algorithmen (pva_5_strings/)
+
+Alle String-Symbol-Table-Implementierungen haben:
+
+- Generische Typisierung mit `TypeVar` für Werte
+- String-Schlüssel (str) als Basis
+- Präfix-basierte Operationen
+- Deutsche Fehlerbehandlung
+
+**Implementierungen:**
+
+1. **TrieST**: Trie Symbol Table (Standard-Trie)
+   - get, put, delete: **O(m)** wobei m = Schlüssellänge (unabhängig von n!)
+   - Dictionary-basiert (flexibel für beliebige Zeichen, nicht nur ASCII)
+   - Präfix-Operationen: `keys_with_prefix()`, `keys_that_match()`, `longest_prefix_of()`
+   - Wildcard-Suche mit '.' als Platzhalter
+   - Keine teuren String-Vergleiche
+   - Speichereffizient bei gemeinsamen Präfixen
+   - Anwendungen: Autovervollständigung, Textsuchmaschinen, Routing-Tabellen
+
+2. **PatriciaTrie**: Patricia-Trie (Pfadkompression)
+   - get, put: **O(m)** wobei m = Schlüssellänge
+   - Kompakter als Standard-Trie durch Knoten-Verschmelzung
+   - Kanten speichern Strings statt einzelner Zeichen
+   - Optimiert für lange gemeinsame Präfixe
+   - Platzsparend bei vielen ähnlichen Schlüsseln
+   - Anwendungen: IP-Routing, Netzwerk-Algorithmen
+
 #### Fehlerbehandlung
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
@@ -232,10 +264,11 @@ Package Management erfolgt über `uv` (siehe pyproject.toml).
 
 ## Test-Statistik
 
-- **Gesamt-Tests**: 440 (100% bestanden)
+- **Gesamt-Tests**: 563 (100% bestanden)
 - **PVA 1 (Fundamentals)**: 92 Tests
 - **PVA 2 (Sorting)**: 108 Tests
 - **PVA 3 (Searching)**: 162 Tests
 - **PVA 4 (Graphs)**: 78 Tests
+- **PVA 5 (Strings)**: 59 Tests
 - **Utils**: 7 Tests
-- **Code-Coverage**: 93%+
+- **Code-Coverage**: 93%+ (Trie: 99.22%)
