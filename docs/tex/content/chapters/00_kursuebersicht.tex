@@ -1,0 +1,281 @@
+% Kursübersicht - Datenstrukturen und Algorithmen
+% ================================================
+
+\chapter{Kursübersicht}
+
+\section{Einführung}
+
+Dieses Dokument begleitet den Kurs {\em Datenstrukturen und Algorithmen} an der
+Fernfachhochschule Schweiz (FFHS). Der Kurs basiert auf dem Lehrbuch
+{\em Praktische Algorithmik mit Python} von Tobias Häberlein (Oldenbourg Verlag, 2012)
+und vermittelt die theoretischen Grundlagen sowie praktische Implementierungen
+fundamentaler Algorithmen und Datenstrukturen.
+
+\subsection{Kursstruktur}
+
+Das Semester ist in fünf Module gegliedert, die jeweils einer Präsenzveranstaltung (PVA) entsprechen:
+
+\startitemize[n]
+\item {\bf Grundlagen} -- Algorithmen-Grundlagen, Rekursion, ADTs und Laufzeitanalyse
+\item {\bf Sortieren} -- Sortieralgorithmen und Priority Queues
+\item {\bf Suchen} -- Suchbäume, Hashtabellen und Bloomfilter
+\item {\bf Graphen} -- Graphentheorie und Graphenalgorithmen
+\item {\bf Strings} -- Stringalgorithmen und Tries
+\stopitemize
+
+\subsection{Begleitliteratur}
+
+\startframedtext[infobox]
+{\bf Hauptreferenz:}
+
+Häberlein, Tobias: {\em Praktische Algorithmik mit Python}.
+Oldenbourg Wissenschaftsverlag, München, 2012.
+ISBN 978-3-486-71390-9
+
+Das Buch verwendet Python als Implementierungssprache und bietet einen
+praxisorientierten Zugang zur Algorithmik. Alle Algorithmen sind als
+ausführbarer Code verfügbar und können interaktiv ausprobiert werden.
+\stopframedtext
+
+\section{Modul 1: Grundlagen}
+
+Das erste Modul legt die Fundamente für das Verständnis von Algorithmen und
+Datenstrukturen. Es behandelt die grundlegenden Konzepte, die für alle
+weiteren Module essentiell sind.
+
+\subsection{Lernziele}
+
+Nach Abschluss dieses Moduls können Sie:
+
+\startitemize
+\item erklären, was Algorithmen sind und deren Eigenschaften benennen
+\item Rekursionen entwerfen und damit Probleme lösen
+\item den Begriff ADT (Abstrakter Datentyp) erklären und implementieren
+\item die grundlegenden Datenstrukturen (Stack, Queue, Bag) benennen und anwenden
+\item mit Python Algorithmen schreiben und testen
+\item die Laufzeit von Algorithmen analysieren und beurteilen
+\stopitemize
+
+\subsection{Implementierte Datenstrukturen}
+
+\subsubsection{Stack}
+
+Ein {\em Stack} ist eine LIFO-Datenstruktur (Last-In-First-Out).
+Die Implementierung bietet drei Varianten:
+
+\startitemize
+\item {\bf Stack} -- Verkettete Liste mit dynamischer Grösse, $O(1)$ push/pop
+\item {\bf FixedCapacityStack} -- Feste Array-Grösse
+\item {\bf ResizingArrayStack} -- Dynamisches Array mit amortisiert $O(1)$
+\stopitemize
+
+\subsubsection{Queue}
+
+Eine {\em Queue} ist eine FIFO-Datenstruktur (First-In-First-Out).
+Die Implementierung basiert auf einer verketteten Liste.
+
+\subsubsection{Bag}
+
+Ein {\em Bag} ist eine ungeordnete Sammlung von Elementen,
+die das Hinzufügen und Iterieren unterstützt.
+
+\subsubsection{Union-Find}
+
+Die {\em Union-Find}-Datenstruktur (auch Disjoint-Set genannt) ermöglicht
+das effiziente Verwalten von disjunkten Mengen. Es gibt vier Varianten:
+
+\startitemize
+\item {\bf UF} -- Optimiert mit Weighted Quick Union und Path Compression, $O(\alpha(n))$
+\item {\bf QuickUnionUF} -- Einfache Quick Union, $O(n)$ worst case
+\item {\bf WeightedQuickUnionUF} -- Gewichtete Quick Union, $O(\log n)$
+\item {\bf QuickFindUF} -- Quick Find mit $O(1)$ find, aber $O(n)$ union
+\stopitemize
+
+\section{Modul 2: Sortieren}
+
+Das zweite Modul behandelt Sortieralgorithmen, die zu den fundamentalsten
+Algorithmen in der Informatik gehören.
+
+\subsection{Lernziele}
+
+Nach Abschluss dieses Moduls können Sie:
+
+\startitemize
+\item die sequentielle und binäre Suche erklären
+\item Elemente mittels einfachen Sortieralgorithmen sortieren
+\item Mergesort, Quicksort und Heapsort erklären und adäquat einsetzen
+\item Prioritätswarteschlangen zweckmässig einsetzen und implementieren
+\item die Komplexität und Laufzeit der Sortieralgorithmen beurteilen
+\stopitemize
+
+\subsection{Implementierte Algorithmen}
+
+\subsubsection{Shell Sort}
+
+Shell Sort ist eine Erweiterung von Insertion Sort mit der Knuth-Sequenz.
+Komplexität: $O(n^{3/2})$ im worst case.
+
+\subsubsection{Quick Sort}
+
+Quick Sort verwendet das Divide-and-Conquer-Prinzip mit Hoare-Partitionierung.
+Komplexität: $O(n \log n)$ durchschnittlich, $O(n^2)$ im worst case.
+
+\subsubsection{Merge Sort}
+
+Merge Sort ist ein stabiler Sortieralgorithmus mit garantierter Laufzeit.
+Komplexität: $O(n \log n)$ garantiert.
+
+\subsubsection{Heap Sort}
+
+Heap Sort basiert auf der Heap-Datenstruktur und garantiert gute Performance.
+Komplexität: $O(n \log n)$ garantiert.
+
+\section{Modul 3: Suchen}
+
+Das dritte Modul behandelt Suchalgorithmen und Datenstrukturen für
+effizientes Suchen und Speichern von Schlüssel-Wert-Paaren.
+
+\subsection{Lernziele}
+
+Nach Abschluss dieses Moduls können Sie:
+
+\startitemize
+\item die Herausforderung der Suche benennen
+\item die Funktionsweise binärer Suchbäume erklären und implementieren
+\item den Unterschied zu den verschiedenen balancierten Suchbäumen aufzeigen
+\item Hashtabellen für die Suche anwenden
+\item die verschiedenen Suchen zweckmässig in Problemstellungen anwenden
+\item den Bloomfilter Algorithmus erklären und anwenden
+\stopitemize
+
+\subsection{Implementierte Datenstrukturen}
+
+\subsubsection{Binary Search Tree (BST)}
+
+Ein {\em Binary Search Tree} ist ein binärer Suchbaum ohne Balancierung.
+Komplexität: $O(\log n)$ durchschnittlich, $O(n)$ im worst case.
+
+\subsubsection{AVL Tree}
+
+Ein {\em AVL Tree} ist ein selbstbalancierender binärer Suchbaum.
+Komplexität: $O(\log n)$ garantiert durch automatische Rotationen.
+
+\subsubsection{Red-Black BST}
+
+Ein {\em Left-Leaning Red-Black BST} basiert auf 2-3 Bäumen und
+garantiert perfekte schwarze Balance.
+Komplexität: $O(\log n)$ garantiert.
+
+\subsubsection{Hash Tables}
+
+{\em Hash Tables} ermöglichen $O(1)$ durchschnittliche Zugriffszeit.
+Zwei Kollisionsbehandlungsstrategien sind implementiert:
+
+\startitemize
+\item {\bf SeparateChainingHashST} -- Verkettung in Listen
+\item {\bf LinearProbingHashST} -- Offene Adressierung
+\stopitemize
+
+\section{Modul 4: Graphen}
+
+Das vierte Modul behandelt Graphentheorie und Algorithmen auf Graphen,
+die in vielen praktischen Anwendungen essentiell sind.
+
+\subsection{Lernziele}
+
+Nach Abschluss dieses Moduls können Sie:
+
+\startitemize
+\item das Konzept der Graphen und deren Bedeutung nennen
+\item Breiten- und Tiefensuche erklären und anwenden
+\item kürzeste Wege in einem Graphen berechnen
+\item minimale Spannbäume ermitteln
+\item den maximalen Fluss in einem Graphen ermitteln
+\stopitemize
+
+\subsection{Implementierte Algorithmen}
+
+\subsubsection{Breitensuche (BFS)}
+
+{\em Breadth-First Search} erkundet einen Graphen schichtweise
+und findet kürzeste Wege in ungewichteten Graphen.
+
+\subsubsection{Tiefensuche (DFS)}
+
+{\em Depth-First Search} erkundet einen Graphen in die Tiefe
+und ist Basis für viele Graph-Algorithmen.
+
+\subsubsection{Dijkstra's Algorithmus}
+
+Findet kürzeste Wege von einem Startknoten zu allen anderen Knoten
+in Graphen mit nicht-negativen Kantengewichten.
+Komplexität: $O((V + E) \log V)$ mit Priority Queue.
+
+\subsubsection{Minimum Spanning Tree}
+
+Zwei Algorithmen für minimale Spannbäume sind implementiert:
+
+\startitemize
+\item {\bf Kruskal's Algorithmus} -- Greedy-Ansatz mit Union-Find
+\item {\bf Prim's Algorithmus} -- Greedy-Ansatz mit Priority Queue
+\stopitemize
+
+\section{Modul 5: Strings}
+
+Das fünfte Modul behandelt Algorithmen für die Verarbeitung von
+Zeichenketten (Strings), die in vielen Anwendungen wichtig sind.
+
+\subsection{Lernziele}
+
+Nach Abschluss dieses Moduls können Sie:
+
+\startitemize
+\item mittels Tries Algorithmen Zeichenketten in einem Text suchen
+\item die verschiedenen Stringmatching Algorithmen erklären und anwenden
+\item das Travelling-Salesman-Problem erklären und Lösungsstrategien benennen
+\item den Greedy-Algorithmus erklären und anwenden
+\item das Konzept der dynamischen Programmierung erklären
+\stopitemize
+
+\subsection{Implementierte Datenstrukturen und Algorithmen}
+
+\subsubsection{Trie}
+
+Ein {\em Trie} (auch Präfixbaum) ist eine Baumstruktur für
+String-Schlüssel mit $O(m)$ Zugriffszeit ($m$ = Schlüssellänge).
+Unterstützt Präfix-Suche und Wildcard-Matching.
+
+\subsubsection{Patricia-Trie}
+
+Ein {\em Patricia-Trie} ist ein kompakter Trie mit Pfadkompression,
+der speichereffizienter ist bei langen gemeinsamen Präfixen.
+
+\subsubsection{Knuth-Morris-Pratt (KMP)}
+
+Der {\em KMP-Algorithmus} sucht ein Muster in einem Text mit
+garantierter $O(n)$ Laufzeit durch Verwendung eines DFA.
+
+\subsubsection{Boyer-Moore}
+
+Der {\em Boyer-Moore-Algorithmus} nutzt die Bad-Character-Rule
+für sublineare Suche im besten Fall: $O(n/m)$.
+
+\subsubsection{Rabin-Karp}
+
+Der {\em Rabin-Karp-Algorithmus} verwendet Rolling Hashes
+für effiziente String-Suche: $O(n + m)$ durchschnittlich.
+
+\section{Projektstruktur}
+
+Die Python-Implementierungen folgen der PVA-Struktur:
+
+\starttyping
+src/algs4/
+├── pva_1_fundamentals/   # Stack, Queue, Bag, Union-Find
+├── pva_2_sorting/        # Quick, Merge, Heap, Shell Sort
+├── pva_3_searching/      # BST, AVL, Red-Black, Hashing
+├── pva_4_graphs/         # Dijkstra, BFS, DFS, MST
+└── pva_5_strings/        # Trie, KMP, Boyer-Moore, Rabin-Karp
+\stoptyping
+
+Alle Implementierungen sind vollständig getestet und dokumentiert.

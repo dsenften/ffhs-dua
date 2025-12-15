@@ -1,0 +1,104 @@
+% FFHS-DUA: Datenstrukturen und Algorithmen
+% Hauptdokument für ConTeXt-Kompilierung
+% ========================================
+
+% Basis-Setup
+\setuppapersize[A4]
+\setuplayout[
+    topspace=2.5cm,
+    bottomspace=2cm,
+    backspace=2.5cm,
+    width=16cm,
+    height=24.7cm,
+    header=1cm,
+    footer=1cm
+]
+
+% Sprache und Encoding
+\mainlanguage[de]
+\enableregime[utf-8]
+
+% Externe Style-Dateien laden
+\input templates/styles/typography
+\input templates/styles/colors
+\input templates/styles/layout
+\input templates/styles/code
+
+% Metadaten
+\setvariables[document][
+    title={FFHS-DUA: Datenstrukturen und Algorithmen},
+    subtitle={Praktische Vertiefungsaufgaben und Implementierungen},
+    author={Daniel Senften},
+    institution={Fernfachhochschule Schweiz (FFHS)},
+    course={Datenstrukturen und Algorithmen},
+    date={\currentdate},
+    version={1.0}
+]
+
+% PDF-Metadaten
+\setupinteraction[
+    state=start,
+    title={\getvariable{document}{title}},
+    subtitle={\getvariable{document}{subtitle}},
+    author={\getvariable{document}{author}},
+    keyword={FFHS, Algorithmen, Datenstrukturen, Python}
+]
+
+% Hyperlinks konfigurieren
+\setupurl[style=\tt, color=linkcolor]
+
+% Kopf- und Fußzeilen
+\setupheadertexts
+    [{\getmarking[chapter]}]
+    [{\getvariable{document}{title}}]
+
+\setupfootertexts
+    [{\getvariable{document}{author}}]
+    [Seite \pagenumber\ von \lastpagenumber]
+
+% Infobox Definition (für Literatur-Box)
+\defineframedtext[infobox][
+    width=\textwidth,
+    frame=on,
+    framecolor=primarycolor,
+    background=color,
+    backgroundcolor=lightgray,
+    rulethickness=2pt,
+    offset=1em,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Dokument-Struktur
+\starttext
+
+% Titelseite
+\startstandardmakeup
+\vfill
+\midaligned{\bfd\ss\color[primarycolor]{\getvariable{document}{title}}}
+\blank[2*big]
+\midaligned{\bfb\ss\color[secondarycolor]{\getvariable{document}{subtitle}}}
+\vfill
+\midaligned{\bfa\ss Kurs: \getvariable{document}{course}}
+\blank[big]
+\midaligned{\bf\ss \getvariable{document}{institution}}
+\vfill
+\midaligned{
+    Autor: \getvariable{document}{author} \\
+    Datum: \getvariable{document}{date} \\
+    Version: \getvariable{document}{version}
+}
+\vfill
+\stopstandardmakeup
+
+% Inhaltsverzeichnis
+\page
+\midaligned{\bfd\ss\color[primarycolor]{Inhaltsverzeichnis}}
+\blank[2*big]
+\placecontent
+
+% Hauptinhalt
+\page
+\input content/chapters/00_kursuebersicht
+
+\stoptext

@@ -1,0 +1,30 @@
+# ConTeXt Build-Artefakte
+# =======================
+
+# Log-Dateien
+*.log
+
+# Hilfsdateien für Referenzen und Inhaltsverzeichnis
+*.tuc
+*.tuo
+*.tui
+*.top
+*.aux
+*.toc
+*.idx
+
+# SyncTeX (Editor-Synchronisation)
+*.synctex.gz
+
+# LaTeX-Hilfsdateien (falls verwendet)
+*.fls
+*.fdb_latexmk
+
+# Temporäre Verzeichnisse
+texexec-*.tmp/
+
+# MetaPost Grafik-Dateien (generiert)
+*-mpgraph.mp
+
+# Generierte PDF-Datei (optional - auskommentieren falls PDF versioniert werden soll)
+*.pdf
