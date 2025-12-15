@@ -21,11 +21,14 @@ import logging
 import sys
 from pathlib import Path
 
-from config import load_config
-
 # Lokale Imports
-from converter import ConTeXtGenerator, MarkdownConverter
-from utils import setup_logging, validate_environment
+from converter import (
+    ConTeXtGenerator,
+    MarkdownConverter,
+    load_config,
+    setup_logging,
+    validate_environment,
+)
 
 
 class DocumentationBuilder:
@@ -114,7 +117,7 @@ class DocumentationBuilder:
 
     def _find_markdown_files(self, chapters: list[str] | None = None) -> list[Path]:
         """Findet alle relevanten Markdown-Dateien."""
-        from .utils import find_markdown_files
+        from converter.utils import find_markdown_files
 
         if chapters:
             # Nur spezifische Kapitel
@@ -142,7 +145,7 @@ class DocumentationBuilder:
 
     def _build_pdf(self, main_document: Path) -> Path | None:
         """Erstellt PDF aus ConTeXt-Hauptdokument."""
-        from .utils import clean_output_directory, copy_assets, run_context
+        from converter.utils import clean_output_directory, copy_assets, run_context
 
         try:
             # Assets kopieren
