@@ -40,6 +40,7 @@ clean:
 	rm -f $(DOCUMENT).tmp $(DOCUMENT).top $(DOCUMENT).tui $(DOCUMENT)*.mp
 	rm -f $(DOCUMENT).synctex.gz $(DOCUMENT).fls $(DOCUMENT).fdb_latexmk
 	rm -f *.log *.tuc *.tuo *.aux
+	rm -f $(DOCUMENT)-temp-*.vimout
 	rm -rf texexec-*.tmp
 	@echo "==> Aufgeräumt."
 

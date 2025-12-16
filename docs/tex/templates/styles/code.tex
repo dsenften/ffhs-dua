@@ -1,84 +1,120 @@
 % Code-Highlighting und Syntax-Definitionen
 % =========================================
 
-% Basis-Setup für Code-Blöcke
-\setuptyping[
-    style=\tt,
-    color=codecolor,
-    before={\blank[medium]},
-    after={\blank[medium]},
-    margin=1em,
-    numbering=line,
-    numbercolor=lighttext,
-    numberstyle=\tfx,
-    frame=on,
-    framecolor=mediumgray,
-    background=color,
-    backgroundcolor=codebgcolor,
-    corner=round,
-    radius=3pt,
-    offset=10pt
+% =============================================================================
+% CODE-BLÖCKE MIT SYNTAX-HIGHLIGHTING (via vim)
+% =============================================================================
+
+% vim-Modul laden für Syntax-Highlighting
+\usemodule[vim]
+
+% Python-Code mit Syntax-Highlighting
+\definevimtyping[pythoncode][
+    syntax=python,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
 ]
 
-% Python Syntax-Highlighting
-\definetyping[python]
-\setuptyping[python][
-    option=python,
-    tab=4,
-    style=\tt\tfx
+% Bash/Shell-Code mit Syntax-Highlighting
+\definevimtyping[bashcode][
+    syntax=sh,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
 ]
 
-% Java Syntax-Highlighting
-\definetyping[java]
-\setuptyping[java][
-    option=java,
-    tab=4,
-    style=\tt\tfx
+% JSON-Code mit Syntax-Highlighting
+\definevimtyping[jsoncode][
+    syntax=json,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
 ]
 
-% Shell/Bash Syntax-Highlighting
-\definetyping[shell]
-\setuptyping[shell][
-    option=shell,
-    style=\tt\tfx,
-    color=shellcommand
+% YAML-Code mit Syntax-Highlighting
+\definevimtyping[yamlcode][
+    syntax=yaml,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
 ]
 
-% SQL Syntax-Highlighting
-\definetyping[sql]
-\setuptyping[sql][
-    option=sql,
-    style=\tt\tfx
-]
-
-% XML/HTML Syntax-Highlighting
-\definetyping[xml]
-\setuptyping[xml][
-    option=xml,
-    style=\tt\tfx
-]
-
-% JSON Syntax-Highlighting
-\definetyping[json]
-\setuptyping[json][
-    option=json,
-    style=\tt\tfx
-]
-
-% YAML Syntax-Highlighting
-\definetyping[yaml]
-\setuptyping[yaml][
-    option=yaml,
-    style=\tt\tfx
+% Generischer Text-Code (ohne Highlighting)
+\definetyping[textcode][
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
 ]
 
 % Inline-Code
-\definetype[code][
-    style=\tt,
-    color=codecolor,
-    before=,
-    after=
-]
+\definetype[code][style=\tt\small]
+
+% Inline Python (mit Highlighting)
+\definevimtyping[inlinepython][syntax=python,escape=on]
+
+% =============================================================================
+% ZUSÄTZLICHE CODE-UMGEBUNGEN
+% =============================================================================
 
 % Dateinamen
 \definetype[filename][
@@ -104,62 +140,6 @@
     after=
 ]
 
-% Algorithmus-Pseudocode
-\definetyping[algorithm]
-\setuptyping[algorithm][
-    style=\tt,
-    numbering=line,
-    numbercolor=lighttext,
-    numberstyle=\tfx,
-    frame=on,
-    framecolor=primarycolor,
-    background=color,
-    backgroundcolor=lightgray,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
-% Code-Blöcke mit Titel
-\defineframedtext[codeblock][
-    frame=on,
-    framecolor=mediumgray,
-    background=color,
-    backgroundcolor=codebgcolor,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
-% Spezielle Code-Umgebungen
-\defineframedtext[pythoncode][
-    frame=on,
-    framecolor=pythonkeyword,
-    background=color,
-    backgroundcolor=codebgcolor,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
-\defineframedtext[javacode][
-    frame=on,
-    framecolor=javakeyword,
-    background=color,
-    backgroundcolor=codebgcolor,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
 % Terminal/Console Output
 \definetyping[terminal]
 \setuptyping[terminal][
@@ -169,36 +149,6 @@
     backgroundcolor=textcolor,
     frame=on,
     framecolor=textcolor,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
-% Diff/Patch Darstellung
-\definetyping[diff]
-\setuptyping[diff][
-    style=\tt\tfx,
-    frame=on,
-    framecolor=mediumgray,
-    background=color,
-    backgroundcolor=lightgray,
-    corner=round,
-    radius=3pt,
-    offset=10pt,
-    before={\blank[medium]},
-    after={\blank[medium]}
-]
-
-% Konfigurationsdateien
-\definetyping[config]
-\setuptyping[config][
-    style=\tt\tfx,
-    frame=on,
-    framecolor=accentcolor,
-    background=color,
-    backgroundcolor=codebgcolor,
     corner=round,
     radius=3pt,
     offset=10pt,

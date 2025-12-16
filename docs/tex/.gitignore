@@ -26,5 +26,8 @@ texexec-*.tmp/
 # MetaPost Grafik-Dateien (generiert)
 *-mpgraph.mp
 
+# vim Syntax-Highlighting Ausgabe-Dateien
+*-temp-*.vimout
+
 # Generierte PDF-Datei (optional - auskommentieren falls PDF versioniert werden soll)
 *.pdf

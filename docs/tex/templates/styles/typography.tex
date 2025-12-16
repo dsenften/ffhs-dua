@@ -136,6 +136,71 @@
     after={\blank[medium]}
 ]
 
+% =============================================================================
+% LERNZIELE
+% =============================================================================
+
+% Lernziele-Box (grün, ohne Rahmen)
+\defineframedtext[lernziele][
+    frame=off,
+    background=color,
+    backgroundcolor=tipbgcolor,
+    width=\textwidth,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    loffset=1em,
+    roffset=1em,
+    toffset=0.5em,
+    boffset=0.5em,
+]
+
+% =============================================================================
+% AUFGABEN UND ÜBUNGEN
+% =============================================================================
+
+% Aufgaben-Box (orange)
+\defineframedtext[aufgabenbox][
+    frame=on,
+    framecolor=accentcolor,
+    background=color,
+    backgroundcolor=warningbgcolor,
+    width=\textwidth,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    loffset=1em,
+    roffset=1em,
+    toffset=0.5em,
+    boffset=0.5em,
+]
+
+% Übungs-Box (grün)
+\defineframedtext[uebungsbox][
+    frame=on,
+    framecolor=tipcolor,
+    background=color,
+    backgroundcolor=tipbgcolor,
+    width=\textwidth,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    loffset=1em,
+    roffset=1em,
+    toffset=0.5em,
+    boffset=0.5em,
+]
+
+% =============================================================================
+% MARKDOWN-ÄHNLICHE SHORTCUTS
+% =============================================================================
+
+% Fett
+\define[1]\strong{{\bf #1}}
+
+% Kursiv (emph ist bereits in ConTeXt definiert, daher emphtext)
+\define[1]\emphtext{{\it #1}}
+
+% Durchgestrichen
+\define[1]\strike{{\overstrike #1}}
+
 % Mathematik-Typografie
 \setupmathematics[
     autopunctuation=yes,

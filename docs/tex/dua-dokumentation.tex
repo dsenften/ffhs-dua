@@ -47,14 +47,7 @@
 % Hyperlinks konfigurieren
 \setupurl[style=\tt, color=linkcolor]
 
-% Kopf- und Fußzeilen
-\setupheadertexts
-    [{\getmarking[chapter]}]
-    [{\getvariable{document}{title}}]
-
-\setupfootertexts
-    [{\getvariable{document}{author}}]
-    [Seite \pagenumber\ von \lastpagenumber]
+% Kopf- und Fußzeilen werden in layout.tex definiert (inkl. Git-Info)
 
 % Infobox Definition (für Literatur-Box)
 \defineframedtext[infobox][
@@ -97,8 +90,31 @@
 \blank[2*big]
 \placecontent
 
-% Hauptinhalt
+% =====================
+% TEIL I: GRUNDLAGEN
+% =====================
 \page
 \input content/chapters/00_kursuebersicht
+
+\page
+\input content/chapters/01_komplexitaetsanalyse
+
+\page
+\input content/chapters/02_union_find
+
+% =====================
+% TEIL II: SORTIEREN
+% =====================
+\page
+\input content/chapters/03_quick_sort
+
+\page
+\input content/chapters/04_heap_sort
+
+% =====================
+% ANHANG
+% =====================
+\page
+\input content/chapters/A_erste_schritte
 
 \stoptext

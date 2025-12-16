@@ -27,6 +27,52 @@
     conversion=numbers
 ]
 
+% =============================================================================
+% GIT-INFORMATIONEN
+% =============================================================================
+
+% Git-Branch und Commit-ID dynamisch ermitteln
+\startluacode
+    local function get_git_info()
+        local branch = "unknown"
+        local commit = "000000"
+
+        -- Branch ermitteln
+        local handle = io.popen("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+        if handle then
+            branch = handle:read("*a"):gsub("%s+", "")
+            handle:close()
+        end
+
+        -- Kurze Commit-ID ermitteln
+        handle = io.popen("git rev-parse --short HEAD 2>/dev/null")
+        if handle then
+            commit = handle:read("*a"):gsub("%s+", "")
+            handle:close()
+        end
+
+        return branch, commit
+    end
+
+    local branch, commit = get_git_info()
+    document.gitbranch = branch
+    document.gitcommit = commit
+    document.gitinfo = "[git] • Branch: " .. branch .. "@" .. commit
+\stopluacode
+
+% Makro für Git-Info in TeX verfügbar machen
+\def\gitinfo{\ctxlua{context(document.gitinfo)}}
+\def\gitbranch{\ctxlua{context(document.gitbranch)}}
+\def\gitcommit{\ctxlua{context(document.gitcommit)}}
+
+% =============================================================================
+% KOPF- UND FUSSZEILEN
+% =============================================================================
+
+% Markierungen für Kapitel und Section aktivieren
+\setuphead[chapter][marking=chapter]
+\setuphead[section][marking=section]
+
 % Kopfzeilen-Layout - keine Linie
 \setupheader[
     style=\tfx\ss,
@@ -35,10 +81,9 @@
     after=
 ]
 
-% Kopfzeilen-Inhalt
+% Kopfzeilen-Inhalt: Links = Dokumenttitel, Rechts = Kapitel
 \setupheadertexts
-    [][chapter]
-    [section][]
+    [FFHS DUA - Datenstrukturen und Algorithmen][\getmarking[chapter]]
 
 % Fußzeilen-Layout - keine Linie, mehr Abstand nach oben
 \setupfooter[
@@ -48,10 +93,9 @@
     after=
 ]
 
-% Fußzeilen-Inhalt: Seitenzahl
+% Fußzeilen-Inhalt: Git-Info zentriert, Seitenzahl rechts
 \setupfootertexts
-    [][\pagenumber]
-    [\pagenumber][]
+    [][\hbox to \hsize{\hfil\gitinfo\hfil\llap{\pagenumber}}]
 
 % Abschnittsnummerierung
 \setuphead[chapter][number=yes]

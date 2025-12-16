@@ -1,0 +1,266 @@
+% Kapitel: Union-Find (Disjoint Sets)
+% ====================================
+
+\chapter{Union-Find: Dynamische Konnektivität}
+
+\section{Einführung}
+
+Union-Find (auch bekannt als Disjoint Set Union, DSU) ist eine fundamentale
+Datenstruktur zur Verwaltung von dynamischen Konnektivitätsproblemen. Die Struktur
+unterstützt effizient zwei Hauptoperationen:
+
+\startitemize
+\item {\bf Union:} Verbinde zwei Elemente (und ihre Komponenten)
+\item {\bf Find:} Bestimme, zu welcher Komponente ein Element gehört
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor, background=color, backgroundcolor=lightgray]
+{\bf Problem:} Gegeben eine Menge von $n$ Elementen, die initial alle isoliert sind,
+und eine Sequenz von Verbindungsoperationen -- können wir effizient feststellen,
+ob zwei beliebige Elemente verbunden sind?
+\stopframedtext
+
+\section{Implementierungsvarianten}
+
+\subsection{Basis-Union-Find (UF)}
+
+Die optimierte Variante mit {\em Weighted Quick Union by Rank} und {\em Path Compression}:
+
+\startpythoncode
+class UF:
+    """Union-Find mit Weighted Quick Union by Rank und Path Compression.
+
+    Komplexität: O(α(n)) pro Operation (nahezu konstant)
+    wobei α die inverse Ackermann-Funktion ist (wächst extrem langsam).
+    """
+
+    def __init__(self, n: int):
+        self._parent = list(range(n))  # Jedes Element ist sein eigener Parent
+        self._rank = [0] * n           # Rang (Obergrenze für Tiefe)
+        self._count = n                # Anzahl der Komponenten
+
+    def find(self, p: int) -> int:
+        """Findet die Wurzel der Komponente von p mit Path Compression."""
+        root = p
+        while root != self._parent[root]:
+            root = self._parent[root]
+
+        # Path Compression: Alle Knoten direkt an die Wurzel hängen
+        while p != root:
+            next_p = self._parent[p]
+            self._parent[p] = root
+            p = next_p
+
+        return root
+
+    def union(self, p: int, q: int) -> None:
+        """Verbindet die Komponenten von p und q."""
+        root_p = self.find(p)
+        root_q = self.find(q)
+
+        if root_p == root_q:
+            return  # Bereits verbunden
+
+        # Union by Rank: Kleinerer Baum unter grösseren hängen
+        if self._rank[root_p] < self._rank[root_q]:
+            self._parent[root_p] = root_q
+        elif self._rank[root_p] > self._rank[root_q]:
+            self._parent[root_q] = root_p
+        else:
+            self._parent[root_q] = root_p
+            self._rank[root_p] += 1
+
+        self._count -= 1
+
+    def connected(self, p: int, q: int) -> bool:
+        """Prüft, ob p und q in derselben Komponente sind."""
+        return self.find(p) == self.find(q)
+
+    def count(self) -> int:
+        """Gibt die Anzahl der Komponenten zurück."""
+        return self._count
+\stoppythoncode
+
+\subsection{Quick Find}
+
+Die einfachste Variante mit $O(1)$ Find, aber $O(n)$ Union:
+
+\startpythoncode
+class QuickFindUF:
+    """Quick Find: O(1) find, O(n) union.
+
+    Jedes Element speichert direkt seine Komponenten-ID.
+    Find ist schnell, aber Union muss alle Elemente durchlaufen.
+    """
+
+    def __init__(self, n: int):
+        self._id = list(range(n))  # Jedes Element hat eigene ID
+        self._count = n
+
+    def find(self, p: int) -> int:
+        return self._id[p]  # O(1)
+
+    def union(self, p: int, q: int) -> None:
+        id_p = self._id[p]
+        id_q = self._id[q]
+
+        if id_p == id_q:
+            return
+
+        # O(n): Alle Elemente mit ID = id_p auf id_q umstellen
+        for i in range(len(self._id)):
+            if self._id[i] == id_p:
+                self._id[i] = id_q
+
+        self._count -= 1
+\stoppythoncode
+
+\subsection{Quick Union}
+
+Baumartige Struktur mit $O(n)$ Worst Case für beide Operationen:
+
+\startpythoncode
+class QuickUnionUF:
+    """Quick Union: O(n) find im Worst Case, O(n) union im Worst Case.
+
+    Elemente bilden Bäume. Find folgt dem Pfad zur Wurzel.
+    Problem: Bäume können zu langen Ketten entarten.
+    """
+
+    def __init__(self, n: int):
+        self._parent = list(range(n))  # Jedes Element ist sein eigener Parent
+        self._count = n
+
+    def find(self, p: int) -> int:
+        while p != self._parent[p]:  # O(n) im Worst Case
+            p = self._parent[p]
+        return p
+
+    def union(self, p: int, q: int) -> None:
+        root_p = self.find(p)
+        root_q = self.find(q)
+
+        if root_p == root_q:
+            return
+
+        self._parent[root_p] = root_q  # O(1) plus O(n) für find
+        self._count -= 1
+\stoppythoncode
+
+\subsection{Weighted Quick Union}
+
+Optimierte Variante mit $O(\log n)$ Garantie:
+
+\startpythoncode
+class WeightedQuickUnionUF:
+    """Weighted Quick Union: O(log n) find, O(log n) union.
+
+    Kleinerer Baum wird immer unter grösseren gehängt.
+    Garantiert maximale Baumhöhe von O(log n).
+    """
+
+    def __init__(self, n: int):
+        self._parent = list(range(n))
+        self._size = [1] * n  # Anzahl Elemente im Teilbaum
+        self._count = n
+
+    def find(self, p: int) -> int:
+        while p != self._parent[p]:
+            p = self._parent[p]
+        return p
+
+    def union(self, p: int, q: int) -> None:
+        root_p = self.find(p)
+        root_q = self.find(q)
+
+        if root_p == root_q:
+            return
+
+        # Kleineren Baum unter grösseren hängen
+        if self._size[root_p] < self._size[root_q]:
+            self._parent[root_p] = root_q
+            self._size[root_q] += self._size[root_p]
+        else:
+            self._parent[root_q] = root_p
+            self._size[root_p] += self._size[root_q]
+
+        self._count -= 1
+\stoppythoncode
+
+\section{Komplexitätsvergleich}
+
+\starttabulate[|l|c|c|c|]
+\HL
+\NC {\bf Variante} \NC {\bf find()} \NC {\bf union()} \NC {\bf connected()} \NC\NR
+\HL
+\NC Quick Find \NC $O(1)$ \NC $O(n)$ \NC $O(1)$ \NC\NR
+\NC Quick Union \NC $O(n)$ \NC $O(n)$ \NC $O(n)$ \NC\NR
+\NC Weighted QU \NC $O(\log n)$ \NC $O(\log n)$ \NC $O(\log n)$ \NC\NR
+\NC UF (optimiert) \NC $O(\alpha(n))$ \NC $O(\alpha(n))$ \NC $O(\alpha(n))$ \NC\NR
+\HL
+\stoptabulate
+
+{\em Hinweis: $\alpha(n)$ ist die inverse Ackermann-Funktion, die für alle praktischen
+Eingabegrössen $\leq 4$ ist.}
+
+\section{Anwendungsbeispiele}
+
+\subsection{Netzwerk-Konnektivität}
+
+\startpythoncode
+# Prüfe, ob zwei Computer im selben Netzwerk sind
+uf = UF(10)  # 10 Computer
+
+# Verbindungen hinzufügen
+uf.union(0, 1)  # Computer 0 und 1 verbinden
+uf.union(2, 3)  # Computer 2 und 3 verbinden
+uf.union(1, 2)  # Netzwerk verbinden
+
+# Konnektivität prüfen
+print(uf.connected(0, 3))  # True - über 0-1-2-3 verbunden
+print(uf.connected(0, 4))  # False - nicht verbunden
+print(uf.count())          # 7 - 7 separate Komponenten
+\stoppythoncode
+
+\subsection{Kruskal's Minimum Spanning Tree}
+
+\startpythoncode
+def kruskal_mst(edges, n):
+    """Findet minimalen Spannbaum mit Union-Find."""
+    # Kanten nach Gewicht sortieren
+    edges.sort(key=lambda e: e[2])  # (u, v, weight)
+
+    uf = UF(n)
+    mst = []
+
+    for u, v, weight in edges:
+        if not uf.connected(u, v):
+            uf.union(u, v)
+            mst.append((u, v, weight))
+
+            if len(mst) == n - 1:  # MST komplett
+                break
+
+    return mst
+\stoppythoncode
+
+\section{Zusammenfassung}
+
+Union-Find ist eine der effizientesten Datenstrukturen für dynamische Konnektivitätsprobleme:
+
+\startitemize
+\item {\bf Weighted Quick Union by Rank}: Garantiert $O(\log n)$ Baumhöhe
+\item {\bf Path Compression}: Macht Bäume flacher bei jeder Find-Operation
+\item {\bf Kombiniert}: Nahezu konstante Zeit $O(\alpha(n))$ pro Operation
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor]
+{\bf Wichtige Anwendungen:}
+\startitemize
+\item Netzwerk-Konnektivität
+\item Kruskal's MST-Algorithmus
+\item Perkolation (z.B. Wasserfluss durch poröse Materialien)
+\item Bildverarbeitung (Connected Components)
+\item Äquivalenzklassen-Probleme
+\stopitemize
+\stopframedtext
