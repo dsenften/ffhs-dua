@@ -204,12 +204,15 @@ Alle String-Symbol-Table-Implementierungen haben:
    - Anwendungen: Autovervollständigung, Textsuchmaschinen, Routing-Tabellen
 
 2. **PatriciaTrie**: Patricia-Trie (Pfadkompression)
-   - get, put: **O(m)** wobei m = Schlüssellänge
+   - get, put, delete: **O(m)** wobei m = Schlüssellänge
    - Kompakter als Standard-Trie durch Knoten-Verschmelzung
    - Kanten speichern Strings statt einzelner Zeichen
+   - Automatisches Node-Merging bei Deletion (Single-Child-Knoten werden verschmolzen)
+   - Leere Blattknoten werden entfernt
    - Optimiert für lange gemeinsame Präfixe
    - Platzsparend bei vielen ähnlichen Schlüsseln
-   - Anwendungen: IP-Routing, Netzwerk-Algorithmen
+   - Methoden: `get()`, `put()`, `delete()`, `keys()`, `contains()`, `size()`
+   - Anwendungen: IP-Routing, Netzwerk-Algorithmen, Prefix-Matching
 
 3. **KMP**: Knuth-Morris-Pratt String-Suchalgorithmus
    - search: **O(n) garantiert** wobei n = Textlänge (auch im Worst-Case!)
@@ -296,11 +299,11 @@ Package Management erfolgt über `uv` (siehe pyproject.toml).
 
 ## Test-Statistik
 
-- **Gesamt-Tests**: 625 (100% bestanden)
+- **Gesamt-Tests**: 786 (100% bestanden)
 - **PVA 1 (Fundamentals)**: 92 Tests
 - **PVA 2 (Sorting)**: 108 Tests
 - **PVA 3 (Searching)**: 162 Tests
 - **PVA 4 (Graphs)**: 78 Tests
-- **PVA 5 (Strings)**: 121 Tests (Trie: 59, KMP: 62)
+- **PVA 5 (Strings)**: 282 Tests (Trie: 59, Patricia: 39, KMP: 62, Boyer-Moore: 59, Rabin-Karp: 63)
 - **Utils**: 7 Tests
-- **Code-Coverage**: 93%+ (Trie: 99.22%, KMP: 100%)
+- **Code-Coverage**: 93%+ (Trie: 99.22%, Patricia: neu, KMP: 100%)
