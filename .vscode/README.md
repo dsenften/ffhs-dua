@@ -66,7 +66,7 @@ Siehe `.vscode/extensions.json`:
 1. Prüfen Sie, ob die `.venv` aktiviert ist:
    ```bash
    which python
-   # Sollte zeigen: /Users/daniel/GitRepository/pyt-intro-2025/.venv/bin/python
+   # Sollte zeigen: /path/to/your/repo/.venv/bin/python
    ```
 
 2. Prüfen Sie, ob pytest installiert ist:

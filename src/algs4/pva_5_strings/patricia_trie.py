@@ -241,6 +241,105 @@ class PatriciaTrie[V]:
 
         return split_node
 
+    def delete(self, key: str) -> None:
+        """Löscht den Schlüssel und den zugehörigen Wert aus dem Patricia-Trie.
+
+        Entfernt den Wert am Schlüssel-Ende und räumt die Struktur auf:
+        - Leere Blattknoten werden entfernt
+        - Knoten mit nur einem Kind werden verschmolzen (Pfadkompression)
+
+        Args:
+            key: Der zu löschende Schlüssel
+
+        Raises:
+            ValueError: Wenn der Schlüssel None ist
+
+        Examples:
+            >>> pt = PatriciaTrie()
+            >>> pt.put("test", 1)
+            >>> pt.put("testing", 2)
+            >>> pt.delete("test")
+            >>> pt.get("test")
+            >>> pt.size()
+            1
+        """
+        if key is None:
+            raise ValueError("Schlüssel darf nicht None sein")
+
+        if self._root is None:
+            return  # Nichts zu löschen
+
+        # Versuche zu löschen
+        result = self._delete(self._root, key)
+        if result is None:
+            self._root = None
+        else:
+            self._root = result
+
+    def _delete(self, node: _PatriciaNode[V], key: str) -> _PatriciaNode[V] | None:
+        """Hilfsmethode für delete - löscht rekursiv einen Schlüssel.
+
+        Args:
+            node: Aktueller Knoten
+            key: Der zu löschende Schlüssel (verbleibender Teil)
+
+        Returns:
+            _PatriciaNode[V] | None: Der aktualisierte Knoten oder None wenn zu löschen
+        """
+        # Prüfe ob Präfix übereinstimmt
+        if not key.startswith(node.prefix):
+            return node  # Schlüssel nicht gefunden, nichts ändern
+
+        # Entferne den Präfix
+        remaining = key[len(node.prefix) :]
+
+        # Wenn nichts mehr übrig ist, sind wir am Ziel
+        if not remaining:
+            if node.val is not None:
+                node.val = None
+                self._n -= 1
+
+                # Aufräumen: Wenn Knoten keine Kinder hat, löschen
+                if not node.children:
+                    return None
+
+                # Wenn Knoten nur ein Kind hat, verschmelzen
+                if len(node.children) == 1:
+                    child_char, child = next(iter(node.children.items()))
+                    # Verschmelze: Präfixe kombinieren
+                    # child.prefix beginnt bereits mit child_char, daher nicht doppelt hinzufügen
+                    child.prefix = node.prefix + child.prefix
+                    return child
+
+            return node
+
+        # Suche nach passendem Kind
+        first_char = remaining[0]
+        if first_char not in node.children:
+            return node  # Schlüssel nicht gefunden
+
+        # Rekursiv im Kind löschen
+        child_result = self._delete(node.children[first_char], remaining)
+
+        if child_result is None:
+            # Kind wurde gelöscht
+            del node.children[first_char]
+
+            # Aufräumen: Wenn dieser Knoten jetzt leer ist und keinen Wert hat
+            if not node.children and node.val is None:
+                return None
+
+            # Wenn nur ein Kind übrig ist und dieser Knoten keinen Wert hat, verschmelzen
+            if len(node.children) == 1 and node.val is None:
+                child_char, child = next(iter(node.children.items()))
+                # child.prefix beginnt bereits mit child_char, daher nicht doppelt hinzufügen
+                child.prefix = node.prefix + child.prefix
+                return child
+        else:
+            node.children[first_char] = child_result
+
+        return node
+
     def keys(self) -> Iterator[str]:
         """Gibt alle Schlüssel zurück.
 
