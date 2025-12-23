@@ -70,13 +70,13 @@ def rabin_karp_multiple(patterns: list, text: str) -> dict:
 # Rabin-Karp spezifische Tests
 rk = RabinKarp("abc")
 text = "abcabcabc"
+```
 
-# Besondere Testfälle
+**Besondere Testfälle:**
 - Hash-Kollisionen: Verschiedene Strings mit gleichem Hash
 - Rolling Hash: Korrekte Update-Berechnung
 - Multiple Patterns: Gleichzeitige Suche mehrerer Muster
 - Numerische Stabilität: Sehr lange Texte und Muster
-```
 
 ### Hash-Qualität prüfen
 - Testet die Hash-Verteilung bei verschiedenen Eingaben
