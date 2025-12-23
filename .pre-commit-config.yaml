@@ -5,7 +5,7 @@
 repos:
   # General file checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v6.0.0
     hooks:
       # Identify files that would conflict in merge
       - id: check-merge-conflict
@@ -26,12 +26,12 @@ repos:
       - id: end-of-file-fixer
       # Check for debugger imports and py37+ breakpoint()
       - id: debug-statements
-      # Forbid files which have a UTF-8 byte-order marker
-      - id: check-byte-order-marker
+      # Fix files which have a UTF-8 byte-order marker
+      - id: fix-byte-order-marker
 
   # Python code formatting with Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.8
+    rev: v0.14.10
     hooks:
       # Linting
       - id: ruff

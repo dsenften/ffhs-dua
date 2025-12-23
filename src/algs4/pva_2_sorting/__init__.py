@@ -13,11 +13,6 @@ Datentypen, die das Vergleichsprotokoll implementieren. Merge Sort benötigt
 zusätzlichen Speicher, ist aber stabil.
 """
 
-from .heap import Heap
-from .merge import Merge
-from .quick import Quick
-from .shell import Shell
-
 __all__ = [
     # Sortieralgorithmen
     "Shell",
@@ -25,3 +20,22 @@ __all__ = [
     "Heap",
     "Merge",
 ]
+
+# Lazy loading für Module - verhindert RuntimeWarning bei Ausführung als Script
+_LAZY_IMPORTS = {
+    "Shell": (".shell", "Shell"),
+    "Quick": (".quick", "Quick"),
+    "Heap": (".heap", "Heap"),
+    "Merge": (".merge", "Merge"),
+}
+
+
+def __getattr__(name: str):
+    """Lazy loading von Modulen bei erstem Zugriff."""
+    if name in _LAZY_IMPORTS:
+        module_path, attr_name = _LAZY_IMPORTS[name]
+        import importlib
+
+        module = importlib.import_module(module_path, __package__)
+        return getattr(module, attr_name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

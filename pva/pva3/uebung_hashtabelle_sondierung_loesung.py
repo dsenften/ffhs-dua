@@ -182,10 +182,10 @@ def analyze_hash_function(
 
     print("\nStatistiken:")
     print(
-        f"  Genutzte Indizes: {used_indices}/{capacity} ({used_indices/capacity*100:.1f}%)"
+        f"  Genutzte Indizes: {used_indices}/{capacity} ({used_indices / capacity * 100:.1f}%)"
     )
     print(
-        f"  Ungenutzte Indizes: {unused_indices}/{capacity} ({unused_indices/capacity*100:.1f}%)"
+        f"  Ungenutzte Indizes: {unused_indices}/{capacity} ({unused_indices / capacity * 100:.1f}%)"
     )
     print(f"  Maximale Kollisionen pro Index: {max_collisions}")
 
@@ -195,7 +195,7 @@ def analyze_hash_function(
     for x in examples:
         if x in value_range:
             h = hash_func(x)
-            print(f"  h({x:3}) = ({x:3} * {x:3}) % 23 = {x*x:5} % 23 = {h:2}")
+            print(f"  h({x:3}) = ({x:3} * {x:3}) % 23 = {x * x:5} % 23 = {h:2}")
 
 
 def analyze_hash_properties() -> None:
@@ -336,10 +336,10 @@ def test_part_a() -> None:
     print("EINFÜGEN VON WERT: 63")
     print("=" * 60)
     final_index_63, probed_indices_63 = ht.insert(63, verbose=True)
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"ERGEBNIS: Wert 63 wurde an Index {final_index_63} eingefügt")
     print(f"Probierte Indizes: {probed_indices_63}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     ht.display()
 
     # Füge 116 ein
@@ -347,10 +347,10 @@ def test_part_a() -> None:
     print("EINFÜGEN VON WERT: 116")
     print("=" * 60)
     final_index_116, probed_indices_116 = ht.insert(116, verbose=True)
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"ERGEBNIS: Wert 116 wurde an Index {final_index_116} eingefügt")
     print(f"Probierte Indizes: {probed_indices_116}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     ht.display()
 
     # Zusammenfassung
@@ -401,7 +401,7 @@ def verify_initial_positions() -> None:
         calculated_pos = ht.hash_function(value)
         match = "✓" if calculated_pos == expected_pos else "✗"
         print(
-            f"  h({value:3}) = ({value:3}²) % 23 = {value*value:5} % 23 = {calculated_pos:2} (erwartet: {expected_pos:2}) {match}"
+            f"  h({value:3}) = ({value:3}²) % 23 = {value * value:5} % 23 = {calculated_pos:2} (erwartet: {expected_pos:2}) {match}"
         )
 
 

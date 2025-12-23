@@ -7,7 +7,7 @@ Autor: Daniel Senften <daniel.senften@ffhs.ch>
 Datum: 2025
 """
 
-from typing import Generic, TypeVar
+from typing import TypeVar
 
 from src.algs4.pva_3_searching.bst import BST, Node
 
@@ -15,7 +15,7 @@ K = TypeVar("K")  # Key type (muss vergleichbar sein)
 V = TypeVar("V")  # Value type
 
 
-class BSTValidator(Generic[K, V]):
+class BSTValidator[K, V]:
     """Validator für Binary Search Trees.
 
     Diese Klasse implementiert eine Methode zur Überprüfung der BST-Eigenschaft.
@@ -96,7 +96,7 @@ class BSTValidator(Generic[K, V]):
         ) and self._is_valid_bst_helper(node.right, node.key, max_val)
 
 
-class BSTValidatorIterative(Generic[K, V]):
+class BSTValidatorIterative[K, V]:
     """Alternative iterative Implementierung der BST-Validierung.
 
     Diese Variante verwendet einen Stack anstelle von Rekursion.
@@ -238,9 +238,9 @@ def test_equal_keys() -> None:
     bst._root.right = Node(5, "fünf_dupliziert", 1)  # Gleicher Schlüssel!
 
     validator = BSTValidator(bst)
-    assert (
-        not validator.is_valid_bst()
-    ), "BST mit duplizierten Schlüsseln sollte ungültig sein"
+    assert not validator.is_valid_bst(), (
+        "BST mit duplizierten Schlüsseln sollte ungültig sein"
+    )
     print("✓ Test 6 bestanden: Duplizierte Schlüssel erkannt")
 
 

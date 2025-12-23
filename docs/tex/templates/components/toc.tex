@@ -1,0 +1,118 @@
+% Inhaltsverzeichnis für FFHS-DUA Dokumentation
+% =============================================
+
+\startcomponent toc
+
+% Neue Seite für Inhaltsverzeichnis
+\page
+
+% Überschrift
+\midaligned{\bfd\ss\color[primarycolor]{Inhaltsverzeichnis}}
+
+\blank[2*big]
+
+% Inhaltsverzeichnis-Setup
+\setupcombinedlist[content][
+    level=3,                    % Bis zu 3 Ebenen anzeigen
+    alternative=c,              % Kompakte Darstellung
+    interaction=all,            % Alle Links aktivieren
+    width=2em,                  % Breite für Nummern
+    distance=0.5em,             % Abstand zwischen Nummer und Text
+    margin=1em,                 % Linker Rand
+    before={\blank[medium]},    % Abstand vor TOC
+    after={\blank[big]},        % Abstand nach TOC
+    style=\rm,                  % Schriftart
+    numberstyle=\bf,            % Nummern-Schriftart
+    pagenumberstyle=\rm,        % Seitenzahlen-Schriftart
+    aligntitle=yes,             % Titel ausrichten
+    criterium=all               % Alle Ebenen einbeziehen
+]
+
+% Spezielle Formatierung für verschiedene Ebenen
+\setuplist[chapter][
+    style=\bfa\ss,
+    color=primarycolor,
+    numberstyle=\bfa\ss,
+    numbercolor=primarycolor,
+    pagenumberstyle=\bfa,
+    before={\blank[medium]},
+    after={\blank[small]}
+]
+
+\setuplist[section][
+    style=\rm,
+    color=textcolor,
+    numberstyle=\bf,
+    numbercolor=secondarycolor,
+    pagenumberstyle=\rm,
+    margin=2em
+]
+
+\setuplist[subsection][
+    style=\rm,
+    color=lighttext,
+    numberstyle=\rm,
+    numbercolor=lighttext,
+    pagenumberstyle=\rm,
+    margin=3em
+]
+
+% Punkte zwischen Titel und Seitenzahl
+\setuplist[chapter][
+    symbol=none,
+    pagecommand=\groupedcommand{}{\quad}
+]
+
+\setuplist[section][
+    symbol=none,
+    pagecommand=\groupedcommand{}{\quad}
+]
+
+\setuplist[subsection][
+    symbol=none,
+    pagecommand=\groupedcommand{}{\quad}
+]
+
+% Inhaltsverzeichnis ausgeben
+\placecontent
+
+% Abbildungsverzeichnis (falls Abbildungen vorhanden)
+\determinelistcharacteristics[figure]
+\ifnum\currentlistlength>0
+    \blank[2*big]
+    \midaligned{\bfb\ss\color[secondarycolor]{Abbildungsverzeichnis}}
+    \blank[big]
+
+    \setuplist[figure][
+        alternative=c,
+        interaction=all,
+        style=\rm,
+        numberstyle=\bf,
+        numbercolor=secondarycolor
+    ]
+
+    \placelist[figure]
+\fi
+
+% Tabellenverzeichnis (falls Tabellen vorhanden)
+\determinelistcharacteristics[table]
+\ifnum\currentlistlength>0
+    \blank[2*big]
+    \midaligned{\bfb\ss\color[secondarycolor]{Tabellenverzeichnis}}
+    \blank[big]
+
+    \setuplist[table][
+        alternative=c,
+        interaction=all,
+        style=\rm,
+        numberstyle=\bf,
+        numbercolor=secondarycolor
+    ]
+
+    \placelist[table]
+\fi
+
+% Code-Listings-Verzeichnis (falls Code-Blöcke vorhanden)
+% (Wird durch den Generator hinzugefügt falls nötig)
+
+\stopcomponent

@@ -7,7 +7,7 @@ packages = ["src"]
 
 [project]
 name = "ffhs-dua"
-version = "1.0.0"
+version = "1.1.0"
 description = "Umfassende Python-Implementierung grundlegender Algorithmen und Datenstrukturen für den akademischen Gebrauch an der Fernfachhochschule Schweiz (FFHS)"
 readme = "README.md"
 requires-python = ">=3.13.1"
@@ -44,6 +44,7 @@ classifiers = [
 ]
 dependencies = [
     "matplotlib>=3.10.5",
+    "pyyaml>=6.0.2",
 ]
 
 [project.urls]

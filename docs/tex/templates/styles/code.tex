@@ -1,0 +1,185 @@
+% Code-Highlighting und Syntax-Definitionen
+% =========================================
+
+% =============================================================================
+% CODE-BLÖCKE MIT SYNTAX-HIGHLIGHTING (via vim)
+% =============================================================================
+
+% vim-Modul laden für Syntax-Highlighting
+\usemodule[vim]
+
+% Python-Code mit Syntax-Highlighting
+\definevimtyping[pythoncode][
+    syntax=python,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
+]
+
+% Bash/Shell-Code mit Syntax-Highlighting
+\definevimtyping[bashcode][
+    syntax=sh,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
+]
+
+% JSON-Code mit Syntax-Highlighting
+\definevimtyping[jsoncode][
+    syntax=json,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
+]
+
+% YAML-Code mit Syntax-Highlighting
+\definevimtyping[yamlcode][
+    syntax=yaml,
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+    numbering=no,
+]
+
+% Generischer Text-Code (ohne Highlighting)
+\definetyping[textcode][
+    before={\blank[small]\startframedtext[
+        frame=on,
+        framecolor=codeborder,
+        background=color,
+        backgroundcolor=codebackground,
+        width=\textwidth,
+        align=flushleft,
+        loffset=0.5em,
+        roffset=0.5em,
+        toffset=0.3em,
+        boffset=0.3em,
+    ]},
+    after={\stopframedtext\blank[small]},
+    style=\tt\small,
+]
+
+% Inline-Code
+\definetype[code][style=\tt\small]
+
+% Inline Python (mit Highlighting)
+\definevimtyping[inlinepython][syntax=python,escape=on]
+
+% =============================================================================
+% ZUSÄTZLICHE CODE-UMGEBUNGEN
+% =============================================================================
+
+% Dateinamen
+\definetype[filename][
+    style=\tt\bf,
+    color=filenamecolor,
+    before=,
+    after=
+]
+
+% Pfade
+\definetype[path][
+    style=\tt,
+    color=pathcolor,
+    before=,
+    after=
+]
+
+% Kommandozeilen-Befehle
+\definetype[command][
+    style=\tt\bf,
+    color=shellcommand,
+    before=,
+    after=
+]
+
+% Terminal/Console Output
+\definetyping[terminal]
+\setuptyping[terminal][
+    style=\tt\tfx,
+    color=white,
+    background=color,
+    backgroundcolor=textcolor,
+    frame=on,
+    framecolor=textcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Output/Ergebnis-Blöcke
+\defineframedtext[output][
+    frame=on,
+    framecolor=successcolor,
+    background=color,
+    backgroundcolor=infobgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\tt\tfx,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Fehler-Output
+\defineframedtext[error][
+    frame=on,
+    framecolor=errorcolor,
+    background=color,
+    backgroundcolor=errorbgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\tt\tfx,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]

@@ -1,0 +1,404 @@
+\section{KMP String-Suchalgorithmus (Knuth-Morris-Pratt)}
+
+\subsection{Einleitung}
+
+Der KMP-Algorithmus (Knuth-Morris-Pratt) ist ein effizienter String-Suchalgorithmus, der einen Muster-String in einem Text-String sucht. Benannt nach seinen Erfindern Donald Knuth, Vaughan Pratt und James Morris (1977), ist KMP besonders bemerkenswert, weil er {\bf garantierte lineare Laufzeit} auch im Worst-Case bietet.
+
+{\bf Kernvorteil}: Im Gegensatz zu naiven Ansätzen nutzt KMP eine vorberechnete Tabelle (DFA - Deterministic Finite Automaton oder Verschiebetabelle), um {\bf Backtracking im Text zu vermeiden}. Der Text-Index läuft nur vorwärts, was zu einer garantierten O(n) Laufzeit führt, wobei n die Textlänge ist.
+
+{\bf Grundprinzip}: KMP verfolgt prinzipiell die gleiche Idee wie die Konstruktion eines deterministischen endlichen Automaten, vermeidet jedoch die aufwändige Konstruktion eines kompletten Automaten und beschränkt sich auf das Wesentliche: die Suche nach Präfixen des Musters innerhalb des Musters selbst.
+
+\subsection{Hauptmerkmale}
+
+\subsubsection{Vorteile gegenüber naiven Algorithmen}
+
+\startitemize[n]
+\item {\bf Kein Backtracking im Text}: Der Text-Index läuft nur vorwärts
+\item {\bf Worst-Case O(n) Laufzeit}: Garantierte lineare Laufzeit für die Suche
+\item {\bf Wiederverwendbar}: DFA wird einmal aufgebaut und kann für beliebig viele Suchen verwendet werden
+\item {\bf Effizient bei wiederholten Zeichen}: Gerade bei Mustern mit Wiederholungen deutlich schneller als naive Ansätze
+\stopitemize
+
+\subsubsection{Typische Anwendungsfälle}
+
+\startitemize
+\item {\bf Textsuche}: Schnelle Suche in grossen Texten (Editoren, Datenbanken)
+\item {\bf DNA-Sequenzanalyse}: Suche nach genetischen Mustern
+\item {\bf Netzwerk-Intrusion-Detection}: Pattern Matching in Netzwerkpaketen
+\item {\bf Plagiatserkennung}: Effiziente Suche nach kopierten Textpassagen
+\stopitemize
+
+\subsection{Algorithmus}
+
+\subsubsection{Naive String-Suche (zum Vergleich)}
+
+Die naive String-Suche vergleicht das Muster an jeder Position im Text:
+
+\startpythoncode
+def naive_search(pattern: str, text: str) -> int:
+    m = len(pattern)
+    n = len(text)
+
+    for i in range(n - m + 1):
+        j = 0
+        while j < m and text[i + j] == pattern[j]:
+            j += 1
+        if j == m:
+            return i  # Gefunden an Position i
+    return n  # Nicht gefunden
+\stoppythoncode
+
+{\bf Problem}: Bei einem Mismatch springt der Algorithmus nur um 1 Position weiter, auch wenn mehr Information verfügbar wäre. Dies führt zu O(n × m) Laufzeit im Worst-Case.
+
+{\bf Beispiel-Worst-Case}:
+\startitemize
+\item Text: \type{"aaaaaaaaab"}
+\item Muster: \type{"aaab"}
+\item Naive Suche macht viele unnötige Vergleiche bei jedem Mismatch
+\stopitemize
+
+\subsubsection{KMP-Idee: Verschiebetabelle und DFA}
+
+KMP kann auf zwei äquivalente Arten verstanden werden:
+
+\startitemize
+\item {\bf Verschiebetabelle-Ansatz (Häberlein)}: Die Verschiebetabelle P speichert für jede Position i im Muster die Länge des maximalen Präfixes, das sich vor Position i befindet
+\item {\bf DFA-Ansatz (Sedgewick/Wayne)}: KMP baut einen DFA auf, der für jeden Zustand (Position im Muster) und jedes mögliche Zeichen den nächsten Zustand bestimmt
+\stopitemize
+
+{\bf Kern-Prinzip}: Bei einem Mismatch springt der Algorithmus nicht zurück zum Anfang, sondern nutzt die bereits gematchten Zeichen, um den optimalen nächsten Zustand zu finden.
+
+\subsubsection{Verschiebetabelle-Konstruktion (Häberlein-Ansatz)}
+
+Die Verschiebetabelle wird analog zur KMP-Suche berechnet, nur dass hier das Muster im Muster selbst gesucht wird:
+
+\startpythoncode
+def VerschTab(M):
+    """Berechnet die Verschiebetabelle für das Muster M."""
+    q = -1
+    P = [q]  # Verschiebetabelle
+
+    for i in range(1, len(M)):
+        # Suche längsten Präfix vor Position i
+        while q >= 0 and M[q] != M[i]:
+            q = P[q]  # Fallback über Verschiebetabelle
+        q += 1
+        P.append(q)
+
+    return P
+\stoppythoncode
+
+{\bf Beispiel für Muster "kakaokaki"}:
+\startitemize
+\item P = [-1, 0, 0, 1, 2, 0, 1, 2, 3]
+\item P[7] = 3: Die drei Zeichen "kak" vor Position 7 sind ein Präfix
+\stopitemize
+
+\subsubsection{DFA-Konstruktion (Sedgewick/Wayne-Ansatz)}
+
+Der DFA wird in O(m × R) Zeit aufgebaut:
+
+\startpythoncode
+class KMP:
+    def __init__(self, pattern: str) -> None:
+        self._pattern = pattern
+        self._R = 256  # Extended ASCII
+        m = len(pattern)
+
+        # Initialisiere DFA (R × m Matrix)
+        self._dfa = [[0] * m for _ in range(self._R)]
+
+        # Baue DFA auf
+        self._dfa[ord(pattern[0])][0] = 1  # Match im Zustand 0
+
+        x = 0  # Restart-Zustand (Fallback bei Mismatch)
+        for j in range(1, m):
+            # Kopiere Mismatch-Fälle vom Restart-Zustand
+            for c in range(self._R):
+                self._dfa[c][j] = self._dfa[c][x]
+
+            # Setze Match-Fall
+            self._dfa[ord(pattern[j])][j] = j + 1
+
+            # Update Restart-Zustand
+            x = self._dfa[ord(pattern[j])][x]
+\stoppythoncode
+
+{\bf Restart-Zustand x}: Simuliert den DFA auf dem Muster selbst, um bei einem Mismatch den optimalen Fallback-Zustand zu finden.
+
+\subsubsection{Suche mit Verschiebetabelle (Häberlein-Ansatz)}
+
+\startpythoncode
+def KMP(M, T):
+    """Knuth-Morris-Pratt Suche mit Verschiebetabelle."""
+    P = VerschTab(M)  # Berechne Verschiebetabelle
+    erg = []
+    q = -1  # Position im Muster (zuletzt erfolgreich geprüft)
+
+    for i in range(len(T)):
+        # Bei Mismatch: nutze Verschiebetabelle für Fallback
+        while q >= 0 and M[q + 1] != T[i]:
+            q = P[q]
+
+        q += 1  # Nächste Position im Muster
+
+        # Vollständiger Match gefunden
+        if q == len(M) - 1:
+            erg.append(i + 1 - len(M))  # Startposition des Matches
+            q = P[q]  # Bereite nächste Suche vor
+
+    return erg
+\stoppythoncode
+
+\subsubsection{Suche mit DFA (Sedgewick/Wayne-Ansatz)}
+
+Die Suche läuft in O(n) Zeit:
+
+\startpythoncode
+def search(self, text: str) -> int:
+    n = len(text)
+    m = len(self._pattern)
+
+    i = 0  # Text-Index
+    j = 0  # Muster-Index (Zustand im DFA)
+
+    # Durchlaufe Text (nur vorwärts, kein Backtracking!)
+    while i < n and j < m:
+        j = self._dfa[ord(text[i])][j]  # Nächster Zustand
+        i += 1  # Text-Index läuft nur vorwärts
+
+    # Gefunden wenn j == m (Endzustand erreicht)
+    if j == m:
+        return i - m
+    return n  # Nicht gefunden
+\stoppythoncode
+
+{\bf Wichtig}: Der Text-Index \type{i} läuft nur vorwärts. Es gibt kein Backtracking!
+
+\subsection{Python-Implementierung}
+
+\subsubsection{Klasse KMP}
+
+\startpythoncode
+from collections.abc import Iterator
+
+class KMP:
+    """Knuth-Morris-Pratt String-Suchalgorithmus.
+
+    Implementiert effiziente String-Suche durch Verwendung eines
+    Deterministischen Finiten Automaten (DFA). Der DFA wird einmal
+    beim Konstruktor aufgebaut und kann dann für beliebig viele
+    Suchen wiederverwendet werden.
+    """
+
+    def __init__(self, pattern: str) -> None:
+        """Initialisiert den KMP-Algorithmus mit einem Suchmuster."""
+        if pattern is None:
+            raise ValueError("Muster darf nicht None sein")
+        if not pattern:
+            raise ValueError("Muster darf nicht leer sein")
+
+        self._pattern = pattern
+        self._R = 256  # Extended ASCII
+        # ... DFA-Aufbau ...
+
+    @property
+    def pattern(self) -> str:
+        """Gibt das Suchmuster zurück."""
+        return self._pattern
+
+    def search(self, text: str) -> int:
+        """Sucht das Muster im gegebenen Text.
+
+        Returns:
+            Index der ersten Übereinstimmung, oder len(text) wenn nicht gefunden
+        """
+        # ... Suche mit DFA ...
+
+    def search_all(self, text: str) -> Iterator[int]:
+        """Findet alle Vorkommen des Musters im Text.
+
+        Returns:
+            Iterator über alle Match-Positionen
+        """
+        pos = 0
+        while pos <= len(text) - len(self._pattern):
+            remaining_text = text[pos:]
+            offset = self.search(remaining_text)
+
+            if offset < len(remaining_text):
+                yield pos + offset
+                pos += offset + 1  # Weiter nach erstem Match
+            else:
+                break
+
+    def count(self, text: str) -> int:
+        """Zählt alle Vorkommen des Musters im Text."""
+        return sum(1 for _ in self.search_all(text))
+\stoppythoncode
+
+\subsubsection{Verwendungsbeispiele}
+
+\startpythoncode
+# Einfache Suche
+kmp = KMP("NEEDLE")
+position = kmp.search("HAYSTACK WITH NEEDLE IN IT")
+print(position)  # 14
+
+# Nicht gefunden
+kmp = KMP("xyz")
+position = kmp.search("abcdef")
+print(position)  # 6 (len(text))
+
+# Alle Vorkommen finden
+kmp = KMP("ab")
+for pos in kmp.search_all("ababab"):
+    print(pos)  # 0, 2, 4
+
+# Vorkommen zählen
+kmp = KMP("the")
+count = kmp.count("the quick brown fox jumps over the lazy dog")
+print(count)  # 2
+\stoppythoncode
+
+\subsection{Komplexitätsanalyse}
+
+\subsubsection{Laufzeitanalyse (Amortisierte Analyse)}
+
+{\bf Kernbeobachtung}: Die Variable q (Muster-Position) kann nicht bei jedem Durchlauf der Hauptschleife um m Werte erniedrigt werden. Die while-Schleife stellt sicher, dass q nur bis zum Wert -1 erniedrigt werden kann. Um q erneut zu erniedrigen, muss es zunächst erhöht worden sein.
+
+{\bf Amortisierte Analyse}:
+\startitemize
+\item Jede Erhöhung von q geht mit einer Erhöhung von i (Text-Index) einher
+\item Schlimmster Fall: q wird immer in Einerschritten erniedrigt und danach wieder erhöht
+\item Insgesamt: n Schritte "nach oben" + n Schritte "nach unten" = 2n Schritte
+\item {\bf Resultat}: Worst-Case-Komplexität von O(2n) = O(n)
+\stopitemize
+
+\subsubsection{Komplexitätstabelle}
+
+\placetable[here][tab:kmp-complexity]{Komplexitätsanalyse KMP-Operationen}
+\starttabulate[|l|l|l|l|]
+\HL
+\NC {\bf Operation} \NC {\bf Laufzeit} \NC {\bf Speicher} \NC {\bf Bemerkung} \NC\NR
+\HL
+\NC Verschiebetabelle-Aufbau \NC O(m) \NC O(m) \NC m = Muster-Länge \NC\NR
+\NC DFA-Aufbau \NC O(m × R) \NC O(m × R) \NC R = Alphabet-Grösse (256) \NC\NR
+\NC \type{search(text)} \NC O(n) \NC O(1) \NC n = Text-Länge, garantiert! \NC\NR
+\NC \type{search_all(text)} \NC O(n) \NC O(1) \NC Bei k Matches: O(n + k × m) \NC\NR
+\NC \type{count(text)} \NC O(n) \NC O(1) \NC Bei k Matches: O(n + k × m) \NC\NR
+\HL
+\stoptabulate
+
+{\bf Wichtig}:
+\startitemize
+\item Die Suche hat {\bf garantierte O(n) Laufzeit}, unabhängig vom Muster
+\item Kein Backtracking im Text (i läuft nur vorwärts)
+\item Der DFA-Speicher ist O(m × R), bei R=256 sind das 256 × m Integer
+\item Die Verschiebetabelle benötigt nur O(m) Speicher
+\stopitemize
+
+\subsubsection{Vergleich mit naiven Algorithmen}
+
+{\bf Worst-Case Beispiel}:
+\startitemize
+\item Text: \type{"aaaaaaaaaaaab"} (n Zeichen)
+\item Muster: \type{"aaaab"} (m Zeichen)
+\stopitemize
+
+\placetable[here][tab:kmp-vs-naive]{Vergleich KMP vs. naive Suche}
+\starttabulate[|l|l|l|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Laufzeit} \NC {\bf Vergleiche} \NC\NR
+\HL
+\NC Naive Suche \NC O(n × m) \NC (n - m + 1) × m \NC\NR
+\NC KMP \NC O(n) \NC n \NC\NR
+\HL
+\stoptabulate
+
+Bei n=1.000.000 und m=100:
+\startitemize
+\item Naive: ~100.000.000 Vergleiche
+\item KMP: ~1.000.000 Vergleiche (100× schneller!)
+\stopitemize
+
+\subsection{Limitierungen}
+
+\subsubsection{Extended ASCII (256 Zeichen)}
+
+Die aktuelle Implementierung verwendet eine 256-Element DFA-Tabelle für Extended ASCII:
+
+\startpythoncode
+self._R = 256  # Extended ASCII
+\stoppythoncode
+
+{\bf Limitation}: Unicode-Zeichen mit \type{ord() > 255} (z.B. Emojis wie 😀 mit ord=128512) führen zu einem \type{IndexError}.
+
+{\bf Lösung} (für volle Unicode-Unterstützung):
+\startpythoncode
+# Alternative: Dictionary-basierte DFA statt Array
+self._dfa = [{} for _ in range(m)]  # Speichert nur tatsächlich vorkommende Zeichen
+\stoppythoncode
+
+\subsubsection{Speicherverbrauch}
+
+Bei langen Mustern (z.B. m=10.000) benötigt der DFA:
+\startitemize
+\item Array-basiert: 256 × 10.000 × 4 Bytes ≈ 10 MB
+\item Dictionary-basiert: Deutlich weniger, abhängig vom Alphabet
+\stopitemize
+
+Für sehr lange Muster können alternative Algorithmen wie {\bf Boyer-Moore} effizienter sein.
+
+\subsection{Vergleich mit anderen String-Suchalgorithmen}
+
+\placetable[here][tab:string-algorithms-comparison]{Vergleich String-Suchalgorithmen}
+\starttabulate[|l|l|l|l|l|l|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Preprocessing} \NC {\bf Suche (Average)} \NC {\bf Suche (Worst)} \NC {\bf Speicher} \NC {\bf Bemerkung} \NC\NR
+\HL
+\NC Naive \NC O(1) \NC O(n × m) \NC O(n × m) \NC O(1) \NC Einfach, aber langsam \NC\NR
+\NC {\bf KMP} \NC O(m × R) \NC O(n) \NC O(n) \NC O(m × R) \NC Kein Backtracking, garantiert O(n) \NC\NR
+\NC Boyer-Moore \NC O(m + R) \NC O(n/m) \NC O(n × m) \NC O(m + R) \NC Oft schneller als KMP \NC\NR
+\NC Rabin-Karp \NC O(m) \NC O(n + m) \NC O(n × m) \NC O(1) \NC Nutzt Hashing \NC\NR
+\HL
+\stoptabulate
+
+{\bf KMP vs. Boyer-Moore}:
+\startitemize
+\item KMP: Garantierte O(n) Laufzeit, kein Backtracking
+\item Boyer-Moore: Durchschnittlich schneller (O(n/m)), aber O(n × m) im Worst-Case
+\stopitemize
+
+{\bf Wann KMP nutzen}:
+\startitemize
+\item Garantierte Worst-Case Performance gefordert
+\item Muster wird oft wiederverwendet (DFA-Aufbau amortisiert)
+\item Text mit vielen Wiederholungen (DNA-Sequenzen, komprimierte Daten)
+\stopitemize
+
+\subsection{Zusammenfassung}
+
+{\bf KMP (Knuth-Morris-Pratt)} ist ein fundamentaler String-Suchalgorithmus mit folgenden Charakteristika:
+
+{\bf Stärken}:
+\startitemize
+\item Garantierte O(n) Laufzeit, auch im Worst-Case
+\item Kein Backtracking im Text (i läuft nur vorwärts)
+\item Wiederverwendbarer DFA für mehrfache Suchen
+\item Effizient bei Mustern mit selbst-überlappenden Präfixen
+\stopitemize
+
+{\bf Zu beachten}:
+\startitemize
+\item Preprocessing benötigt O(m × R) Zeit und Speicher
+\item Bei kleinen Alphabeten (DNA: A,C,G,T) sehr speichereffizient
+\item Bei grossen Alphabeten (Unicode) kann Dictionary-basierte DFA besser sein
+\item Boyer-Moore ist in der Praxis oft schneller, aber ohne Worst-Case Garantie
+\stopitemize
+
+{\bf Einsatzempfehlung}: KMP ist die beste Wahl für Anwendungen, die {\bf garantierte lineare Laufzeit} benötigen, wie Echtzeitsysteme, Netzwerk-Intrusion-Detection oder DNA-Sequenzanalyse. Für allgemeine Textsuche kann Boyer-Moore schneller sein.
+
+\blank[medium]
+
+{\it Quelle: Praktische Algorithmik mit Python von Tobias Häberlein, Abschnitt 7.3 "Der Knuth-Morris-Pratt-Algorithmus" und Algorithms, 4th Edition von Sedgewick & Wayne, Abschnitt 5.3 "Substring Search"}

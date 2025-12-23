@@ -1,0 +1,266 @@
+% Typografie-Definitionen für FFHS-DUA Dokumentation
+% ==================================================
+
+% Schriftarten definieren
+\definetypeface[mainface][rm][serif][palatino][default]
+\definetypeface[mainface][ss][sans][helvetica][default]
+\definetypeface[mainface][tt][mono][courier][default]
+\definetypeface[mainface][mm][math][palatino][default]
+
+% Hauptschriftart aktivieren
+\setupbodyfont[mainface,11pt]
+
+% Zeilenhöhe und Absatzabstände
+\setupinterlinespace[line=1.2em]
+\setupwhitespace[medium]
+
+% Überschriften-Typografie
+\setuphead[chapter][
+    style=\bfd\ss,
+    color=primarycolor,
+    numberstyle=\bfd\ss,
+    numbercolor=primarycolor,
+    before={\blank[2*big]},
+    after={\blank[big]},
+    align=flushleft
+]
+
+\setuphead[section][
+    style=\bfb\ss,
+    color=secondarycolor,
+    numberstyle=\bfb\ss,
+    numbercolor=secondarycolor,
+    before={\blank[big]},
+    after={\blank[medium]},
+    align=flushleft
+]
+
+\setuphead[subsection][
+    style=\bfa\ss,
+    color=accentcolor,
+    numberstyle=\bfa\ss,
+    numbercolor=accentcolor,
+    before={\blank[medium]},
+    after={\blank[small]},
+    align=flushleft
+]
+
+\setuphead[subsubsection][
+    style=\bf\ss,
+    color=textcolor,
+    numberstyle=\bf\ss,
+    numbercolor=textcolor,
+    before={\blank[small]},
+    after={\blank[small]},
+    align=flushleft
+]
+
+% Absatz-Formatierung
+\setupindenting[yes, medium]
+\setupalign[width, tolerant, stretch]
+
+% Hervorhebungen
+\definehighlight[important][style=\bf, color=primarycolor]
+\definehighlight[emphasis][style=\it]
+\definehighlight[code][style=\tt, color=codecolor]
+\definehighlight[filename][style=\tt\bf, color=filenamecolor]
+
+% Fußnoten
+\setupfootnotes[
+    location=page,
+    rule=on,
+    width=\textwidth,
+    bodyfont=9pt,
+    style=\rm
+]
+
+% Marginalnoten
+\setupmargindata[inmargin][
+    style=\tfx\ss,
+    color=margincolor,
+    align=flushleft
+]
+
+% Beschriftungen (Captions)
+\setupcaption[figure][
+    style=\tfx\ss,
+    color=captioncolor,
+    align=middle,
+    location=bottom
+]
+
+\setupcaption[table][
+    style=\tfx\ss,
+    color=captioncolor,
+    align=middle,
+    location=top
+]
+
+% Spezielle Textblöcke
+\defineframedtext[infobox][
+    frame=on,
+    framecolor=infocolor,
+    background=color,
+    backgroundcolor=infobgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\rm,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+\defineframedtext[warningbox][
+    frame=on,
+    framecolor=warningcolor,
+    background=color,
+    backgroundcolor=warningbgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\rm,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+\defineframedtext[tipbox][
+    frame=on,
+    framecolor=tipcolor,
+    background=color,
+    backgroundcolor=tipbgcolor,
+    corner=round,
+    radius=3pt,
+    offset=10pt,
+    style=\rm,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% =============================================================================
+% LERNZIELE
+% =============================================================================
+
+% Lernziele-Box (FFHS Rot, ohne Rahmen)
+% Verwende defineframedtext - das unterstützt vertikale Strukturen wie itemize
+\defineframedtext[lernziele][
+    frame=off,
+    background=color,
+    backgroundcolor=lernzielebgcolor,
+    width=broad,
+    offset=1.5em,
+    before={\blank[medium]},
+    after={\blank[medium]},
+]
+
+% =============================================================================
+% AUFGABEN UND ÜBUNGEN
+% =============================================================================
+
+% Aufgaben-Box (orange)
+\defineframedtext[aufgabenbox][
+    frame=on,
+    framecolor=accentcolor,
+    background=color,
+    backgroundcolor=warningbgcolor,
+    width=\textwidth,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    loffset=1em,
+    roffset=1em,
+    toffset=0.5em,
+    boffset=0.5em,
+]
+
+% Übungs-Box (grün)
+\defineframedtext[uebungsbox][
+    frame=on,
+    framecolor=tipcolor,
+    background=color,
+    backgroundcolor=tipbgcolor,
+    width=\textwidth,
+    before={\blank[medium]},
+    after={\blank[medium]},
+    loffset=1em,
+    roffset=1em,
+    toffset=0.5em,
+    boffset=0.5em,
+]
+
+% =============================================================================
+% MARKDOWN-ÄHNLICHE SHORTCUTS
+% =============================================================================
+
+% Fett
+\define[1]\strong{{\bf #1}}
+
+% Kursiv (emph ist bereits in ConTeXt definiert, daher emphtext)
+\define[1]\emphtext{{\it #1}}
+
+% Durchgestrichen
+\define[1]\strike{{\overstrike #1}}
+
+% Mathematik-Typografie
+\setupmathematics[
+    autopunctuation=yes,
+    integral=nolimits
+]
+
+% Formelnummerierung
+\setupformulas[
+    location=right,
+    left={(},
+    right={)},
+    numberstyle=\rm
+]
+
+% Tabellen-Typografie
+\setupTABLE[each][each][
+    style=\rm,
+    align=middle,
+    offset=5pt
+]
+
+\setupTABLE[row][first][
+    style=\bf\ss,
+    color=white,
+    background=color,
+    backgroundcolor=primarycolor
+]
+
+% Listen-Typografie
+\setupitemize[1][
+    symbol=•,
+    margin=1em,
+    distance=0.5em,
+    style=\rm
+]
+
+\setupitemize[2][
+    symbol=◦,
+    margin=1.5em,
+    distance=0.5em,
+    style=\rm
+]
+
+\setupitemize[3][
+    symbol=▪,
+    margin=2em,
+    distance=0.5em,
+    style=\rm
+]
+
+% Nummerierte Listen (verwenden \startitemize[n])
+\setupitemize[n][
+    margin=1em,
+    distance=0.5em,
+    style=\rm
+]
+
+% Beschreibungslisten
+\setupdescription[
+    headstyle=\bf\ss,
+    headcolor=primarycolor,
+    margin=1em,
+    distance=0.5em,
+    style=\rm
+]

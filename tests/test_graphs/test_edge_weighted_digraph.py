@@ -89,7 +89,7 @@ class TestEdgeWeightedDigraph:
             EdgeWeightedDigraph(-1)
 
     def test_large_graph(self):
-        """Test: Großer Graph mit vielen Kanten."""
+        """Test: Grosser Graph mit vielen Kanten."""
         g = EdgeWeightedDigraph(100)
         for i in range(50):
             g.add_edge(DirectedEdge(i, i + 1, 0.5))

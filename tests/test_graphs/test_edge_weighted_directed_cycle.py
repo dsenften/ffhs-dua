@@ -1,6 +1,5 @@
 """Tests für die EdgeWeightedDirectedCycle-Klasse."""
 
-
 from src.algs4.pva_4_graphs.directed_edge import DirectedEdge
 from src.algs4.pva_4_graphs.edge_weighted_digraph import EdgeWeightedDigraph
 from src.algs4.pva_4_graphs.edge_weighted_directed_cycle import (

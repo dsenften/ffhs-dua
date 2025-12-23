@@ -1,0 +1,149 @@
+% Anhang: Erste Schritte
+% ======================
+
+\chapter{Erste Schritte mit ALGS4}
+
+Dieser Anhang führt Sie durch die Installation und erste Verwendung des Projekts.
+
+\section{Installation}
+
+\subsection{Repository klonen}
+
+\startpythoncode
+git clone <repository-url>
+cd ffhs-dua
+\stoppythoncode
+
+\subsection{Entwicklungsumgebung einrichten}
+
+\startpythoncode
+# Mit uv (empfohlen)
+uv sync
+
+# Oder mit setup-Skript
+python scripts/setup_dev.py
+\stoppythoncode
+
+\section{Ihr erstes Programm}
+
+\subsection{Stack-Beispiel}
+
+\startpythoncode
+from src.algs4.pva_1_fundamentals.stack import Stack
+
+# Stack erstellen
+stack = Stack[str]()
+
+# Elemente hinzufügen
+stack.push("Erstes Element")
+stack.push("Zweites Element")
+
+# Element entfernen
+element = stack.pop()
+print(f"Entfernt: {element}")  # "Zweites Element"
+\stoppythoncode
+
+\subsection{Quick Sort-Beispiel}
+
+\startpythoncode
+from src.algs4.pva_2_sorting.quick import Quick
+
+# Liste sortieren
+numbers = [64, 34, 25, 12, 22, 11, 90]
+print(f"Unsortiert: {numbers}")
+
+sorted_numbers = Quick.sort(numbers)
+print(f"Sortiert: {sorted_numbers}")
+
+# Überprüfung
+print(f"Ist sortiert: {Quick.is_sorted(sorted_numbers)}")
+\stoppythoncode
+
+\subsection{Heap Sort-Beispiel}
+
+\startpythoncode
+from src.algs4.pva_2_sorting.heap import Heap
+
+# Liste sortieren (garantierte O(n log n) Performance)
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Heap.sort(numbers)
+print(f"Sortiert: {sorted_numbers}")
+
+# Heap Sort ist besonders gut für Worst-Case-Garantien
+worst_case = list(range(100, 0, -1))  # Umgekehrt sortiert
+Heap.sort(worst_case)  # Immer noch O(n log n)!
+\stoppythoncode
+
+\subsection{Union-Find-Beispiel}
+
+\startpythoncode
+from src.algs4.pva_1_fundamentals.uf import UF
+
+# Union-Find mit 10 Elementen erstellen
+uf = UF(10)
+
+# Verbindungen erstellen
+uf.union(0, 1)
+uf.union(2, 3)
+uf.union(1, 2)
+
+# Konnektivität prüfen
+print(f"0 und 3 verbunden: {uf.connected(0, 3)}")  # True
+print(f"0 und 4 verbunden: {uf.connected(0, 4)}")  # False
+print(f"Anzahl Komponenten: {uf.count()}")
+\stoppythoncode
+
+\section{Tests schreiben und ausführen}
+
+\subsection{Test schreiben}
+
+\startpythoncode
+# tests/test_mein_stack.py
+from src.algs4.pva_1_fundamentals.stack import Stack
+
+def test_mein_stack():
+    stack = Stack[int]()
+    stack.push(42)
+    assert stack.pop() == 42
+    assert stack.is_empty()
+\stoppythoncode
+
+\subsection{Test ausführen}
+
+\startpythoncode
+uv run pytest tests/test_mein_stack.py -v
+\stoppythoncode
+
+\section{TDD-Workflow}
+
+Der empfohlene Test-Driven Development Workflow:
+
+\startitemize[n]
+\item {\bf Test schreiben} (rot) -- der Test schlägt fehl
+\item {\bf Minimale Implementierung} (grün) -- der Test besteht
+\item {\bf Code verbessern} (refactor) -- Qualität erhöhen
+\item {\bf Wiederholen}
+\stopitemize
+
+\section{Nächste Schritte}
+
+\subsection{Dokumentation erkunden}
+
+\startitemize
+\item {\bf Kursübersicht}: Vollständige Projektübersicht
+\item {\bf Komplexitätsanalyse}: O-Notation verstehen
+\item {\bf Einzelne Algorithmen}: Detaillierte Dokumentation zu jedem Algorithmus
+\stopitemize
+
+\subsection{Praktische Übungen}
+
+\startitemize
+\item Erkunden Sie die Jupyter Notebooks in {\tt notebooks/}
+\item Führen Sie Performance-Tests mit verschiedenen Datengrössen durch
+\item Experimentieren Sie mit verschiedenen Datentypen
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor]
+{\bf Tipp:} Beginnen Sie mit den grundlegenden Datenstrukturen (Stack, Queue, Bag)
+und arbeiten Sie sich zu komplexeren Algorithmen vor.
+\stopframedtext

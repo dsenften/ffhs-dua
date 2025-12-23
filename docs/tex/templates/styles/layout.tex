@@ -1,0 +1,173 @@
+% Layout-Definitionen für FFHS-DUA Dokumentation
+% ===============================================
+
+% Seitenlayout
+\setuplayout[
+    topspace=2.5cm,
+    bottomspace=3cm,
+    leftmargin=2.5cm,
+    rightmargin=2.5cm,
+    header=1.5cm,
+    footer=2cm,
+    footerdistance=0.8cm,
+    width=middle,
+    height=middle,
+    backspace=3cm,
+    cutspace=0cm
+]
+
+% Mehrspalten-Layout (optional)
+\definecolumnset[twocolumn][n=2, distance=0.5cm]
+
+% Seitenumbruch-Einstellungen (Seitenzahl wird via \setupfootertexts gesteuert)
+\setuppagenumbering[
+    alternative=doublesided,
+    location=,
+    style=\rm,
+    conversion=numbers
+]
+
+% =============================================================================
+% GIT-INFORMATIONEN
+% =============================================================================
+
+% Git-Branch und Commit-ID dynamisch ermitteln
+\startluacode
+    local function get_git_info()
+        local branch = "unknown"
+        local commit = "000000"
+
+        -- Branch ermitteln
+        local handle = io.popen("git rev-parse --abbrev-ref HEAD 2>/dev/null")
+        if handle then
+            branch = handle:read("*a"):gsub("%s+", "")
+            handle:close()
+        end
+
+        -- Kurze Commit-ID ermitteln
+        handle = io.popen("git rev-parse --short HEAD 2>/dev/null")
+        if handle then
+            commit = handle:read("*a"):gsub("%s+", "")
+            handle:close()
+        end
+
+        return branch, commit
+    end
+
+    local branch, commit = get_git_info()
+    document.gitbranch = branch
+    document.gitcommit = commit
+    document.gitinfo = "[git] • Branch: " .. branch .. "@" .. commit
+\stopluacode
+
+% Makro für Git-Info in TeX verfügbar machen
+\def\gitinfo{\ctxlua{context(document.gitinfo)}}
+\def\gitbranch{\ctxlua{context(document.gitbranch)}}
+\def\gitcommit{\ctxlua{context(document.gitcommit)}}
+
+% =============================================================================
+% KOPF- UND FUSSZEILEN
+% =============================================================================
+
+% Markierungen für Kapitel und Section aktivieren
+\setuphead[chapter][marking=chapter]
+\setuphead[section][marking=section]
+
+% Kopfzeilen-Layout - keine Linie
+\setupheader[
+    style=\tfx\ss,
+    color=lighttext,
+    before=,
+    after=
+]
+
+% Kopfzeilen-Inhalt: Links = Dokumenttitel, Rechts = Kapitel
+\setupheadertexts
+    [FFHS DUA - Datenstrukturen und Algorithmen][\getmarking[chapter]]
+
+% Fußzeilen-Layout - keine Linie, mehr Abstand nach oben
+\setupfooter[
+    style=\tfx\ss,
+    color=lighttext,
+    before={\blank[big]},
+    after=
+]
+
+% Fußzeilen-Inhalt: Git-Info zentriert, Seitenzahl rechts
+\setupfootertexts
+    [][\hbox to \hsize{\hfil\gitinfo\hfil\llap{\pagenumber}}]
+
+% Abschnittsnummerierung
+\setuphead[chapter][number=yes]
+\setuphead[section][number=yes]
+\setuphead[subsection][number=yes]
+\setuphead[subsubsection][number=yes]
+
+% Seitenumbrüche bei Kapiteln
+\setuphead[chapter][page=yes]
+
+% Floating-Einstellungen für Abbildungen und Tabellen
+\setupfloat[figure][
+    location=here,
+    frame=off,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+\setupfloat[table][
+    location=here,
+    frame=off,
+    before={\blank[medium]},
+    after={\blank[medium]}
+]
+
+% Abstände zwischen Elementen
+\setupblank[medium]
+
+% Einzüge nach Überschriften
+\setupindenting[no]
+
+% Referenzierungssystem
+\setupreferencing[left=, right=]
+
+% Cross-Referenzen
+\setupreferenceformat[default][
+    left={},
+    right={}
+]
+
+% Satzspiegel-Optimierung
+\setupalign[width, tolerant, stretch, hanging]
+
+% Trennung
+\setuptolerance[verytolerant, stretch]
+\setuphyphenation[method=traditional]
+
+% Absatzeinzug nach Leerzeilen
+\setupindenting[yes, medium, first]
+
+% Keine Einzüge nach Überschriften und Listen
+\setuphead[chapter, section, subsection][indentnext=no]
+\setupitemize[indentnext=no]
+
+% Marginalnoten-Position
+\setupmargindata[inmargin][
+    location=left,
+    width=2cm,
+    style=\tfx\ss\it,
+    color=margincolor
+]
+
+% Seitenaufteilung für Anhänge
+\definehead[appendix][chapter]
+\setuphead[appendix][
+    prefix=yes,
+    prefixtext=Anhang,
+    conversion=Character
+]
+
+% Grid-Layout (optional, für präzise Ausrichtung)
+% \setupalign[line]
+
+% Leere Seiten-Einstellungen
+\setuppagenumber[state=start]

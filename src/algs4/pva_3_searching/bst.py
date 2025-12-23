@@ -26,15 +26,11 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
 
 from src.algs4.pva_1_fundamentals.queue import Queue
 
-K = TypeVar("K")  # Key type (muss vergleichbar sein)
-V = TypeVar("V")  # Value type
 
-
-class Node(Generic[K, V]):
+class Node[K, V]:
     """Knoten im binären Suchbaum.
 
     Attributes:
@@ -60,7 +56,7 @@ class Node(Generic[K, V]):
         self.right: Node[K, V] | None = None
 
 
-class BST(Generic[K, V]):
+class BST[K, V]:
     """Binary Search Tree - Binärer Suchbaum.
 
     Ein geordneter Symbol-Table, implementiert als binärer Suchbaum.
