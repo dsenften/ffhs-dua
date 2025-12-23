@@ -16,13 +16,21 @@ Beispiele:
     python build.py --debug --verbose        # Debug-Modus
 """
 
-import argparse
-import logging
+import os
 import sys
-from pathlib import Path
+
+# Stelle sicher, dass docs/tex im Python-Pfad ist
+# (erlaubt Ausführung von Repository-Root: python3 docs/tex/build.py)
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+if _SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPT_DIR)
+
+import argparse  # noqa: E402
+import logging  # noqa: E402
+from pathlib import Path  # noqa: E402
 
 # Lokale Imports
-from converter import (
+from converter import (  # noqa: E402
     ConTeXtGenerator,
     MarkdownConverter,
     load_config,

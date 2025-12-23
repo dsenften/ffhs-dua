@@ -115,6 +115,14 @@ class BuildConfig:
         }
     )
 
+    # Build-Optionen
+    build_options: dict[str, Any] = field(
+        default_factory=lambda: {
+            "copy_assets": True,
+            "clean_before_build": False,
+        }
+    )
+
     # Index-Einstellungen
     generate_index: bool = True
     index_terms: list[str] = field(
