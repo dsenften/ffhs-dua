@@ -214,14 +214,14 @@ class TestHeap:
             right_child = 2 * i + 2
 
             if left_child < n:
-                assert (
-                    arr[i] >= arr[left_child]
-                ), f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
+                assert arr[i] >= arr[left_child], (
+                    f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{left_child}]={arr[left_child]}"
+                )
 
             if right_child < n:
-                assert (
-                    arr[i] >= arr[right_child]
-                ), f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
+                assert arr[i] >= arr[right_child], (
+                    f"Heap-Eigenschaft verletzt: arr[{i}]={arr[i]} < arr[{right_child}]={arr[right_child]}"
+                )
 
     def test_heap_sort_phases(self):
         """Test: Beide Phasen des Heap-Sort-Algorithmus."""
@@ -271,9 +271,9 @@ class TestHeap:
         while n > 1:
             # Das Maximum sollte an der Wurzel stehen
             for i in range(n):
-                assert (
-                    arr[0] >= arr[i]
-                ), f"Maximum nicht an Wurzel: arr[0]={arr[0]} < arr[{i}]={arr[i]}"
+                assert arr[0] >= arr[i], (
+                    f"Maximum nicht an Wurzel: arr[0]={arr[0]} < arr[{i}]={arr[i]}"
+                )
 
             # Tausche und reduziere Heap-Grösse
             arr[0], arr[n - 1] = arr[n - 1], arr[0]
@@ -401,9 +401,9 @@ class TestHeap:
         for test_case in test_cases:
             heap_result = Heap.sort(test_case.copy())
             python_result = sorted(test_case)
-            assert (
-                heap_result == python_result
-            ), f"Heap Sort Ergebnis {heap_result} != Python sort {python_result} für Input {test_case}"
+            assert heap_result == python_result, (
+                f"Heap Sort Ergebnis {heap_result} != Python sort {python_result} für Input {test_case}"
+            )
 
     def test_heap_sort_with_custom_objects(self):
         """Test: Heap Sort mit benutzerdefinierten Objekten."""
