@@ -84,7 +84,9 @@ class TestEdgeWeightedDigraph:
         assert "1 edges" in r
 
     def test_negative_vertices_raises_error(self):
-        """Test: Negative Knotenzahl wirft ValueError."""
+        """
+        Verify that constructing an EdgeWeightedDigraph with a negative vertex count raises a ValueError.
+        """
         with pytest.raises(ValueError):
             EdgeWeightedDigraph(-1)
 

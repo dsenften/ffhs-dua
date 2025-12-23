@@ -38,14 +38,15 @@ class DijkstraSP:
     """
 
     def __init__(self, g: "EdgeWeightedDigraph", s: int) -> None:
-        """Initialisiert Dijkstras Algorithmus.
-
-        Args:
-            g: Der gewichtete Digraph
-            s: Der Startknoten
-
+        """
+        Compute the shortest-path tree from start vertex `s` in the weighted directed graph `g` using Dijkstra's algorithm.
+        
+        Parameters:
+            g (EdgeWeightedDigraph): The edge-weighted directed graph whose shortest paths are computed.
+            s (int): Index of the start vertex.
+        
         Raises:
-            ValueError: Wenn s ausserhalb des gültigen Bereichs liegt
+            ValueError: If `s` is outside the valid range [0, g.V - 1].
         """
         if s < 0 or s >= g.V:
             raise ValueError(

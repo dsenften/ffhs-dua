@@ -34,10 +34,10 @@ class MarkdownConverter:
 
     def __init__(self, config: BuildConfig):
         """
-        Initialisiert den Konverter.
-
-        Args:
-            config: Build-Konfiguration
+        Initialize the MarkdownConverter with a build configuration.
+        
+        Parameters:
+            config (BuildConfig): Configuration used to initialize the converter and to configure the internal MarkdownParser and ConTeXtGenerator.
         """
         self.config = config
         self.parser = MarkdownParser(config)
@@ -45,14 +45,14 @@ class MarkdownConverter:
 
     def convert_file(self, markdown_path, force_rebuild=False):
         """
-        Konvertiert eine einzelne Markdown-Datei zu ConTeXt.
-
-        Args:
-            markdown_path: Pfad zur Markdown-Datei
-            force_rebuild: Datei auch bei vorhandener Ausgabe neu erstellen
-
+        Convert a single Markdown file into a ConTeXt file.
+        
+        Parameters:
+            markdown_path (str or Path): Path to the Markdown file to convert.
+            force_rebuild (bool): If True, recreate the output even if it already exists.
+        
         Returns:
-            Pfad zur erstellten ConTeXt-Datei oder None bei Fehler
+            str or None: Path to the generated ConTeXt file, or `None` if conversion failed.
         """
         try:
             # Markdown parsen
@@ -70,15 +70,15 @@ class MarkdownConverter:
 
     def convert_directory(self, directory_path, pattern="*.md", force_rebuild=False):
         """
-        Konvertiert alle Markdown-Dateien in einem Verzeichnis.
-
-        Args:
-            directory_path: Pfad zum Verzeichnis
-            pattern: Datei-Pattern für Markdown-Dateien
-            force_rebuild: Alle Dateien neu erstellen
-
+        Convert all Markdown files in a directory to ConTeXt files.
+        
+        Parameters:
+            directory_path (str | pathlib.Path): Path to the directory containing Markdown files.
+            pattern (str): Glob pattern to select Markdown files (default: "*.md").
+            force_rebuild (bool): If True, regenerate ConTeXt files even when up-to-date.
+        
         Returns:
-            Liste der erstellten ConTeXt-Dateien
+            list[str]: Paths of the generated ConTeXt files.
         """
         from pathlib import Path
 

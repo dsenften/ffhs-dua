@@ -36,10 +36,10 @@ class DocumentationBuilder:
 
     def __init__(self, config_path: Path | None = None):
         """
-        Initialisiert den Builder.
-
-        Args:
-            config_path: Pfad zur Konfigurationsdatei
+        Create a DocumentationBuilder configured from the given configuration path and initialize its converters and logger.
+        
+        Parameters:
+            config_path (Path | None): Optional path to the configuration file; if None, the default configuration location is used.
         """
         self.config = load_config(config_path)
         self.converter = MarkdownConverter(self.config)
@@ -53,15 +53,17 @@ class DocumentationBuilder:
         force_rebuild: bool = False,
     ) -> bool:
         """
-        Erstellt die komplette Dokumentation.
-
-        Args:
-            chapters: Liste der zu verarbeitenden Kapitel
-            convert_only: Nur konvertieren, keine PDF erstellen
-            force_rebuild: Alle Dateien neu erstellen
-
+        Orchestrates conversion of Markdown sources to ConTeXt and optionally builds the final PDF.
+        
+        Performs environment validation, discovers and converts Markdown files (optionally restricted to specified chapters), generates the main ConTeXt document, and—unless disabled—builds the PDF output.
+        
+        Parameters:
+            chapters (list[str] | None): Optional list of chapter names to process; if None, all configured Markdown files are processed.
+            convert_only (bool): If True, only convert Markdown to ConTeXt and do not attempt to build the PDF.
+            force_rebuild (bool): If True, force rebuilding of all files regardless of cached/previous outputs.
+        
         Returns:
-            True bei Erfolg, False bei Fehlern
+            bool: `True` if the requested workflow completed successfully, `False` on any failure.
         """
         try:
             self.logger.info("Starte Dokumentationserstellung...")
@@ -116,7 +118,15 @@ class DocumentationBuilder:
             return False
 
     def _find_markdown_files(self, chapters: list[str] | None = None) -> list[Path]:
-        """Findet alle relevanten Markdown-Dateien."""
+        """
+        Locate Markdown source files to process, either for specific chapters or for all configured directories.
+        
+        Parameters:
+            chapters (list[str] | None): Optional list of chapter names to restrict discovery to; if omitted, files from all configured markdown directories are returned.
+        
+        Returns:
+            list[Path]: A list of Paths to Markdown files. When `chapters` is provided, files are collected from each named chapter's configured file patterns (expanding glob patterns and including existing explicit file paths). When `chapters` is None, discovery uses the configured markdown directories and extensions.
+        """
         from converter.utils import find_markdown_files
 
         if chapters:
@@ -144,7 +154,17 @@ class DocumentationBuilder:
             )
 
     def _build_pdf(self, main_document: Path) -> Path | None:
-        """Erstellt PDF aus ConTeXt-Hauptdokument."""
+        """
+        Builds a PDF from the provided ConTeXt main document.
+        
+        Runs the ConTeXt build using the configured output directory, optionally copies assets and cleans the PDF output directory beforehand, and ensures the final file uses the configured PDF output name when possible.
+        
+        Parameters:
+            main_document (Path): Path to the generated ConTeXt main document to be compiled.
+        
+        Returns:
+            Path | None: Path to the produced PDF file if the build succeeds and a PDF is found, `None` on failure.
+        """
         from converter.utils import clean_output_directory, copy_assets, run_context
 
         try:
@@ -187,7 +207,11 @@ class DocumentationBuilder:
 
 
 def main():
-    """Hauptfunktion mit Argument-Parsing."""
+    """
+    Command-line entry point that parses CLI options, configures logging, and runs the documentation build.
+    
+    Parses arguments for configuration path, chapter selection, convert-only mode, force rebuild, output path, and verbosity/debug flags. Translates the chapters argument into a list when provided, sets the logging level based on debug/verbose flags, instantiates DocumentationBuilder with the given config, invokes its build_documentation method with the parsed options, and exits the process with status 0 on success or 1 on failure.
+    """
     parser = argparse.ArgumentParser(
         description="ConTeXt-Dokumentationssystem für FFHS-DUA",
         formatter_class=argparse.RawDescriptionHelpFormatter,

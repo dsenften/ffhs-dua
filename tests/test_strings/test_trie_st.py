@@ -31,7 +31,9 @@ class TestTrieSTBasics:
         assert st.contains("sea")
 
     def test_multiple_put_get(self):
-        """Teste Einfügen und Abrufen mehrerer Elemente."""
+        """
+        Verify that inserting multiple string keys with distinct integer values stores all entries and that size, get, and contains report the expected results.
+        """
         st: TrieST[int] = TrieST()
         keys = ["she", "sells", "sea", "shells", "by", "the", "shore"]
 
@@ -85,7 +87,11 @@ class TestTrieSTBasics:
             st.contains(None)  # type: ignore
 
     def test_empty_string_key(self):
-        """Teste leerer String als Schlüssel."""
+        """
+        Verifies that an empty string can be used as a key in the TrieST.
+        
+        Asserts that inserting the empty string stores the value, that the key is contained, and that the trie size is 1.
+        """
         st: TrieST[int] = TrieST()
         st.put("", 0)
 
@@ -94,7 +100,11 @@ class TestTrieSTBasics:
         assert st.size() == 1
 
     def test_prefix_not_a_key(self):
-        """Teste dass ein Präfix nicht als Schlüssel gilt, wenn er nicht eingefügt wurde."""
+        """
+        Check that a prefix of an inserted key is not treated as a stored key if it was not inserted.
+        
+        Verifies that after inserting "shells", the prefix "she" is not contained and retrieval returns None.
+        """
         st: TrieST[int] = TrieST()
         st.put("shells", 1)
 
@@ -131,7 +141,9 @@ class TestTrieSTKeys:
         assert list(st.keys()) == ["sea"]
 
     def test_keys_multiple_elements_sorted(self):
-        """Teste dass keys in lexikographischer Reihenfolge zurückgegeben werden."""
+        """
+        Verifies that keys() yields all stored keys in lexicographic (sorted) order.
+        """
         st: TrieST[int] = TrieST()
         keys = ["she", "sells", "sea", "shells", "by", "the", "shore"]
 
@@ -142,7 +154,9 @@ class TestTrieSTKeys:
         assert result == sorted(keys)
 
     def test_keys_with_numbers(self):
-        """Teste keys mit numerischen Strings."""
+        """
+        Verify that keys() returns numeric-string keys in lexicographic order.
+        """
         st: TrieST[int] = TrieST()
         st.put("1", 1)
         st.put("10", 10)
@@ -153,7 +167,11 @@ class TestTrieSTKeys:
         assert result == ["1", "10", "2", "20"]  # Lexikographisch sortiert
 
     def test_iter(self):
-        """Teste __iter__ Methode."""
+        """
+        Verifies that iterating over a TrieST yields the same sequence of keys as returned by keys().
+        
+        The test inserts a sequence of keys with associated values and asserts that list(st) produces the expected key order.
+        """
         st: TrieST[int] = TrieST()
         keys = ["a", "b", "c"]
 
@@ -307,7 +325,9 @@ class TestTrieSTLongestPrefixOf:
         assert st.longest_prefix_of("shells") == "shells"
 
     def test_longest_prefix_of_partial_match(self):
-        """Teste longest_prefix_of mit Teilübereinstimmung."""
+        """
+        Verify that longest_prefix_of returns the longest stored key that is a prefix of the given query when a partial (prefix) match exists.
+        """
         st: TrieST[int] = TrieST()
         st.put("she", 1)
         st.put("shell", 2)
@@ -368,7 +388,11 @@ class TestTrieSTDelete:
         assert st.contains("she")
 
     def test_delete_nonexistent_key(self):
-        """Teste Löschen eines nicht-existierenden Schlüssels."""
+        """
+        Verifies that deleting a non-existent key does not change the trie.
+        
+        After attempting to delete a key that was never inserted, the trie size remains unchanged and existing keys remain present.
+        """
         st: TrieST[int] = TrieST()
         st.put("sea", 1)
 
@@ -413,7 +437,11 @@ class TestTrieSTDelete:
         )
 
     def test_delete_none_raises_exception(self):
-        """Teste dass None als Schlüssel eine Exception auslöst."""
+        """
+        Verifies that attempting to delete None as a key raises a ValueError.
+        
+        Asserts the raised ValueError's message contains "Schlüssel darf nicht None sein".
+        """
         st: TrieST[int] = TrieST()
 
         with pytest.raises(ValueError, match="Schlüssel darf nicht None sein"):
@@ -484,7 +512,11 @@ class TestTrieSTTypeSafety:
         assert st.get("e") == 2.71828
 
     def test_list_values(self):
-        """Teste mit list-Werten."""
+        """
+        Verifies that list values can be stored and retrieved from the TrieST.
+        
+        Inserts two keys with list[int] values and asserts that get returns the exact lists.
+        """
         st: TrieST[list[int]] = TrieST()
         st.put("primes", [2, 3, 5, 7])
         st.put("evens", [2, 4, 6, 8])
@@ -521,7 +553,9 @@ class TestTrieSTUnicodeSupport:
         assert "übersicht" in result
 
     def test_emojis(self):
-        """Teste mit Emoji-Zeichen."""
+        """
+        Verify that emoji characters can be used as keys and their associated values are stored and retrieved correctly.
+        """
         st: TrieST[str] = TrieST()
         st.put("😀", "happy")
         st.put("😢", "sad")
@@ -547,7 +581,11 @@ class TestTrieSTEdgeCases:
         assert st.contains(long_key)
 
     def test_single_character_keys(self):
-        """Teste mit einbuchstabigen Schlüsseln."""
+        """
+        Verify that storing single-character keys 'a' through 'z' with integer values preserves size and allows correct retrieval.
+        
+        Inserts the keys "a".."z" mapped to integers 0..25, asserts the trie size is 26, and verifies each key returns its corresponding value.
+        """
         st: TrieST[int] = TrieST()
         for i in range(26):
             st.put(chr(ord("a") + i), i)
@@ -584,7 +622,14 @@ class TestTrieSTIntegration:
     """Integrationstests für komplexe Szenarien."""
 
     def test_shellsst_example(self):
-        """Teste das Beispiel aus der Dokumentation (shellsST.txt)."""
+        """
+        Exercise the TrieST example from the documentation to validate longest-prefix, prefix, and wildcard queries.
+        
+        Inserts a sample set of words with integer values, then verifies that:
+        - longest_prefix_of returns the longest stored prefix for a query,
+        - keys_with_prefix yields keys matching a given prefix,
+        - keys_that_match finds keys matching a wildcard pattern.
+        """
         st: TrieST[int] = TrieST()
         words = ["she", "sells", "sea", "shells", "by", "the", "shore"]
 
@@ -631,7 +676,11 @@ class TestTrieSTIntegration:
         assert st.size() == 3
 
     def test_dictionary_use_case(self):
-        """Teste Wörterbuch-Anwendungsfall."""
+        """
+        Test dictionary-like use of TrieST with German words.
+        
+        Inserts German word→definition pairs, verifies that keys_with_prefix("haus") returns the three expected "haus" entries, and verifies that keys_that_match("....") includes the four-letter words "haus" and "hund".
+        """
         st: TrieST[str] = TrieST()
 
         # Deutsches Wörterbuch

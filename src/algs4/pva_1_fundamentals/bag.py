@@ -34,6 +34,11 @@ class Bag[T]:
     class Node[S]:
         # Hilfsklasse für verkettete Liste
         def __init__(self):
+            """
+            Initialize a Node with no linked successor and no stored item.
+            
+            Sets the node's `next` reference to `None` and its `item` to `None`.
+            """
             self.next: Bag.Node[T] | None = None
             self.item: S | None = None
 

@@ -39,14 +39,15 @@ class BFS:
     """
 
     def __init__(self, G: "EdgeWeightedGraph", s: int) -> None:
-        """Initialisiert BFS mit einem Graphen und Startknoten.
-
-        Args:
-            G: Der ungerichtete gewichtete Graph
-            s: Der Startknoten
-
+        """
+        Initialize BFS state for an undirected weighted graph from a start vertex.
+        
+        Parameters:
+            G (EdgeWeightedGraph): The undirected weighted graph.
+            s (int): Index of the start vertex.
+        
         Raises:
-            ValueError: Wenn s ausserhalb des gültigen Bereichs liegt
+            ValueError: If `s` is outside the valid range [0, G.V - 1].
         """
         if s < 0 or s >= G.V:
             raise ValueError(

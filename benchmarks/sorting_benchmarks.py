@@ -77,31 +77,13 @@ def benchmark_algorithm(algorithm: Callable, data: list[int]) -> float:
 
 def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
     """
-    Führt umfassende Benchmarks für Sortieralgorithmen durch.
-
-    Testet verschiedene Sortieralgorithmen mit verschiedenen Datentypen
-    und Größen:
-    - Datentypen: random, sorted, reverse, nearly_sorted
-    - Größen: 100, 1.000, 10.000 Elemente
-
+    Run benchmarks for multiple sorting algorithms across predefined data patterns and sizes.
+    
+    Benchmarks Shell Sort, Merge Sort, and Heap Sort on data types "random", "sorted", "reverse", and "nearly_sorted" for sizes 100, 1000, and 10000. Benchmarks Quick Sort separately using sizes 100, 1000, and 5000 and only the "random" and "nearly_sorted" data types to avoid worst-case behavior on sorted inputs.
+    
     Returns:
-        Dictionary mit Benchmark-Ergebnissen:
-        {
-            "Algorithm Name": {
-                "data_type_size": execution_time_in_seconds,
-                ...
-            },
-            ...
-        }
-
-    Example:
-        >>> results = run_sorting_benchmarks()
-        >>> print(results["Shell Sort"]["random_10000"])
-        0.0123
-
-    Note:
-        Quick Sort wird mit kleineren Datenmengen getestet, da es bei
-        umgekehrt sortierten Daten zu Worst-Case O(n²) führt.
+        dict[str, dict[str, float]]: Mapping from algorithm name to a mapping of
+        keys formatted as "<data_type>_<size>" to execution time in seconds.
     """
     algorithms = {
         "Shell Sort": Shell.sort,

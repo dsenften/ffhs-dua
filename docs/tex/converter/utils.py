@@ -14,11 +14,11 @@ from pathlib import Path
 
 def setup_logging(level: int = logging.INFO, log_file: Path | None = None):
     """
-    Konfiguriert das Logging-System.
-
-    Args:
-        level: Logging-Level
-        log_file: Optional: Pfad zur Log-Datei
+    Configure the root logger with a console handler and an optional file handler.
+    
+    Parameters:
+        level (int): Logging level applied to the root logger and created handlers.
+        log_file (Path | None): Optional path to a log file; if provided, the file's parent directory will be created and a file handler will be attached.
     """
     # Formatter definieren
     formatter = logging.Formatter(
@@ -46,10 +46,12 @@ def setup_logging(level: int = logging.INFO, log_file: Path | None = None):
 
 def validate_environment() -> bool:
     """
-    Validiert die Umgebung für die Dokumentationserstellung.
-
+    Validate that the runtime environment meets requirements for documentation generation.
+    
+    Performs checks for a working ConTeXt installation and the presence of required Python modules.
+    
     Returns:
-        True wenn alle Anforderungen erfüllt sind
+        True if all validations pass, False otherwise.
     """
     logger = logging.getLogger(__name__)
 
@@ -76,10 +78,12 @@ def validate_environment() -> bool:
 
 def check_context_installation() -> bool:
     """
-    Prüft ob ConTeXt installiert und funktionsfähig ist.
-
+    Check whether the ConTeXt `context` command is installed and executable.
+    
+    Attempts to run `context --version` (10-second timeout) to verify availability.
+    
     Returns:
-        True wenn ConTeXt verfügbar ist
+        `True` if the `context` command runs and exits with status code 0, `False` otherwise (including when the command is not found or times out).
     """
     try:
         result = subprocess.run(
@@ -92,14 +96,14 @@ def check_context_installation() -> bool:
 
 def run_context(tex_file: Path, output_dir: Path | None = None) -> tuple[bool, str]:
     """
-    Führt ConTeXt auf einer .tex-Datei aus.
-
-    Args:
-        tex_file: Pfad zur .tex-Datei
-        output_dir: Optional: Ausgabeverzeichnis
-
+    Run ConTeXt on a given .tex file and return success status and process output.
+    
+    Parameters:
+        tex_file (Path): Path to the .tex file to be processed.
+        output_dir (Path | None): Optional directory to place ConTeXt results; if provided, passed to ConTeXt as the result directory.
+    
     Returns:
-        Tuple (Erfolg, Output/Fehlermeldung)
+        tuple[bool, str]: `True` and the process stdout if ConTeXt exits with code 0; `False` and stderr or an error message otherwise.
     """
     logger = logging.getLogger(__name__)
 
@@ -142,14 +146,14 @@ def find_markdown_files(
     directories: list[Path], extensions: list[str] = None
 ) -> list[Path]:
     """
-    Findet alle Markdown-Dateien in den angegebenen Verzeichnissen.
-
-    Args:
-        directories: Liste der zu durchsuchenden Verzeichnisse
-        extensions: Liste der Dateiendungen (Standard: ['.md', '.markdown'])
-
+    Locate Markdown files within the provided file system paths.
+    
+    Parameters:
+        directories (list[Path]): Paths to files or directories to search; files are checked directly, directories are searched recursively.
+        extensions (list[str], optional): File suffixes to include (example: [".md", ".markdown"]). Defaults to [".md", ".markdown"].
+    
     Returns:
-        Liste der gefundenen Markdown-Dateien
+        list[Path]: Sorted list of unique Markdown file paths that match the given extensions.
     """
     if extensions is None:
         extensions = [".md", ".markdown"]
@@ -176,11 +180,13 @@ def find_markdown_files(
 
 def clean_output_directory(output_dir: Path, keep_patterns: list[str] = None):
     """
-    Bereinigt das Ausgabeverzeichnis.
-
-    Args:
-        output_dir: Ausgabeverzeichnis
-        keep_patterns: Muster für Dateien die behalten werden sollen
+    Clean the contents of an output directory while preserving specified patterns.
+    
+    Deletes common temporary and auxiliary files (e.g., logs, aux, toc, tmp, fls, fdb_latexmk) from output_dir, leaving files that match any pattern in keep_patterns. If keep_patterns is not provided, files matching "*.pdf" are preserved.
+    
+    Parameters:
+        output_dir (Path): Directory whose contents will be cleaned. If the directory does not exist, the function returns without action.
+        keep_patterns (list[str] | None): Glob-style filename patterns to preserve (e.g., ["*.pdf", "important_*"]). Defaults to ["*.pdf"] when None.
     """
     logger = logging.getLogger(__name__)
 
@@ -215,11 +221,13 @@ def clean_output_directory(output_dir: Path, keep_patterns: list[str] = None):
 
 def copy_assets(source_dir: Path, target_dir: Path):
     """
-    Kopiert Asset-Dateien (Bilder, etc.) ins Ausgabeverzeichnis.
-
-    Args:
-        source_dir: Quellverzeichnis
-        target_dir: Zielverzeichnis
+    Copy common asset files (images, fonts, PDFs, etc.) from a source directory into a target directory while preserving the source's subdirectory structure.
+    
+    If the source directory does not exist, the function logs a warning and returns without raising. The function creates any necessary target subdirectories and copies matching asset file types (e.g., PNG, JPG, SVG, PDF, EPS, TTF, WOFF) using metadata-preserving copy operations.
+    
+    Parameters:
+        source_dir (Path): Directory to search recursively for asset files.
+        target_dir (Path): Destination directory where assets will be copied, preserving relative paths.
     """
     import shutil
 
@@ -268,13 +276,13 @@ def copy_assets(source_dir: Path, target_dir: Path):
 
 def generate_file_hash(file_path: Path) -> str:
     """
-    Generiert einen Hash für eine Datei (für Caching).
-
-    Args:
-        file_path: Pfad zur Datei
-
+    Compute the SHA-256 hash of a file's contents.
+    
+    Parameters:
+        file_path (Path): Path to the file to hash.
+    
     Returns:
-        SHA256-Hash der Datei
+        str: SHA-256 hex digest of the file contents.
     """
     import hashlib
 
@@ -289,13 +297,13 @@ def generate_file_hash(file_path: Path) -> str:
 
 def format_file_size(size_bytes: int) -> str:
     """
-    Formatiert eine Dateigröße in lesbarer Form.
-
-    Args:
-        size_bytes: Größe in Bytes
-
+    Convert a size in bytes into a human-readable string using 1024-based units.
+    
+    Parameters:
+        size_bytes (int): Size in bytes.
+    
     Returns:
-        Formatierte Größe (z.B. "1.5 MB")
+        str: Formatted size string using units B, KB, MB, GB, or TB (e.g., "1.5 MB").
     """
     if size_bytes == 0:
         return "0 B"

@@ -38,13 +38,16 @@ from collections.abc import Iterator
 
 
 def _rabin_miller_test(n: int) -> bool:
-    """Rabin-Miller Primzahltest.
-
-    Args:
-        n: Zu testende Zahl
-
+    """
+    Determine whether an integer is likely prime using the Rabin–Miller probabilistic primality test.
+    
+    Performs five randomized witness rounds; returns `True` when n passes all rounds (probably prime) and `False` when a witness proves n composite. Values less than 2 are considered composite.
+    
+    Parameters:
+        n (int): Integer to test for primality.
+    
     Returns:
-        True wenn n wahrscheinlich prim ist, False wenn n zusammengesetzt ist
+        bool: `True` if n is probably prime, `False` if n is composite.
     """
     if n < 2:
         return False
@@ -79,16 +82,17 @@ def _rabin_miller_test(n: int) -> bool:
 
 
 def _generate_prime(bits: int) -> int:
-    """Generiert eine Primzahl mit der gewünschten Bit-Länge.
-
-    Args:
-        bits: Gewünschte Bit-Länge der Primzahl
-
+    """
+    Generate a prime number with the specified bit length.
+    
+    Parameters:
+        bits (int): Bit length of the desired prime; must be at least 2.
+    
     Returns:
-        Eine Primzahl mit der gewünschten Bit-Länge
-
+        int: A prime number between 2^(bits-1) and 2^bits - 1 (inclusive).
+    
     Raises:
-        ValueError: Wenn keine Primzahl nach vielen Versuchen gefunden wird
+        ValueError: If `bits` is less than 2 or no prime is found after the maximum number of attempts.
     """
     if bits < 2:
         raise ValueError("Bit-Länge muss mindestens 2 sein")
@@ -127,13 +131,14 @@ class RabinKarp:
     """
 
     def __init__(self, pattern: str) -> None:
-        """Initialisiert den Rabin-Karp Algorithmus mit einem Muster.
-
-        Args:
-            pattern: Das zu suchende Muster
-
+        """
+        Initialize the Rabin-Karp searcher with the given pattern.
+        
+        Parameters:
+            pattern (str): The pattern to search for; must be a non-empty string.
+        
         Raises:
-            ValueError: Wenn pattern None oder leer ist
+            ValueError: If `pattern` is None or an empty string.
         """
         if pattern is None:
             raise ValueError("Muster darf nicht None sein")
@@ -155,24 +160,26 @@ class RabinKarp:
 
     @property
     def pattern(self) -> str:
-        """Gibt das Suchmuster zurück.
-
+        """
+        The search pattern stored in this RabinKarp instance.
+        
         Returns:
-            Das Suchmuster als String
+            pattern (str): The stored pattern string.
         """
         return self._pattern
 
     def search(self, text: str) -> int:
-        """Sucht das erste Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Finds the first occurrence of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): The text to search.
+        
         Returns:
-            Index des ersten Vorkommens, oder len(text) wenn nicht gefunden
-
+            int: Index of the first match, or `len(text)` if no match is found.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -205,16 +212,17 @@ class RabinKarp:
         return n
 
     def search_all(self, text: str) -> Iterator[int]:
-        """Sucht alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
-        Yields:
-            Indizes aller Vorkommen des Musters
-
+        """
+        Yield all start indices where the stored pattern occurs in the given text.
+        
+        Parameters:
+            text (str): Text to search for the pattern.
+        
+        Returns:
+            Iterator[int]: An iterator that yields the start index of each verified occurrence in ascending order.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -243,27 +251,29 @@ class RabinKarp:
                 yield i - self._m + 1
 
     def count(self, text: str) -> int:
-        """Zählt alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Count occurrences of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): Text to search.
+        
         Returns:
-            Anzahl der Vorkommen des Musters
-
+            int: Number of occurrences of the stored pattern in text (including overlapping matches).
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If text is None.
         """
         return sum(1 for _ in self.search_all(text))
 
     def _hash(self, key: str) -> int:
-        """Berechnet Hash-Wert eines Strings mit Horner's Methode.
-
-        Args:
-            key: String für den der Hash berechnet werden soll
-
+        """
+        Compute the rolling (polynomial) hash value of a string using the instance's alphabet size and modulus.
+        
+        Parameters:
+            key (str): Input string to hash.
+        
         Returns:
-            Hash-Wert modulo q
+            int: Hash value of `key` in the range [0, self._q - 1] (computed modulo `self._q`).
         """
         hash_value = 0
         for char in key:
@@ -271,37 +281,35 @@ class RabinKarp:
         return hash_value
 
     def _verify_match(self, text: str, pos: int) -> bool:
-        """Verifiziert einen potentiellen Match durch direkten Stringvergleich.
-
-        Args:
-            text: Der Text
-            pos: Position des potentiellen Matches
-
+        """
+        Verify that the stored pattern matches the substring of `text` starting at `pos`.
+        
+        Parameters:
+            text (str): The text to compare against.
+            pos (int): Start index in `text` for the comparison.
+        
         Returns:
-            True wenn Match verifiziert, False sonst
+            bool: `True` if the substring `text[pos:pos+pattern_length]` equals the pattern, `False` otherwise. Returns `False` if the comparison would extend past the end of `text`.
         """
         if pos + self._m > len(text):
             return False
         return text[pos : pos + self._m] == self._pattern
 
     def __repr__(self) -> str:
-        """String-Repräsentation des RabinKarp-Objekts.
-
+        """
+        Return a concise string representation of the RabinKarp instance.
+        
         Returns:
-            String-Repräsentation mit Muster
+            repr_str (str): A string of the form "RabinKarp('<pattern>')" showing the stored pattern.
         """
         return f"RabinKarp('{self._pattern}')"
 
 
 def main() -> None:
-    """CLI-Interface für Rabin-Karp String-Suche.
-
-    Verwendung:
-        python3 -m src.algs4.pva_5_strings.rabin_karp <muster> <text>
-
-    Beispiele:
-        python3 -m src.algs4.pva_5_strings.rabin_karp "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
-        python3 -m src.algs4.pva_5_strings.rabin_karp "abc" "abcabcabc"
+    """
+    Command-line interface for running Rabin-Karp pattern search on a given pattern and text.
+    
+    Expects exactly two command-line arguments: the search pattern and the text to search. Prints the text, pattern, the first match position (if any), a list of all match positions when there are multiple matches, a visual alignment of the first match, and timing information for construction and search. Exits with status code 1 if the argument count is incorrect.
     """
     import sys
     import time

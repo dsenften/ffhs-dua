@@ -21,6 +21,13 @@ from collections.abc import Iterator
 class Node[T]:
     # Hilfsklasse für verkettete Liste
     def __init__(self):
+        """
+        Initialize a linked-list node with empty value and no next reference.
+        
+        Attributes:
+            item (T | None): Stored value for the node, initialized to None.
+            next (Node | None): Reference to the next node in the list, initialized to None.
+        """
         self.item: T = None
         self.next: Node | None = None
 
@@ -118,11 +125,11 @@ class Stack[T]:
         return " ".join(s)
 
     def __iter__(self) -> Iterator[T]:
-        """Gibt einen Iterator für diesen Stack zurück, der durch die Elemente in
-        LIFO-Reihenfolge iteriert.
-
-        :return: Ein Iterator für diesen Stack, der durch die Elemente in LIFO-Reihenfolge iteriert
-
+        """
+        Iterate over the stack's elements from top (most recently pushed) to bottom.
+        
+        Returns:
+            Iterator[T]: An iterator that yields the stack's elements in LIFO order.
         """
         current = self._first
         while current is not None:
@@ -170,10 +177,14 @@ class FixedCapacityStack[T]:
         self.n += 1
 
     def pop(self) -> T:
-        """Entfernt und gibt das zuletzt hinzugefügte Element dieses Stacks zurück.
-
-        :returns: Das zuletzt hinzugefügte Element
-        :raises AssertionError: Wenn dieser Stack leer ist
+        """
+        Remove and return the most recently pushed element from this fixed-capacity stack.
+        
+        Returns:
+            The most recently pushed element.
+        
+        Raises:
+            AssertionError: If the stack is empty.
         """
         self.n -= 1
         item = self.a[self.n]

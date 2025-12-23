@@ -42,11 +42,15 @@ class AVLNode[K, V]:
     """
 
     def __init__(self, key: K, val: V) -> None:
-        """Initialisiert einen neuen AVL-Knoten.
-
-        Args:
-            key: Schlüssel des Knotens
-            val: Wert des Knotens
+        """
+        Initialize an AVL tree node and its default attributes.
+        
+        Parameters:
+            key (K): The node's key.
+            val (V): The node's value.
+        
+        Notes:
+            Sets `height` to 0, `n` (subtree size) to 1, and initializes `left` and `right` to `None`.
         """
         self.key: K = key
         self.val: V = val

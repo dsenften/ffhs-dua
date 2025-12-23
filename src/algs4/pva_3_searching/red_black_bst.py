@@ -48,13 +48,14 @@ class RBNode[K, V]:
     """
 
     def __init__(self, key: K, val: V, color: bool, n: int) -> None:
-        """Initialisiert einen neuen Rot-Schwarz-Knoten.
-
-        Args:
-            key: Schlüssel des Knotens
-            val: Wert des Knotens
-            color: Farbe der Kante zum Elternknoten (True=rot, False=schwarz)
-            n: Anzahl der Knoten im Teilbaum
+        """
+        Initialize a red–black tree node with the given key, value, color, and subtree size.
+        
+        Parameters:
+            key (K): Node key.
+            val (V): Node value.
+            color (bool): Color of the link from this node to its parent — `True` = red, `False` = black.
+            n (int): Number of nodes in the subtree rooted at this node (including this node).
         """
         self.key: K = key
         self.val: V = val

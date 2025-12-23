@@ -64,7 +64,9 @@ class TestBoyerMooreSearch:
         assert bm.search(text) == len(text)
 
     def test_search_exact_match(self):
-        """Teste Suche mit exakter Übereinstimmung."""
+        """
+        Verifies that searching a text identical to the pattern returns the index 0.
+        """
         bm = BoyerMoore("EXACT")
         assert bm.search("EXACT") == 0
 
@@ -80,7 +82,12 @@ class TestBoyerMooreSearch:
         assert bm.search("") == 0
 
     def test_search_none_text(self):
-        """Teste Suche mit None-Text."""
+        """
+        Verify that BoyerMoore.search raises a ValueError when called with text set to None.
+        
+        Raises:
+            ValueError: with the message "Text darf nicht None sein".
+        """
         bm = BoyerMoore("PATTERN")
         with pytest.raises(ValueError, match="Text darf nicht None sein"):
             bm.search(None)
@@ -344,7 +351,9 @@ class TestBoyerMooreIntegration:
         assert matches == [0, 12, 24]
 
     def test_case_sensitive_search(self):
-        """Teste case-sensitive Suche."""
+        """
+        Verify that search_all is case-sensitive: with pattern "Python" and a text containing both "python" and "Python", only the exact-case occurrence is returned (index 18).
+        """
         bm = BoyerMoore("Python")
         text = "I love python and Python programming"
         matches = list(bm.search_all(text))

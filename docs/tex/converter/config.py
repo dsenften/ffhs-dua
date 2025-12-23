@@ -139,7 +139,12 @@ class BuildConfig:
     log_file: Path | None = None
 
     def __post_init__(self):
-        """Nachbearbeitung nach Initialisierung."""
+        """
+        Normalize and resolve path fields after initialization.
+        
+        Converts project_root to an absolute resolved Path and makes template_dir, output_dir,
+        assets_dir, and each entry in markdown_dirs absolute by joining them with project_root.
+        """
         # Pfade zu absoluten Pfaden konvertieren
         self.project_root = Path(self.project_root).resolve()
         self.template_dir = self.project_root / self.template_dir
@@ -152,13 +157,13 @@ class BuildConfig:
 
 def load_config(config_path: Path | None = None) -> BuildConfig:
     """
-    Lädt die Konfiguration aus einer YAML-Datei.
-
-    Args:
-        config_path: Pfad zur Konfigurationsdatei
-
+    Load build configuration from a YAML file, falling back to the default configuration if no file is found or parsing fails.
+    
+    Parameters:
+        config_path (Path | None): Optional path to a YAML configuration file. If None, the function searches standard locations in order: "docs/tex/config/build.yaml", "docs/tex/build.yaml", and "build.yaml", and uses the first one that exists.
+    
     Returns:
-        BuildConfig-Instanz
+        BuildConfig: The loaded configuration merged with defaults, or a default BuildConfig if no valid configuration file could be loaded.
     """
     logger = logging.getLogger(__name__)
 
@@ -203,11 +208,17 @@ def load_config(config_path: Path | None = None) -> BuildConfig:
 
 def _update_config_from_dict(config: BuildConfig, data: dict[str, Any]):
     """
-    Aktualisiert die Konfiguration mit Werten aus einem Dictionary.
-
-    Args:
-        config: BuildConfig-Instanz
-        data: Dictionary mit Konfigurationswerten
+    Update a BuildConfig instance from a dictionary of configuration values.
+    
+    Only keys that correspond to existing attributes on the provided BuildConfig are applied. Behavior:
+    - If the current attribute is a pathlib.Path, the incoming value is converted to Path(value).
+    - If the current attribute is a non-empty list whose first element is a Path, each incoming list item is converted to Path(...) and the attribute is replaced.
+    - If both the current attribute and incoming value are dicts, perform a shallow merge via dict.update().
+    - Otherwise, set the attribute directly to the incoming value.
+    
+    Parameters:
+        config (BuildConfig): The configuration object to modify.
+        data (dict[str, Any]): Mapping of attribute names to new values; unknown keys are ignored.
     """
     for key, value in data.items():
         if hasattr(config, key):
@@ -233,11 +244,16 @@ def _update_config_from_dict(config: BuildConfig, data: dict[str, Any]):
 
 def save_config(config: BuildConfig, config_path: Path):
     """
-    Speichert die Konfiguration in eine YAML-Datei.
-
-    Args:
-        config: BuildConfig-Instanz
-        config_path: Pfad zur Ausgabedatei
+    Persist a BuildConfig to a YAML file.
+    
+    Serializes the provided BuildConfig to a YAML-compatible mapping (converting Path objects to strings and lists of Paths to lists of strings) and writes it to the given filesystem path, creating parent directories as needed.
+    
+    Parameters:
+        config (BuildConfig): Configuration instance to serialize.
+        config_path (Path): Filesystem path of the YAML file to write.
+    
+    Raises:
+        Exception: If serialization or file I/O fails; the original exception is re-raised.
     """
     logger = logging.getLogger(__name__)
 

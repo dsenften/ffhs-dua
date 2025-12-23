@@ -148,12 +148,18 @@ class QuadraticProbingHashTable:
 def analyze_hash_function(
     hash_func: Callable[[int], int], capacity: int, value_range: range
 ) -> None:
-    """Analysiert die Verteilung einer Hashfunktion.
-
-    Args:
-        hash_func: Zu analysierende Hashfunktion
-        capacity: Grösse der Hashtabelle
-        value_range: Bereich der zu testenden Werte
+    """
+    Analyze the distribution of a hash function over a given range of input values and print a summary report.
+    
+    Parameters:
+        hash_func (Callable[[int], int]): Hash function that maps an integer to an index in [0, capacity).
+        capacity (int): Number of slots in the hash table (modulus used by the hash function).
+        value_range (range): Range of integer inputs to evaluate (start..stop-1).
+    
+    Behavior:
+        Prints a table of frequencies for each index 0..capacity-1, a simple bar visualization,
+        statistics about used/unused indices and maximum collisions per index, and example
+        hash computations for selected input values found in value_range.
     """
     print("\n" + "=" * 60)
     print("Analyse der Hashfunktion h(x) = (x * x) % 23")
@@ -199,7 +205,11 @@ def analyze_hash_function(
 
 
 def analyze_hash_properties() -> None:
-    """Analysiert mathematische Eigenschaften der Hashfunktion."""
+    """
+    Analyze mathematical properties of the hash function h(x) = (x * x) % 23.
+    
+    Computes the set of quadratic residues modulo 23, prints the reachable hash values and their count, lists indices that are never produced by the function, and summarizes the practical implications (limited index coverage, increased collision probability, and reduced storage efficiency).
+    """
     print("\n" + "=" * 60)
     print("Mathematische Eigenschaften von h(x) = (x * x) % 23")
     print("=" * 60)
@@ -307,7 +317,11 @@ def suggest_better_hash_function() -> None:
 
 
 def test_part_a() -> None:
-    """Test für Teil a: Einfügen von Werten."""
+    """
+    Demonstrates Part A: populates a QuadraticProbingHashTable with predefined entries, inserts values 63 and 116 using quadratic probing, and prints the step-by-step process and summary.
+    
+    Preloads the table with values 25, 48, 71, and 94 at their specified indices, displays the initial state, performs the two insertions while showing probed indices and final positions, and prints a concise summary including each value's initial hash, final index, and number of probe attempts.
+    """
     print("=" * 60)
     print("TEIL A: EINFÜGEN VON WERTEN MIT QUADRATISCHEM SONDIEREN")
     print("=" * 60)
@@ -386,7 +400,11 @@ def test_part_b() -> None:
 
 
 def verify_initial_positions() -> None:
-    """Verifiziert die initialen Positionen der gegebenen Werte."""
+    """
+    Verify and print whether specific example values map to their expected initial positions using the hash table's hash function.
+    
+    Performs the check for the values [25, 48, 71, 94] against expected indices [2, 8, 15, 20] and prints a line for each showing the computed hash, the expected position, and a match indicator.
+    """
     print("\n" + "=" * 60)
     print("VERIFIKATION DER INITIALEN POSITIONEN")
     print("=" * 60)

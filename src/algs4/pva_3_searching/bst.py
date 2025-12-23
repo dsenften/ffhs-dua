@@ -42,12 +42,13 @@ class Node[K, V]:
     """
 
     def __init__(self, key: K, val: V, n: int) -> None:
-        """Initialisiert einen neuen Knoten.
-
-        Args:
-            key: Schlüssel des Knotens
-            val: Wert des Knotens
-            n: Anzahl der Knoten im Teilbaum
+        """
+        Initialize a node with the given key, value, and subtree size.
+        
+        Parameters:
+            key (K): The node's key.
+            val (V): The node's value.
+            n (int): Number of nodes in the subtree rooted at this node, including the node itself.
         """
         self.key: K = key
         self.val: V = val

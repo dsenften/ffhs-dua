@@ -52,12 +52,13 @@ class SequentialSearchNode[K, V]:
     def __init__(
         self, key: K, val: V, next_node: "SequentialSearchNode[K, V] | None"
     ) -> None:
-        """Initialisiert einen neuen Knoten.
-
-        Args:
-            key: Schlüssel des Knotens
-            val: Wert des Knotens
-            next_node: Nächster Knoten in der Liste
+        """
+        Create a node holding a key, a value, and a reference to the next node in a singly linked list.
+        
+        Parameters:
+            key (K): The node's key.
+            val (V): The node's value.
+            next_node (SequentialSearchNode[K, V] | None): Reference to the next node in the list, or None if this is the last node.
         """
         self.key: K = key
         self.val: V = val
@@ -246,10 +247,13 @@ class SeparateChainingHashST[K, V]:
                 node = node.next
 
     def _resize(self, capacity: int) -> None:
-        """Ändert die Grösse der Hash-Tabelle.
-
-        Args:
-            capacity: Neue Kapazität der Hash-Tabelle
+        """
+        Resize the hash table to the given number of buckets and rehash all entries.
+        
+        Rebuilds the table with the specified capacity and reinserts every existing key-value pair so their bucket indices reflect the new capacity.
+        
+        Parameters:
+            capacity (int): Target number of buckets for the resized table.
         """
         temp = SeparateChainingHashST[K, V](capacity)
         for i in range(self._m):

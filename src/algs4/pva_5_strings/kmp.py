@@ -48,16 +48,14 @@ class KMP:
     """
 
     def __init__(self, pattern: str) -> None:
-        """Initialisiert den KMP-Algorithmus mit einem Suchmuster.
-
-        Baut den DFA (Deterministic Finite Automaton) für das Muster auf.
-        Der DFA wird verwendet, um die Suche ohne Backtracking durchzuführen.
-
-        Args:
-            pattern: Das Suchmuster (nicht-leerer String)
-
+        """
+        Builds the DFA for the given non-empty search pattern and initializes the KMP instance.
+        
+        Parameters:
+            pattern (str): The search pattern to compile into a DFA; must be a non-empty string.
+        
         Raises:
-            ValueError: Wenn pattern None oder leer ist
+            ValueError: If `pattern` is None or an empty string.
         """
         if pattern is None:
             raise ValueError("Muster darf nicht None sein")
@@ -88,27 +86,26 @@ class KMP:
 
     @property
     def pattern(self) -> str:
-        """Gibt das Suchmuster zurück.
-
+        """
+        Return the stored search pattern.
+        
         Returns:
-            str: Das Suchmuster
+            str: The stored search pattern.
         """
         return self._pattern
 
     def search(self, text: str) -> int:
-        """Sucht das Muster im gegebenen Text.
-
-        Verwendet den vorberechneten DFA, um das Muster zu finden.
-        Der Text-Index läuft nur vorwärts (kein Backtracking).
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Finds the first occurrence of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): The text to search; must not be None.
+        
         Returns:
-            int: Index der ersten Übereinstimmung, oder len(text) wenn nicht gefunden
-
+            int: The starting index of the first match, or len(text) if no match is found.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -132,16 +129,17 @@ class KMP:
         return n
 
     def search_all(self, text: str) -> Iterator[int]:
-        """Findet alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Yield the starting index of each occurrence of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): The text to search.
+        
         Returns:
-            Iterator[int]: Iterator über alle Match-Positionen
-
+            Iterator[int]: An iterator over start indices for each match found in `text`.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -160,16 +158,19 @@ class KMP:
                 break
 
     def count(self, text: str) -> int:
-        """Zählt alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Count occurrences of the pattern in the given text.
+        
+        Counts and returns the number of (non-overlapping) occurrences of the stored pattern within `text`.
+        
+        Parameters:
+            text (str): Text to search.
+        
         Returns:
-            int: Anzahl der Vorkommen
-
+            int: Number of occurrences of the pattern in `text`.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -177,10 +178,11 @@ class KMP:
         return sum(1 for _ in self.search_all(text))
 
     def __repr__(self) -> str:
-        """Gibt eine String-Repräsentation zurück.
-
+        """
+        Return a concise representation of the KMP instance including its pattern.
+        
         Returns:
-            str: String-Repräsentation
+            str: Representation in the form "KMP(pattern='...')".
         """
         return f"KMP(pattern='{self._pattern}')"
 

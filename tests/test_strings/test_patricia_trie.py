@@ -103,7 +103,11 @@ class TestPatriciaTrieBasics:
         assert pt.get("she") is None
 
     def test_gemeinsame_praefixe(self):
-        """Teste Wörter mit gemeinsamen Präfixen (Patricia-Trie-Kernfunktion)."""
+        """
+        Verify that the PatriciaTrie correctly stores and retrieves keys that share common prefixes.
+        
+        Inserts 'shell', 'shells', and 'she' with different values and asserts each key returns its associated value and that the trie size equals 3.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         pt.put("shell", 1)
         pt.put("shells", 2)
@@ -170,7 +174,11 @@ class TestPatriciaTrieDelete:
         assert pt._root is None
 
     def test_delete_leaf_node(self):
-        """Teste Löschen eines Blatt-Knotens."""
+        """
+        Verifies that deleting a leaf node removes only that key and preserves its prefix entry.
+        
+        After inserting "test" and "testing" (where "testing" is a leaf), deleting "testing" reduces the trie size by one, leaves "test" present, and makes "testing" absent.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         pt.put("test", 1)
         pt.put("testing", 2)  # "testing" ist Blatt
@@ -217,7 +225,9 @@ class TestPatriciaTrieDelete:
         assert pt.contains("sea")
 
     def test_delete_partial_prefix(self):
-        """Teste Löschen eines Präfix der nicht existiert."""
+        """
+        Verifies that deleting a key which is a prefix of an existing key does not remove or affect the longer key.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         pt.put("testing", 1)
 
@@ -341,7 +351,11 @@ class TestPatriciaTrieTypeSafety:
     """Tests für Type-Safety mit verschiedenen Werttypen."""
 
     def test_int_values(self):
-        """Teste mit int-Werten."""
+        """
+        Verifies values can be stored and retrieved by string keys in a PatriciaTrie.
+        
+        Inserts two key-value pairs with integer values and asserts that each key returns the expected value.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         pt.put("a", 1)
         pt.put("b", 2)
@@ -372,7 +386,11 @@ class TestPatriciaTrieEdgeCases:
     """Tests für Grenzfälle."""
 
     def test_very_long_key(self):
-        """Teste mit sehr langem Schlüssel."""
+        """
+        Verifies that a very long key (500 characters) can be inserted, retrieved, detected as present, deleted, and that the trie is empty after deletion.
+        
+        The test inserts a 500-character key with an integer value, checks retrieval and containment, deletes the key, and confirms the trie is empty.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         long_key = "a" * 500
 
@@ -386,7 +404,11 @@ class TestPatriciaTrieEdgeCases:
         assert pt.is_empty()
 
     def test_single_character_keys(self):
-        """Teste mit einbuchstabigen Schlüsseln."""
+        """
+        Verify that the PatriciaTrie correctly stores and retrieves single-character lowercase keys.
+        
+        Inserts keys 'a' through 'z' with distinct integer values, asserts the trie reports size 26, and that each key returns the value originally stored.
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
         for i in range(26):
             pt.put(chr(ord("a") + i), i)
@@ -475,7 +497,11 @@ class TestPatriciaTrieIntegration:
                 assert pt.get(f"{base}{i}") == i
 
     def test_complex_delete_scenario(self):
-        """Teste komplexes Lösch-Szenario mit Merges."""
+        """
+        Exercise a complex deletion scenario that triggers node merges and verifies size and containment after each deletion.
+        
+        Verifies that deleting "apple" causes a merge preserving "app" and "application", deleting "app" triggers further merges preserving "application" and "apply", and deleting "bandana" removes it while keeping "banana" and "band".
+        """
         pt: PatriciaTrie[int] = PatriciaTrie()
 
         # Erstelle eine Baumstruktur

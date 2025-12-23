@@ -62,7 +62,20 @@ _LAZY_IMPORTS = {
 
 
 def __getattr__(name: str):
-    """Lazy loading von Modulen bei erstem Zugriff."""
+    """
+    Provide lazy access to exported submodule attributes.
+    
+    Looks up `name` in the module's _LAZY_IMPORTS mapping, imports the corresponding submodule on first access, and returns the mapped attribute.
+    
+    Parameters:
+        name (str): The attribute name being accessed; valid values are the keys of `_LAZY_IMPORTS`.
+    
+    Returns:
+        The attribute (class, function, or value) exported by the mapped submodule for `name`.
+    
+    Raises:
+        AttributeError: If `name` is not present in `_LAZY_IMPORTS`.
+    """
     if name in _LAZY_IMPORTS:
         module_path, attr_name = _LAZY_IMPORTS[name]
         import importlib

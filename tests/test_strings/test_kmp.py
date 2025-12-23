@@ -203,7 +203,11 @@ class TestKMPCount:
             kmp.count(None)
 
     def test_count_real_world_example(self):
-        """Teste count mit realem Beispiel."""
+        """
+        Verify that count() returns the total number of occurrences, including overlapping ones, of a pattern in a realistic text example.
+        
+        Uses pattern "abra" on the text "abacadabrabracabracadabrabrabracad" and expects a count of 6.
+        """
         kmp = KMP("abra")
         text = "abacadabrabracabracadabrabrabracad"
         # "abra" erscheint 6 mal (inkl. überlappende Vorkommen)
@@ -219,7 +223,9 @@ class TestKMPRepr:
         assert repr(kmp) == "KMP(pattern='test')"
 
     def test_repr_single_char(self):
-        """Teste repr mit einzelnem Zeichen."""
+        """
+        Verify that KMP.__repr__ formats a single-character pattern as "KMP(pattern='A')".
+        """
         kmp = KMP("A")
         assert repr(kmp) == "KMP(pattern='A')"
 
@@ -275,7 +281,11 @@ class TestKMPEdgeCases:
         assert kmp.search(text) == 1000
 
     def test_very_long_text(self):
-        """Teste mit sehr langem Text."""
+        """
+        Verify KMP correctly finds and counts a pattern in a very long text.
+        
+        Asserts that the single occurrence of "target" placed after 100000 characters is found at index 100000 and that count returns 1.
+        """
         kmp = KMP("target")
         text = "x" * 100000 + "target" + "y" * 100000
         assert kmp.search(text) == 100000
@@ -328,10 +338,10 @@ class TestKMPAlgorithmCorrectness:
         assert kmp.search(text) == 14
 
     def test_kmp_linear_time(self):
-        """Teste dass KMP in linearer Zeit läuft.
-
-        Worst-Case für naive Algorithmen: Wiederholte Zeichen.
-        KMP sollte trotzdem effizient sein.
+        """
+        Ensures KMP locates the expected pattern position on a large repetitive worst-case-like input.
+        
+        Constructs a KMP for a pattern of 100 'a' characters, searches a text composed of 10,000 'b' characters, then the 100 'a' pattern, then 10,000 'b' characters, and asserts the found index is 10,000.
         """
         kmp = KMP("a" * 100)
         text = "b" * 10000 + "a" * 100 + "b" * 10000
@@ -457,9 +467,10 @@ class TestKMPPerformance:
 
     @pytest.mark.slow
     def test_large_text_performance(self):
-        """Teste Performance mit sehr grossem Text.
-
-        KMP sollte auch bei grossen Texten effizient sein.
+        """
+        Validate that KMP locates a pattern efficiently in a very large text with a single mid-text match.
+        
+        Constructs a ~1,000,007-character text containing the pattern at index 500000 and asserts that search returns 500000.
         """
         kmp = KMP("pattern")
         # 1 Million Zeichen

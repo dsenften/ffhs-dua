@@ -61,61 +61,70 @@ class TrieST[V]:
     """
 
     def __init__(self) -> None:
-        """Initialisiert einen leeren Trie."""
+        """
+        Create an empty TrieST instance.
+        
+        Initializes internal state so the trie has no root node and contains zero key-value pairs.
+        """
         self._root: _Node[V] | None = None
         self._n: int = 0  # Anzahl der Schlüssel-Wert-Paare
 
     def size(self) -> int:
-        """Gibt die Anzahl der Schlüssel-Wert-Paare im Trie zurück.
-
+        """
+        Return the number of key-value pairs stored in the trie.
+        
         Returns:
-            int: Anzahl der Schlüssel-Wert-Paare
+            int: Number of key-value pairs stored.
         """
         return self._n
 
     def __len__(self) -> int:
-        """Gibt die Anzahl der Schlüssel-Wert-Paare im Trie zurück.
-
+        """
+        Report the number of key-value pairs stored in the trie.
+        
         Returns:
-            int: Anzahl der Schlüssel-Wert-Paare
+            int: Number of key-value pairs stored in the trie.
         """
         return self._n
 
     def is_empty(self) -> bool:
-        """Prüft, ob der Trie leer ist.
-
+        """
+        Determine whether the trie contains no key-value pairs.
+        
         Returns:
-            bool: True wenn leer, False sonst
+            `true` if the trie contains no key-value pairs, `false` otherwise.
         """
         return self._n == 0
 
     def contains(self, key: str) -> bool:
-        """Prüft, ob der Trie den Schlüssel enthält.
-
-        Args:
-            key: Der zu suchende Schlüssel
-
+        """
+        Determine whether the Trie contains the given key.
+        
+        Parameters:
+            key (str): The string key to look up.
+        
         Returns:
-            bool: True wenn der Schlüssel enthalten ist, False sonst
-
+            `true` if the key exists, `false` otherwise.
+        
         Raises:
-            ValueError: Wenn der Schlüssel None ist
+            ValueError: If `key` is None.
         """
         if key is None:
             raise ValueError("Schlüssel darf nicht None sein")
         return self.get(key) is not None
 
     def get(self, key: str) -> V | None:
-        """Gibt den Wert zurück, der mit dem Schlüssel verknüpft ist.
-
-        Args:
-            key: Der zu suchende Schlüssel
-
+        """
+        Retrieve the value associated with the given key.
+        
+        Parameters:
+            key (str): The string key to look up; must not be None.
+        
         Returns:
-            V | None: Der verknüpfte Wert oder None wenn nicht gefunden
-
+            `V` if the key exists, `None` otherwise.
+        
         Raises:
-            ValueError: Wenn der Schlüssel None ist
+            ValueError: If `key` is None.
         """
         if key is None:
             raise ValueError("Schlüssel darf nicht None sein")
@@ -125,15 +134,16 @@ class TrieST[V]:
         return node.val
 
     def _get(self, node: _Node[V] | None, key: str, depth: int) -> _Node[V] | None:
-        """Hilfsmethode für get - sucht rekursiv nach einem Knoten.
-
-        Args:
-            node: Aktueller Knoten
-            key: Der zu suchende Schlüssel
-            depth: Aktuelle Tiefe im Trie (Index in key)
-
+        """
+        Locate the trie node that corresponds to the given key starting from the provided node and depth.
+        
+        Parameters:
+            node (_Node[V] | None): The node from which to start the search.
+            key (str): The string key to locate.
+            depth (int): The current index in `key` indicating the character to examine.
+        
         Returns:
-            _Node[V] | None: Der Knoten mit dem Schlüssel oder None
+            _Node[V] | None: The node matching the key (when `depth == len(key)`), or `None` if no such path exists.
         """
         if node is None:
             return None
@@ -145,32 +155,34 @@ class TrieST[V]:
         return self._get(node.children[char], key, depth + 1)
 
     def put(self, key: str, val: V) -> None:
-        """Fügt ein Schlüssel-Wert-Paar in den Trie ein.
-
-        Überschreibt den alten Wert, wenn der Schlüssel bereits vorhanden ist.
-
-        Args:
-            key: Der Schlüssel
-            val: Der zu speichernde Wert
-
+        """
+        Insert or update the value associated with the given key in the trie.
+        
+        If the key already exists, its value is replaced.
+        
+        Parameters:
+            key (str): The key to insert; must not be None.
+            val (V): The value to store for the key.
+        
         Raises:
-            ValueError: Wenn der Schlüssel None ist
+            ValueError: If `key` is None.
         """
         if key is None:
             raise ValueError("Schlüssel darf nicht None sein")
         self._root = self._put(self._root, key, val, 0)
 
     def _put(self, node: _Node[V] | None, key: str, val: V, depth: int) -> _Node[V]:
-        """Hilfsmethode für put - fügt rekursiv einen Schlüssel ein.
-
-        Args:
-            node: Aktueller Knoten
-            key: Der Schlüssel
-            val: Der zu speichernde Wert
-            depth: Aktuelle Tiefe im Trie (Index in key)
-
+        """
+        Insert or update the value for `key` in the trie and return the node that roots this subtree.
+        
+        Parameters:
+            node (_Node[V] | None): Current node for this subtree (may be None).
+            key (str): The string key to insert or update.
+            val (V): The value to associate with `key`.
+            depth (int): Current index in `key` indicating the position being processed.
+        
         Returns:
-            _Node[V]: Der aktualisierte Knoten
+            _Node[V]: The updated node representing the root of this subtree.
         """
         if node is None:
             node = _Node()
@@ -186,13 +198,16 @@ class TrieST[V]:
         return node
 
     def delete(self, key: str) -> None:
-        """Löscht den Schlüssel und den zugehörigen Wert aus dem Trie.
-
+        """
+        Remove a key and its associated value from the trie.
+        
+        If the key exists, removes its stored value, prunes any now-empty nodes, and updates the trie size counter.
+        
         Args:
-            key: Der zu löschende Schlüssel
-
+            key (str): The key to remove.
+        
         Raises:
-            ValueError: Wenn der Schlüssel None ist
+            ValueError: If `key` is None.
         """
         if key is None:
             raise ValueError("Schlüssel darf nicht None sein")
@@ -231,24 +246,26 @@ class TrieST[V]:
         return node
 
     def keys(self) -> Iterator[str]:
-        """Gibt alle Schlüssel im Trie zurück.
-
+        """
+        Return an iterator over every key stored in the trie.
+        
         Returns:
-            Iterator[str]: Iterator über alle Schlüssel in lexikographischer Reihenfolge
+            Iterator[str]: An iterator yielding all keys in lexicographic order.
         """
         return self.keys_with_prefix("")
 
     def keys_with_prefix(self, prefix: str) -> Iterator[str]:
-        """Gibt alle Schlüssel zurück, die mit dem Präfix beginnen.
-
-        Args:
-            prefix: Der Präfix
-
+        """
+        Collects all keys in the trie that start with the given prefix.
+        
+        Parameters:
+            prefix (str): The prefix to match; must not be None.
+        
         Returns:
-            Iterator[str]: Iterator über alle Schlüssel mit dem Präfix
-
+            Iterator[str]: An iterator over keys that begin with `prefix`.
+        
         Raises:
-            ValueError: Wenn der Präfix None ist
+            ValueError: If `prefix` is None.
         """
         if prefix is None:
             raise ValueError("Präfix darf nicht None sein")
@@ -258,12 +275,13 @@ class TrieST[V]:
         return iter(queue)
 
     def _collect(self, node: _Node[V] | None, prefix: str, queue: Queue[str]) -> None:
-        """Sammelt alle Schlüssel im Teilbaum.
-
-        Args:
-            node: Wurzel des Teilbaums
-            prefix: Aktueller Präfix
-            queue: Queue zum Sammeln der Schlüssel
+        """
+        Collect all keys in the subtrie rooted at `node` and enqueue each complete key prefixed by `prefix` into `queue`.
+        
+        Parameters:
+            node (_Node[V] | None): Root of the subtrie to traverse; if None, nothing is enqueued.
+            prefix (str): Current key prefix for this subtree.
+            queue (Queue[str]): Queue used to collect matching keys; each full key is enqueued as a string.
         """
         if node is None:
             return
@@ -273,18 +291,17 @@ class TrieST[V]:
             self._collect(node.children[char], prefix + char, queue)
 
     def keys_that_match(self, pattern: str) -> Iterator[str]:
-        """Gibt alle Schlüssel zurück, die dem Muster entsprechen.
-
-        Das Zeichen '.' im Muster steht für ein beliebiges Zeichen.
-
-        Args:
-            pattern: Das Suchmuster (z.B. ".he.l.")
-
+        """
+        Finds all keys that match a pattern using '.' as a single-character wildcard.
+        
+        Parameters:
+            pattern (str): Search pattern where '.' matches any single character.
+        
         Returns:
-            Iterator[str]: Iterator über alle passenden Schlüssel
-
+            An iterator over keys that match the pattern.
+        
         Raises:
-            ValueError: Wenn das Muster None ist
+            ValueError: If `pattern` is None.
         """
         if pattern is None:
             raise ValueError("Muster darf nicht None sein")
@@ -295,13 +312,16 @@ class TrieST[V]:
     def _collect_match(
         self, node: _Node[V] | None, prefix: str, pattern: str, queue: Queue[str]
     ) -> None:
-        """Sammelt alle Schlüssel, die dem Muster entsprechen.
-
-        Args:
-            node: Aktueller Knoten
-            prefix: Aktueller Präfix
-            pattern: Das Suchmuster
-            queue: Queue zum Sammeln der Schlüssel
+        """
+        Collects keys in the subtrie that match a pattern where '.' matches any single character.
+        
+        Traverses the subtrie rooted at `node`, extending `prefix` as it descends, and enqueues each key that matches `pattern` into `queue`.
+        
+        Parameters:
+        	node (_Node[V] | None): Subtrie root to search; if None nothing is enqueued.
+        	prefix (str): String accumulated from the root to the current node.
+        	pattern (str): Pattern to match against; '.' is a wildcard matching any single character.
+        	queue (Queue[str]): Queue to receive matching keys.
         """
         if node is None:
             return
@@ -321,16 +341,17 @@ class TrieST[V]:
             self._collect_match(node.children[char], prefix + char, pattern, queue)
 
     def longest_prefix_of(self, query: str) -> str:
-        """Gibt den längsten Schlüssel zurück, der ein Präfix von query ist.
-
-        Args:
-            query: Die Abfragezeichenfolge
-
+        """
+        Return the longest key stored in the trie that is a prefix of the given query.
+        
+        Parameters:
+            query (str): The query string to search for a key-prefix.
+        
         Returns:
-            str: Der längste Präfix-Schlüssel oder "" wenn keiner gefunden
-
+            str: The longest key in the trie that is a prefix of `query`, or an empty string if no such key exists.
+        
         Raises:
-            ValueError: Wenn die Query None ist
+            ValueError: If `query` is None.
         """
         if query is None:
             raise ValueError("Query darf nicht None sein")
@@ -340,16 +361,17 @@ class TrieST[V]:
     def _search(
         self, node: _Node[V] | None, query: str, depth: int, length: int
     ) -> int:
-        """Hilfsmethode für longest_prefix_of.
-
-        Args:
-            node: Aktueller Knoten
-            query: Die Abfragezeichenfolge
-            depth: Aktuelle Tiefe
-            length: Länge des längsten gefundenen Präfix
-
+        """
+        Find the length of the longest key in the subtree rooted at `node` that is a prefix of `query`.
+        
+        Parameters:
+            node (_Node[V] | None): Subtrie root to search.
+            query (str): Query string whose prefix is being matched.
+            depth (int): Current depth in `query` corresponding to `node`.
+            length (int): Length of the longest matching key found so far.
+        
         Returns:
-            int: Länge des längsten Präfix
+            int: Number of characters of the longest key in the subtree that is a prefix of `query`.
         """
         if node is None:
             return length
@@ -363,18 +385,25 @@ class TrieST[V]:
         return self._search(node.children[char], query, depth + 1, length)
 
     def __iter__(self) -> Iterator[str]:
-        """Gibt einen Iterator über alle Schlüssel zurück.
-
+        """
+        Provide an iterator over all keys in the trie.
+        
         Returns:
-            Iterator[str]: Iterator über alle Schlüssel
+            Iterator[str]: An iterator that yields each stored key.
         """
         return self.keys()
 
     def __repr__(self) -> str:
-        """Gibt eine String-Repräsentation des Tries zurück.
-
+        """
+        Return a concise textual representation of the trie.
+        
+        The representation is:
+        - "TrieST(empty)" when the trie contains no keys.
+        - "TrieST([keys])" when the trie contains 10 or fewer keys (shows all keys).
+        - "TrieST([first 10 keys]... {n} total)" when the trie contains more than 10 keys (shows the first 10 and the total count).
+        
         Returns:
-            str: String-Repräsentation
+            str: The textual representation of the trie.
         """
         if self.is_empty():
             return "TrieST(empty)"

@@ -23,7 +23,17 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 def main():
-    """Hauptfunktion für einfachen Build-Prozess."""
+    """
+    Orchestrates a simple ConTeXt documentation build and demonstrates single-file, directory, and full-project conversion workflows.
+    
+    Performs environment validation, loads configuration, initializes a MarkdownConverter, and runs three example scenarios:
+    1. Convert a single README.md if present.
+    2. Convert all Markdown files in a given directory (pva/pva5) if present.
+    3. Discover all project Markdown files, convert them to ConTeXt, generate the main document, and attempt to build a PDF via the DocumentationBuilder.
+    
+    Returns:
+        int: Exit code — `0` on successful completion, `1` if environment validation fails or an unrecoverable error occurs during the demo.
+    """
 
     # Logging einrichten
     setup_logging()
@@ -116,7 +126,14 @@ def main():
 
 
 def demo_advanced_features():
-    """Demonstriert erweiterte Features des Systems."""
+    """
+    Demonstrates and prints examples of the converter's advanced features and configuration.
+    
+    Loads the project configuration, attempts to instantiate the DocumentationBuilder (returns early if not available), and prints:
+    - the number of Markdown files selected for the "pva5" chapter,
+    - the first five index terms and a count of remaining terms,
+    - the ordered chapter structure with each chapter's title and file count.
+    """
 
     print("\n🔬 Erweiterte Features")
     print("-" * 30)

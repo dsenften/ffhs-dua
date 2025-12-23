@@ -70,7 +70,9 @@ class TestIndexMinPQ:
         assert pq.min() == 0.5
 
     def test_size_after_operations(self):
-        """Test: size() gibt korrekte Grösse nach Operationen."""
+        """
+        Verifies that size() reflects the number of elements after inserts and deletions.
+        """
         pq = IndexMinPQ(5)
         assert pq.size() == 0
         pq.insert(0, 1.0)

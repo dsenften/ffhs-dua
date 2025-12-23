@@ -19,12 +19,21 @@ class TestRabinKarpBasics:
         assert rk.pattern == "a"
 
     def test_init_none_pattern(self):
-        """Teste Konstruktor mit None-Muster."""
+        """
+        Verifies that constructing RabinKarp with a None pattern raises a ValueError.
+        
+        Raises:
+            ValueError: If the pattern is None, with message "Muster darf nicht None sein".
+        """
         with pytest.raises(ValueError, match="Muster darf nicht None sein"):
             RabinKarp(None)
 
     def test_init_empty_pattern(self):
-        """Teste Konstruktor mit leerem Muster."""
+        """
+        Verify that initializing RabinKarp with an empty pattern raises a ValueError.
+        
+        Asserts that constructing RabinKarp with "" raises ValueError with the message "Muster darf nicht leer sein".
+        """
         with pytest.raises(ValueError, match="Muster darf nicht leer sein"):
             RabinKarp("")
 
@@ -128,7 +137,12 @@ class TestRabinKarpSearchAll:
         assert matches == []
 
     def test_search_all_none_text(self):
-        """Teste search_all mit None-Text."""
+        """
+        Verifies that search_all raises a ValueError when called with None as the text.
+        
+        Raises:
+            ValueError: with message "Text darf nicht None sein" when text is None.
+        """
         rk = RabinKarp("abc")
         with pytest.raises(ValueError, match="Text darf nicht None sein"):
             list(rk.search_all(None))
@@ -238,7 +252,9 @@ class TestRabinKarpEdgeCases:
         assert rk.search(text) == 7
 
     def test_unicode_german_text(self):
-        """Teste deutsche Umlaute."""
+        """
+        Verify that patterns containing German umlauts are matched correctly by search().
+        """
         rk = RabinKarp("Müller")
         text = "Herr Müller ist da"
         assert rk.search(text) == 5
@@ -269,7 +285,11 @@ class TestRabinKarpEdgeCases:
         assert rk.search(text) == 1
 
     def test_pattern_at_multiple_positions(self):
-        """Teste Muster an mehreren Positionen."""
+        """
+        Verifies that search_all returns all start indices for multiple occurrences of a pattern within a text.
+        
+        Asserts that searching for "test" in "test this test and test again" yields [0, 10, 19].
+        """
         rk = RabinKarp("test")
         text = "test this test and test again"
         matches = list(rk.search_all(text))
@@ -302,7 +322,11 @@ class TestRabinKarpAlgorithmCorrectness:
         assert matches == [0, 4, 6]
 
     def test_modular_arithmetic_correctness(self):
-        """Teste dass modulare Arithmetik korrekt funktioniert."""
+        """
+        Verifies that modular arithmetic correctly handles characters with larger code points.
+        
+        Asserts that a pattern containing extended characters ("ÄÖÜ") is found at the expected index (4) in the text "testÄÖÜdata".
+        """
         # Teste mit grossen Zeichen-Werten (Extended ASCII)
         rk = RabinKarp("ÄÖÜ")
         text = "testÄÖÜdata"
@@ -344,7 +368,11 @@ class TestRabinKarpIntegration:
         assert len(matches) == 2
 
     def test_search_url_pattern(self):
-        """Teste Suche nach URL-Muster."""
+        """
+        Verify that search_all finds all occurrences of the URL prefix "http://" in a text.
+        
+        The test expects matches at positions 6 and 28 for the sample string "Visit http://example.com or http://test.org".
+        """
         rk = RabinKarp("http://")
         text = "Visit http://example.com or http://test.org"
         matches = list(rk.search_all(text))
@@ -365,7 +393,11 @@ class TestRabinKarpIntegration:
         assert rk.count(text) == 3
 
     def test_case_sensitive_search(self):
-        """Teste case-sensitive Suche."""
+        """
+        Verify RabinKarp distinguishes between differently cased patterns when searching and counting.
+        
+        Uses a sample text containing both "Python" and "python" to assert that searches for "python" and "Python" return their respective start indices and that each count equals 1.
+        """
         rk_lower = RabinKarp("python")
         rk_upper = RabinKarp("Python")
         text = "I love Python programming. python is great!"
@@ -439,7 +471,10 @@ class TestRabinKarpPerformance:
         assert end - start < 1.0  # Sollte unter 1 Sekunde dauern
 
     def test_worst_case_pattern_performance(self):
-        """Teste Performance im Worst-Case Szenario."""
+        """Verify RabinKarp maintains acceptable performance in a worst-case collision-heavy scenario.
+        
+        Searches for the pattern "aaab" in a text consisting of 1000 'a' characters followed by 'b', asserts the match is found at index 997 and that the search completes in under 1 second.
+        """
         # Worst-Case: Viele Hash-Kollisionen aber keine echten Matches
         rk = RabinKarp("aaab")
         text = "a" * 1000 + "b"  # Viele 'a's aber kein "aaab"
@@ -459,7 +494,11 @@ class TestRabinKarpComparison:
     """Vergleichstests mit anderen String-Suchalgorithmen."""
 
     def test_consistency_with_builtin_find(self):
-        """Teste Konsistenz mit Python's eingebautem str.find()."""
+        """
+        Verifies that RabinKarp.search produces the same match positions as Python's str.find() for several pattern/text pairs.
+        
+        Tests multiple cases and, because RabinKarp does not allow empty patterns, skips empty-pattern cases. For each tested pair, asserts that when str.find() returns -1 the RabinKarp result equals the text length, otherwise the RabinKarp result equals the index returned by str.find().
+        """
         test_cases = [
             ("abc", "abcdef"),
             ("def", "abcdef"),
@@ -500,7 +539,11 @@ class TestRabinKarpComparison:
         assert rk_positions == expected_positions
 
     def test_count_consistency(self):
-        """Teste dass count() mit search_all() konsistent ist."""
+        """
+        Verifies that count() returns the same number of matches as iterating search_all().
+        
+        Runs several pattern/text pairs and asserts count(text) equals the length of list(search_all(text)).
+        """
         test_cases = [
             ("a", "banana"),
             ("an", "banana"),

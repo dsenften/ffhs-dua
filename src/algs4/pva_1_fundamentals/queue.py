@@ -20,11 +20,12 @@ from ..errors.errors import NoSuchElementException
 
 class Node[T]:
     def __init__(self, item: T, next: "Node[T] | None") -> None:
-        """Initialisiert einen neuen Knoten.
-
-        :param item: Das Element, das im Knoten gespeichert werden soll
-        :param next: Der nächste Knoten in der Queue
-
+        """
+        Create a node containing an item and an optional reference to the next node.
+        
+        Parameters:
+            item (T): Element to store in the node.
+            next (Node[T] | None): Reference to the next node or None if there is no successor.
         """
         self.item: T = item
         self.next: Node[T] | None = next

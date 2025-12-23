@@ -198,7 +198,11 @@ class TestHeap:
         assert arr == [5, 3]
 
     def test_heap_construction_phase(self):
-        """Test: Heap-Konstruktionsphase separat testen."""
+        """
+        Verify the heap-construction phase produces a max-heap where each parent node is greater than or equal to its children.
+        
+        Runs the heap-construction (heapify) phase on a fixed array and asserts the heap property for every parent node.
+        """
         arr = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
         n = len(arr)
 
@@ -257,7 +261,14 @@ class TestHeap:
         assert sorted(arr) == sorted(original_arr)
 
     def test_heap_property_maintenance(self):
-        """Test: Erhaltung der Heap-Eigenschaft während des Sortierens."""
+        """
+        Verify that the heap property is preserved during the sortdown phase of heap sort.
+        
+        Builds a max-heap from a sample array, then repeatedly moves the root (maximum) to the end,
+        reduces the heap size, and restores the heap. After each extraction and restoration, asserts
+        that the root is the maximum of the current heap and that every parent is greater than or
+        equal to its children within the reduced heap.
+        """
         arr = [9, 5, 6, 2, 3, 7, 1, 4, 8]
         n = len(arr)
 

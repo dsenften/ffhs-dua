@@ -53,17 +53,17 @@ class BoyerMoore:
     """
 
     def __init__(self, pattern: str) -> None:
-        """Initialisiert den Boyer-Moore-Algorithmus mit einem Suchmuster.
-
-        Baut die Bad Character Table für das Muster auf.
-        Die Tabelle speichert für jedes Zeichen die rechteste Position
-        im Muster (oder -1 wenn nicht vorhanden).
-
-        Args:
-            pattern: Das Suchmuster (nicht-leerer String)
-
+        """
+        Initialize the Boyer-Moore searcher with the given pattern.
+        
+        Builds the bad-character table for extended ASCII (256), recording the rightmost index
+        of each character in the pattern (or -1 if the character does not occur).
+        
+        Parameters:
+            pattern (str): Non-empty search pattern.
+        
         Raises:
-            ValueError: Wenn pattern None oder leer ist
+            ValueError: If `pattern` is None or an empty string.
         """
         if pattern is None:
             raise ValueError("Muster darf nicht None sein")
@@ -85,27 +85,23 @@ class BoyerMoore:
 
     @property
     def pattern(self) -> str:
-        """Gibt das Suchmuster zurück.
-
+        """
+        Get the stored search pattern.
+        
         Returns:
-            str: Das Suchmuster
+            str: The search pattern.
         """
         return self._pattern
 
     def search(self, text: str) -> int:
-        """Sucht das Muster im gegebenen Text.
-
-        Verwendet die Bad Character Rule, um grosse Sprünge im Text zu machen.
-        Der Algorithmus vergleicht das Muster von rechts nach links.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Locate the first occurrence of the stored pattern in the given text using the Bad Character rule.
+        
         Returns:
-            int: Index der ersten Übereinstimmung, oder len(text) wenn nicht gefunden
-
+            int: Index of the first match; len(text) if no match is found.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -143,16 +139,17 @@ class BoyerMoore:
         return n
 
     def search_all(self, text: str) -> Iterator[int]:
-        """Findet alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Yield the starting index of each occurrence of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): Text to search.
+        
         Returns:
-            Iterator[int]: Iterator über alle Match-Positionen
-
+            Iterator[int]: Iterator yielding the start index of each match in ascending order.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -171,16 +168,17 @@ class BoyerMoore:
                 break
 
     def count(self, text: str) -> int:
-        """Zählt alle Vorkommen des Musters im Text.
-
-        Args:
-            text: Der zu durchsuchende Text
-
+        """
+        Count occurrences of the stored pattern in the given text.
+        
+        Parameters:
+            text (str): Text to search.
+        
         Returns:
-            int: Anzahl der Vorkommen
-
+            int: Number of occurrences of the pattern in the text.
+        
         Raises:
-            ValueError: Wenn text None ist
+            ValueError: If `text` is None.
         """
         if text is None:
             raise ValueError("Text darf nicht None sein")
@@ -188,10 +186,11 @@ class BoyerMoore:
         return sum(1 for _ in self.search_all(text))
 
     def __repr__(self) -> str:
-        """Gibt eine String-Repräsentation zurück.
-
+        """
+        Return a concise string representation of the BoyerMoore instance.
+        
         Returns:
-            str: String-Repräsentation
+            str: Representation in the form "BoyerMoore(pattern='...')".
         """
         return f"BoyerMoore(pattern='{self._pattern}')"
 

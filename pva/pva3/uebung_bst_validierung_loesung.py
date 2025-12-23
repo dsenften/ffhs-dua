@@ -57,25 +57,16 @@ class BSTValidator[K, V]:
     def _is_valid_bst_helper(
         self, node: Node[K, V] | None, min_val: K | None, max_val: K | None
     ) -> bool:
-        """Rekursive Hilfsmethode zur BST-Validierung.
-
-        Diese Methode überprüft, ob der Teilbaum mit Wurzel 'node' die
-        BST-Eigenschaft erfüllt. Dabei wird sichergestellt, dass alle
-        Schlüssel im erlaubten Wertebereich [min_val, max_val] liegen.
-
-        Args:
-            node: Aktueller Knoten (None für leeren Teilbaum)
-            min_val: Minimaler erlaubter Schlüsselwert (None = unbeschränkt)
-            max_val: Maximaler erlaubter Schlüsselwert (None = unbeschränkt)
-
+        """
+        Validate that the subtree rooted at `node` satisfies the binary search tree ordering constraints.
+        
+        Parameters:
+            node (Node[K, V] | None): Root of the subtree to validate; `None` denotes an empty subtree.
+            min_val (K | None): Exclusive lower bound for allowed keys (None means no lower bound).
+            max_val (K | None): Exclusive upper bound for allowed keys (None means no upper bound).
+        
         Returns:
-            bool: True wenn der Teilbaum gültig ist, False sonst
-
-        Algorithmus:
-            1. Basisfall: Leerer Teilbaum ist gültig
-            2. Überprüfe, ob der aktuelle Schlüssel im erlaubten Bereich liegt
-            3. Rekursiv: Überprüfe linken Teilbaum mit angepasstem Maximum
-            4. Rekursiv: Überprüfe rechten Teilbaum mit angepasstem Minimum
+            bool: `True` if every key in the subtree lies strictly between `min_val` and `max_val` (empty subtree is valid), `False` otherwise.
         """
         # Basisfall: Ein leerer Teilbaum ist immer gültig
         if node is None:
@@ -225,12 +216,11 @@ def test_invalid_bst_right_subtree() -> None:
 
 
 def test_equal_keys() -> None:
-    """Test: BST mit gleichen Schlüsseln (ungültig).
-
-    Konstruiert einen Baum mit duplizierten Schlüsseln:
-           5
-          / \
-         3   5  <- Duplizierter Schlüssel!
+    """
+    Test that a BST containing duplicate keys is identified as invalid.
+    
+    Constructs a tree where the right child has the same key as the root and asserts
+    the validator reports the tree is not a valid BST.
     """
     bst = BST[int, str]()
     bst._root = Node(5, "fünf", 3)
