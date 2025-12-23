@@ -2,27 +2,19 @@
 % Hauptdokument für ConTeXt-Kompilierung
 % ========================================
 
-% Basis-Setup
-\setuppapersize[A4]
-\setuplayout[
-    topspace=2.5cm,
-    bottomspace=2cm,
-    backspace=2.5cm,
-    width=16cm,
-    height=24.7cm,
-    header=1cm,
-    footer=1cm
-]
+% Globale Environment-Datei laden (aus ~/Library/texmf/tex/context/user/)
+\environment environment
 
-% Sprache und Encoding
-\mainlanguage[de]
-\enableregime[utf-8]
+% =============================================================================
+% FFHS-SPEZIFISCHE ANPASSUNGEN
+% =============================================================================
 
-% Externe Style-Dateien laden
-\input templates/styles/typography
-\input templates/styles/colors
-\input templates/styles/layout
-\input templates/styles/code
+% Überschreibe primarycolor mit FFHS-Blau
+\definecolor[primarycolor][ffhsblue]
+
+% Überschreibe Kopfzeile mit FFHS-spezifischem Titel
+\setupheadertexts
+    [FFHS DUA - Datenstrukturen und Algorithmen][\getmarking[chapter]]
 
 % Metadaten
 \setvariables[document][
@@ -91,30 +83,41 @@
 \placecontent
 
 % =====================
-% TEIL I: GRUNDLAGEN
+% EINLEITUNG
 % =====================
 \page
-\input content/chapters/00_kursuebersicht
-
+\input content/chapters/00_einleitung/index
 \page
-\input content/chapters/01_komplexitaetsanalyse
-
-\page
-\input content/chapters/02_union_find
+\input content/chapters/00_einleitung/erste_schritte
 
 % =====================
-% TEIL II: SORTIEREN
+% MODUL 1: GRUNDLAGEN
 % =====================
 \page
-\input content/chapters/03_quick_sort
-
-\page
-\input content/chapters/04_heap_sort
+\input content/chapters/01_grundlagen/index
 
 % =====================
-% ANHANG
+% MODUL 2: SORTIEREN
 % =====================
 \page
-\input content/chapters/A_erste_schritte
+\input content/chapters/02_sortieren/index
+
+% =====================
+% MODUL 3: SUCHEN
+% =====================
+\page
+\input content/chapters/03_suchen/index
+
+% =====================
+% MODUL 4: GRAPHEN
+% =====================
+\page
+\input content/chapters/04_graphen/index
+
+% =====================
+% MODUL 5: STRINGS
+% =====================
+\page
+\input content/chapters/05_strings/index
 
 \stoptext

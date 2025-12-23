@@ -13,10 +13,10 @@
 DOCUMENT = dua-dokumentation
 CONTEXT = context
 
-# Hauptquelldateien
+# Hauptquelldateien - rekursiv alle .tex-Dateien finden
 SOURCES = $(DOCUMENT).tex \
-          content/chapters/*.tex \
-          templates/styles/*.tex
+          $(shell find content/chapters -name "*.tex" 2>/dev/null) \
+          $(shell find templates/styles -name "*.tex" 2>/dev/null)
 
 # Standard-Ziel
 .PHONY: all
