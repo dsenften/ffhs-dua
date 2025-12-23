@@ -1,0 +1,229 @@
+\section{Tries - Effiziente String-Suchbäume}
+
+\subsection{Einleitung}
+
+Tries sind spezialisierte Baumdatenstrukturen, deren Kanten mit Buchstaben oder Zeichenteilen beschriftet sind. Der Name {\em Trie} leitet sich vom englischen Wort {\em retrieval} (Wiederfinden von Informationen) ab. Sie eignen sich besonders für die effiziente Speicherung und Suche von Schlüssel-Wert-Paaren, bei denen die Schlüssel aus Zeichenketten bestehen.
+
+{\bf Kernvorteil}: Die Suchzeit in einem Trie hängt {\bf nicht} von der Gesamtzahl der Einträge ab, sondern {\bf ausschliesslich von der Länge des Suchschlüssels}. Eine Suche nach einem kurzen String benötigt immer die gleiche Anzahl Schritte, unabhängig davon, ob der Trie 1.000, 100.000 oder mehrere Milliarden Einträge enthält.
+
+\subsection{Hauptmerkmale}
+
+\subsubsection{Vorteile gegenüber anderen Datenstrukturen}
+
+\startitemize[n]
+\item {\bf Unabhängigkeit von der Datenmenge}: Suchzeit O(m), wobei m = Länge des Suchschlüssels
+\item {\bf Speichereffizienz}: Gemeinsame Präfixe werden nur einmal gespeichert
+\item {\bf Keine Schlüsselvergleiche}: Die Position im Baum bestimmt den Schlüssel
+\item {\bf Präfix-Operationen}: Effiziente Suche nach allen Einträgen mit gleichem Präfix
+\stopitemize
+
+\subsubsection{Typische Anwendungsfälle}
+
+\startitemize
+\item {\bf Textsuchmaschinen}: Effiziente Volltextsuche
+\item {\bf Routing-Tabellen}: Lookup-Operationen im Internet
+\item {\bf Autovervollständigung}: Schnelle Präfix-basierte Vorschläge
+\item {\bf Rechtschreibprüfung}: Wörterbuch-Implementierungen
+\stopitemize
+
+\subsection{Datenstruktur}
+
+\subsubsection{Konzept}
+
+Anders als bei binären Suchbäumen werden in Tries die Schlüssel nicht in den Knoten gespeichert. Stattdessen bestimmt die {\bf Position des Knotens} innerhalb des Baums, welcher Schlüssel repräsentiert wird.
+
+\subsubsection{Aufbau}
+
+\startitemize
+\item {\bf Knoten}: Jeder Knoten hat ein Attribut für den Wert (\type{val}) und eine Menge von Kind-Knoten (\type{children})
+\item {\bf Kanten}: Beschriftet mit Zeichen (z.B. 'a' bis 'z')
+\item {\bf Navigation}: Von der Wurzel ausgehend folgt man den mit den Zeichen des Suchschlüssels markierten Kanten
+\item {\bf Werte}: Nur Knoten, die tatsächlich einen Schlüssel repräsentieren, speichern Werte
+\stopitemize
+
+\subsubsection{Python-Implementierung}
+
+\startpythoncode
+from typing import Generic, TypeVar
+
+V = TypeVar("V")  # Value type
+
+class _Node(Generic[V]):
+    """Knoten im Trie."""
+    def __init__(self) -> None:
+        self.val: V | None = None
+        self.children: dict[str, _Node[V]] = {}
+
+class TrieST(Generic[V]):
+    """Trie Symbol Table - String-basierte Symbol-Tabelle."""
+    def __init__(self) -> None:
+        self._root: _Node[V] | None = None
+        self._n: int = 0  # Anzahl der Schlüssel-Wert-Paare
+\stoppythoncode
+
+{\bf Designentscheidung}: Die Verwendung eines \type{dict} für \type{children} ist effizienter als eine Liste von Tupeln, da der Zugriff auf ein spezifisches Kind in O(1) erfolgt. Die Dictionary-basierte Implementierung ist flexibel für beliebige Zeichen (nicht nur ASCII) und entspricht den Python-Konventionen.
+
+\subsection{Operationen}
+
+\subsubsection{Suche}
+
+Die Suche ist die fundamentale Operation eines Tries.
+
+{\bf Algorithmus}:
+
+\startitemize[n]
+\item Beginne an der Wurzel
+\item Wenn die Tiefe gleich der Schlüssellänge ist → Rückgabe des Wertes im aktuellen Knoten
+\item Nimm das Zeichen an der aktuellen Position
+\item Wenn keine Kante mit diesem Zeichen existiert → Rückgabe \type{None} (nicht gefunden)
+\item Folge der Kante zu Kind-Knoten und fahre rekursiv fort
+\stopitemize
+
+\startpythoncode
+class TrieST(Generic[V]):
+    def get(self, key: str) -> V | None:
+        """Gibt den Wert zurück, der mit dem Schlüssel verknüpft ist."""
+        if key is None:
+            raise ValueError("Schlüssel darf nicht None sein")
+        node = self._get(self._root, key, 0)
+        if node is None:
+            return None
+        return node.val
+
+    def _get(self, node: _Node[V] | None, key: str, depth: int) -> _Node[V] | None:
+        """Hilfsmethode für get - sucht rekursiv nach einem Knoten."""
+        if node is None:
+            return None
+        if depth == len(key):
+            return node
+        char = key[depth]
+        if char not in node.children:
+            return None
+        return self._get(node.children[char], key, depth + 1)
+\stoppythoncode
+
+{\bf Laufzeit}: O(m), wobei m = Länge des Suchschlüssels
+
+\subsubsection{Einfügen}
+
+Das Einfügen navigiert zum passenden Knoten und erstellt fehlende Zwischenknoten bei Bedarf.
+
+\startpythoncode
+class TrieST(Generic[V]):
+    def put(self, key: str, val: V) -> None:
+        """Fügt ein Schlüssel-Wert-Paar in den Trie ein."""
+        if key is None:
+            raise ValueError("Schlüssel darf nicht None sein")
+        self._root = self._put(self._root, key, val, 0)
+
+    def _put(self, node: _Node[V] | None, key: str, val: V, depth: int) -> _Node[V]:
+        """Hilfsmethode für put - fügt rekursiv einen Schlüssel ein."""
+        if node is None:
+            node = _Node[V]()
+        if depth == len(key):
+            if node.val is None:
+                self._n += 1  # Neuer Schlüssel
+            node.val = val
+            return node
+        char = key[depth]
+        if char not in node.children:
+            node.children[char] = _Node[V]()
+        node.children[char] = self._put(node.children[char], key, val, depth + 1)
+        return node
+\stoppythoncode
+
+{\bf Laufzeit}: O(m), wobei m = Länge des Schlüssels
+
+\subsubsection{Präfix-Operationen}
+
+Eine der Stärken von Tries ist die effiziente Unterstützung für Präfix-basierte Operationen.
+
+\startitemize
+\item {\bf keys\_with\_prefix(prefix)}: Gibt alle Schlüssel zurück, die mit dem Präfix beginnen
+\item {\bf keys\_that\_match(pattern)}: Gibt alle Schlüssel zurück, die einem Muster entsprechen (\type{.} = Wildcard)
+\item {\bf longest\_prefix\_of(query)}: Gibt den längsten Schlüssel zurück, der ein Präfix der Query ist
+\stopitemize
+
+Diese Operationen sind besonders nützlich für:
+
+\startitemize
+\item {\bf Autovervollständigung}: \type{keys_with_prefix("pr")} → ["print", "printf", "private"]
+\item {\bf Wildcard-Suche}: \type{keys_that_match(".he.l.")} → ["shells"]
+\item {\bf Routing}: \type{longest_prefix_of("192.168.1.100")} → findet längste IP-Präfix-Übereinstimmung
+\stopitemize
+
+\subsection{Performance-Vergleich}
+
+\subsubsection{Tries vs. Binäre Suchbäume}
+
+{\bf Vergleichsaufwand}:
+
+\startitemize
+\item {\bf Trie mit 1 Mio. Einträgen} (Schlüssellänge ≤ 14): Maximal 14 Zeichenvergleiche
+\item {\bf Balancierter BST mit 1 Mio. Einträgen}: Etwa log₂(1.000.000) ≈ 20 Vergleiche, wobei jeder Vergleich bis zu 14 Zeichen vergleichen kann
+\stopitemize
+
+Tries vermeiden teure String-Vergleiche durch zeichenweise Navigation.
+
+\subsection{Komplexitätsanalyse}
+
+\placetable[here][tab:trie-complexity]{Komplexitätsanalyse Trie-Operationen}
+\starttabulate[|l|l|l|]
+\HL
+\NC {\bf Operation} \NC {\bf Laufzeit} \NC {\bf Bemerkung} \NC\NR
+\HL
+\NC Suche     \NC O(m)     \NC m = Schlüssellänge, unabhängig von n \NC\NR
+\NC Einfügen  \NC O(m)     \NC m = Schlüssellänge, unabhängig von n \NC\NR
+\NC Löschen   \NC O(m)     \NC m = Schlüssellänge \NC\NR
+\NC Speicher  \NC O(ALPHABET\_SIZE × n × m) \NC Worst Case, bei gemeinsamen Präfixen besser \NC\NR
+\HL
+\stoptabulate
+
+{\bf Wichtig}: Im Gegensatz zu Hash-Tabellen (O(1) durchschnittlich) und BSTs (O(log n)) hängt die Laufzeit bei Tries nicht von der Anzahl der Einträge n ab!
+
+\subsection{Patricia-Tries (Optimierung)}
+
+\subsubsection{Motivation}
+
+Standard-Tries können ineffizient werden, wenn viele Einträge einen langen gemeinsamen Präfix teilen. Dies führt zu langen Ketten von Knoten mit jeweils nur einem Kind.
+
+\subsubsection{Patricia-Konzept}
+
+{\bf Patricia} (auch Patricia-Trie genannt) ist eine kompaktere Variante des Tries:
+
+\startitemize
+\item {\bf Optimierung}: Knoten mit Grad 1 (nur ein Kind) ohne Informationen werden mit dem Kind-Knoten verschmolzen
+\item {\bf Speicherung}: Die verbleibenden Knoten speichern den gemeinsamen Präfix aller Einträge im Teilbaum
+\item {\bf Trade-off}: Kompaktere Speicherung gegen etwas langsamere Einfüge- und Löschoperationen
+\stopitemize
+
+\subsubsection{Anwendung}
+
+Patricia-Tries werden häufig in Routing-Tabellen und Netzwerkanwendungen eingesetzt, wo Speichereffizienz wichtig ist und die zusätzliche Implementierungskomplexität gerechtfertigt werden kann.
+
+\subsection{Zusammenfassung}
+
+{\bf Tries} sind hocheffiziente Datenstrukturen für String-basierte Schlüssel mit folgenden Charakteristika:
+
+{\bf Stärken}:
+
+\startitemize
+\item Suchzeit unabhängig von Anzahl der Einträge (nur von Schlüssellänge)
+\item Keine teuren String-Vergleiche nötig
+\item Natürliche Unterstützung für Präfix-Operationen
+\item Gemeinsame Präfixe werden effizient gespeichert
+\stopitemize
+
+{\bf Zu beachten}:
+
+\startitemize
+\item Speicherverbrauch kann hoch sein bei kleinem Alphabet und wenig gemeinsamen Präfixen
+\item Implementierung ist etwas komplexer als BSTs
+\item Patricia-Tries bieten kompaktere Speicherung bei etwas höherem Implementierungsaufwand
+\stopitemize
+
+{\bf Einsatzempfehlung}: Tries sind die beste Wahl für Anwendungen mit String-Schlüsseln, bei denen schnelle Suche und Präfix-Operationen im Vordergrund stehen, wie Textsuchmaschinen, Autovervollständigung und Netzwerk-Routing.
+
+\blank[medium]
+
+{\it Quelle: Praktische Algorithmik mit Python von Tobias Häberlein, Abschnitt 3.7 "Tries" und 3.8 "Patricia-Tries"}
