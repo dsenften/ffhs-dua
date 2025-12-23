@@ -1,0 +1,88 @@
+% Titelseite für FFHS-DUA Dokumentation
+% ====================================
+
+\startcomponent titlepage
+
+% Titelseite ohne Kopf-/Fußzeilen
+\setuppagenumbering[state=stop]
+
+\startstandardmakeup
+
+% FFHS Logo (falls vorhanden)
+\startlinecorrection[blank]
+\midaligned{
+    \ifnum\pdffilesize{assets/logos/ffhs-logo.pdf}>0
+        \externalfigure[assets/logos/ffhs-logo.pdf][width=4cm]
+    \else
+        % Fallback: Text-Logo
+        {\bfd\ss FFHS}
+    \fi
+}
+\stoplinecorrection
+
+\vfill
+
+% Haupttitel
+\startlinecorrection[blank]
+\midaligned{
+    \bfd\ss\color[primarycolor]{\getvariable{document}{title}}
+}
+\stoplinecorrection
+
+\blank[2*big]
+
+% Untertitel
+\startlinecorrection[blank]
+\midaligned{
+    \bfb\ss\color[secondarycolor]{\getvariable{document}{subtitle}}
+}
+\stoplinecorrection
+
+\vfill
+
+% Kurs-Information
+\startlinecorrection[blank]
+\midaligned{
+    \bfa\ss Kurs: \getvariable{document}{course}
+}
+\stoplinecorrection
+
+\blank[big]
+
+% Institution
+\startlinecorrection[blank]
+\midaligned{
+    \bf\ss \getvariable{document}{institution}
+}
+\stoplinecorrection
+
+\vfill
+
+% Autor und Datum
+\startlinecorrection[blank]
+\midaligned{
+    \starttabulate[|l|r|]
+    \NC Autor: \NC \getvariable{document}{author} \NC\NR
+    \NC Datum: \NC \getvariable{document}{date} \NC\NR
+    \NC Version: \NC \getvariable{document}{version} \NC\NR
+    \stoptabulate
+}
+\stoplinecorrection
+
+\vfill
+
+% Zusätzliche Informationen
+\startlinecorrection[blank]
+\midaligned{
+    \tfx\ss
+    Dieses Dokument wurde automatisch aus Markdown-Dateien\\
+    mit ConTeXt generiert.
+}
+\stoplinecorrection
+
+\stopstandardmakeup
+
+% Seitennummerierung wieder aktivieren
+\setuppagenumbering[state=start, location={footer,right}]
+
+\stopcomponent

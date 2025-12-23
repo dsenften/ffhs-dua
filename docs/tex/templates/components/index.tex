@@ -1,0 +1,114 @@
+% Index für FFHS-DUA Dokumentation
+% =================================
+
+\startcomponent index
+
+% Prüfen ob Index-Einträge vorhanden sind
+\doifmode{*register}{
+
+% Neue Seite für Index
+\page
+
+% Index-Überschrift
+\midaligned{\bfd\ss\color[primarycolor]{Index}}
+
+\blank[2*big]
+
+% Index-Setup
+\setupregister[index][
+    balance=yes,                % Spalten ausbalancieren
+    compress=yes,               % Seitenzahlen komprimieren (1-3 statt 1,2,3)
+    indicator=no,               % Keine Indikatoren
+    distance=0.5em,             % Abstand zwischen Einträgen
+    before={\blank[small]},     % Abstand vor Index
+    after={\blank[medium]},     % Abstand nach Index
+    style=\rm,                  % Schriftart
+    pagestyle=\rm,              % Seitenzahlen-Schriftart
+    interaction=all,            % Links aktivieren
+    n=2,                        % Anzahl Spalten
+    align=flushleft,            % Linksbündig
+    margin=0pt                  % Kein zusätzlicher Rand
+]
+
+% Spezielle Formatierung für Haupt-Einträge
+\setupregister[index][1][
+    style=\bf,
+    color=primarycolor
+]
+
+% Spezielle Formatierung für Sub-Einträge
+\setupregister[index][2][
+    style=\rm,
+    color=textcolor,
+    margin=1em
+]
+
+% Spezielle Formatierung für Sub-Sub-Einträge
+\setupregister[index][3][
+    style=\rm,
+    color=lighttext,
+    margin=2em
+]
+
+% Index ausgeben
+\placeregister[index]
+
+% Zusätzliche Register (falls definiert)
+
+% Algorithmus-Register
+\doifmode{*algorithmregister}{
+    \blank[2*big]
+    \midaligned{\bfb\ss\color[secondarycolor]{Algorithmen}}
+    \blank[big]
+
+    \setupregister[algorithm][
+        balance=yes,
+        compress=yes,
+        style=\rm,
+        pagestyle=\rm,
+        interaction=all,
+        n=1
+    ]
+
+    \placeregister[algorithm]
+}
+
+% Datenstruktur-Register
+\doifmode{*datastructureregister}{
+    \blank[2*big]
+    \midaligned{\bfb\ss\color[secondarycolor]{Datenstrukturen}}
+    \blank[big]
+
+    \setupregister[datastructure][
+        balance=yes,
+        compress=yes,
+        style=\rm,
+        pagestyle=\rm,
+        interaction=all,
+        n=1
+    ]
+
+    \placeregister[datastructure]
+}
+
+% Komplexitäts-Register
+\doifmode{*complexityregister}{
+    \blank[2*big]
+    \midaligned{\bfb\ss\color[secondarycolor]{Komplexitäten}}
+    \blank[big]
+
+    \setupregister[complexity][
+        balance=yes,
+        compress=yes,
+        style=\rm,
+        pagestyle=\rm,
+        interaction=all,
+        n=1
+    ]
+
+    \placeregister[complexity]
+}
+
+} % Ende \doifmode{*register}
+
+\stopcomponent

@@ -35,14 +35,6 @@ Beispiel:
     'value'
 """
 
-from src.algs4.pva_3_searching.avl import AVL
-from src.algs4.pva_3_searching.bst import BST
-from src.algs4.pva_3_searching.hashing import (
-    LinearProbingHashST,
-    SeparateChainingHashST,
-)
-from src.algs4.pva_3_searching.red_black_bst import RedBlackBST
-
 __all__ = [
     "BST",
     "AVL",
@@ -50,3 +42,23 @@ __all__ = [
     "SeparateChainingHashST",
     "LinearProbingHashST",
 ]
+
+# Lazy loading für Module - verhindert RuntimeWarning bei Ausführung als Script
+_LAZY_IMPORTS = {
+    "BST": (".bst", "BST"),
+    "AVL": (".avl", "AVL"),
+    "RedBlackBST": (".red_black_bst", "RedBlackBST"),
+    "SeparateChainingHashST": (".hashing", "SeparateChainingHashST"),
+    "LinearProbingHashST": (".hashing", "LinearProbingHashST"),
+}
+
+
+def __getattr__(name: str):
+    """Lazy loading von Modulen bei erstem Zugriff."""
+    if name in _LAZY_IMPORTS:
+        module_path, attr_name = _LAZY_IMPORTS[name]
+        import importlib
+
+        module = importlib.import_module(module_path, __package__)
+        return getattr(module, attr_name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

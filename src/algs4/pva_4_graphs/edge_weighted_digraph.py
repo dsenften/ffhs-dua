@@ -23,6 +23,7 @@ Beispiel:
     6: 6->4 0.93000 6->0 0.58000 6->2 0.40000
     7: 7->3 0.39000 7->5 0.28000
 """
+
 from src.algs4.pva_1_fundamentals.bag import Bag
 
 from .directed_edge import DirectedEdge

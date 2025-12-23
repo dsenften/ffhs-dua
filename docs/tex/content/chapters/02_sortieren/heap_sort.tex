@@ -1,0 +1,229 @@
+% Kapitel: Heap Sort
+% ==================
+
+\chapter{Heap Sort: Garantiert effizienter Sortieralgorithmus}
+
+\section{Einführung}
+
+Heap Sort wurde 1964 von J.W.J. Williams entwickelt und zeichnet sich durch seine
+{\bf garantierte} Zeitkomplexität von $O(n \log n)$ in allen Fällen aus. Im Gegensatz
+zu Quick Sort hat Heap Sort keine ungünstigen Eingaben, die zu schlechterer
+Performance führen könnten.
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor, background=color, backgroundcolor=lightgray]
+{\bf Wichtig:} Ein {\bf Max-Heap} ist ein vollständiger Binärbaum, bei dem jeder
+Knoten grösser oder gleich seinen Kindern ist. Die Wurzel enthält immer das Maximum.
+\stopframedtext
+
+\subsection{Grundprinzip}
+
+Heap Sort arbeitet in zwei Hauptphasen:
+
+\startitemize[n]
+\item {\bf Heap-Konstruktion (Heapify)}: Das unsortierte Array wird in einen Max-Heap umgewandelt
+\item {\bf Sortdown}: Wiederholt wird das Maximum (Wurzel) extrahiert und an das Ende gesetzt
+\stopitemize
+
+\section{Die Heap-Datenstruktur}
+
+\subsection{Array-Repräsentation}
+
+In der Array-Darstellung gilt für einen Knoten an Index $i$:
+
+\startitemize
+\item {\bf Linkes Kind}: Index $2i + 1$
+\item {\bf Rechtes Kind}: Index $2i + 2$
+\item {\bf Elternknoten}: Index $(i-1)/2$ (abgerundet)
+\stopitemize
+
+\startpythoncode
+Array: [16, 14, 10, 8, 7, 9, 3, 2, 4, 1]
+
+Baum-Darstellung:
+       16
+     /    \
+   14      10
+  /  \    /  \
+ 8    7  9    3
+/ \  /
+2  4 1
+\stoppythoncode
+
+\section{Algorithmus-Details}
+
+\subsection{Sink-Operation (Heapify)}
+
+Die {\tt sink}-Operation ist das Herzstück von Heap Sort:
+
+\startpythoncode
+def sink(cls, arr: list, i: int, length: int) -> None:
+    """Stellt die Heap-Eigenschaft für Knoten i wieder her."""
+    while 2 * i + 1 <= length:
+        # Finde den Index des linken Kindes
+        j = 2 * i + 1
+
+        # Wähle das grössere der beiden Kinder
+        if j < length and arr[j] < arr[j + 1]:
+            j += 1
+
+        # Wenn das aktuelle Element bereits grösser ist, fertig
+        if arr[i] >= arr[j]:
+            break
+
+        # Tausche das aktuelle Element mit dem grösseren Kind
+        arr[i], arr[j] = arr[j], arr[i]
+        i = j
+\stoppythoncode
+
+\subsection{Vollständige Implementierung}
+
+\startpythoncode
+class Heap:
+    """Heap-Sort-Implementierung."""
+
+    @classmethod
+    def sort(cls, arr: list) -> list:
+        """Sortiert eine Liste mit dem Heap-Sort-Algorithmus."""
+        n = len(arr)
+
+        # Phase 1: Heap-Konstruktion
+        k = n // 2 - 1  # Letzter Nicht-Blatt-Knoten
+        while k >= 0:
+            cls.sink(arr, k, n - 1)
+            k -= 1
+
+        # Phase 2: Sortdown
+        while n > 1:
+            arr[0], arr[n - 1] = arr[n - 1], arr[0]  # Max ans Ende
+            n -= 1
+            cls.sink(arr, 0, n - 1)  # Heap wiederherstellen
+
+        return arr
+
+    @classmethod
+    def is_sorted(cls, arr: list) -> bool:
+        """Überprüft, ob eine Liste sortiert ist."""
+        for i in range(1, len(arr)):
+            if arr[i] < arr[i - 1]:
+                return False
+        return True
+\stoppythoncode
+
+\section{Komplexitätsanalyse}
+
+\starttabulate[|l|c|l|]
+\HL
+\NC {\bf Phase} \NC {\bf Komplexität} \NC {\bf Beschreibung} \NC\NR
+\HL
+\NC Heap-Konstruktion \NC $O(n)$ \NC Überraschenderweise linear! \NC\NR
+\NC Sortdown \NC $O(n \log n)$ \NC $n-1$ Extraktionen à $O(\log n)$ \NC\NR
+\NC {\bf Gesamt} \NC $O(n \log n)$ \NC In {\em allen} Fällen \NC\NR
+\HL
+\stoptabulate
+
+\subsection{Speicherkomplexität}
+
+\startitemize
+\item {\bf Speicherplatz}: $O(1)$ -- In-Place-Sortierung
+\item {\bf Stack-Speicher}: $O(1)$ -- Keine Rekursion
+\stopitemize
+
+\section{Eigenschaften}
+
+\subsection{Stabilität}
+
+\startframedtext[width=\textwidth, frame=on, framecolor=orange]
+{\bf Warnung:} Heap Sort ist {\bf nicht stabil}. Gleiche Elemente können ihre
+relative Reihenfolge ändern.
+\stopframedtext
+
+\subsection{Konsistente Performance}
+
+{\bf Grosser Vorteil:} Heap Sort hat in allen Fällen $O(n \log n)$ Zeitkomplexität:
+\startitemize
+\item Bereits sortierte Arrays: $O(n \log n)$
+\item Umgekehrt sortierte Arrays: $O(n \log n)$
+\item Zufällige Arrays: $O(n \log n)$
+\stopitemize
+
+\section{Vergleich mit anderen Algorithmen}
+
+\starttabulate[|l|c|c|c|c|c|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Best} \NC {\bf Average} \NC {\bf Worst} \NC {\bf Speicher} \NC {\bf Stabil} \NC\NR
+\HL
+\NC Heap Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(1)$ \NC Nein \NC\NR
+\NC Quick Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n^2)$ \NC $O(\log n)$ \NC Nein \NC\NR
+\NC Merge Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n)$ \NC Ja \NC\NR
+\NC Shell Sort \NC $O(n \log n)$ \NC $O(n^{1.25})$ \NC $O(n^2)$ \NC $O(1)$ \NC Nein \NC\NR
+\HL
+\stoptabulate
+
+\section{Verwendung}
+
+\startpythoncode
+from src.algs4.pva_2_sorting.heap import Heap
+
+# Beispiel: Ganzzahlen sortieren
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Heap.sort(numbers)
+print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
+
+# Beispiel: Strings sortieren
+words = ["banana", "apple", "cherry", "date"]
+sorted_words = Heap.sort(words)
+print(sorted_words)  # ['apple', 'banana', 'cherry', 'date']
+
+# Überprüfung
+print(Heap.is_sorted([1, 2, 3, 4, 5]))  # True
+\stoppythoncode
+
+\section{Heap-Anwendungen}
+
+\subsection{Priority Queue}
+
+Heaps sind die Grundlage für Priority Queues:
+
+\startpythoncode
+class PriorityQueue:
+    def __init__(self):
+        self.heap = []
+
+    def insert(self, item):
+        self.heap.append(item)
+        self._swim(len(self.heap) - 1)
+
+    def extract_max(self):
+        if not self.heap:
+            return None
+
+        max_item = self.heap[0]
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+
+        if self.heap:
+            self._sink(0)
+
+        return max_item
+\stoppythoncode
+
+\section{Zusammenfassung}
+
+Heap Sort ist ein robuster und vorhersagbarer Sortieralgorithmus:
+
+\startitemize
+\item {\bf Garantierte $O(n \log n)$} Zeitkomplexität in allen Fällen
+\item {\bf $O(1)$ Speicherkomplexität} durch In-Place-Sortierung
+\item {\bf Keine Rekursion} -- kein Stack-Overflow-Risiko
+\item {\bf Nicht stabil}, aber konsistent performant
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor]
+{\bf Empfehlung:} Heap Sort ist ideal, wenn:
+\startitemize
+\item Worst-Case-Garantien wichtig sind
+\item Speicherverbrauch minimiert werden muss
+\item Konsistente Performance erforderlich ist
+\item Stabilität nicht benötigt wird
+\stopitemize
+\stopframedtext

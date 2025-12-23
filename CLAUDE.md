@@ -79,6 +79,10 @@ src/algs4/
 │   ├── edge_weighted_directed_cycle.py  # Zyklenerkennung in gerichteten Graphen
 │   ├── index_min_pq.py           # Indexed Min Priority Queue
 │   └── dijkstra_sp.py            # Dijkstras Algorithmus
+├── pva_5_strings/               # Praktische Vertiefungsaufgaben 5
+│   ├── trie_st.py                # Trie Symbol Table (Dictionary-basiert)
+│   ├── patricia_trie.py          # Patricia-Trie (Pfadkompression)
+│   └── kmp.py                    # KMP String-Suchalgorithmus
 ├── errors/
 │   └── errors.py                # Benutzerdefinierte Exceptions
 └── utils/
@@ -93,6 +97,7 @@ tests/
 ├── test_sorting/                # Tests für PVA-2
 ├── test_searching/              # Tests für PVA-3
 ├── test_graphs/                 # Tests für PVA-4
+├── test_strings/                # Tests für PVA-5
 └── test_utils/                  # Tests für Utility-Module
 
 data/                            # Thematisch organisierte Testdaten
@@ -178,6 +183,68 @@ Alle Symbol-Table-Implementierungen haben:
    - Einfachere Implementierung als Standard Red-Black Trees
    - Visuelle Darstellung zeigt Knotenfarben: `A (R)` oder `A (B)`
 
+#### String-Algorithmen (pva_5_strings/)
+
+Alle String-Symbol-Table-Implementierungen haben:
+
+- Generische Typisierung mit `TypeVar` für Werte
+- String-Schlüssel (str) als Basis
+- Präfix-basierte Operationen
+- Deutsche Fehlerbehandlung
+
+**Implementierungen:**
+
+1. **TrieST**: Trie Symbol Table (Standard-Trie)
+   - get, put, delete: **O(m)** wobei m = Schlüssellänge (unabhängig von n!)
+   - Dictionary-basiert (flexibel für beliebige Zeichen, nicht nur ASCII)
+   - Präfix-Operationen: `keys_with_prefix()`, `keys_that_match()`, `longest_prefix_of()`
+   - Wildcard-Suche mit '.' als Platzhalter
+   - Keine teuren String-Vergleiche
+   - Speichereffizient bei gemeinsamen Präfixen
+   - Anwendungen: Autovervollständigung, Textsuchmaschinen, Routing-Tabellen
+
+2. **PatriciaTrie**: Patricia-Trie (Pfadkompression)
+   - get, put, delete: **O(m)** wobei m = Schlüssellänge
+   - Kompakter als Standard-Trie durch Knoten-Verschmelzung
+   - Kanten speichern Strings statt einzelner Zeichen
+   - Automatisches Node-Merging bei Deletion (Single-Child-Knoten werden verschmolzen)
+   - Leere Blattknoten werden entfernt
+   - Optimiert für lange gemeinsame Präfixe
+   - Platzsparend bei vielen ähnlichen Schlüsseln
+   - Methoden: `get()`, `put()`, `delete()`, `keys()`, `contains()`, `size()`
+   - Anwendungen: IP-Routing, Netzwerk-Algorithmen, Prefix-Matching
+
+3. **KMP**: Knuth-Morris-Pratt String-Suchalgorithmus
+   - search: **O(n) garantiert** wobei n = Textlänge (auch im Worst-Case!)
+   - Konstruktor (DFA-Aufbau): O(m × R) wobei m = Muster-Länge, R = Alphabet-Grösse (256)
+   - Kein Backtracking im Text (Text-Index läuft nur vorwärts)
+   - Nutzt DFA (Deterministischer Finiter Automat) für effiziente Suche
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Textsuche, DNA-Sequenzanalyse, Intrusion Detection, Plagiatserkennung
+
+4. **BoyerMoore**: Boyer-Moore String-Suchalgorithmus
+   - search: **O(n/m) bester Fall**, O(n) worst case wobei n = Textlänge, m = Musterlänge
+   - Konstruktor: O(m + R) wobei R = Alphabet-Grösse (256)
+   - Rückwärtsvergleich mit Bad Character Rule
+   - Kann Zeichen überspringen (sublineare Performance möglich)
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Textsuche bei großen Alphabeten, lange Muster, Editoren
+
+5. **RabinKarp**: Rabin-Karp String-Suchalgorithmus
+   - search: **O(n + m) durchschnittlich**, O(n × m) worst case bei vielen Hash-Kollisionen
+   - Konstruktor: O(m) für Hash-Berechnung und Primzahl-Generierung
+   - Rolling Hash mit modularer Arithmetik
+   - Las Vegas Version mit expliziter Verifikation
+   - Methoden: `search()`, `search_all()`, `count()`
+   - Property: `pattern` (read-only Zugriff auf Muster)
+   - Extended ASCII (256 Zeichen), keine Emoji-Unterstützung
+   - Anwendungen: Multiple-Pattern-Suche, Plagiatserkennung, DNA-Analyse
+
+
 #### Fehlerbehandlung
 
 - Benutzerdefinierte Exceptions in `src.algs4.errors.errors`
@@ -232,10 +299,11 @@ Package Management erfolgt über `uv` (siehe pyproject.toml).
 
 ## Test-Statistik
 
-- **Gesamt-Tests**: 440 (100% bestanden)
+- **Gesamt-Tests**: 786 (100% bestanden)
 - **PVA 1 (Fundamentals)**: 92 Tests
 - **PVA 2 (Sorting)**: 108 Tests
 - **PVA 3 (Searching)**: 162 Tests
 - **PVA 4 (Graphs)**: 78 Tests
+- **PVA 5 (Strings)**: 282 Tests (Trie: 59, Patricia: 39, KMP: 62, Boyer-Moore: 59, Rabin-Karp: 63)
 - **Utils**: 7 Tests
-- **Code-Coverage**: 93%+
+- **Code-Coverage**: 93%+ (Trie: 99.22%, Patricia: neu, KMP: 100%)

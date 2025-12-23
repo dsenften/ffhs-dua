@@ -31,15 +31,11 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
 
 from src.algs4.pva_1_fundamentals.queue import Queue
 
-K = TypeVar("K")  # Key type (muss vergleichbar sein)
-V = TypeVar("V")  # Value type
 
-
-class RBNode(Generic[K, V]):
+class RBNode[K, V]:
     """Knoten im Rot-Schwarz-Baum.
 
     Attributes:
@@ -68,7 +64,7 @@ class RBNode(Generic[K, V]):
         self.right: RBNode[K, V] | None = None
 
 
-class RedBlackBST(Generic[K, V]):
+class RedBlackBST[K, V]:
     """Red-Black BST - Rot-Schwarz-Baum (left-leaning).
 
     Ein selbstbalancierender binärer Suchbaum basierend auf 2-3-Bäumen.

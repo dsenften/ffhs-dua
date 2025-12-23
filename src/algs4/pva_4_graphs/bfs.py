@@ -46,11 +46,11 @@ class BFS:
             s: Der Startknoten
 
         Raises:
-            ValueError: Wenn s außerhalb des gültigen Bereichs liegt
+            ValueError: Wenn s ausserhalb des gültigen Bereichs liegt
         """
         if s < 0 or s >= G.V:
             raise ValueError(
-                f"Startknoten {s} ist außerhalb des Bereichs [0, {G.V - 1}]"
+                f"Startknoten {s} ist ausserhalb des Bereichs [0, {G.V - 1}]"
             )
 
         self.marked = [False for _ in range(G.V)]

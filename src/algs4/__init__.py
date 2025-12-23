@@ -25,6 +25,18 @@ Module (nach PVA-Struktur):
         - Red-Black BST (links-lastiger Rot-Schwarz-Baum)
         - Hash Tables (Separate Chaining, Linear Probing)
 
+    pva_4_graphs: Graphen-Algorithmen
+        - Dijkstras Algorithmus (Kürzeste Pfade)
+        - Gewichtete Graphen (gerichtet und ungerichtet)
+        - Indexed Min Priority Queue
+
+    pva_5_strings: String-Algorithmen und Symbol Tables
+        - Trie Symbol Table (Dictionary-basiert, O(m) Operationen)
+        - Patricia-Trie (Pfadkompression, platzsparend)
+        - KMP String-Suche (Knuth-Morris-Pratt, O(n) garantiert)
+        - Boyer-Moore String-Suche (Bad Character Rule, sublinear im besten Fall)
+        - Rabin-Karp String-Suche (Rolling Hash, O(n+m) durchschnittlich)
+
     errors: Benutzerdefinierte Exception-Klassen
 
 Beispiele:
@@ -45,16 +57,32 @@ __email__ = "daniel.senften@ffhs.ch"
 __license__ = "MIT"
 
 # Hauptmodule für einfachen Import
-from . import errors, pva_1_fundamentals, pva_2_sorting
+from . import (
+    errors,
+    pva_1_fundamentals,
+    pva_2_sorting,
+    pva_3_searching,
+    pva_4_graphs,
+    pva_5_strings,
+)
 
 # Aliase für Abwärtskompatibilität
 fundamentals = pva_1_fundamentals
 sorting = pva_2_sorting
+searching = pva_3_searching
+graphs = pva_4_graphs
+strings = pva_5_strings
 
 __all__ = [
     "pva_1_fundamentals",
     "pva_2_sorting",
+    "pva_3_searching",
+    "pva_4_graphs",
+    "pva_5_strings",
     "fundamentals",  # Alias
     "sorting",  # Alias
+    "searching",  # Alias
+    "graphs",  # Alias
+    "strings",  # Alias
     "errors",
 ]

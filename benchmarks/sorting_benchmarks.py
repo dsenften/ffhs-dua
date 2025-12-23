@@ -133,8 +133,7 @@ def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
                 results[alg_name][key] = execution_time
 
                 print(
-                    f"{alg_name} - {data_type} ({size} Elemente): "
-                    f"{execution_time:.4f}s"
+                    f"{alg_name} - {data_type} ({size} Elemente): {execution_time:.4f}s"
                 )
 
     # Benchmark für Quick Sort (mit kleineren Datenmengen und nur zufälligen Daten)
@@ -153,8 +152,7 @@ def run_sorting_benchmarks() -> dict[str, dict[str, float]]:
                 results[alg_name][key] = execution_time
 
                 print(
-                    f"{alg_name} - {data_type} ({size} Elemente): "
-                    f"{execution_time:.4f}s"
+                    f"{alg_name} - {data_type} ({size} Elemente): {execution_time:.4f}s"
                 )
 
     return results

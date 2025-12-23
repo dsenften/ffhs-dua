@@ -12,11 +12,6 @@ Alle Implementierungen unterstützen generische Typen und folgen den
 Python-Konventionen für Container-Klassen.
 """
 
-from .bag import Bag
-from .queue import Queue
-from .stack import FixedCapacityStack, ResizingArrayStack, Stack
-from .uf import UF, QuickFindUF, QuickUnionUF, WeightedQuickUnionUF
-
 __all__ = [
     # Stack-Implementierungen
     "Stack",
@@ -32,3 +27,27 @@ __all__ = [
     "WeightedQuickUnionUF",
     "QuickFindUF",
 ]
+
+# Lazy loading für Module - verhindert RuntimeWarning bei Ausführung als Script
+_LAZY_IMPORTS = {
+    "Bag": (".bag", "Bag"),
+    "Queue": (".queue", "Queue"),
+    "Stack": (".stack", "Stack"),
+    "FixedCapacityStack": (".stack", "FixedCapacityStack"),
+    "ResizingArrayStack": (".stack", "ResizingArrayStack"),
+    "UF": (".uf", "UF"),
+    "QuickFindUF": (".uf", "QuickFindUF"),
+    "QuickUnionUF": (".uf", "QuickUnionUF"),
+    "WeightedQuickUnionUF": (".uf", "WeightedQuickUnionUF"),
+}
+
+
+def __getattr__(name: str):
+    """Lazy loading von Modulen bei erstem Zugriff."""
+    if name in _LAZY_IMPORTS:
+        module_path, attr_name = _LAZY_IMPORTS[name]
+        import importlib
+
+        module = importlib.import_module(module_path, __package__)
+        return getattr(module, attr_name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

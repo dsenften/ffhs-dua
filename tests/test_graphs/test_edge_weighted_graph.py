@@ -1,6 +1,5 @@
 """Tests für die EdgeWeightedGraph-Klasse."""
 
-
 from src.algs4.pva_4_graphs.edge import Edge
 from src.algs4.pva_4_graphs.edge_weighted_graph import EdgeWeightedGraph
 
@@ -85,7 +84,7 @@ class TestEdgeWeightedGraph:
         assert "1:" in s
 
     def test_graph_large(self):
-        """Test: Großer Graph mit vielen Kanten."""
+        """Test: Grosser Graph mit vielen Kanten."""
         g = EdgeWeightedGraph(100)
         for i in range(99):
             g.add_edge(Edge(i, i + 1, 0.5))

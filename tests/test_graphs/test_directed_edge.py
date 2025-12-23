@@ -60,6 +60,6 @@ class TestDirectedEdge:
         assert edge.To() == 0
 
     def test_edge_large_weight(self):
-        """Test: Große Gewichte sind erlaubt."""
+        """Test: Grosse Gewichte sind erlaubt."""
         edge = DirectedEdge(0, 1, 999999.0)
         assert edge.weight == 999999.0

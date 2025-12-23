@@ -1,0 +1,65 @@
+% Modul 2: Sortieren
+% ===================
+
+\part{Modul 2: Sortieren}
+
+\chapter{Einführung in Modul 2: Sortieren}
+
+\section{Überblick}
+
+Das zweite Modul behandelt Sortieralgorithmen, die zu den fundamentalsten
+Algorithmen in der Informatik gehören. Sortieren ist nicht nur eine häufige
+Aufgabe in der Praxis, sondern auch ein exzellentes Beispiel für verschiedene
+algorithmische Paradigmen und Optimierungstechniken.
+
+\subsection{Lernziele}
+
+\startlernziele
+{\bf Lernziele -- Nach Abschluss dieses Moduls können Sie:}
+\startitemize
+\item die sequentielle und binäre Suche erklären
+\item Elemente mittels einfachen Sortieralgorithmen sortieren
+\item Mergesort, Quicksort und Heapsort erklären und adäquat einsetzen
+\item Prioritätswarteschlangen zweckmässig einsetzen und implementieren
+\item die Komplexität und Laufzeit der Sortieralgorithmen beurteilen
+\stopitemize
+\stoplernziele
+
+\subsection{Themen}
+
+Dieses Modul umfasst folgende Hauptthemen:
+
+\startitemize
+\item {\bf Quick Sort:} Divide-and-Conquer mit Partitionierung
+\item {\bf Heap Sort:} Garantierte $O(n \log n)$ Performance
+\item {\bf Merge Sort:} Stabiler Sortieralgorithmus
+\item {\bf Shell Sort:} Erweiterung von Insertion Sort
+\item {\bf Priority Queues:} Heap-basierte Warteschlangen
+\stopitemize
+
+\subsection{Vergleich der Sortieralgorithmen}
+
+\starttabulate[|l|c|c|c|c|c|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Best} \NC {\bf Average} \NC {\bf Worst} \NC {\bf Speicher} \NC {\bf Stabil} \NC\NR
+\HL
+\NC Quick Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n^2)$ \NC $O(\log n)$ \NC Nein \NC\NR
+\NC Heap Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(1)$ \NC Nein \NC\NR
+\NC Merge Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n)$ \NC Ja \NC\NR
+\NC Shell Sort \NC $O(n \log n)$ \NC $O(n^{1.25})$ \NC $O(n^2)$ \NC $O(1)$ \NC Nein \NC\NR
+\HL
+\stoptabulate
+
+\subsection{Referenzen im Lehrbuch}
+
+Die Themen dieses Moduls werden in folgenden Kapiteln des Lehrbuchs
+{\em Praktische Algorithmik mit Python} (Häberlein, 2012) behandelt:
+
+\startitemize
+\item Kapitel 4: Sortieralgorithmen
+\item Kapitel 5: Priority Queues und Heaps
+\stopitemize
+
+% Unterkapitel einbinden
+\input content/chapters/02_sortieren/quick_sort
+\input content/chapters/02_sortieren/heap_sort

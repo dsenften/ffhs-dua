@@ -1,0 +1,232 @@
+% Kapitel: Quick Sort
+% ===================
+
+\chapter{Quick Sort: Der schnelle Sortieralgorithmus}
+
+\section{Einführung}
+
+Quick Sort wurde 1960 von Tony Hoare entwickelt und ist einer der am häufigsten
+verwendeten Sortieralgorithmen. Er kombiniert elegantes Design mit exzellenter
+durchschnittlicher Performance und ist die Grundlage vieler Standardbibliotheken.
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor, background=color, backgroundcolor=lightgray]
+{\bf Das Divide-and-Conquer-Prinzip:}
+\startitemize[n]
+\item {\bf Wähle} ein Pivot-Element aus dem Array
+\item {\bf Partitioniere} das Array so, dass alle Elemente kleiner als das Pivot
+      links stehen und alle grösseren rechts
+\item {\bf Sortiere} rekursiv die linke und rechte Hälfte
+\stopitemize
+\stopframedtext
+
+\section{Algorithmus-Details}
+
+\subsection{Die Partitionierung (Hoare-Schema)}
+
+Die Partitionierung ist das Herzstück von Quick Sort:
+
+\startpythoncode
+def partition(cls, arr: list, lo: int, hi: int) -> int:
+    """Hoare-Partitionierung: Effizienter als Lomuto-Schema.
+
+    Wählt das erste Element als Pivot und platziert alle kleineren
+    Elemente links, alle grösseren rechts.
+    """
+    pivot = arr[lo]
+    i = lo - 1
+    j = hi + 1
+
+    while True:
+        # Finde Element von links, das >= pivot ist
+        i += 1
+        while arr[i] < pivot:
+            i += 1
+
+        # Finde Element von rechts, das <= pivot ist
+        j -= 1
+        while arr[j] > pivot:
+            j -= 1
+
+        # Wenn sich die Zeiger kreuzen, sind wir fertig
+        if i >= j:
+            return j
+
+        # Tausche die gefundenen Elemente
+        arr[i], arr[j] = arr[j], arr[i]
+\stoppythoncode
+
+\subsection{Der rekursive Sortieralgorithmus}
+
+\startpythoncode
+class Quick:
+    """Quick-Sort-Implementierung mit Hoare-Partitionierung."""
+
+    @classmethod
+    def sort(cls, arr: list) -> list:
+        """Sortiert eine Liste mit dem Quick-Sort-Algorithmus."""
+        cls._sort(arr, 0, len(arr) - 1)
+        return arr
+
+    @classmethod
+    def _sort(cls, arr: list, lo: int, hi: int) -> None:
+        """Rekursiver Sortieraufruf."""
+        if lo < hi:
+            # Partitioniere und erhalte Pivot-Position
+            p = cls.partition(arr, lo, hi)
+
+            # Sortiere linke und rechte Hälfte
+            cls._sort(arr, lo, p)
+            cls._sort(arr, p + 1, hi)
+
+    @classmethod
+    def is_sorted(cls, arr: list) -> bool:
+        """Überprüft, ob eine Liste sortiert ist."""
+        for i in range(1, len(arr)):
+            if arr[i] < arr[i - 1]:
+                return False
+        return True
+\stoppythoncode
+
+\section{Komplexitätsanalyse}
+
+\starttabulate[|l|c|l|]
+\HL
+\NC {\bf Fall} \NC {\bf Zeitkomplexität} \NC {\bf Bedingung} \NC\NR
+\HL
+\NC Best Case \NC $O(n \log n)$ \NC Pivot teilt Array gleichmässig \NC\NR
+\NC Average Case \NC $O(n \log n)$ \NC Zufällige Eingabe \NC\NR
+\NC Worst Case \NC $O(n^2)$ \NC Bereits sortiert/umgekehrt sortiert \NC\NR
+\HL
+\stoptabulate
+
+\subsection{Speicherkomplexität}
+
+\startitemize
+\item {\bf In-Place}: $O(1)$ zusätzlicher Speicher für die Daten
+\item {\bf Rekursionsstack}: $O(\log n)$ im Durchschnitt, $O(n)$ im Worst Case
+\stopitemize
+
+\section{Eigenschaften}
+
+\subsection{Stabilität}
+
+\startframedtext[width=\textwidth, frame=on, framecolor=orange]
+{\bf Warnung:} Quick Sort ist {\bf nicht stabil}. Elemente mit gleichem Wert
+können ihre relative Reihenfolge ändern.
+\stopframedtext
+
+\subsection{Vorteile}
+
+\startitemize
+\item Sehr schnell in der Praxis (gute Cache-Lokalität)
+\item In-Place-Sortierung (geringer Speicherverbrauch)
+\item Einfach zu implementieren
+\item Gut parallelisierbar
+\stopitemize
+
+\subsection{Nachteile}
+
+\startitemize
+\item Nicht stabil
+\item $O(n^2)$ Worst Case bei ungünstiger Pivot-Wahl
+\item Rekursionstiefe kann bei grossen Arrays problematisch sein
+\stopitemize
+
+\section{Optimierungen}
+
+\subsection{Randomisiertes Pivot}
+
+Verhindert Worst-Case bei bereits sortierten Arrays:
+
+\startpythoncode
+import random
+
+def randomized_partition(arr, lo, hi):
+    """Wählt zufälliges Pivot für gleichmässigere Verteilung."""
+    pivot_idx = random.randint(lo, hi)
+    arr[lo], arr[pivot_idx] = arr[pivot_idx], arr[lo]
+    return partition(arr, lo, hi)
+\stoppythoncode
+
+\subsection{Median-of-Three}
+
+Wählt den Median von drei Elementen als Pivot:
+
+\startpythoncode
+def median_of_three(arr, lo, hi):
+    """Wählt Median von erstem, mittlerem und letztem Element."""
+    mid = (lo + hi) // 2
+
+    if arr[lo] > arr[mid]:
+        arr[lo], arr[mid] = arr[mid], arr[lo]
+    if arr[lo] > arr[hi]:
+        arr[lo], arr[hi] = arr[hi], arr[lo]
+    if arr[mid] > arr[hi]:
+        arr[mid], arr[hi] = arr[hi], arr[mid]
+
+    # Median ist jetzt in der Mitte
+    arr[lo], arr[mid] = arr[mid], arr[lo]
+    return partition(arr, lo, hi)
+\stoppythoncode
+
+\subsection{Insertion Sort für kleine Arrays}
+
+Quick Sort hat Overhead für sehr kleine Arrays:
+
+\startpythoncode
+CUTOFF = 10  # Schwellenwert
+
+def quick_sort_optimized(arr, lo, hi):
+    if hi - lo < CUTOFF:
+        # Insertion Sort für kleine Teilarrays
+        insertion_sort(arr, lo, hi)
+        return
+
+    p = partition(arr, lo, hi)
+    quick_sort_optimized(arr, lo, p)
+    quick_sort_optimized(arr, p + 1, hi)
+\stoppythoncode
+
+\section{Verwendung}
+
+\startpythoncode
+from src.algs4.pva_2_sorting.quick import Quick
+
+# Liste sortieren
+numbers = [64, 34, 25, 12, 22, 11, 90]
+sorted_numbers = Quick.sort(numbers)
+print(sorted_numbers)  # [11, 12, 22, 25, 34, 64, 90]
+
+# Überprüfung
+print(Quick.is_sorted(sorted_numbers))  # True
+\stoppythoncode
+
+\section{Vergleich mit anderen Algorithmen}
+
+\starttabulate[|l|c|c|c|c|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Average} \NC {\bf Worst} \NC {\bf Speicher} \NC {\bf Stabil} \NC\NR
+\HL
+\NC Quick Sort \NC $O(n \log n)$ \NC $O(n^2)$ \NC $O(\log n)$ \NC Nein \NC\NR
+\NC Merge Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(n)$ \NC Ja \NC\NR
+\NC Heap Sort \NC $O(n \log n)$ \NC $O(n \log n)$ \NC $O(1)$ \NC Nein \NC\NR
+\NC Insertion \NC $O(n^2)$ \NC $O(n^2)$ \NC $O(1)$ \NC Ja \NC\NR
+\HL
+\stoptabulate
+
+\section{Zusammenfassung}
+
+Quick Sort ist trotz seines theoretischen $O(n^2)$ Worst-Case einer der
+schnellsten Sortieralgorithmen in der Praxis:
+
+\startitemize
+\item {\bf Durchschnittlich $O(n \log n)$}: Sehr effizient für die meisten Eingaben
+\item {\bf In-Place}: Benötigt nur $O(\log n)$ Stack-Speicher
+\item {\bf Cache-freundlich}: Sequentielle Speicherzugriffe
+\item {\bf Optimierbar}: Randomisierung, Median-of-Three, Cutoff
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor]
+{\bf Empfehlung:} Verwenden Sie Quick Sort für allgemeine Sortieraufgaben.
+Bei Worst-Case-Garantien wählen Sie Heap Sort oder Merge Sort.
+\stopframedtext

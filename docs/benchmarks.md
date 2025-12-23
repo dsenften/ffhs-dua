@@ -5,7 +5,7 @@ Dieses Dokument beschreibt die Performance-Benchmarks für die Algorithmen und D
 ## Überblick
 
 Die Benchmarks messen die Ausführungszeit verschiedener Algorithmen unter verschiedenen Bedingungen:
-- **Verschiedene Datengrößen**: 100, 1.000, 10.000 Elemente
+- **Verschiedene Datengroessen**: 100, 1.000, 10.000 Elemente
 - **Verschiedene Datentypen**: Zufällig, sortiert, umgekehrt, fast sortiert
 - **Verschiedene Algorithmen**: Shell Sort, Quick Sort, Merge Sort, Heap Sort
 
@@ -22,28 +22,28 @@ Die Sortieralgorithmen-Benchmarks befinden sich in `benchmarks/sorting_benchmark
    - Worst-Case: O(n^(3/2))
    - Space: O(1)
    - **Testdaten**: Alle Typen (random, sorted, reverse, nearly_sorted)
-   - **Datengrößen**: 100, 1.000, 10.000 Elemente
+   - **Datengroessen**: 100, 1.000, 10.000 Elemente
 
 2. **Quick Sort** - Divide-and-Conquer mit Hoare-Partitionierung
    - Durchschnittliche Komplexität: O(n log n)
    - Worst-Case: O(n²) bei sortierten/umgekehrten Daten
    - Space: O(log n)
    - **Testdaten**: Nur random und nearly_sorted (Worst-Case Schutz)
-   - **Datengrößen**: 100, 1.000, 5.000 Elemente (kleinere Mengen wegen Worst-Case)
+   - **Datengroessen**: 100, 1.000, 5.000 Elemente (kleinere Mengen wegen Worst-Case)
 
 3. **Merge Sort** - Stabile Sortierung
    - Durchschnittliche Komplexität: O(n log n)
    - Worst-Case: O(n log n)
    - Space: O(n)
    - **Testdaten**: Alle Typen (random, sorted, reverse, nearly_sorted)
-   - **Datengrößen**: 100, 1.000, 10.000 Elemente
+   - **Datengroessen**: 100, 1.000, 10.000 Elemente
 
 4. **Heap Sort** - Heap-basierte Sortierung
    - Durchschnittliche Komplexität: O(n log n)
    - Worst-Case: O(n log n)
    - Space: O(1)
    - **Testdaten**: Alle Typen (random, sorted, reverse, nearly_sorted)
-   - **Datengrößen**: 100, 1.000, 10.000 Elemente
+   - **Datengroessen**: 100, 1.000, 10.000 Elemente
 
 #### Testdatentypen
 
@@ -103,7 +103,7 @@ Die Union-Find Implementierungen haben unterschiedliche Performance-Charakterist
 |---|---|---|---|
 | QuickFindUF | O(1) | O(n) | Schnelles Find, langsames Union |
 | QuickUnionUF | O(n) | O(n) | Einfach, aber langsam |
-| WeightedQuickUnionUF | O(log n) | O(log n) | Gewichtet nach Größe |
+| WeightedQuickUnionUF | O(log n) | O(log n) | Gewichtet nach Grosse |
 | UF (Optimiert) | O(α(n)) | O(α(n)) | Mit Path Compression & Rank |
 
 ### Suchbäume

@@ -16,13 +16,9 @@ Beispiele:
 """
 
 from collections.abc import Iterator
-from typing import Generic, TypeVar
-
-T = TypeVar("T")
-S = TypeVar("S")
 
 
-class Bag(Generic[T]):
+class Bag[T]:
     """Die Bag-Klasse repräsentiert einen Beutel (oder Multiset) von generischen Elementen.
     Sie unterstützt das Einfügen und Iterieren über die Elemente in beliebiger Reihenfolge.
 
@@ -35,7 +31,7 @@ class Bag(Generic[T]):
 
     """
 
-    class Node(Generic[S]):
+    class Node[S]:
         # Hilfsklasse für verkettete Liste
         def __init__(self):
             self.next: Bag.Node[T] | None = None

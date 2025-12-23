@@ -1,0 +1,246 @@
+% Kapitel: O-Notation und Komplexitätsanalyse
+% ============================================
+
+\chapter{O-Notation: Komplexitätsanalyse von Algorithmen}
+
+\section{Einführung}
+
+Die O-Notation (auch Big-O-Notation genannt) ist ein fundamentales Werkzeug der
+theoretischen Informatik zur Analyse der Effizienz von Algorithmen. Sie beschreibt
+das asymptotische Verhalten einer Funktion für grosse Eingabegrössen.
+
+\subsection{Was beschreibt die O-Notation?}
+
+Die O-Notation gibt eine obere Schranke für das Wachstum einer Funktion an.
+Mathematisch ausgedrückt: Eine Funktion $f(n)$ ist $O(g(n))$, wenn es positive
+Konstanten $c$ und $n_0$ gibt, sodass $f(n) \leq c \cdot g(n)$ für alle $n \geq n_0$.
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor, background=color, backgroundcolor=lightgray]
+{\bf Wichtig:} In der Praxis bedeutet dies: {\em Wie verhält sich die Laufzeit oder
+der Speicherbedarf eines Algorithmus, wenn die Eingabegrösse gegen unendlich geht?}
+\stopframedtext
+
+\section{Komplexitätsklassen-Hierarchie}
+
+{\bf Vom schnellsten zum langsamsten Wachstum:}
+
+\startpythoncode
+O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)
+\stoppythoncode
+
+\section{Detaillierte Analyse mit Code-Beispielen}
+
+\subsection{O(1) -- Konstante Zeit}
+
+{\bf Charakteristik:} Unabhängig von der Eingabegrösse
+
+\startpythoncode
+def constant_time_example(arr):
+    # Alle diese Operationen sind O(1)
+    if len(arr) == 0:
+        return None
+
+    first = arr[0]           # Direkter Zugriff
+    last = arr[-1]           # Direkter Zugriff
+    arr.append(42)           # Amortisiert O(1) bei Python-Listen
+
+    return first + last
+\stoppythoncode
+
+\subsection{O(log n) -- Logarithmische Zeit}
+
+{\bf Charakteristik:} Halbiert den Suchraum in jedem Schritt
+
+\startpythoncode
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+
+    while left <= right:        # Maximal log₂(n) Iterationen
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1      # Halbiert den Suchraum
+        else:
+            right = mid - 1     # Halbiert den Suchraum
+
+    return -1
+
+# Beispiel: Bei 1.000.000 Elementen maximal ~20 Vergleiche!
+\stoppythoncode
+
+\subsection{O(n) -- Lineare Zeit}
+
+{\bf Charakteristik:} Proportionales Wachstum zur Eingabegrösse
+
+\startpythoncode
+def linear_search(arr, target):
+    for i, element in enumerate(arr):  # Maximal n Iterationen
+        if element == target:
+            return i
+    return -1
+
+def sum_array(arr):
+    total = 0
+    for num in arr:         # Genau n Iterationen
+        total += num        # O(1) pro Iteration
+    return total
+\stoppythoncode
+
+\subsection{O(n log n) -- Linearithmische Zeit}
+
+{\bf Charakteristik:} Typisch für effiziente Sortieralgorithmen
+
+\startpythoncode
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    # Teile: O(1)
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])    # T(n/2)
+    right = merge_sort(arr[mid:])   # T(n/2)
+
+    # Herrsche: O(n)
+    return merge(left, right)
+
+# Rekurrenzrelation: T(n) = 2T(n/2) + O(n) = O(n log n)
+\stoppythoncode
+
+\subsection{O(n²) -- Quadratische Zeit}
+
+{\bf Charakteristik:} Verschachtelte Schleifen über die Eingabe
+
+\startpythoncode
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):              # n Iterationen
+        for j in range(0, n-i-1):   # Bis zu n Iterationen
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]  # O(1)
+    return arr
+
+def find_all_pairs(arr):
+    pairs = []
+    for i in range(len(arr)):           # n Iterationen
+        for j in range(i+1, len(arr)):  # Bis zu n Iterationen
+            pairs.append((arr[i], arr[j]))
+    return pairs
+\stoppythoncode
+
+\subsection{O(n³) -- Kubische Zeit}
+
+{\bf Charakteristik:} Dreifach verschachtelte Schleifen
+
+\startpythoncode
+def three_nested_loops(arr):
+    result = []
+    n = len(arr)
+
+    for i in range(n):          # n Iterationen
+        for j in range(n):      # n Iterationen
+            for k in range(n):  # n Iterationen
+                if arr[i] + arr[j] + arr[k] == 0:
+                    result.append((arr[i], arr[j], arr[k]))
+
+    return result  # Gesamtkomplexität: O(n³)
+\stoppythoncode
+
+\subsection{O(2ⁿ) -- Exponentielle Zeit}
+
+{\bf Charakteristik:} Verdoppelt die Arbeit für jedes zusätzliche Element
+
+\startpythoncode
+def fibonacci_naive(n):
+    if n <= 1:
+        return n
+    # Zwei rekursive Aufrufe pro Aufruf = Verdoppelung
+    return fibonacci_naive(n-1) + fibonacci_naive(n-2)
+
+# fib(5) erzeugt 15 Funktionsaufrufe
+# fib(10) erzeugt 177 Aufrufe
+# fib(40) erzeugt über 300 Millionen Aufrufe!
+\stoppythoncode
+
+\section{Praktische Konsequenzen}
+
+\subsection{Zeiten bei n = 1.000.000}
+
+{\bfx Vergleich verschiedener Komplexitätsklassen:}
+
+\starttabulate[|l|r|l|]
+\HL
+\NC {\bf Komplexität} \NC {\bf Operationen} \NC {\bf Bei 1 GHz} \NC\NR
+\HL
+\NC $O(1)$ \NC 1 \NC 1 ns \NC\NR
+\NC $O(\log n)$ \NC 20 \NC 20 ns \NC\NR
+\NC $O(n)$ \NC 1.000.000 \NC 1 ms \NC\NR
+\NC $O(n \log n)$ \NC 20.000.000 \NC 20 ms \NC\NR
+\NC $O(n^2)$ \NC 1.000.000.000.000 \NC 16 min \NC\NR
+\NC $O(2^n)$ \NC $\infty$ \NC Niemals fertig \NC\NR
+\HL
+\stoptabulate
+
+\section{Optimierungstechniken}
+
+\subsection{Memoization: Von O(2ⁿ) zu O(n)}
+
+\startpythoncode
+def fibonacci_optimized(n, memo=None):
+    if memo is None:
+        memo = {}
+
+    if n in memo:
+        return memo[n]
+
+    if n <= 1:
+        return n
+
+    # Speichere Ergebnis für spätere Verwendung
+    memo[n] = fibonacci_optimized(n-1, memo) + fibonacci_optimized(n-2, memo)
+    return memo[n]
+
+# fib(40) braucht jetzt nur 79 Aufrufe statt 300+ Millionen!
+\stoppythoncode
+
+\subsection{Zwei-Zeiger-Technik: Von O(n²) zu O(n)}
+
+\startpythoncode
+def two_sum_optimized(sorted_arr, target):
+    """Findet zwei Zahlen, die sich zu target summieren."""
+    left, right = 0, len(sorted_arr) - 1
+
+    while left < right:            # O(n) statt O(n²)
+        current_sum = sorted_arr[left] + sorted_arr[right]
+
+        if current_sum == target:
+            return left, right
+        elif current_sum < target:
+            left += 1
+        else:
+            right -= 1
+
+    return None
+\stoppythoncode
+
+\section{Zusammenfassung}
+
+\startitemize
+\item {\bf $O(1)$}: Direkter Array-Zugriff, Hash-Tabellen-Lookup
+\item {\bf $O(\log n)$}: Binäre Suche, Operationen in balancierten Bäumen
+\item {\bf $O(n)$}: Einfache Schleifen, lineare Suche
+\item {\bf $O(n \log n)$}: Effiziente Sortieralgorithmen (Merge Sort, Quick Sort im Durchschnitt)
+\item {\bf $O(n^2)$}: Einfache Sortieralgorithmen, verschachtelte Schleifen
+\item {\bf $O(2^n)$}: Rekursive Algorithmen ohne Optimierung
+\stopitemize
+
+\startframedtext[width=\textwidth, frame=on, framecolor=primarycolor]
+{\bf Goldene Regeln:}
+\startitemize[n]
+\item Ignoriere konstante Faktoren: $O(3n) = O(n)$
+\item Behalte nur den dominanten Term: $O(n^2 + n) = O(n^2)$
+\item Die O-Notation beschreibt das {\em Worst-Case}-Verhalten
+\item Wähle den richtigen Algorithmus {\em vor} Mikrooptimierungen
+\stopitemize
+\stopframedtext
