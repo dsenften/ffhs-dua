@@ -1,0 +1,435 @@
+\section{Boyer-Moore String-Suchalgorithmus}
+
+\subsection{Überblick}
+
+Der Boyer-Moore-Algorithmus ist ein effizienter String-Suchalgorithmus, der 1977 von Robert S. Boyer und J Strother Moore entwickelt wurde. Er ist besonders effizient bei der Suche in grossen Texten mit langen Mustern und grossen Alphabeten. Der Algorithmus wurde einige Jahre nach dem Knuth-Morris-Pratt-Algorithmus entdeckt und ist - zumindest was die Average-Case-Komplexität betrifft - effizienter als KMP.
+
+\subsection{Grundprinzip}
+
+Im Gegensatz zu naiven String-Suchalgorithmen, die das Muster von links nach rechts vergleichen, nutzt Boyer-Moore eine fundamentale Erkenntnis: {\bf Mehr Informationen über Verschiebemöglichkeiten erhält man, wenn man die Musterpositionen von rechts nach links mit den aktuellen Textpositionen vergleicht}.
+
+\subsubsection{Kernidee}
+
+\startitemize[n]
+\item {\bf Muster läuft von links nach rechts} über den Text
+\item {\bf Vergleich erfolgt von rechts nach links} im Muster
+\item {\bf Bei Mismatch}: Muster wird um möglichst viele Positionen weitergeschoben
+\item {\bf Zwei Heuristiken} bestimmen die Verschiebung:
+  \startitemize
+  \item {\bf Bad Character Rule} (Bad-Character-Heuristik)
+  \item {\bf Good Suffix Rule} (Good-Suffix-Heuristik)
+  \stopitemize
+\stopitemize
+
+Der Boyer-Moore-Algorithmus schiebt das Muster um den {\bf grösseren der beiden vorgeschlagenen Werte} weiter.
+
+\subsection{Bad Character Rule (Bad-Character-Heuristik)}
+
+Die Bad Character Rule ist das Herzstück unserer Implementierung und die einfachere der beiden Heuristiken:
+
+\subsubsection{Grundidee nach Häberlein}
+
+Die Bad-Character-Heuristik basiert {\bf alleine auf dem Zeichen \type{c} des zu durchsuchenden Textes}, das den Mismatch verursacht hat - dem ersten Zeichen von rechts gesehen, das nicht mit der entsprechenden Stelle im Muster übereinstimmt.
+
+\subsubsection{Zwei Fälle}
+
+\startitemize[n]
+\item {\bf Zeichen \type{c} kommt nicht im Muster vor}:
+  \startitemize
+  \item Das Muster kann {\bf an die Stelle nach dem Mismatch} weitergeschoben werden
+  \item Maximaler Sprung möglich
+  \stopitemize
+
+\item {\bf Zeichen \type{c} kommt im Muster vor}:
+  \startitemize
+  \item Das Muster wird so weit nach rechts verschoben, dass das {\bf von rechts gesehen erste Vorkommen von \type{c} im Muster} mit dem Mismatch-verursachenden Zeichen \type{c} im Text gleichauf liegt
+  \item {\bf Spezialfall}: Wenn die Bad-Character-Heuristik eine Linksverschiebung vorschlagen würde, wird das Muster einfach um {\bf eine Position} weitergerückt
+  \stopitemize
+\stopitemize
+
+\subsubsection{Implementierung nach Häberlein}
+
+\startpythoncode
+def makedelta1(M):
+    """Erstellt Bad-Character-Tabelle als Dictionary"""
+    delta1 = {}
+    for i in range(len(M) - 1):  # Letztes Zeichen ausschliessen
+        delta1[M[i]] = i
+    return delta1
+
+def badChar(delta1, c, j):
+    """Berechnet Verschiebung basierend auf Bad Character"""
+    if c in delta1:
+        return j - delta1[c]  # Kann negativ sein!
+    else:
+        return j + 1  # Zeichen kommt nicht im Muster vor
+\stoppythoncode
+
+\subsubsection{Unsere Implementierung (Optimiert)}
+
+\startpythoncode
+# Bad Character Table für alle ASCII-Zeichen
+_right = [-1] * 256  # Initialisierung: Zeichen nicht im Muster
+
+# Aufbau der Tabelle für Muster "NEEDLE":
+# N: Position 0 → _right[ord('N')] = 0
+# E: Position 1 → _right[ord('E')] = 1
+# E: Position 2 → _right[ord('E')] = 2  (überschreibt Position 1)
+# D: Position 3 → _right[ord('D')] = 3
+# L: Position 4 → _right[ord('L')] = 4
+# E: Position 5 → _right[ord('E')] = 5  (überschreibt Position 2)
+
+# Ergebnis: E→5, D→3, L→4, N→0, alle anderen→-1
+\stoppythoncode
+
+\subsubsection{Sprung-Berechnung}
+
+\startpythoncode
+skip = j - self._right[ord(text[i + j])]
+if skip < 1:
+    skip = 1  # Mindestens 1 Position vorwärts (verhindert Rückwärtssprünge)
+\stoppythoncode
+
+{\bf Parameter:}
+\startitemize
+\item \type{j}: Position im Muster (von rechts nach links, 0-basiert)
+\item \type{text[i + j]}: Das fehlerhafte Zeichen im Text
+\item \type{_right[...]}: Rechteste Position dieses Zeichens im Muster (-1 wenn nicht vorhanden)
+\stopitemize
+
+\subsubsection{Beispiel: Muster "kakaokaki"}
+
+Nach Häberlein's Beispiel aus Abbildung 7.4:
+
+\placetable[here][tab:boyer-moore-example]{Bad Character Beispiele für "kakaokaki"}
+\starttabulate[|l|l|l|l|l|l|]
+\HL
+\NC {\bf Situation} \NC {\bf Bad Character} \NC {\bf delta1[c]} \NC {\bf j} \NC {\bf Verschiebung} \NC {\bf Erklärung} \NC\NR
+\HL
+\NC 1 \NC 'o' \NC 4 \NC 6 \NC 6-4=2 \NC 'o' an Position 4 \NC\NR
+\NC 2 \NC 'x' \NC KeyError \NC 8 \NC 8+1=9 \NC 'x' nicht im Muster \NC\NR
+\NC 3 \NC '-' \NC KeyError \NC 7 \NC 7+1=8 \NC '-' nicht im Muster \NC\NR
+\NC 4 \NC 'o' \NC 4 \NC 8 \NC 8-4=4 \NC 'o' an Position 4 \NC\NR
+\NC 5 \NC 'a' \NC 6 \NC 5 \NC max(-1,1)=1 \NC Rückwärtssprung verhindert \NC\NR
+\NC 6 \NC 's' \NC KeyError \NC 8 \NC 8+1=9 \NC 's' nicht im Muster \NC\NR
+\HL
+\stoptabulate
+
+\subsection{Good Suffix Rule (Good-Suffix-Heuristik)}
+
+Die Good-Suffix-Heuristik ist komplexer zu konstruieren, aber sehr mächtig:
+
+\subsubsection{Grundidee nach Häberlein}
+
+Während die Bad-Character-Heuristik das Zeichen \type{c} betrachtet, das den Mismatch verursacht, zieht die Good-Suffix-Heuristik den {\bf übereinstimmenden Teil von Muster und Text rechts des Zeichens \type{c}} in Betracht - das {\bf "Good Suffix"}.
+
+\subsubsection{Funktionsweise}
+
+Die Good-Suffix-Heuristik schlägt eine Verschiebung des Musters so vor, dass ein {\bf weiter links stehender, mit diesem "Good-Suffix" übereinstimmender Teil des Musters} auf dieser Textstelle liegt.
+
+\subsubsection{Beispiel: Muster "entbenennen"}
+
+\placetable[here][tab:good-suffix-example]{Good Suffix Beispiele für "entbenennen"}
+\starttabulate[|l|l|l|l|l|]
+\HL
+\NC {\bf j} \NC {\bf Good Suffix} \NC {\bf Passender Teilstring} \NC {\bf Verschiebung} \NC {\bf Erklärung} \NC\NR
+\HL
+\NC 0 \NC "n" \NC "e" an Position 9 \NC 1 \NC Einzelnes 'n' → 'e' passt \NC\NR
+\NC 1 \NC "en" \NC "en" an Position 7-8 \NC 2 \NC "en" → "en" passt \NC\NR
+\NC 2 \NC "nen" \NC "nen" an Position 4-6 \NC 5 \NC "nen" → "nen" passt \NC\NR
+\NC 3 \NC "nnen" \NC "nnen" an Position 5-8 \NC 3 \NC "nnen" → "nnen" passt \NC\NR
+\NC 4 \NC "ennen" \NC "···en" (virtuell) \NC 9 \NC Kein echter Match \NC\NR
+\NC 5-9 \NC "nennen"+ \NC "···en" (virtuell) \NC 9 \NC Alle längeren Suffixe \NC\NR
+\HL
+\stoptabulate
+
+\subsubsection{Implementierung nach Häberlein}
+
+\startpythoncode
+DOT = None  # Virtuelles Zeichen für Präfix-Erweiterung
+
+def unify(pat, mismatch, suffix):
+    """Prüft Kompatibilität von Muster-Teil mit Good-Suffix"""
+    def eq(c1, c2): return c1 == DOT or c1 == c2
+    def not_eq(c1, c2): return c1 == DOT or c1 != c2
+    return not_eq(pat[0], mismatch) and all(map(eq, pat[1:], suffix))
+
+def makedelta2(M):
+    """Erstellt Good-Suffix-Tabelle"""
+    m = len(M)
+    delta2 = {}
+
+    for j in range(0, m):  # Suffix der Länge j
+        suffix = [] if j == 0 else M[-j:]
+        mismatch = M[-j-1]
+
+        for k in range(m-1, 0, -1):
+            # Virtueller Präfix mit DOTs falls nötig
+            pat = [DOT for i in range(-k + j)] + list(M[max(0, k-j): k+1])
+
+            if unify(pat, mismatch, suffix):
+                delta2[j] = m - 1 - k
+                break
+
+        if j not in delta2:
+            delta2[j] = m  # Kein Match gefunden
+
+    return delta2
+\stoppythoncode
+
+\subsection{Komplexitätsanalyse}
+
+\subsubsection{Zeitkomplexität nach Häberlein}
+
+\startitemize
+\item {\bf Best Case}: {\bf O(n/m)} - sublinear!
+  \startitemize
+  \item Tritt auf wenn "viele" Zeichen des Textes gar nicht im Muster vorkommen
+  \item Oder wenn "viele" Suffixe kein weiteres Vorkommen im Muster haben
+  \item In diesen Fällen wird eine Verschiebung um \type{m} Positionen vorgeschlagen
+  \item Beispiel: Suche "ABCDEFGHIJK" in Text mit vielen 'A's
+  \stopitemize
+
+\item {\bf Average Case}: O(n) - linear
+  \startitemize
+  \item Bei typischen Texten und Mustern
+  \stopitemize
+
+\item {\bf Worst Case}: {\bf O(3n)} ≈ {\bf O(n)} - linear!
+  \startitemize
+  \item Mathematische Argumentation ist komplex (erst 1991 bewiesen)
+  \item {\bf Nicht} O(n×m) wie oft fälschlicherweise angenommen
+  \item Deutlich besser als naive Algorithmen
+  \stopitemize
+\stopitemize
+
+\subsubsection{Speicherkomplexität}
+
+\startitemize
+\item {\bf Bad Character Table}: O(R), wobei R = Alphabet-Grösse (256 für ASCII)
+\item {\bf Good Suffix Table}: O(m), wobei m = Muster-Länge
+\item {\bf Gesamt}: O(m + R), wobei m = Muster-Länge
+\stopitemize
+
+\subsection{Implementierung}
+
+\subsubsection{Vollständiger Boyer-Moore nach Häberlein}
+
+\startpythoncode
+def boyerMoore(T, M):
+    """Vollständige Boyer-Moore Implementierung mit beiden Heuristiken"""
+    delta1 = makedelta1(M)  # Bad Character Table
+    delta2 = makedelta2(M)  # Good Suffix Table
+    m, n = len(M), len(T)
+    i = m - 1  # Startposition im Text
+
+    while i < n:
+        i_old = i  # Merke Startposition für diese Iteration
+        j = m - 1  # Starte am Ende des Musters
+
+        # Vergleiche von rechts nach links
+        while j >= 0 and T[i] == M[j]:
+            i -= 1
+            j -= 1
+
+        if j == -1:  # Vollständiger Match gefunden
+            print("Treffer:", i + 1)
+            i = i_old + 1  # Suche nach weiteren Matches
+        else:
+            # Berechne Verschiebung mit beiden Heuristiken
+            bad_char_shift = badChar(delta1, T[i], j)
+            good_suffix_shift = delta2[m - 1 - j]
+
+            # Nimm die groessere Verschiebung
+            i = i_old + max(bad_char_shift, good_suffix_shift)
+\stoppythoncode
+
+\subsubsection{Unsere vereinfachte Klassen-Struktur}
+
+\startpythoncode
+class BoyerMoore:
+    def __init__(self, pattern: str) -> None:
+        # Baut nur Bad Character Table auf (vereinfacht)
+
+    def search(self, text: str) -> int:
+        # Sucht erste Übereinstimmung
+
+    def search_all(self, text: str) -> Iterator[int]:
+        # Findet alle Übereinstimmungen
+
+    def count(self, text: str) -> int:
+        # Zählt alle Übereinstimmungen
+\stoppythoncode
+
+\subsubsection{Unser Kern-Algorithmus (Bad Character Rule only)}
+
+\startpythoncode
+def search(self, text: str) -> int:
+    n, m = len(text), len(self._pattern)
+    i = 0  # Text-Index (Anfang des aktuellen Vergleichs)
+
+    while i <= n - m:
+        skip = 0
+
+        # Vergleiche von rechts nach links
+        for j in range(m - 1, -1, -1):
+            if self._pattern[j] != text[i + j]:
+                # Bad Character Rule
+                skip = j - self._right[ord(text[i + j])]
+                if skip < 1:
+                    skip = 1  # Verhindere Rückwärtssprünge
+                break
+
+        if skip == 0:  # Vollständige Übereinstimmung
+            return i
+
+        i += skip  # Springe um berechnete Distanz
+
+    return n  # Nicht gefunden
+\stoppythoncode
+
+\subsection{Anwendungsbereiche}
+
+\subsubsection{Boyer-Moore ist besonders effizient bei:}
+
+\startitemize[n]
+\item {\bf Grossen Alphabeten} (Häberlein's Hauptargument)
+  \startitemize
+  \item Englische Texte (26 Buchstaben)
+  \item ASCII-Texte (256 Zeichen)
+  \item Unicode-Texte
+  \item {\bf Grund}: Viele Zeichen kommen nicht im Muster vor → grosse Sprünge
+  \stopitemize
+
+\item {\bf Langen Mustern}
+  \startitemize
+  \item URLs, E-Mail-Adressen
+  \item Dateinamen, Pfade
+  \item Komplexe Suchbegriffe
+  \item {\bf Grund}: Grössere Sprungdistanzen möglich
+  \stopitemize
+
+\item {\bf Grossen Texten}
+  \startitemize
+  \item Dokumentensuche
+  \item Log-Datei-Analyse
+  \item Genomanalyse (bei grossen Alphabeten)
+  \item {\bf Grund}: Sublineare O(n/m) Performance amortisiert sich
+  \stopitemize
+\stopitemize
+
+\subsubsection{Boyer-Moore ist weniger effizient bei:}
+
+\startitemize[n]
+\item {\bf Kleinen Alphabeten} (Häberlein's Warnung)
+  \startitemize
+  \item DNA-Sequenzen (4 Basen: A, T, C, G)
+  \item Binäre Daten (0, 1)
+  \item {\bf Grund}: Wenige grosse Sprünge möglich
+  \stopitemize
+
+\item {\bf Kurzen Mustern}
+  \startitemize
+  \item 1-3 Zeichen lange Muster
+  \item Hier ist KMP oft besser
+  \item {\bf Grund}: Overhead der Tabellenerstellung
+  \stopitemize
+
+\item {\bf Wiederholenden Mustern}
+  \startitemize
+  \item "AAAA", "ABAB", etc.
+  \item Führt zu häufigen kleinen Sprüngen
+  \item {\bf Grund}: Bad Character Rule versagt oft
+  \stopitemize
+\stopitemize
+
+\subsection{Vergleich mit anderen Algorithmen}
+
+\subsubsection{Korrigierte Komplexitätstabelle (nach Häberlein)}
+
+\placetable[here][tab:string-algorithms-boyer-moore]{Vergleich String-Suchalgorithmen}
+\starttabulate[|l|l|l|l|l|l|]
+\HL
+\NC {\bf Algorithmus} \NC {\bf Best Case} \NC {\bf Average Case} \NC {\bf Worst Case} \NC {\bf Speicher} \NC {\bf Besonderheiten} \NC\NR
+\HL
+\NC {\bf Boyer-Moore} \NC {\bf O(n/m)} \NC {\bf O(n)} \NC {\bf O(n)} \NC O(m+R) \NC {\bf Sublinear möglich} \NC\NR
+\NC {\bf KMP} \NC O(n) \NC O(n) \NC O(n) \NC O(m×R) \NC Garantiert linear \NC\NR
+\NC {\bf Naiv} \NC O(n) \NC O(n×m) \NC O(n×m) \NC O(1) \NC Einfach zu implementieren \NC\NR
+\HL
+\stoptabulate
+
+{\bf Wichtige Korrektur}: Boyer-Moore hat {\bf nicht} O(n×m) Worst-Case, sondern O(n)! Dies wurde erst 1991 mathematisch bewiesen.
+
+\subsubsection{Wann welchen Algorithmus verwenden?}
+
+{\bf Boyer-Moore (nach Häberlein)}:
+\startitemize
+\item {\bf Ideal für}: Grosse Alphabete, lange Muster, grosse Texte
+\item {\bf Beispiele}: Textverarbeitung, Dokumentensuche, Websuche
+\item {\bf Vorteil}: Kann sublinear sein (schneller als Text einmal lesen!)
+\stopitemize
+
+{\bf KMP}:
+\startitemize
+\item {\bf Ideal für}: Kleine Alphabete, garantierte Performance
+\item {\bf Beispiele}: DNA-Analyse, Binärdaten, Echtzeitanwendungen
+\item {\bf Vorteil}: Vorhersagbare O(n) Laufzeit
+\stopitemize
+
+{\bf Naiv}:
+\startitemize
+\item {\bf Ideal für}: Sehr kurze Muster, einfache Implementierung
+\item {\bf Beispiele}: Prototyping, Lernzwecke
+\item {\bf Vorteil}: Minimaler Speicherverbrauch
+\stopitemize
+
+\subsection{Historische Einordnung nach Häberlein}
+
+Der Boyer-Moore-Algorithmus wurde {\bf einige Jahre nach dem Knuth-Morris-Pratt-Algorithmus entdeckt} [Boyer \& Moore, 1977]. Häberlein betont, dass Boyer-Moore - {\bf zumindest was die Average-Case-Komplexität betrifft} - effizienter als KMP ist.
+
+\subsubsection{Schlüsselerkenntnisse aus Häberlein}
+
+\startitemize[n]
+\item {\bf Rückwärtsvergleich ist der Schlüssel}: Mehr Informationen über Verschiebemöglichkeiten durch Vergleich von rechts nach links
+\item {\bf Zwei Heuristiken sind besser als eine}: Bad Character + Good Suffix Rule ergänzen sich optimal
+\item {\bf Alphabet-Grösse ist entscheidend}: Bei grossen Alphabeten zeigt Boyer-Moore seine wahre Stärke
+\item {\bf Worst-Case ist besser als gedacht}: O(n) statt O(n×m), aber erst 1991 bewiesen
+\stopitemize
+
+\subsection{Zusammenfassung}
+
+Der Boyer-Moore-Algorithmus ist ein {\bf revolutionärer String-Suchalgorithmus}, der durch seine {\bf Rückwärts-Vergleichsstrategie} und {\bf zwei komplementäre Heuristiken} in den richtigen Szenarien aussergewöhnliche Performance bietet:
+
+{\bf Häberlein's Hauptargumente}:
+\startitemize
+\item {\bf Sublineare Performance möglich}: O(n/m) bei grossen Alphabeten
+\item {\bf Praktisch oft schneller als KMP}: Besonders bei natürlichen Sprachen
+\item {\bf Elegante mathematische Grundlage}: Zwei Heuristiken ergänzen sich optimal
+\stopitemize
+
+{\bf Unsere Implementierung}:
+\startitemize
+\item {\bf Fokus auf Bad Character Rule}: Einfachheit für Lehrzwecke
+\item {\bf Konsistente API mit KMP}: Einheitliche Nutzung
+\item {\bf Umfassende Tests}: 59 Tests für alle Szenarien
+\stopitemize
+
+{\bf Wann Boyer-Moore verwenden}:
+\startitemize
+\item {\bf Grosse Alphabete} (Englisch, ASCII, Unicode)
+\item {\bf Lange Muster} (URLs, komplexe Suchbegriffe)
+\item {\bf Performance-kritische Anwendungen} (Textsuche, Dokumentenanalyse)
+\stopitemize
+
+{\bf Wann KMP bevorzugen}:
+\startitemize
+\item {\bf Kleine Alphabete} (DNA, Binärdaten)
+\item {\bf Garantierte lineare Laufzeit} erforderlich
+\item {\bf Echtzeitanwendungen} mit vorhersagbarer Performance
+\stopitemize
+
+Boyer-Moore bleibt ein {\bf Meilenstein der Algorithmik} und demonstriert, wie clevere Heuristiken und Rückwärts-Denken zu bahnbrechenden Verbesserungen führen können.
+
+\blank[medium]
+
+{\it Quelle: Praktische Algorithmik mit Python von Tobias Häberlein, Abschnitt 7.4 "Der Boyer-Moore-Algorithmus"}

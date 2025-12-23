@@ -1,0 +1,310 @@
+\section{Tourverschmelzung beim TSP und Clarke-Wright-Savings-Algorithmus}
+
+\subsection{Zusammenhang zwischen Tourverschmelzung und Clarke-Wright}
+
+Ja, die Tourverschmelzung hat {\bf direkten Zusammenhang} mit dem Clarke-Wright-Savings-Algorithmus. Beide Verfahren basieren auf dem gleichen Grundprinzip:
+
+\startitemize[n]
+\item {\bf Ausgangssituation}: Mehrere separate (Teil-)Touren
+\item {\bf Verschmelzung}: Systematisches Zusammenführen dieser Touren
+\item {\bf Optimierungskriterium}: Maximale Einsparung (Savings) bei der Verschmelzung
+\stopitemize
+
+\subsection{Der Clarke-Wright-Savings-Algorithmus in einfachen Schritten}
+
+\subsubsection{Schritt 1: Initialzustand - Sternkonfiguration}
+
+{\bf Was passiert:}
+
+\startitemize
+\item Wir starten mit einem zentralen Depot (oft Knoten 0)
+\item Jeder Kunde wird einzeln vom Depot aus besucht und wieder zurück
+\item Wir haben also n separate "Touren" der Form: Depot → Kunde i → Depot
+\stopitemize
+
+{\bf Beispiel:}
+
+\starttyping
+Depot (0) → Kunde 1 → Depot (0)
+Depot (0) → Kunde 2 → Depot (0)
+Depot (0) → Kunde 3 → Depot (0)
+Depot (0) → Kunde 4 → Depot (0)
+\stoptyping
+
+\subsubsection{Schritt 2: Savings-Berechnung}
+
+{\bf Was passiert:}
+
+\startitemize
+\item Für jedes Kundenpaar (i, j) berechnen wir die potenzielle Einsparung
+\item Die Savings-Formel lautet: {\bf s(i,j) = d(0,i) + d(0,j) - d(i,j)}
+\stopitemize
+
+{\bf Bedeutung:}
+
+\startitemize
+\item d(0,i) = Distanz vom Depot zu Kunde i
+\item d(0,j) = Distanz vom Depot zu Kunde j
+\item d(i,j) = Direkte Distanz zwischen Kunde i und j
+\item s(i,j) = Eingesparte Distanz bei Verbindung von i und j
+\stopitemize
+
+{\bf Intuition:}
+Statt zwei separate Touren zu fahren (0→i→0 und 0→j→0), fahren wir eine kombinierte Tour (0→i→j→0). Die Einsparung ist: (0→i→0) + (0→j→0) - (0→i→j→0)
+
+\subsubsection{Schritt 3: Sortierung der Savings}
+
+{\bf Was passiert:}
+
+\startitemize
+\item Alle berechneten Savings-Werte werden in {\bf absteigender Reihenfolge} sortiert
+\item Wir erstellen eine Savings-Liste: s(i,j) ≥ s(k,l) ≥ s(m,n) ≥ ...
+\stopitemize
+
+{\bf Beispiel:}
+
+\starttyping
+s(1,3) = 25  (höchste Einsparung)
+s(2,4) = 18
+s(1,2) = 12
+s(3,4) = 8
+s(2,3) = 5   (niedrigste Einsparung)
+\stoptyping
+
+\subsubsection{Schritt 4: Tourverschmelzung (iterativ)}
+
+{\bf Was passiert:}
+
+\startitemize
+\item Wir gehen die sortierte Savings-Liste von oben nach unten durch
+\item Für jedes Kundenpaar (i,j) prüfen wir: Können wir die Touren verschmelzen?
+\stopitemize
+
+{\bf Verschmelzungsbedingungen:}
+
+\startitemize[n]
+\item Kunde i ist {\bf Endpunkt} einer Tour (nicht in der Mitte)
+\item Kunde j ist {\bf Endpunkt} einer anderen Tour (nicht in der Mitte)
+\item Beide Kunden sind in {\bf verschiedenen} Touren
+\item Die Kapazitätsbeschränkung wird nicht verletzt (falls vorhanden)
+\stopitemize
+
+{\bf Wenn alle Bedingungen erfüllt sind:}
+→ Verbinde die beiden Touren über die Kante (i,j)
+
+\subsubsection{Schritt 5: Terminierung}
+
+{\bf Was passiert:}
+
+\startitemize
+\item Der Algorithmus endet, wenn alle Savings abgearbeitet sind
+\item Resultat: Eine oder mehrere Touren (je nach Kapazitätsbeschränkungen)
+\stopitemize
+
+\subsection{Detailliertes Beispiel mit Visualisierung}
+
+\subsubsection{Ausgangssituation}
+
+Gegeben: 4 Kunden (1,2,3,4) und 1 Depot (0)
+
+{\bf Distanzmatrix:}
+
+\placetable[here][tab:distance-matrix]{Distanzmatrix für Clarke-Wright-Beispiel}
+\starttabulate[|c|c|c|c|c|c|]
+\HL
+\NC \NC {\bf 0} \NC {\bf 1} \NC {\bf 2} \NC {\bf 3} \NC {\bf 4} \NC\NR
+\HL
+\NC {\bf 0} \NC 0 \NC 10 \NC 15 \NC 20 \NC 25 \NC\NR
+\NC {\bf 1} \NC 10 \NC 0 \NC 35 \NC 30 \NC 20 \NC\NR
+\NC {\bf 2} \NC 15 \NC 35 \NC 0 \NC 15 \NC 30 \NC\NR
+\NC {\bf 3} \NC 20 \NC 30 \NC 15 \NC 0 \NC 15 \NC\NR
+\NC {\bf 4} \NC 25 \NC 20 \NC 30 \NC 15 \NC 0 \NC\NR
+\HL
+\stoptabulate
+
+\subsubsection{Schritt-für-Schritt Durchführung}
+
+{\bf 1. Initialzustand (Sternkonfiguration)}
+
+\starttyping
+Tour 1: 0 → 1 → 0  (Länge: 20)
+Tour 2: 0 → 2 → 0  (Länge: 30)
+Tour 3: 0 → 3 → 0  (Länge: 40)
+Tour 4: 0 → 4 → 0  (Länge: 50)
+
+Gesamtlänge: 140
+\stoptyping
+
+{\bf 2. Savings berechnen}
+
+Für alle Paare (i,j):
+
+\starttyping
+s(1,2) = d(0,1) + d(0,2) - d(1,2) = 10 + 15 - 35 = -10 (negativ!)
+s(1,3) = d(0,1) + d(0,3) - d(1,3) = 10 + 20 - 30 = 0
+s(1,4) = d(0,1) + d(0,4) - d(1,4) = 10 + 25 - 20 = 15  ✓
+s(2,3) = d(0,2) + d(0,3) - d(2,3) = 15 + 20 - 15 = 20  ✓
+s(2,4) = d(0,2) + d(0,4) - d(2,4) = 15 + 25 - 30 = 10  ✓
+s(3,4) = d(0,3) + d(0,4) - d(3,4) = 20 + 25 - 15 = 30  ✓ (max!)
+\stoptyping
+
+{\bf 3. Sortierte Savings-Liste}
+
+\placetable[here][tab:sorted-savings]{Sortierte Savings-Liste}
+\starttabulate[|l|l|]
+\HL
+\NC {\bf Rang} \NC {\bf Savings} \NC\NR
+\HL
+\NC 1. \NC s(3,4) = 30 \NC\NR
+\NC 2. \NC s(2,3) = 20 \NC\NR
+\NC 3. \NC s(1,4) = 15 \NC\NR
+\NC 4. \NC s(2,4) = 10 \NC\NR
+\NC 5. \NC s(1,3) = 0 \NC\NR
+\NC 6. \NC s(1,2) = -10 \NC\NR
+\HL
+\stoptabulate
+
+{\bf 4. Verschmelzung durchführen}
+
+{\bf Iteration 1: s(3,4) = 30}
+
+\startitemize
+\item Kunde 3 ist Endpunkt von Tour 3: 0→3→0 ✓
+\item Kunde 4 ist Endpunkt von Tour 4: 0→4→0 ✓
+\item Verschiedene Touren ✓
+\item {\bf Verschmelzung möglich!}
+\stopitemize
+
+\starttyping
+Neue Tour: 0 → 3 → 4 → 0  (Länge: 20 + 15 + 25 = 60)
+Vorher: (0→3→0) + (0→4→0) = 40 + 50 = 90
+Ersparnis: 90 - 60 = 30 ✓
+
+Aktuelle Touren:
+Tour 1: 0 → 1 → 0  (20)
+Tour 2: 0 → 2 → 0  (30)
+Tour 3/4: 0 → 3 → 4 → 0  (60)
+Gesamtlänge: 110 (Ersparnis: 30)
+\stoptyping
+
+{\bf Iteration 2: s(2,3) = 20}
+
+\startitemize
+\item Kunde 2 ist Endpunkt von Tour 2: 0→2→0 ✓
+\item Kunde 3 ist Endpunkt von Tour 3/4: 0→3→4→0 ✓
+\item Verschiedene Touren ✓
+\item {\bf Verschmelzung möglich!}
+\stopitemize
+
+\starttyping
+Neue Tour: 0 → 2 → 3 → 4 → 0  (Länge: 15 + 15 + 15 + 25 = 70)
+Vorher: (0→2→0) + (0→3→4→0) = 30 + 60 = 90
+Ersparnis: 90 - 70 = 20 ✓
+
+Aktuelle Touren:
+Tour 1: 0 → 1 → 0  (20)
+Tour 2/3/4: 0 → 2 → 3 → 4 → 0  (70)
+Gesamtlänge: 90 (Ersparnis: 50)
+\stoptyping
+
+{\bf Iteration 3: s(1,4) = 15}
+
+\startitemize
+\item Kunde 1 ist Endpunkt von Tour 1: 0→1→0 ✓
+\item Kunde 4 ist Endpunkt von Tour 2/3/4: 0→2→3→4→0 ✓
+\item Verschiedene Touren ✓
+\item {\bf Verschmelzung möglich!}
+\stopitemize
+
+\starttyping
+Neue Tour: 0 → 2 → 3 → 4 → 1 → 0
+Länge: 15 + 15 + 15 + 20 + 10 = 75
+
+Aktuelle Touren:
+Tour gesamt: 0 → 2 → 3 → 4 → 1 → 0  (75)
+Gesamtlänge: 75 (Ersparnis: 65)
+\stoptyping
+
+\subsubsection{Endergebnis}
+
+\startitemize
+\item {\bf Optimierte Tour:} 0 → 2 → 3 → 4 → 1 → 0
+\item {\bf Länge:} 75
+\item {\bf Ersparnis gegenüber Initialzustand:} 140 - 75 = 65 (46\% Reduktion!)
+\stopitemize
+
+\subsection{Wichtige Hinweise für die Lehre}
+
+\subsubsection{1. Negative Savings}
+
+\startitemize
+\item Wenn s(i,j) < 0: Die Verschmelzung würde die Tour {\bf verlängern}
+\item Solche Paare werden {\bf nicht} verschmolzen
+\item Beispiel: s(1,2) = -10 bedeutet, es ist besser, separate Touren zu behalten
+\stopitemize
+
+\subsubsection{2. Reihenfolge ist wichtig}
+
+\startitemize
+\item Wir bearbeiten Savings in {\bf absteigender} Reihenfolge
+\item Grund: Maximale Einsparungen zuerst realisieren
+\item Greedy-Ansatz: Lokale Optima führen zu guten (nicht optimalen) Lösungen
+\stopitemize
+
+\subsubsection{3. Endpunkt-Bedingung}
+
+\startitemize
+\item Nur Endpunkte können verschmolzen werden
+\item Warum? Sonst entstehen ungültige Touren (kein Hamiltonscher Kreis)
+\item Beispiel: In 0→2→3→0 ist Kunde 3 ein Endpunkt, Kunde 2 nicht
+\stopitemize
+
+\subsubsection{4. Kapazitätsbeschränkungen (CVRP)}
+
+\startitemize
+\item Bei Vehicle Routing Problems mit Kapazität
+\item Zusätzliche Bedingung: Gesamtbedarf der Tour ≤ Fahrzeugkapazität
+\item Falls verletzt: Verschmelzung ablehnen
+\stopitemize
+
+\subsection{Pädagogische Tipps}
+
+\startitemize[n]
+\item {\bf Visualisierung}: Zeichnen Sie jeden Schritt auf der Tafel/Folien
+\item {\bf Hands-On}: Lassen Sie Studierende ein kleines Beispiel selbst durchrechnen
+\item {\bf Intuition}: Betonen Sie die Savings-Intuition (Wegfall von 2× Depot-Kanten)
+\item {\bf Komplexität}: O(n²) für Savings-Berechnung, O(n² log n) für Sortierung
+\item {\bf Qualität}: Typischerweise 5-15\% über optimaler Lösung (sehr gut für Heuristik!)
+\stopitemize
+
+\subsection{Vergleich zu anderen Heuristiken}
+
+\placetable[here][tab:heuristics-comparison]{Vergleich verschiedener TSP-Heuristiken}
+\starttabulate[|l|l|l|l|]
+\HL
+\NC {\bf Heuristik} \NC {\bf Konstruktionsart} \NC {\bf Qualität} \NC {\bf Komplexität} \NC\NR
+\HL
+\NC Clarke-Wright \NC Verschmelzung \NC Gut (5-15\%) \NC O(n² log n) \NC\NR
+\NC Nearest Neighbor \NC Einfügung \NC Mittel (20-30\%) \NC O(n²) \NC\NR
+\NC 2-Opt \NC Verbesserung \NC Sehr gut \NC O(n²) pro Iteration \NC\NR
+\HL
+\stoptabulate
+
+\subsection{Zusammenfassung}
+
+Der Clarke-Wright-Savings-Algorithmus ist eine {\bf konstruktive Heuristik}, die durch systematische {\bf Tourverschmelzung} arbeitet:
+
+\startitemize[n]
+\item Start: Sternkonfiguration (n einzelne Touren)
+\item Berechne alle möglichen Einsparungen (Savings)
+\item Sortiere Savings absteigend
+\item Verschmelze Touren greedily nach Savings-Wert
+\item Beachte: Nur Endpunkte, verschiedene Touren, Kapazität
+\stopitemize
+
+{\bf Kernidee der Tourverschmelzung:}
+Zwei Depot-Kanten fallen weg, eine Kunden-Kante kommt hinzu → Netto-Einsparung!
+
+\blank[medium]
+
+{\it Hinweis: Diese Zusammenfassung wurde für die praktische Anwendung im FFHS-DUA-Kurs erstellt und dient als Lehrmaterial für Graphen-Algorithmen.}

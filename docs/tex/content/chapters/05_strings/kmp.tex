@@ -2,11 +2,20 @@
 
 \subsection{Einleitung}
 
-Der KMP-Algorithmus (Knuth-Morris-Pratt) ist ein effizienter String-Suchalgorithmus, der einen Muster-String in einem Text-String sucht. Benannt nach seinen Erfindern Donald Knuth, Vaughan Pratt und James Morris (1977), ist KMP besonders bemerkenswert, weil er {\bf garantierte lineare Laufzeit} auch im Worst-Case bietet.
+Der KMP-Algorithmus (Knuth-Morris-Pratt) ist ein effizienter String-Suchalgorithmus,
+der einen Muster-String in einem Text-String sucht. Benannt nach seinen Erfindern
+Donald Knuth, Vaughan Pratt und James Morris (1977), ist KMP besonders bemerkenswert,
+weil er {\bf garantierte lineare Laufzeit} auch im Worst-Case bietet.
 
-{\bf Kernvorteil}: Im Gegensatz zu naiven Ansätzen nutzt KMP eine vorberechnete Tabelle (DFA - Deterministic Finite Automaton oder Verschiebetabelle), um {\bf Backtracking im Text zu vermeiden}. Der Text-Index läuft nur vorwärts, was zu einer garantierten O(n) Laufzeit führt, wobei n die Textlänge ist.
+{\bf Kernvorteil}: Im Gegensatz zu naiven Ansätzen nutzt KMP eine vorberechnete
+Tabelle (DFA - Deterministic Finite Automaton oder Verschiebetabelle),
+um {\bf Backtracking im Text zu vermeiden}. Der Text-Index läuft nur vorwärts,
+was zu einer garantierten O(n) Laufzeit führt, wobei n die Textlänge ist.
 
-{\bf Grundprinzip}: KMP verfolgt prinzipiell die gleiche Idee wie die Konstruktion eines deterministischen endlichen Automaten, vermeidet jedoch die aufwändige Konstruktion eines kompletten Automaten und beschränkt sich auf das Wesentliche: die Suche nach Präfixen des Musters innerhalb des Musters selbst.
+{\bf Grundprinzip}: KMP verfolgt prinzipiell die gleiche Idee wie die Konstruktion
+eines deterministischen endlichen Automaten, vermeidet jedoch die aufwändige
+Konstruktion eines kompletten Automaten und beschränkt sich auf das Wesentliche:
+die Suche nach Präfixen des Musters innerhalb des Musters selbst.
 
 \subsection{Hauptmerkmale}
 
@@ -14,9 +23,11 @@ Der KMP-Algorithmus (Knuth-Morris-Pratt) ist ein effizienter String-Suchalgorith
 
 \startitemize[n]
 \item {\bf Kein Backtracking im Text}: Der Text-Index läuft nur vorwärts
-\item {\bf Worst-Case O(n) Laufzeit}: Garantierte lineare Laufzeit für die Suche
-\item {\bf Wiederverwendbar}: DFA wird einmal aufgebaut und kann für beliebig viele Suchen verwendet werden
-\item {\bf Effizient bei wiederholten Zeichen}: Gerade bei Mustern mit Wiederholungen deutlich schneller als naive Ansätze
+\item {\bf Worst-Case $O(n)$ Laufzeit}: Garantierte lineare Laufzeit für die Suche
+\item {\bf Wiederverwendbar}: DFA wird einmal aufgebaut und kann für beliebig viele
+Suchen verwendet werden
+\item {\bf Effizient bei wiederholten Zeichen}: Gerade bei Mustern mit Wiederholungen
+deutlich schneller als naive Ansätze
 \stopitemize
 
 \subsubsection{Typische Anwendungsfälle}
@@ -48,7 +59,8 @@ def naive_search(pattern: str, text: str) -> int:
     return n  # Nicht gefunden
 \stoppythoncode
 
-{\bf Problem}: Bei einem Mismatch springt der Algorithmus nur um 1 Position weiter, auch wenn mehr Information verfügbar wäre. Dies führt zu O(n × m) Laufzeit im Worst-Case.
+{\bf Problem}: Bei einem Mismatch springt der Algorithmus nur um 1 Position weiter,
+auch wenn mehr Information verfügbar wäre. Dies führt zu O(n × m) Laufzeit im Worst-Case.
 
 {\bf Beispiel-Worst-Case}:
 \startitemize
@@ -62,15 +74,21 @@ def naive_search(pattern: str, text: str) -> int:
 KMP kann auf zwei äquivalente Arten verstanden werden:
 
 \startitemize
-\item {\bf Verschiebetabelle-Ansatz (Häberlein)}: Die Verschiebetabelle P speichert für jede Position i im Muster die Länge des maximalen Präfixes, das sich vor Position i befindet
-\item {\bf DFA-Ansatz (Sedgewick/Wayne)}: KMP baut einen DFA auf, der für jeden Zustand (Position im Muster) und jedes mögliche Zeichen den nächsten Zustand bestimmt
+\item {\bf Verschiebetabelle-Ansatz (Häberlein)}: Die Verschiebetabelle $P$ speichert
+für jede Position $i$ im Muster die Länge des maximalen Präfixes,
+das sich vor Position $i$ befindet
+\item {\bf DFA-Ansatz (Sedgewick/Wayne)}: KMP baut einen DFA auf, der für
+jeden Zustand (Position im Muster) und jedes mögliche Zeichen den nächsten Zustand
+bestimmt
 \stopitemize
 
-{\bf Kern-Prinzip}: Bei einem Mismatch springt der Algorithmus nicht zurück zum Anfang, sondern nutzt die bereits gematchten Zeichen, um den optimalen nächsten Zustand zu finden.
+{\bf Kern-Prinzip}: Bei einem Mismatch springt der Algorithmus nicht zurück zum Anfang,
+sondern nutzt die bereits gematchten Zeichen, um den optimalen nächsten Zustand zu finden.
 
 \subsubsection{Verschiebetabelle-Konstruktion (Häberlein-Ansatz)}
 
-Die Verschiebetabelle wird analog zur KMP-Suche berechnet, nur dass hier das Muster im Muster selbst gesucht wird:
+Die Verschiebetabelle wird analog zur KMP-Suche berechnet, nur dass hier das Muster
+im Muster selbst gesucht wird:
 
 \startpythoncode
 def VerschTab(M):
@@ -90,8 +108,8 @@ def VerschTab(M):
 
 {\bf Beispiel für Muster "kakaokaki"}:
 \startitemize
-\item P = [-1, 0, 0, 1, 2, 0, 1, 2, 3]
-\item P[7] = 3: Die drei Zeichen "kak" vor Position 7 sind ein Präfix
+\item $P = [-1, 0, 0, 1, 2, 0, 1, 2, 3]$
+\item $P[7] = 3$: Die drei Zeichen "kak" vor Position 7 sind ein Präfix
 \stopitemize
 
 \subsubsection{DFA-Konstruktion (Sedgewick/Wayne-Ansatz)}
@@ -124,7 +142,8 @@ class KMP:
             x = self._dfa[ord(pattern[j])][x]
 \stoppythoncode
 
-{\bf Restart-Zustand x}: Simuliert den DFA auf dem Muster selbst, um bei einem Mismatch den optimalen Fallback-Zustand zu finden.
+{\bf Restart-Zustand x}: Simuliert den DFA auf dem Muster selbst, um bei einem
+Mismatch den optimalen Fallback-Zustand zu finden.
 
 \subsubsection{Suche mit Verschiebetabelle (Häberlein-Ansatz)}
 
@@ -152,7 +171,7 @@ def KMP(M, T):
 
 \subsubsection{Suche mit DFA (Sedgewick/Wayne-Ansatz)}
 
-Die Suche läuft in O(n) Zeit:
+Die Suche läuft in $O(n)$ Zeit:
 
 \startpythoncode
 def search(self, text: str) -> int:
@@ -265,14 +284,17 @@ print(count)  # 2
 
 \subsubsection{Laufzeitanalyse (Amortisierte Analyse)}
 
-{\bf Kernbeobachtung}: Die Variable q (Muster-Position) kann nicht bei jedem Durchlauf der Hauptschleife um m Werte erniedrigt werden. Die while-Schleife stellt sicher, dass q nur bis zum Wert -1 erniedrigt werden kann. Um q erneut zu erniedrigen, muss es zunächst erhöht worden sein.
+{\bf Kernbeobachtung}: Die Variable $q$ (Muster-Position) kann nicht bei jedem
+Durchlauf der Hauptschleife um $m$ Werte erniedrigt werden. Die while-Schleife
+stellt sicher, dass $q$ nur bis zum Wert $-1$ erniedrigt werden kann.
+Um $q$ erneut zu erniedrigen, muss es zunächst erhöht worden sein.
 
 {\bf Amortisierte Analyse}:
 \startitemize
-\item Jede Erhöhung von q geht mit einer Erhöhung von i (Text-Index) einher
-\item Schlimmster Fall: q wird immer in Einerschritten erniedrigt und danach wieder erhöht
-\item Insgesamt: n Schritte "nach oben" + n Schritte "nach unten" = 2n Schritte
-\item {\bf Resultat}: Worst-Case-Komplexität von O(2n) = O(n)
+\item Jede Erhöhung von $q$ geht mit einer Erhöhung von $i$ (Text-Index) einher
+\item Schlimmster Fall: $q$ wird immer in Einerschritten erniedrigt und danach wieder erhöht
+\item Insgesamt: $n$ Schritte "nach oben" + $n$ Schritte "nach unten" = $2n$ Schritte
+\item {\bf Resultat}: Worst-Case-Komplexität von $O(2n) = O(n)$
 \stopitemize
 
 \subsubsection{Komplexitätstabelle}
@@ -282,20 +304,20 @@ print(count)  # 2
 \HL
 \NC {\bf Operation} \NC {\bf Laufzeit} \NC {\bf Speicher} \NC {\bf Bemerkung} \NC\NR
 \HL
-\NC Verschiebetabelle-Aufbau \NC O(m) \NC O(m) \NC m = Muster-Länge \NC\NR
-\NC DFA-Aufbau \NC O(m × R) \NC O(m × R) \NC R = Alphabet-Grösse (256) \NC\NR
-\NC \type{search(text)} \NC O(n) \NC O(1) \NC n = Text-Länge, garantiert! \NC\NR
-\NC \type{search_all(text)} \NC O(n) \NC O(1) \NC Bei k Matches: O(n + k × m) \NC\NR
-\NC \type{count(text)} \NC O(n) \NC O(1) \NC Bei k Matches: O(n + k × m) \NC\NR
+\NC Verschiebetabelle-Aufbau \NC $O(m)$     \NC $O(m)$     \NC $m$ = Muster-Länge \NC\NR
+\NC DFA-Aufbau.              \NC $O(m × R)$ \NC $O(m × R)$ \NC $R$ = Alphabet-Grösse (256) \NC\NR
+\NC \type{search(text)}      \NC $O(n)$     \NC $O(1)$     \NC $n$ = Text-Länge, garantiert! \NC\NR
+\NC \type{search_all(text)}  \NC $O(n)$     \NC $O(1)$     \NC Bei $k$ Matches: $O(n + k × m)$ \NC\NR
+\NC \type{count(text)}       \NC $O(n)$     \NC $O(1)$     \NC Bei $k$ Matches: $O(n + k × m)$ \NC\NR
 \HL
 \stoptabulate
 
 {\bf Wichtig}:
 \startitemize
-\item Die Suche hat {\bf garantierte O(n) Laufzeit}, unabhängig vom Muster
-\item Kein Backtracking im Text (i läuft nur vorwärts)
-\item Der DFA-Speicher ist O(m × R), bei R=256 sind das 256 × m Integer
-\item Die Verschiebetabelle benötigt nur O(m) Speicher
+\item Die Suche hat {\bf garantierte $O(n)$ Laufzeit}, unabhängig vom Muster
+\item Kein Backtracking im Text ($i$ läuft nur vorwärts)
+\item Der DFA-Speicher ist $O(m × R)$, bei $R=256$ sind das $256 × m$ Integer
+\item Die Verschiebetabelle benötigt nur $O(m)$ Speicher
 \stopitemize
 
 \subsubsection{Vergleich mit naiven Algorithmen}

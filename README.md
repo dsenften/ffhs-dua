@@ -13,9 +13,10 @@ Fernfachhochschule Schweiz (FFHS).
   - Gerichtete Graphen: Dijkstras Algorithmus, Gewichtete Digraphen, Zyklenerkennung
   - Ungerichtete Graphen: Gewichtete Graphen, Kanten-Verwaltung
   - Utilities: Indexed Min Priority Queue
-- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), KMP String-Suche (Knuth-Morris-Pratt), Boyer-Moore String-Suche, Präfix-Operationen
+- **PVA 5 - Strings**: Trie Symbol Table, Patricia-Trie (Pfadkompression), KMP String-Suche
+  (Knuth-Morris-Pratt), Boyer-Moore String-Suche, Präfix-Operationen
 - **Utils**: Timing-Utilities für Performance-Messungen (`@timeit` Dekorator)
-- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (625 Tests)
+- **Umfassende Tests**: Vollständige Test-Abdeckung mit pytest (786 Tests)
 - **Deutsche Dokumentation**: AsciiDoc-basierte Dokumentation und Jupyter Notebooks
 
 ## 📦 Installation
@@ -181,15 +182,6 @@ print(count)  # 2
 # python3 -m src.algs4.pva_5_strings.kmp "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
 # python3 -m src.algs4.pva_5_strings.boyer_moore "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
 # python3 -m src.algs4.pva_5_strings.rabin_karp "NEEDLE" "HAYSTACK WITH NEEDLE IN IT"
-for pos in bm_the.search_all("the quick brown fox jumps over the lazy dog"):
-    print(pos)  # 0, 31
-
-# Zähle Vorkommen
-count = bm_the.count("the quick brown fox jumps over the lazy dog")
-print(count)  # 2
-
-# CLI-Nutzung
-# python3 -m src.algs4.pva_5_strings.boyer_moore NEEDLE "HAYSTACK WITH NEEDLE IN IT"
 ```
 
 ## 📖 Dokumentation
@@ -237,8 +229,8 @@ pre-commit run --all-files
 
 **Aktuelle Metriken:**
 
-- ✅ 563 Tests (100% bestanden)
-- ✅ 93%+ Code-Coverage (Trie: 99.22%)
+- ✅ 786 Tests (100% bestanden)
+- ✅ 93%+ Code-Coverage (Trie: 99.22%, Patricia: neu, KMP: 100%)
 - ✅ 0 Linting-Fehler
 - ✅ 0 Type-Fehler
 - ✅ 5 PVA-Module (Fundamentals, Sorting, Searching, Graphs, Strings)
